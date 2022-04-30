@@ -9,12 +9,12 @@ declare module '@vue/runtime-core' {
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
     ElDivider: typeof import('element-plus/es')['ElDivider']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImage: typeof import('element-plus/es')['ElImage']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     InfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
     Lottie: typeof import('./../components/lottie/lottie.vue')['default']
+    PlyrVideo: typeof import('./../components/plyrVideo/plyrVideo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

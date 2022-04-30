@@ -1,3 +1,3 @@
 ## CloudMusic
 
-> API 接口为 [点击访问](https://github.com/Binaryify/NeteaseCloudMusicApi);
+> API 接口 <a href="https://github.com/Binaryify/NeteaseCloudMusicApi" target="_blank">点击访问</a>

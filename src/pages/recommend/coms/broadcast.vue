@@ -1,7 +1,13 @@
 <template>
   <!-- 个性推荐 - 独家放送 -->
   <div gap-4 xl:gap-6 class="broadcast">
-    <el-card shadow="never" v-for="item in broadcastData" :key="item.id">
+    <el-card
+      @click="$router.push(`/mvDetails/${item.id}`)"
+      shadow="never"
+      v-for="item in broadcastData"
+      :key="item.id"
+    >
+      <span class="icon i-heroicons-outline:play"></span>
       <el-image :src="item.picUrl" fit="cover" />
       <p>{{ item.copywriter }}</p>
     </el-card>
@@ -33,7 +39,18 @@ onMounted(async () => {
     cursor: pointer;
 
     .el-card__body {
+      position: relative;
       padding: 0px;
+
+      .icon {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 99;
+        color: #fff;
+        font-size: 25px;
+        opacity: 0.5;
+      }
 
       p {
         padding: 15px;
@@ -44,8 +61,14 @@ onMounted(async () => {
     &:hover {
       transform: translateY(-7px);
 
-      .el-card__body p {
-        color: var(--theme-bg-color);
+      .el-card__body {
+        .icon {
+          opacity: 1;
+        }
+
+        p {
+          color: var(--theme-bg-color);
+        }
       }
     }
   }

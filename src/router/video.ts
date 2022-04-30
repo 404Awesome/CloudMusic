@@ -4,6 +4,7 @@ let Video = () => import("@/views/video/video.vue");
 
 let VideoDetails = () => import("@/pages/videoDetails/videoDetails.vue");
 let MV = () => import("@/pages/mv/mv.vue");
+let MVDetails = () => import("@/views/mvDetails/mvDetails.vue");
 
 // 视频
 const routes: RouteRecordRaw[] = [
@@ -26,9 +27,14 @@ const routes: RouteRecordRaw[] = [
       {
         path: "mv",
         component: MV
-      }
+      },
     ]
   },
+  {
+    path: "/mvDetails/:id",
+    component: MVDetails,
+    meta: { title: "MV详情" }
+  }
 ];
 
 export default routes;

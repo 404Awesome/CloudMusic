@@ -11,8 +11,14 @@
     :infinite-scroll-delay="1000"
     :infinite-scroll-disabled="disabled"
   >
-    <el-card v-for="item in broadcastList" :key="item.id" shadow="never">
-      <el-image :src="item.picUrl" fit="cover" />
+    <el-card
+      @click="$router.push(`/mvDetails/${item.id}`)"
+      v-for="item in broadcastList"
+      :key="item.id"
+      shadow="never"
+    >
+      <span class="icon i-heroicons-outline:play"></span>
+      <el-image lazy :src="item.picUrl" fit="cover" />
       <p>{{ item.copywriter }}</p>
     </el-card>
   </div>
@@ -62,7 +68,18 @@ let load = async () => {
     cursor: pointer;
 
     .el-card__body {
+      position: relative;
       padding: 0;
+
+      .icon {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 99;
+        color: #fff;
+        font-size: 25px;
+        opacity: 0.5;
+      }
 
       p {
         padding: 15px;
@@ -73,8 +90,14 @@ let load = async () => {
     &:hover {
       transform: translateY(-7px);
 
-      .el-card__body p {
-        color: var(--theme-bg-color);
+      .el-card__body {
+        .icon {
+          opacity: 1;
+        }
+
+        p {
+          color: var(--theme-bg-color);
+        }
       }
     }
   }

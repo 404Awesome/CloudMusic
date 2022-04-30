@@ -19,6 +19,7 @@ onMounted(() => {
 :root {
   --theme-bg-color: #ff3f34;
   --font-color: #34495e;
+  --plyr-color-main: var(--theme-bg-color);
 }
 
 body {

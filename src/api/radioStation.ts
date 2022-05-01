@@ -1,6 +1,22 @@
 // 电台
 import { CloudMusicAPI } from "./request";
 
+// 电台Banner
+export const getDjBanner = () => {
+  return CloudMusicAPI({
+    url: "/dj/banner",
+    method: "GET",
+  })
+}
+
+// 电台分类
+export const getDjCatelist = () => {
+  return CloudMusicAPI({
+    url: "/dj/catelist",
+    method: "GET",
+  })
+}
+
 // 今日精选
 export const getTodayPerfered = () => {
   return CloudMusicAPI({

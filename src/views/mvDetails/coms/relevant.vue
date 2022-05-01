@@ -68,12 +68,12 @@ let handerTime = (time: number) => {
     margin-bottom: 15px;
     color: var(--font-color);
     font-weight: 400;
-    font-size: 18px;
+    font-size: 20px;
   }
   // 列表
   .list li {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     cursor: pointer;
 
     gap: 10px;

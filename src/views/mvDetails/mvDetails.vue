@@ -3,6 +3,10 @@
     <div>
       <!-- MV视频 -->
       <PlyrVideo v-if="status" :source="source" />
+      <!-- 详情 -->
+      <Details v-if="details.id" :data="details" />
+      <!-- 评论 -->
+      <Comment v-if="comment.id" :data="comment" />
     </div>
 
     <!-- 相关推荐 -->
@@ -13,6 +17,8 @@
 <script setup lang="ts" name="mvDetails">
 import PlyrVideo from "@/components/plyrVideo/plyrVideo.vue";
 import Relevant from "./coms/relevant.vue";
+import Details from "./coms/details.vue";
+import Comment from "./coms/comment.vue";
 import { getMVDetails, getMVAddress } from "@/api/video";
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -32,15 +38,40 @@ let getResolution = async (qualityArr: object[]) => {
 };
 
 // 详情
-let details = reactive({});
+let details = reactive<any>({});
+// 评论
+let comment = reactive<any>({});
 // 请求数据
 onMounted(async () => {
   let { code, data }: any = await getMVDetails(id);
   if (code == 200) {
     // 请求到的详情
-    Object.assign(details, data);
+    let {
+      artists,
+      brs,
+      desc,
+      id,
+      name,
+      playCount,
+      publishTime,
+      shareCount,
+      subCount,
+    } = data;
+
     // 请求所有MV分辨率的视频地址
-    getResolution(data.brs);
+    getResolution(brs);
+
+    // 处理详情
+    Object.assign(details, { artists, desc, id, name });
+
+    // 处理评论
+    Object.assign(comment, {
+      id,
+      playCount,
+      publishTime,
+      shareCount,
+      subCount,
+    });
   }
 });
 </script>

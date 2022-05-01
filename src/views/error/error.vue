@@ -1,7 +1,5 @@
 <template>
-  <div flex justify-center h-full id="error">
-    <Lottie w="1/2" :animationData="lottieAnima" />
-  </div>
+  <Lottie mt-12 mx-auto w="1/2" :animationData="lottieAnima" />
 </template>
 
 <script setup lang="ts">

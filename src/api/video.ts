@@ -12,6 +12,14 @@ export const getMVDetails = (mvid: number) => {
   })
 }
 
+// 推荐MV
+export const getPersonalizedMV = () => {
+  return CloudMusicAPI({
+    url: "/personalized/mv",
+    method: "GET",
+  })
+}
+
 // 获取MV地址
 export const getMVAddress = (id: number, r: number = 1080) => {
   return CloudMusicAPI({

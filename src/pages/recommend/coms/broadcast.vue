@@ -1,6 +1,6 @@
 <template>
-  <!-- 个性推荐 - 独家放送 -->
-  <div gap-4 xl:gap-6 class="broadcast">
+  <!-- 个性推荐 独家放送 -->
+  <div class="broadcast">
     <el-card
       @click="$router.push(`/mvDetails/${item.id}`)"
       shadow="never"
@@ -15,11 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import { getBroadcast } from "@/api/discover";
+import { getBroadcastList } from "@/api/discover";
 
 let broadcastData = reactive<any>([]);
 onMounted(async () => {
-  let { code, result }: any = await getBroadcast();
+  let { code, result }: any = await getBroadcastList(0, 4);
   // 获取成功
   if (code == 200) {
     broadcastData.push(...result);
@@ -30,9 +30,9 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .broadcast {
   display: flex;
-  margin: 0 auto;
   margin-top: 15px;
-  width: 80%;
+
+  gap: 30px;
 
   :deep(.el-card) {
     background-color: #f5f7fa;
@@ -48,13 +48,20 @@ onMounted(async () => {
         left: 10px;
         z-index: 99;
         color: #fff;
-        font-size: 25px;
+        font-size: 20px;
         opacity: 0.5;
       }
 
       p {
-        padding: 15px;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        margin: 10px;
         color: var(--font-color);
+        text-overflow: ellipsis;
+        font-size: 14px;
+
+        -webkit-line-clamp: 2;
       }
     }
 

@@ -1,4 +1,3 @@
-// 发现音乐
 import { CloudMusicAPI } from "./request";
 
 // 获取 banner
@@ -12,22 +11,36 @@ export const getBanner = (type: 0 | 1 | 2 | 3 = 0) => {
   })
 }
 
-// 个性推荐 -- 独家放送
-export const getBroadcast = () => {
+// 推荐歌单
+export const getPersonalized = (limit: number = 30) => {
   return CloudMusicAPI({
-    url: "/personalized/privatecontent",
+    url: "/personalized",
     method: "GET",
+    params: {
+      limit
+    }
   })
 }
 
 // 独家放送列表
-export const getBroadcastList = (offset: number = 0) => {
+export const getBroadcastList = (offset: number = 0, limit: number = 60) => {
   return CloudMusicAPI({
     url: "/personalized/privatecontent/list",
     method: "GET",
     params: {
-      limit: 60,
+      limit,
       offset
+    }
+  })
+}
+
+// 推荐新音乐
+export const getNewSong = (limit: number = 10) => {
+  return CloudMusicAPI({
+    url: "/personalized/newsong",
+    method: "GET",
+    params: {
+      limit
     }
   })
 }

@@ -20,7 +20,6 @@ let props = defineProps({
   },
 });
 let data = toRef(props, "data");
-console.log(data.value);
 
 let getName = computed(() => {
   let names = data.value.artists.map(

@@ -11,7 +11,7 @@
           <!-- 观看数 -->
           <p class="durationms">
             <span class="icon i-heroicons-outline:play"></span>
-            <span>{{ handleDurationms(item.durationms) }}</span>
+            <span>{{ handleCount(item.durationms) }}</span>
           </p>
           <!-- 时间 -->
           <p class="time">{{ handerTime(item.durationms) }}</p>
@@ -31,6 +31,7 @@
 </template>
 
 <script setup lang="ts">
+import { handleCount } from "@/utils/tools";
 import { getRelevantVideo } from "@/api/video";
 let props = defineProps({
   id: {
@@ -45,12 +46,6 @@ onMounted(async () => {
   let { code, data }: any = await getRelevantVideo(props.id);
   if (code == 200) relevant.push(...data);
 });
-
-// 处理观看数
-let handleDurationms = (count: number) => {
-  let num = (count / 10000).toFixed(0);
-  return num.length == 1 ? count : `${num}万`;
-};
 
 // 处理时间
 let handerTime = (time: number) => {

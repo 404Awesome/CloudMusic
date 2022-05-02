@@ -5,11 +5,12 @@
 
     <!-- 渲染列表 -->
     <div class="renderList" v-for="item in renderList" :key="item.path">
+      <!-- 导航 -->
       <nav class="nav">
         <h4 @click="$router.push(item.path)">{{ item.title }}</h4>
         <span class="i-heroicons-outline:chevron-right"></span>
       </nav>
-
+      <!-- 动态组件 -->
       <component :is="item.component" />
     </div>
   </div>
@@ -19,7 +20,7 @@
 import Carousel from "@/components/carousel/carousel.vue";
 import PlayList from "./coms/playlist.vue";
 import Broadcast from "./coms/broadcast.vue";
-import NewMusic from "./coms/newmusic.vue";
+import NewSong from "./coms/newSong.vue";
 import Radio from "./coms/radio.vue";
 import MV from "./coms/mv.vue";
 import { getBanner } from "@/api/discover";
@@ -39,7 +40,7 @@ let renderList = reactive([
   {
     title: "最新音乐",
     path: "/discover/newmusic",
-    component: shallowRef(NewMusic),
+    component: shallowRef(NewSong),
   },
   {
     title: "主播电台",
@@ -63,14 +64,13 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .renderList {
-  margin: 30px 0px;
-  width: 100%;
+  margin: 30px auto 0px;
+  width: 80%;
 
   // 头部
   nav.nav {
     display: flex;
     align-items: center;
-    padding: 0px 30px;
     color: var(--font-color);
 
     h4 {

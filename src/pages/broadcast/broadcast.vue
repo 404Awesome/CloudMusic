@@ -1,6 +1,7 @@
 <template>
   <!-- 独家放送 -->
   <div
+    grid
     grid-cols-2
     gap-4
     lg:grid-cols-3
@@ -57,15 +58,14 @@ let load = async () => {
 
 <style lang="scss" scoped>
 .broadcast {
-  display: grid;
-  padding: 15px 30px;
+  margin: 30px auto;
+  width: 80%;
+  cursor: pointer;
 
-  gap: 30px;
   grid-template-columns: repeat(4, 1fr);
 
   :deep(.el-card) {
     background-color: #f5f7fa;
-    cursor: pointer;
 
     .el-card__body {
       position: relative;
@@ -77,13 +77,20 @@ let load = async () => {
         left: 10px;
         z-index: 99;
         color: #fff;
-        font-size: 25px;
+        font-size: 20px;
         opacity: 0.5;
       }
 
       p {
-        padding: 15px;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        margin: 10px;
         color: var(--font-color);
+        text-overflow: ellipsis;
+        font-size: 14px;
+
+        -webkit-line-clamp: 2;
       }
     }
 

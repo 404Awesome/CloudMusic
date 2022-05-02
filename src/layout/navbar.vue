@@ -85,7 +85,7 @@ let list = reactive([
 .navbar {
   padding: 10px;
   height: 100%;
-  background-color: #ced6e0;
+  background-color: #dcdde1;
 
   user-select: none;
 

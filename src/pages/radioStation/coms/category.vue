@@ -67,6 +67,8 @@ let rightMove = () => {
   display: flex;
   margin-top: 15px;
 
+  user-select: none;
+
   .left,
   .right {
     display: flex;

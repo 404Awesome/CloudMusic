@@ -1,13 +1,13 @@
 <template>
-  <div grid grid-cols-3 gap-4 xl:gap-6 class="radio">
-    <el-card shadow="never" v-for="item in data" :key="item.id">
-      <el-image :src="item.picUrl" fit="cover" />
+  <ul class="radio">
+    <li v-for="item in data" :key="item.id">
+      <img :src="item.picUrl" />
       <div class="details">
-        <p truncate>{{ item.copywriter }}</p>
+        <p>{{ item.copywriter }}</p>
         <p truncate>{{ item.name }}</p>
       </div>
-    </el-card>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
@@ -25,78 +25,50 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .radio {
   display: grid;
-  margin: 0 auto;
   margin-top: 15px;
-  width: 80%;
 
-  gap: 20px;
-  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  grid-template-columns: repeat(3, 1fr);
 
-  section {
+  li {
     display: flex;
     overflow: hidden;
     border-radius: 5px;
     background-color: #f5f7fa;
     cursor: pointer;
 
-    :deep(.el-image__inner) {
-      flex-basis: 100px;
-      height: 100px;
+    img {
+      width: 30%;
     }
 
     .details {
+      display: flex;
       flex: 1;
-      padding-left: 15px;
+      flex-flow: column nowrap;
+      justify-content: space-evenly;
+      padding: 10px;
       color: var(--font-color);
 
-      &:hover {
-        color: var(--theme-bg-color);
-      }
-    }
-  }
+      p {
+        &:first-child {
+          display: -webkit-box;
+          overflow: hidden;
+          -webkit-box-orient: vertical;
+          color: var(--font-color);
+          text-overflow: ellipsis;
+          font-size: 15px;
 
-  :deep(.el-card) {
-    background-color: #f5f7fa;
-    cursor: pointer;
-
-    .el-card__body {
-      display: flex;
-      padding: 0px;
-
-      .el-image__inner {
-        flex: 0;
-        flex-basis: 100px;
-        height: 100px;
-      }
-
-      .details {
-        display: flex;
-        overflow: hidden;
-        flex: 1;
-        flex-flow: column nowrap;
-        justify-content: center;
-        padding: 0px 10px;
-
-        gap: 7px;
-
-        p {
-          &:first-child {
-            color: var(--font-color);
-          }
-          &:last-child {
-            color: #a4b0be;
-            font-size: 14px;
-          }
+          -webkit-line-clamp: 2;
+        }
+        &:last-child {
+          color: rgba($color: #000000, $alpha: 0.5);
+          font-size: 13px;
         }
       }
     }
 
-    &:hover {
-      transform: translateY(-7px);
-
-      .el-card__body .details p:first-child {
-        color: var(--theme-bg-color);
-      }
+    &:hover .details p:first-child {
+      color: var(--theme-bg-color);
     }
   }
 }

@@ -4,7 +4,7 @@
       <!-- MV视频 -->
       <PlyrVideo v-if="status" :source="source" />
       <!-- 详情 -->
-      <Details v-if="details.id" :data="details" />
+      <Detail v-if="details.id" :data="details" />
       <!-- 评论 -->
       <Comment v-if="comment.id" :data="comment" />
     </div>
@@ -17,7 +17,7 @@
 <script setup lang="ts" name="mvDetails">
 import PlyrVideo from "@/components/plyrVideo/plyrVideo.vue";
 import Relevant from "./coms/relevant.vue";
-import Details from "./coms/details.vue";
+import Detail from "./coms/detail.vue";
 import Comment from "./coms/comment.vue";
 import { getMVDetails, getMVAddress } from "@/api/video";
 import { useRoute } from "vue-router";

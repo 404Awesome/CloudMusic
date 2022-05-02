@@ -1,7 +1,104 @@
 <template>
-  <div></div>
+  <!-- 个性推荐 MV -->
+  <ul class="mv">
+    <li
+      v-for="item in mvList"
+      :key="item.id"
+      @click="$router.push(`/mvDetails/${item.id}`)"
+    >
+      <!-- 封面 -->
+      <div class="frontCover">
+        <el-image :src="item.picUrl" lazy />
+        <p class="playCount">
+          <span class="icon i-eva:arrow-right-outline"></span>
+          <span>{{ handleCount(item.playCount) }}</span>
+        </p>
+      </div>
+
+      <!-- 描述 -->
+      <div class="details">
+        <p>{{ item.name }}</p>
+        <p>{{ item.artists[0].name }}</p>
+      </div>
+    </li>
+  </ul>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { handleCount } from "@/utils/tools";
+import { getPersonalizedMV } from "@/api/video";
 
-<style lang="scss" scoped></style>
+let mvList = reactive<any[]>([]);
+onMounted(async () => {
+  let { code, result }: any = await getPersonalizedMV();
+  if (code == 200) mvList.push(...result);
+});
+</script>
+
+<style lang="scss" scoped>
+.mv {
+  display: grid;
+  margin: 15px 0px 30px;
+
+  gap: 30px;
+  grid-template-columns: repeat(4, 1fr);
+
+  li {
+    overflow: hidden;
+    cursor: pointer;
+
+    &:hover .details p:first-child {
+      color: var(--theme-bg-color);
+    }
+
+    .frontCover {
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      border-radius: 5px;
+
+      &::after {
+        position: absolute;
+        top: 0px;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        background-color: rgba($color: #000000, $alpha: 0.2);
+        content: "";
+      }
+
+      .playCount {
+        position: absolute;
+        top: 2px;
+        right: 6px;
+        z-index: 2;
+        color: #fff;
+        font-size: 14px;
+
+        .icon {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .details {
+      margin-top: 5px;
+
+      p {
+        &:first-child {
+          overflow: hidden;
+          color: var(--font-color);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 15px;
+        }
+        &:last-child {
+          color: rgba($color: #000000, $alpha: 0.5);
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+</style>

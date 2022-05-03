@@ -1,10 +1,11 @@
-<!-- 私人FM -->
+<!-- 排行榜 -->
 <template>
   <div>
-    <p>私人FM</p>
+    <p>排行榜</p>
   </div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+</style>

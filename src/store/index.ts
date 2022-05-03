@@ -9,6 +9,10 @@ export const useMainStore = defineStore("main", {
       isDark: useStorage("isDark", false, sessionStorage),
       // 主题色
       theme: useStorage("theme", '#ff3f34'),
+      // 歌单
+      playList: [],
+      // 当前播放歌曲
+      currentSong: ""
     };
   },
   actions: {},

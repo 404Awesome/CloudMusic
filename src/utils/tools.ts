@@ -9,3 +9,10 @@ export const handleCount = (count: number): string => {
     return `${num}万`;
   }
 }
+
+// 处理时间
+export const handerTime = (time: number) => {
+  time = time / 1000 / 60;
+  let arr = `${time.toFixed(2)}`.split(".");
+  return `${arr[0].padStart(2, "0")}:${arr[1]}`;
+};

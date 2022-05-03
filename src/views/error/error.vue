@@ -1,5 +1,6 @@
+<!-- 404 Not Found -->
 <template>
-  <Lottie mt-12 mx-auto w="1/2" :animationData="lottieAnima" />
+  <Lottie mx-auto w="1/2" :animationData="lottieAnima" />
 </template>
 
 <script setup lang="ts">

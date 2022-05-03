@@ -1,3 +1,4 @@
+<!-- Plyr视频组件 -->
 <template>
   <div overflow-hidden rounded-md>
     <video ref="playerEl" playsinline controls>

@@ -1,8 +1,5 @@
-<!-- 设置 -->
 <template>
-  <div>
-    <p>设置</p>
-  </div>
+  <div>视频详情</div>
 </template>
 
 <script setup lang="ts"></script>

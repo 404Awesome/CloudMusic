@@ -1,8 +1,5 @@
-<!-- 设置 -->
 <template>
-  <div>
-    <p>设置</p>
-  </div>
+  <div>注册</div>
 </template>
 
 <script setup lang="ts"></script>

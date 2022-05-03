@@ -1,3 +1,4 @@
+<!-- CloudMusic -->
 <template>
   <main :class="{ dark: store.isDark }">
     <Layout />
@@ -14,44 +15,3 @@ onMounted(() => {
   document.documentElement.style.setProperty("--theme-bg-color", store.theme);
 });
 </script>
-
-<style lang="scss">
-:root {
-  --theme-bg-color: #ff3f34;
-  --font-color: #34495e;
-  --plyr-color-main: var(--theme-bg-color);
-}
-
-body {
-  margin: 0;
-  padding: 0;
-}
-
-img,
-span {
-  vertical-align: middle;
-}
-
-p {
-  margin: 0;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-
-ul,
-li,
-div,
-article,
-header,
-section,
-nav,
-main,
-footer,
-aside {
-  box-sizing: border-box;
-}
-</style>

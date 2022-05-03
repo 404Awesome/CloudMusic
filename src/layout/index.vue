@@ -1,13 +1,14 @@
+<!-- 布局组件 -->
 <template>
   <main id="layout">
     <section class="status">
-      <Status />
+      <TopNavBar />
     </section>
     <section class="navbar">
-      <NavBar />
+      <SideNavBar />
     </section>
     <section class="playbar">
-      <Playbar />
+      <PlayBar />
     </section>
     <section class="view">
       <el-scrollbar>
@@ -22,9 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import Status from "./status.vue"; // 状态栏
-import NavBar from "./navbar.vue"; // 导航栏
-import Playbar from "./playbar.vue"; // 播放栏
+import TopNavBar from "./topNavBar.vue";    // 顶部导航栏
+import SideNavBar from "./sideNavBar.vue";  // 侧边导航栏
+import PlayBar from "./playBar.vue";        // 播放栏
 </script>
 
 <style lang="scss" scoped>
@@ -61,6 +62,10 @@ import Playbar from "./playbar.vue"; // 播放栏
 
     grid-row: 2/3;
     grid-column: 2/3;
+
+    :deep(.el-scrollbar__view) {
+      height: 100%;
+    }
   }
 }
 </style>

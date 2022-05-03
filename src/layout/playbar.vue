@@ -1,3 +1,4 @@
+<!-- 播放控件 -->
 <template>
   <div class="playbar"></div>
 </template>

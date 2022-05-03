@@ -1,3 +1,4 @@
+<!-- 轮播图 -->
 <template>
   <div v-if="data.length" class="carousel">
     <el-carousel :interval="3000" type="card" height="190px">

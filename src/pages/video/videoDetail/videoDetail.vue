@@ -1,8 +1,6 @@
-<!-- Video -->
+<!-- Video详情 -->
 <template>
-  <div>
-    <p>视频</p>
-  </div>
+  <div>视频详情</div>
 </template>
 
 <script setup lang="ts"></script>

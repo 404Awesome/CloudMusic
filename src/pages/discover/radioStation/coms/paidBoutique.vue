@@ -1,11 +1,10 @@
 <!-- 付费精品 -->
 <template>
   <div class="wrapper">
-    <nav class="nav">
-      <h4>付费精品</h4>
-      <span class="i-heroicons-outline:chevron-right"></span>
-    </nav>
+    <!-- 导航栏 -->
+    <NavBar title="付费精品" path="/123123" />
 
+    <!-- 列表 -->
     <ul v-if="paygift.length" class="content">
       <li v-for="item in paygift" :key="item.id">
         <section>
@@ -26,6 +25,7 @@
 
 <script setup lang="ts">
 import { RadioStation } from "@/api/modules/radioStation";
+import NavBar from "@/components/common/navBar/navBar.vue";
 
 let paygift = reactive<any[]>([]);
 onMounted(async () => {
@@ -49,6 +49,7 @@ onMounted(async () => {
 
 .content {
   display: grid;
+  margin-top: 15px;
 
   grid-template-columns: repeat(2, 1fr);
   gap: 20px 30px;
@@ -98,35 +99,6 @@ onMounted(async () => {
         }
       }
     }
-  }
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  color: var(--font-color);
-
-  h4 {
-    margin: 0;
-    margin-right: 5px;
-    font-weight: 400;
-    font-size: 17px;
-
-    &:hover {
-      color: var(--theme-bg-color);
-      cursor: pointer;
-
-      &+span {
-        color: var(--theme-bg-color);
-        transform: translateX(5px);
-      }
-    }
-  }
-
-  span {
-    font-size: 20px;
-    transition: transform 0.2s ease-in-out;
   }
 }
 </style>

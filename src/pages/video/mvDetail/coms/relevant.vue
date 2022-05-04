@@ -1,3 +1,4 @@
+<!-- 相关视频 -->
 <template>
   <div class="recommend">
     <!-- 标题 -->
@@ -50,7 +51,6 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .recommend {
-
   // 标题
   .title {
     margin: 0px;
@@ -75,6 +75,8 @@ onMounted(async () => {
       overflow: hidden;
       overflow: hidden;
       flex-basis: 40%;
+      flex-grow: 0;
+      flex-shrink: 0;
       height: auto;
       border-radius: 5px;
       color: #fff;

@@ -27,6 +27,7 @@ onMounted(async () => {
 .radio {
   display: grid;
   margin-top: 15px;
+  padding-bottom: 30px;
 
   gap: 30px;
   grid-template-columns: repeat(3, 1fr);
@@ -40,12 +41,13 @@ onMounted(async () => {
 
     :deep(.el-image) {
       flex-basis: 30%;
-      flex-shrink: 0;
       flex-grow: 0;
+      flex-shrink: 0;
     }
 
     .details {
       display: flex;
+      overflow: hidden;
       flex: 1;
       flex-flow: column nowrap;
       justify-content: space-evenly;
@@ -53,15 +55,13 @@ onMounted(async () => {
       color: var(--font-color);
 
       p {
-        &:first-child {
-          display: -webkit-box;
-          overflow: hidden;
-          -webkit-box-orient: vertical;
-          color: var(--font-color);
-          text-overflow: ellipsis;
-          font-size: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
-          -webkit-line-clamp: 2;
+        &:first-child {
+          color: var(--font-color);
+          font-size: 15px;
         }
 
         &:last-child {

@@ -1,7 +1,7 @@
 <!-- 个性推荐 MV -->
 <template>
   <ul class="mv">
-    <li v-for="item in mvList" :key="item.id" @click="$router.push(`/mvDetails/${item.id}`)">
+    <li v-for="item in mvList" :key="item.id" @click="$router.push(`/mvDetail/${item.id}`)">
       <!-- 封面 -->
       <div class="frontCover">
         <el-image :src="item.picUrl" fit="cover" w-full h-30 lazy />
@@ -14,14 +14,14 @@
       <!-- 描述 -->
       <div class="details">
         <p>{{ item.name }}</p>
-        <p>{{ item.artists[0].name }}</p>
+        <p class="artist" v-html="handleArtists(item.artists)"></p>
       </div>
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
-import { handleCount } from "@/utils/tools";
+import { handleCount, handleArtists } from "@/utils/tools";
 import { MV } from "@/api/modules/video";
 
 let mvList = reactive<any[]>([]);
@@ -34,7 +34,7 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .mv {
   display: grid;
-  padding: 15px 0px 30px;
+  padding-top: 15px;
 
   gap: 30px;
   grid-template-columns: repeat(4, 1fr);
@@ -90,9 +90,20 @@ onMounted(async () => {
           font-size: 15px;
         }
 
-        &:last-child {
-          color: rgba($color: #000000, $alpha: 0.5);
+        &.artist {
+          overflow: hidden;
+          color: var(--font-color);
+          text-overflow: ellipsis;
+          white-space: nowrap;
           font-size: 13px;
+
+          :deep(.name) {
+            color: rgba(0, 0, 0, 0.5);
+
+            &:hover {
+              color: var(--theme-bg-color);
+            }
+          }
         }
       }
     }

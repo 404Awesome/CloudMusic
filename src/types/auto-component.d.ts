@@ -5,19 +5,22 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Carousel: typeof import('./../components/carousel/carousel.vue')['default']
+    Carousel: typeof import('./../components/common/carousel/carousel.vue')['default']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
-    ElDivider: typeof import('element-plus/es')['ElDivider']
     ElImage: typeof import('element-plus/es')['ElImage']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
-    InfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
-    Lottie: typeof import('./../components/lottie/lottie.vue')['default']
-    PlyrVideo: typeof import('./../components/plyrVideo/plyrVideo.vue')['default']
+    Loading: typeof import('element-plus/es')['ElLoadingDirective']
+    Lottie: typeof import('./../components/common/lottie/lottie.vue')['default']
+    MvListItem: typeof import('./../components/content/mvListItem/mvListItem.vue')['default']
+    MvRankingItem: typeof import('./../components/content/mvRankingItem/mvRankingItem.vue')['default']
+    NavBar: typeof import('./../components/common/navBar/navBar.vue')['default']
+    PlyrVideo: typeof import('./../components/common/plyrVideo/plyrVideo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TypeSelect: typeof import('./../components/content/typeSelect/typeSelect.vue')['default']
   }
 }
 

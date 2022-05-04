@@ -1,12 +1,11 @@
+<!-- MV相关 -->
 <template>
   <div class="mvDetails">
     <div>
       <!-- MV视频 -->
       <PlyrVideo v-if="status" :source="source" />
       <!-- 详情 -->
-      <Detail v-if="details.id" :data="details" />
-      <!-- 评论 -->
-      <Comment v-if="comment.id" :data="comment" />
+      <Detail v-if="detail.id" :detail="detail" />
     </div>
 
     <!-- 相关推荐 -->
@@ -15,10 +14,9 @@
 </template>
 
 <script setup lang="ts" name="mvDetails">
-import PlyrVideo from "@/components/plyrVideo/plyrVideo.vue";
+import PlyrVideo from "@/components/common/plyrVideo/plyrVideo.vue";
 import Relevant from "./coms/relevant.vue";
 import Detail from "./coms/detail.vue";
-import Comment from "./coms/comment.vue";
 import { MV } from "@/api/modules/video";
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -40,40 +38,15 @@ let getResolution = async (qualityArr: object[]) => {
 };
 
 // 详情
-let details = reactive<any>({});
-// 评论
-let comment = reactive<any>({});
-// 请求数据
+let detail = reactive<any>({});
 onMounted(async () => {
-  let { code, data }: any = await MV.getDetails(id);
-  if (code == 200) {
-    // 请求到的详情
-    let {
-      artists,
-      brs,
-      desc,
-      id,
-      name,
-      playCount,
-      publishTime,
-      shareCount,
-      subCount,
-    } = data;
-
-    // 请求所有MV分辨率的视频地址
-    getResolution(brs);
-
-    // 处理详情
-    Object.assign(details, { artists, desc, id, name });
-
-    // 处理评论
-    Object.assign(comment, {
-      id,
-      playCount,
-      publishTime,
-      shareCount,
-      subCount,
-    });
+  // 加载mv详情
+  let result: any = await Promise.all([MV.getDetail(id), MV.getDetailInfo(id)]);
+  if (result[0].code == 200) {
+    // 请求所有MV分辨率的视频地址;
+    getResolution(result[0].data.brs);
+    // 合并详情
+    Object.assign(detail, result[0].data, result[1]);
   }
 });
 </script>

@@ -22,6 +22,7 @@ import { Discover } from "@/api/modules/discover";
 let newSong = reactive<any[]>([]);
 onMounted(async () => {
   let { code, result }: any = await Discover.getNewSong();
+  result.length = 6;
   if (code == 200) newSong.push(...result);
 });
 

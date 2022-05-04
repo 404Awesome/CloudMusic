@@ -1,5 +1,5 @@
 <template>
-  <div>视频详情</div>
+  <div>全部mv</div>
 </template>
 
 <script setup lang="ts"></script>

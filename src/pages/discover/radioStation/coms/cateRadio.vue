@@ -1,11 +1,8 @@
 <!-- 分类电台 -->
 <template>
   <div class="wrapper" v-if="result.length">
-    <!-- 导航 -->
-    <nav class="nav">
-      <h4 @click="$router.push(path)">{{ title }}</h4>
-      <span class="i-heroicons-outline:chevron-right"></span>
-    </nav>
+    <!-- 导航栏 -->
+    <NavBar :title="title" :path="path" />
 
     <!-- 列表 -->
     <ul v-if="result.length" class="content">
@@ -22,6 +19,7 @@
 
 <script setup lang="ts">
 import { RadioStation } from "@/api/modules/radioStation";
+import NavBar from "@/components/common/navBar/navBar.vue";
 let props = defineProps({
   cateId: {
     type: Number,
@@ -36,7 +34,7 @@ let props = defineProps({
     required: true,
   },
 });
-let { cateId, title } = toRefs(props);
+let { cateId, title, path } = toRefs(props);
 
 let result = reactive<any[]>([]);
 onMounted(async () => {
@@ -57,6 +55,7 @@ onMounted(async () => {
 
 .content {
   display: grid;
+  margin-top: 15px;
 
   grid-template-columns: repeat(6, 1fr);
   gap: 30px;
@@ -98,35 +97,6 @@ onMounted(async () => {
 
       -webkit-line-clamp: 2;
     }
-  }
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  color: var(--font-color);
-
-  h4 {
-    margin: 0;
-    margin-right: 5px;
-    font-weight: 400;
-    font-size: 17px;
-
-    &:hover {
-      color: var(--theme-bg-color);
-      cursor: pointer;
-
-      &+span {
-        color: var(--theme-bg-color);
-        transform: translateX(5px);
-      }
-    }
-  }
-
-  span {
-    font-size: 20px;
-    transition: transform 0.2s ease-in-out;
   }
 }
 </style>

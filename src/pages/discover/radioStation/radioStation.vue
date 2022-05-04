@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts" name="radioStation">
-import Carousel from "@/components/carousel/carousel.vue";
+import Carousel from "@/components/common/carousel/carousel.vue";
 import CateList from "./coms/cateList.vue";
 import PaidBoutique from "./coms/paidBoutique.vue";
 import CateRadio from "./coms/cateRadio.vue";

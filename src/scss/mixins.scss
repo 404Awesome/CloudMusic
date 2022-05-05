@@ -1,0 +1,6 @@
+// flex basis
+@mixin flexBasis($value, $shrink: auto, $wrap: auto) {
+  flex-basis: $value;
+  flex-shrink: $shrink;
+  flex-wrap: $wrap;
+}

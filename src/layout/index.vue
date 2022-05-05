@@ -35,7 +35,7 @@ import PlayBar from "./playBar.vue";        // 播放栏
   width: 100vw;
   height: 100vh;
 
-  grid-template: 49px auto 60px / 230px auto;
+  grid-template: var(--topNavBarHeight) auto var(--playBarHeight) / var(--sideNavBarWidth) auto;
 
   // 状态栏
   section.status {

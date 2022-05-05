@@ -15,12 +15,8 @@
 
     <!-- 列表 -->
     <ul class="list">
-      <li
-        @click="$router.push(item.path)"
-        :class="{ active: $route.matched[0]?.path == item.path }"
-        v-for="item in list"
-        :key="item.title"
-      >
+      <li @click="$router.push(item.path)" :class="{ active: $route.matched[0]?.path == item.path }"
+        v-for="item in list" :key="item.title">
         <span :class="item.icon"></span>
         <p>{{ item.title }}</p>
       </li>
@@ -72,7 +68,7 @@ let list = reactive([
   }
 
   p {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   &:hover {

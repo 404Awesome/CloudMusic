@@ -1,6 +1,16 @@
-// flex basis
+// flex基准值
 @mixin flexBasis($value, $shrink: auto, $wrap: auto) {
   flex-basis: $value;
   flex-shrink: $shrink;
   flex-wrap: $wrap;
+}
+
+// 多行省略
+@mixin MultilineOmit($line: 2) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+
+  -webkit-line-clamp: $line;
 }

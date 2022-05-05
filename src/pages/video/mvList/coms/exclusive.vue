@@ -1,5 +1,5 @@
 <template>
-  <div mt-12>
+  <div my-12>
     <!-- 导航栏 -->
     <nav mb-4>
       <NavBar title="网易出品" path="/allMV" />

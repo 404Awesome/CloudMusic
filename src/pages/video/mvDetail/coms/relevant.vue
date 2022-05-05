@@ -1,39 +1,18 @@
 <!-- 相关视频 -->
 <template>
-  <div class="recommend">
+  <div overflow-hidden>
     <!-- 标题 -->
     <h4 class="title">相关推荐</h4>
     <!-- 列表 -->
-    <ul class="list">
-      <li v-for="item in relevant" :key="item.vid">
-        <!-- banner图 -->
-        <div class="banner">
-          <el-image :src="item.coverUrl" fit="cover" lazy />
-          <!-- 观看数 -->
-          <p class="durationms">
-            <span class="icon i-heroicons-outline:play"></span>
-            <span>{{ handleCount(item.durationms) }}</span>
-          </p>
-          <!-- 时间 -->
-          <p class="time">{{ handerTime(item.durationms) }}</p>
-        </div>
-
-        <!-- 详情 -->
-        <div class="details">
-          <p>{{ item.title }}</p>
-          <p truncate>
-            <span>by </span>
-            <span>{{ item.creator[0].userName }}</span>
-          </p>
-        </div>
-      </li>
-    </ul>
+    <section mb-4 v-for="item in relevant" :key="item.id">
+      <MVListItem v-bind="item" :isFlex="true" />
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { handleCount, handerTime } from "@/utils/tools";
-import { Video } from "@/api/modules/video";
+import { MV } from "@/api/modules/video";
+import MVListItem from "@/components/content/mvListItem/mvListItem.vue"
 let props = defineProps({
   id: {
     type: Number,
@@ -41,112 +20,19 @@ let props = defineProps({
   },
 });
 
-// 获取相关视频
+// 获取相关mv
 let relevant = reactive<any[]>([]);
 onMounted(async () => {
-  let { code, data }: any = await Video.getRelevant(props.id);
-  if (code == 200) relevant.push(...data);
+  let { code, mvs }: any = await MV.getRelevant(props.id);
+  if (code == 200) relevant.push(...mvs);
 });
 </script>
 
 <style lang="scss" scoped>
-.recommend {
-  // 标题
-  .title {
-    margin: 0px;
-    margin-bottom: 15px;
-    color: var(--font-color);
-    font-weight: 400;
-    font-size: 20px;
-  }
-
-  // 列表
-  .list li {
-    display: flex;
-    margin-bottom: 15px;
-    cursor: pointer;
-
-    gap: 10px;
-
-    // banner图
-    .banner {
-      position: relative;
-      display: flex;
-      overflow: hidden;
-      overflow: hidden;
-      flex-basis: 40%;
-      flex-grow: 0;
-      flex-shrink: 0;
-      height: auto;
-      border-radius: 5px;
-      color: #fff;
-      font-size: 14px;
-
-      &::after {
-        position: absolute;
-        z-index: 2;
-        width: 100%;
-        height: 100%;
-        background-color: rgba($color: #000000, $alpha: 0.25);
-        content: "";
-      }
-
-      :deep(.el-image__inner) {
-        position: relative;
-        z-index: 1;
-        border-radius: 5px;
-      }
-
-      .durationms {
-        position: absolute;
-        top: 0px;
-        right: 5px;
-        z-index: 3;
-
-        .icon {
-          margin-right: 3px;
-        }
-      }
-
-      .time {
-        position: absolute;
-        right: 5px;
-        bottom: 0px;
-        z-index: 3;
-      }
-    }
-
-    // 详情
-    .details {
-      display: flex;
-      flex: 1;
-      flex-flow: column nowrap;
-      justify-content: center;
-
-      gap: 5px;
-
-      p {
-        &:first-child {
-          display: -webkit-box;
-          overflow: hidden;
-          -webkit-box-orient: vertical;
-          color: var(--font-color);
-          text-overflow: ellipsis;
-          font-size: 15px;
-
-          -webkit-line-clamp: 2;
-        }
-
-        &:last-child {
-          color: #b2bec3;
-          font-size: 13px;
-
-          span:last-child:hover {
-            color: var(--font-color);
-          }
-        }
-      }
-    }
-  }
+.title {
+  margin: 0px 0px 10px 0px;
+  color: var(--font-color);
+  font-weight: 400;
+  font-size: 20px;
 }
 </style>

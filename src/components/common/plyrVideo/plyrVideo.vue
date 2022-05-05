@@ -2,13 +2,7 @@
 <template>
   <div overflow-hidden rounded-md>
     <video ref="playerEl" playsinline controls>
-      <source
-        v-for="(url, quality) in props.source"
-        :key="quality"
-        :src="url"
-        :size="quality"
-        type="video/mp4"
-      />
+      <source v-for="(url, quality) in props.source" :key="quality" :src="url" :size="quality" type="video/mp4" />
     </video>
   </div>
 </template>

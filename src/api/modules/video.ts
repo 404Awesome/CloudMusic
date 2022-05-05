@@ -12,7 +12,10 @@ export const Video = {
   }
 }
 
-// MV相关api
+// MV相关api及interface
+export type MVArea = "全部" | "内地" | "港台" | "欧美" | "日本" | "韩国";
+export type MVType = "全部" | "官方版" | "原生" | "现场版" | "网易出品";
+export type MVOrder = "上升最快" | "最热" | "最新";
 export const MV = {
   // 获取mv详情
   getDetail(mvid: number) {
@@ -38,7 +41,8 @@ export const MV = {
     })
   },
   // 获取最新mv
-  getNewMV(area: string = "内地", limit: number = 30) {
+  getNewMV(area: string = "", limit: number = 30) {
+    // area 不填则为全部
     return Request({
       url: "/mv/first",
       method: "GET",
@@ -53,7 +57,7 @@ export const MV = {
       params: { mvid }
     })
   },
-  // 网易出品 mv
+  // 网易出品mv
   getExclusive(offset: number = 0, limit: number = 30) {
     return Request({
       url: "/mv/exclusive/rcmd",
@@ -62,11 +66,27 @@ export const MV = {
     })
   },
   // mv排行
-  getTop(area: string, offset: number = 0, limit: number = 30) {
+  getTop(area: MVArea = "全部", offset: number = 0, limit: number = 30) {
     return Request({
       url: "/top/mv",
       method: "GET",
       params: { area, offset, limit }
     })
   },
+  // 获取全部mv
+  getAllMV(area: MVArea = "全部", type: MVType = "全部", order: MVOrder = "上升最快", offset: number = 0, limit: number = 30) {
+    return Request({
+      url: "/mv/all",
+      method: "GET",
+      params: { area, type, order, offset, limit }
+    })
+  },
+  // 获取相关mv
+  getRelevant(mvid: number) {
+    return Request({
+      url: "/simi/mv",
+      method: "GET",
+      params: { mvid }
+    })
+  }
 }

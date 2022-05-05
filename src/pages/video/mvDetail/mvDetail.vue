@@ -9,7 +9,7 @@
     </div>
 
     <!-- 相关推荐 -->
-    <Relevant :id="id" />
+    <Relevant v-if="status" :id="mvid!" />
   </div>
 </template>
 
@@ -20,15 +20,16 @@ import Detail from "./coms/detail.vue";
 import { MV } from "@/api/modules/video";
 import { useRoute } from "vue-router";
 const route = useRoute();
-let id = parseInt(route.params.id as string); // MVID
 
+// MVID
+let mvid = ref<number | null>(null)
 // 状态 -> 用于确保加载完毕
 let status = ref(false);
 // 请求到MV资源
 let source = reactive<any>({});
 let getResolution = async (qualityArr: object[]) => {
   let request = qualityArr.map((quality: any) => {
-    return MV.getAddress(id, quality.br);
+    return MV.getAddress(mvid.value!, quality.br);
   });
   let result = await Promise.all(request);
   result.map(({ code, data }: any) => {
@@ -39,16 +40,24 @@ let getResolution = async (qualityArr: object[]) => {
 
 // 详情
 let detail = reactive<any>({});
-onMounted(async () => {
+let loadData = async (mvid: number) => {
   // 加载mv详情
-  let result: any = await Promise.all([MV.getDetail(id), MV.getDetailInfo(id)]);
+  let result: any = await Promise.all([MV.getDetail(mvid), MV.getDetailInfo(mvid)]);
   if (result[0].code == 200) {
     // 请求所有MV分辨率的视频地址;
     getResolution(result[0].data.brs);
     // 合并详情
     Object.assign(detail, result[0].data, result[1]);
   }
-});
+}
+// 监听路由 -> 获取数据
+watch(route, (val) => {
+  if (val.fullPath.startsWith("/mvDetail")) {
+    mvid.value = parseInt(val.params.id as string);
+    status.value = false;
+    loadData(mvid.value);
+  }
+}, { immediate: true })
 </script>
 
 <style lang="scss" scoped>

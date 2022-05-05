@@ -6,7 +6,6 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Carousel: typeof import('./../components/common/carousel/carousel.vue')['default']
-    ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
@@ -17,7 +16,7 @@ declare module '@vue/runtime-core' {
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
     Lottie: typeof import('./../components/common/lottie/lottie.vue')['default']
     MvListItem: typeof import('./../components/content/mvListItem/mvListItem.vue')['default']
-    MvRankingItem: typeof import('./../components/content/mvRankingItem/mvRankingItem.vue')['default']
+    MvRanking: typeof import('./../components/content/mvRanking/mvRanking.vue')['default']
     NavBar: typeof import('./../components/common/navBar/navBar.vue')['default']
     PlyrVideo: typeof import('./../components/common/plyrVideo/plyrVideo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

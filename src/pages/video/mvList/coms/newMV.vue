@@ -1,14 +1,10 @@
 <!-- 最新MV -->
 <template>
-  <div>
+  <div mt-4>
     <!-- 导航栏 -->
     <nav flex mb-4>
       <NavBar title="最新MV" path="/allMV" />
-      <TypeSelect
-        :loading="loading"
-        :typeList="areaList"
-        @selected="selected"
-      />
+      <TypeSelect :loading="loading" :typeList="areaList" @selected="selected" />
     </nav>
 
     <!-- 列表 -->

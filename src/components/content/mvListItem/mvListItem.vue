@@ -1,10 +1,6 @@
 <!-- mv列表item -->
 <template>
-  <div
-    @click="$router.push(`/mvDetail/${id}`)"
-    class="mvListItem"
-    :class="{ flex: isFlex }"
-  >
+  <div @click="$router.replace(`/mvDetail/${id}`)" class="mvListItem" :class="{ flex: isFlex }">
     <div class="cover">
       <!-- 封面 -->
       <el-image w-full h-30 fit="cover" lazy :src="cover" />
@@ -59,6 +55,8 @@ let { id, cover, artists, name, playCount, isFlex } = markRaw(props);
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/mixins.scss";
+
 .mvListItem {
   cursor: pointer;
 
@@ -148,14 +146,22 @@ let { id, cover, artists, name, playCount, isFlex } = markRaw(props);
   }
 
   &.flex {
-    display: flex;
+    width: 100%;
 
-    gap: 15px;
+    gap: 10px;
 
     .cover {
-      flex-basis: 45%;
-      flex-grow: 0;
-      flex-shrink: 0;
+      width: 50%;
+    }
+
+    .detail {
+      width: 50%;
+
+      .title {
+        white-space: normal;
+
+        @include MultilineOmit(2);
+      }
     }
   }
 }

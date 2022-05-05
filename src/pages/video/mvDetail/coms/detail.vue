@@ -12,12 +12,8 @@
       <!-- 标题 -->
       <h4 class="title">
         <span>{{ detail.name }}</span>
-        <span
-          v-if="detail.desc"
-          @click="showDesc = !showDesc"
-          :class="{ active: showDesc }"
-          class="icon i-eva:arrow-up-fill"
-        ></span>
+        <span v-if="detail.desc" @click="showDesc = !showDesc" :class="{ active: showDesc }"
+          class="icon i-eva:arrow-up-fill"></span>
       </h4>
 
       <!-- 元信息 -->
@@ -97,6 +93,8 @@ let showDesc = ref(false);
 }
 
 .mvInfo {
+  margin-top: 10px;
+
   .title {
     margin: 0;
     color: var(--font-color);

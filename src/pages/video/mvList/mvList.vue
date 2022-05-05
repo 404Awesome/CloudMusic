@@ -1,6 +1,6 @@
 <!-- MV -->
 <template>
-  <div class="mvList">
+  <div mx-auto w="8/10" pb-8>
     <!-- 最新mv -->
     <NewMV />
 
@@ -11,7 +11,9 @@
     <Exclusive />
 
     <!-- mv排行榜 -->
-    <RankingList />
+    <MVRanking :limit="10">
+      <NavBar title="MV排行榜" path="/mvRankingList" />
+    </MVRanking>
   </div>
 </template>
 
@@ -19,13 +21,6 @@
 import NewMV from "./coms/newMV.vue";
 import HotMV from "./coms/hotMV.vue";
 import Exclusive from "./coms/exclusive.vue";
-import RankingList from "./coms/rankingList.vue";
+import NavBar from "@/components/common/navBar/navBar.vue";
+import MVRanking from "@/components/content/mvRanking/mvRanking.vue";
 </script>
-
-<style lang="scss" scoped>
-.mvList {
-  margin: 0px auto;
-  padding: 15px 0px 30px;
-  width: 80%;
-}
-</style>

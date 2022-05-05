@@ -15,7 +15,7 @@
           </span>
         </p>
         <p v-else>
-          <span>{{ $route.meta.title }}</span>
+          <span class="active">{{ $route.meta.title }}</span>
         </p>
       </section>
 
@@ -101,7 +101,6 @@ onMounted(async () => {
   // 获取搜索热搜
   let { code, data }: any = await Operate.getSearchHot();
   if (code == 200) searchHot.push(...data);
-  console.log(searchHot);
 })
 </script>
 
@@ -157,11 +156,11 @@ onMounted(async () => {
 
   p {
     display: flex;
+    color: rgba($color: #fff, $alpha: 0.7);
 
     gap: 10px;
 
     span {
-      color: rgba($color: #fff, $alpha: 0.7);
       font-size: 15px;
       cursor: pointer;
 

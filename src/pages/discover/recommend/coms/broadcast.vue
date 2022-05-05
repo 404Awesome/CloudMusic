@@ -1,7 +1,7 @@
 <!-- 个性推荐 独家放送 -->
 <template>
   <div class="broadcast">
-    <el-card @click="$router.push(`/mvDetails/${item.id}`)" shadow="never" v-for="item in broadcastData" :key="item.id">
+    <el-card @click="$router.push(`/mvDetail/${item.id}`)" shadow="never" v-for="item in broadcastData" :key="item.id">
       <span class="icon i-heroicons-outline:play"></span>
       <el-image :src="item.picUrl" fit="cover" />
       <p>{{ item.copywriter }}</p>

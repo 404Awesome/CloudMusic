@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { MV } from "@/api/modules/video";
-import MVListItem from "@/components/content/mvListItem/mvListItem.vue"
+import MVListItem from "@/components/content/mvListItem/mvListItem.vue";
 let props = defineProps({
   id: {
     type: Number,

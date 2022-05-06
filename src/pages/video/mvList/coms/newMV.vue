@@ -8,7 +8,7 @@
     </nav>
 
     <!-- 列表 -->
-    <ul class="list" v-loading="loading">
+    <ul class="list" element-loading-text="Loading..." v-loading="loading">
       <li v-for="item in result" :key="item.id">
         <MVlistItem v-bind="item" />
       </li>

@@ -6,11 +6,11 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Carousel: typeof import('./../components/common/carousel/carousel.vue')['default']
-    ElCard: typeof import('element-plus/es')['ElCard']
-    ElCarousel: typeof import('element-plus/es')['ElCarousel']
-    ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
+    CommentList: typeof import('./../components/content/commentList/commentList.vue')['default']
     ElDivider: typeof import('element-plus/es')['ElDivider']
     ElImage: typeof import('element-plus/es')['ElImage']
+    ElInput: typeof import('element-plus/es')['ElInput']
+    ElPagination: typeof import('element-plus/es')['ElPagination']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
@@ -21,6 +21,7 @@ declare module '@vue/runtime-core' {
     PlyrVideo: typeof import('./../components/common/plyrVideo/plyrVideo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SendComment: typeof import('./../components/content/sendComment/sendComment.vue')['default']
     TypeSelect: typeof import('./../components/content/typeSelect/typeSelect.vue')['default']
   }
 }

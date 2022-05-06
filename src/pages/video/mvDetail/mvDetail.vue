@@ -1,28 +1,34 @@
 <!-- MV相关 -->
 <template>
-  <div class="mvDetails">
+  <div class="mvDetails" v-if="status">
     <div>
       <!-- MV视频 -->
-      <PlyrVideo v-if="status" :source="source" />
+      <PlyrVideo :source="source" />
       <!-- 详情 -->
-      <Detail v-if="detail.id" :detail="detail" />
+      <Detail :detail="detail" />
+      <!-- 评论 -->
+      <Comment :id="mvid!" />
     </div>
 
     <!-- 相关推荐 -->
-    <Relevant v-if="status" :id="mvid!" />
+    <Relevant :id="mvid!" />
   </div>
+
+  <!-- 加载状态 -->
+  <div v-else v-loading="true" element-loading-text="Loading..." h-full></div>
 </template>
 
 <script setup lang="ts" name="mvDetails">
 import PlyrVideo from "@/components/common/plyrVideo/plyrVideo.vue";
 import Relevant from "./coms/relevant.vue";
 import Detail from "./coms/detail.vue";
+import Comment from "./coms/comment.vue";
 import { MV } from "@/api/modules/video";
 import { useRoute } from "vue-router";
 const route = useRoute();
 
 // MVID
-let mvid = ref<number | null>(null)
+let mvid = ref<number | null>(null);
 // 状态 -> 用于确保加载完毕
 let status = ref(false);
 // 请求到MV资源
@@ -37,7 +43,6 @@ let getResolution = async (qualityArr: object[]) => {
   });
   status.value = true;
 };
-
 // 详情
 let detail = reactive<any>({});
 let loadData = async (mvid: number) => {

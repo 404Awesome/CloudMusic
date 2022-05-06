@@ -62,7 +62,5 @@ onMounted(() => {
 });
 
 // 销毁视频
-onBeforeUnmount(() => {
-  plyr.value?.destroy();
-});
+onBeforeUnmount(() => plyr.value?.destroy());
 </script>

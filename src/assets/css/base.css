@@ -55,3 +55,11 @@ footer,
 aside {
   box-sizing: border-box;
 }
+
+/* 修改elementui v-loading 样式 */
+.el-loading-spinner svg circle {
+  stroke: var(--theme-bg-color) !important;
+}
+.el-loading-spinner .el-loading-text {
+  color: var(--theme-bg-color) !important;
+}

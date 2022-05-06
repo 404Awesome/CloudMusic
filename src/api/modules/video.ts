@@ -88,5 +88,13 @@ export const MV = {
       method: "GET",
       params: { mvid }
     })
+  },
+  // 获取mv评论
+  getComment(id: number, offset: number = 0, limit: number = 20, before?: number) {
+    return Request({
+      url: "/comment/mv",
+      method: "GET",
+      params: { id, offset, limit, before }
+    })
   }
 }

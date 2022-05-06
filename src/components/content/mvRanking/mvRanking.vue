@@ -11,7 +11,7 @@
     </nav>
 
     <!-- 列表 -->
-    <ul class="rankingList" v-loading="loading">
+    <ul class="rankingList" element-loading-text="Loading..." v-loading="loading">
       <li class="rankingItem" v-for="(item, index) in result" :key="item.id">
         <p class="rank">{{ index + 1 }}</p>
 

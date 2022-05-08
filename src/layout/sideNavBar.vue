@@ -36,11 +36,6 @@ let list = reactive([
     path: "/discover",
   },
   {
-    icon: "i-heroicons-outline:status-online",
-    title: "私人FM",
-    path: "/privateFM",
-  },
-  {
     icon: "i-heroicons-outline:play",
     title: "视频",
     path: "/video",
@@ -53,6 +48,11 @@ let list = reactive([
 //     title: "关注",
 //     path: "/following",
 //   }
+// {
+//   icon: "i-heroicons-outline:status-online",
+//   title: "私人FM",
+//   path: "/privateFM",
+// },
 </script>
 
 <style lang="scss" scoped>

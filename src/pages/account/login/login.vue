@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import Lottie from "@/components/lottie/lottie.vue";
+import Lottie from "@/components/common/lottie/lottie.vue";
 import lottieAnima from "@/assets/lottie/login.json";
 </script>
 

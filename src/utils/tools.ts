@@ -10,7 +10,7 @@ export const handleCount = (count: number): string => {
   }
 }
 
-// 处理时间
+// 处理时间 -> 02:23
 export const handerTime = (time: number): string => {
   time = time / 1000 / 60;
   let arr = `${time.toFixed(2)}`.split(".");

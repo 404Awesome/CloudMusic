@@ -139,6 +139,8 @@ let showDesc = ref(false);
     justify-content: space-between;
     margin-top: 10px;
 
+    user-select: none;
+
     .control {
       display: flex;
       flex: 1;

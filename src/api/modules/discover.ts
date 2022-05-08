@@ -37,5 +37,30 @@ export const Discover = {
       method: "GET",
       params: { limit }
     })
-  }
+  },
+  // 歌单详情
+  getPlayListDetail(id: number) {
+    return Request({
+      url: "/playlist/detail",
+      method: "GET",
+      params: { id }
+    })
+  },
+  // 获取歌单所有歌曲
+  getPlayListTrackAll(id: number, limit?: number, offset?: number) {
+    return Request({
+      url: "/playlist/track/all",
+      method: "GET",
+      params: { id, limit, offset }
+    })
+  },
+  // 获取音乐 url
+  getSongUrl(idParams: number | number[]) {
+    let id = Array.isArray(idParams) ? idParams.join(",") : idParams;
+    return Request({
+      url: "/song/url",
+      method: "GET",
+      params: { id }
+    })
+  },
 }

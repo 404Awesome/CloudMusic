@@ -1,7 +1,7 @@
 <!-- 个性推荐 推荐歌单 -->
 <template>
   <ul class="playlist">
-    <li v-for="item in playlist" :key="item.id">
+    <li v-for="item in playlist" :key="item.id" @click="$router.push(`/playListDetal/${item.id}`)">
       <div class="frontCover">
         <el-image :src="item.picUrl" fit="cover" />
         <p class="playCount">
@@ -9,7 +9,7 @@
           <span>{{ handleCount(item.playCount) }}</span>
         </p>
         <p class="playIcon">
-          <span @click="playSong(item.id)" class="i-heroicons-outline:play"></span>
+          <span @click.stop="playSong(item.id)" class="i-heroicons-outline:play"></span>
         </p>
       </div>
       <p class="title">{{ item.name }}</p>

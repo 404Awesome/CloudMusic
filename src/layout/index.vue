@@ -13,7 +13,7 @@
     <section class="view">
       <el-scrollbar>
         <router-view v-slot="{ Component }">
-          <keep-alive :exclude="['mvDetails']">
+          <keep-alive :exclude="['mvDetails', 'playListDetail']">
             <component :is="Component" />
           </keep-alive>
         </router-view>

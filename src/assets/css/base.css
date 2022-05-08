@@ -3,12 +3,12 @@
   --theme-bg-color: #ff3f34;
   /* 字体颜色 */
   --font-color: #34495e;
-  /* video主题色 */
+  /* plyr主题色 */
   --plyr-color-main: var(--theme-bg-color);
   /* 顶部导航栏高度 */
   --topNavBarHeight: 49px;
   /* 播放控件高度 */
-  --playBarHeight: 60px;
+  --playBarHeight: 52px;
   /* 侧边导航栏宽度 */
   --sideNavBarWidth: 230px;
 }

@@ -9,7 +9,8 @@ import { RouteRecordRaw } from "vue-router";
 //   NewSong: "最新音乐",
 //   RadioStation: "主播电台",
 //   DailySongs: "每日歌曲推荐",
-//   Broadcast: "独家放送"
+//   Broadcast: "独家放送",
+//   PlayListDetail: "歌单详情",
 // }
 let Discover = () => import("@/views/discover/discover.vue");
 let Recommend = () => import("@/pages/discover/recommend/recommend.vue");
@@ -20,6 +21,7 @@ let NewSong = () => import("@/pages/discover/newSong/newSong.vue");
 let RadioStation = () => import("@/pages/discover/radioStation/radioStation.vue");
 let DailySongs = () => import("@/pages/discover/dailySongs/dailySongs.vue")
 let Broadcast = () => import("@/pages/discover/broadcast/broadcast.vue");
+let PlayListDetail = () => import("@/pages/discover/playListDetail/playListDetail.vue");
 
 // 默认为发现音乐
 const routes: RouteRecordRaw[] = [
@@ -47,7 +49,7 @@ const routes: RouteRecordRaw[] = [
       component: Recommend,
     }, {
       path: "playList",
-      component: PlayList
+      component: PlayList,
     }, {
       path: "ranking",
       component: Ranking
@@ -68,8 +70,13 @@ const routes: RouteRecordRaw[] = [
       path: "broadcast",
       meta: { title: "独家放送" },
       component: Broadcast
-    },]
+    }]
   },
+  {
+    path: "/playListDetal/:id",
+    meta: { title: "歌单详情" },
+    component: PlayListDetail
+  }
 ];
 
 export default routes;

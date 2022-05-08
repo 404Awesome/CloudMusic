@@ -39,10 +39,7 @@ let { cateId, title, path } = toRefs(props);
 let result = reactive<any[]>([]);
 onMounted(async () => {
   let { code, djRadios }: any = await RadioStation.getCateRadioHot(cateId.value, 0, 6);
-  if (code == 200) {
-    djRadios.length = 6;
-    result.push(...djRadios);
-  }
+  if (code == 200) result.push(...djRadios.splice(0, 6));
 });
 </script>
 

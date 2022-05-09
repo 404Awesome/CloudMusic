@@ -55,12 +55,12 @@ export const Discover = {
     })
   },
   // 获取音乐 url
-  getSongUrl(idParams: number | number[]) {
-    let id = Array.isArray(idParams) ? idParams.join(",") : idParams;
-    return Request({
-      url: "/song/url",
-      method: "GET",
-      params: { id }
-    })
-  },
+  // getSongUrl(idParams: number | number[]) {
+  //   let id = Array.isArray(idParams) ? idParams.join(",") : idParams;
+  //   return Request({
+  //     url: "/song/url",
+  //     method: "GET",
+  //     params: { id }
+  //   })
+  // },
 }

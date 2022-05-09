@@ -23,9 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import TopNavBar from "./topNavBar.vue";    // 顶部导航栏
-import SideNavBar from "./sideNavBar.vue";  // 侧边导航栏
-import PlayBar from "./playBar.vue";        // 播放栏
+import TopNavBar from "./topNavBar/topNavBar.vue";      // 顶部导航栏
+import SideNavBar from "./sideNavBar/sideNavBar.vue";   // 侧边导航栏
+import PlayBar from "./playBar/playBar.vue";            // 播放栏
 </script>
 
 <style lang="scss" scoped>

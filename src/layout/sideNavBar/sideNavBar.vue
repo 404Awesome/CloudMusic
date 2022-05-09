@@ -3,7 +3,7 @@
   <main class="navbar">
     <!-- 登陆状态 -->
     <header class="loginStatus">
-      <section v-if="store.status">
+      <section v-if="store.auth">
         <img class="avatar" src="" />
         <p></p>
       </section>

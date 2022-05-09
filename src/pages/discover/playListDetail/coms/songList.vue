@@ -1,7 +1,7 @@
 <!-- 歌曲列表 -->
 <template>
   <div class="songList">
-    <el-table @row-dblclick="playSong" :data="songList" stripe style="width: 100%">
+    <el-table @row-dblclick="(song: any) => store.playSong(song.id)" :data="songList" stripe style="width: 100%">
       <el-table-column class-name="index" :width="50" align="center" type="index" :index="handleIndex" />
       <el-table-column :width="50">
         <template v-slot="{ row }">
@@ -49,11 +49,6 @@ let likeSong = (id: number) => {
   console.log("喜欢的歌曲", id);
 }
 
-// 播放音乐
-let playSong = (song: any) => {
-  store.getSong(song.id);
-}
-
 // 下载歌曲
 let download = (id: number) => {
   console.log(id);
@@ -62,8 +57,12 @@ let download = (id: number) => {
 // 歌曲列表
 let songList = reactive<any>([]);
 onMounted(async () => {
-  let { code, songs }: any = await Discover.getPlayListTrackAll(id);
-  if (code == 200) songList.push(...songs);
+  try {
+    let { code, songs }: any = await Discover.getPlayListTrackAll(id);
+    if (code == 200) songList.push(...songs);
+  } catch (err) {
+    ElMessage.error('获取音乐列表失败!');
+  }
 })
 </script>
 

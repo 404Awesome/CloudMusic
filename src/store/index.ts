@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
-import { Discover } from "@/api/modules/discover";
 
 export const useMainStore = defineStore("main", {
   state: () => {
@@ -8,20 +7,25 @@ export const useMainStore = defineStore("main", {
       // 登陆状态
       auth: useStorage("auth", false),
       // 暗夜模式
-      isDark: useStorage("isDark", false, sessionStorage),
+      isDark: useStorage<boolean>("isDark", false, sessionStorage),
       // 主题色
-      theme: useStorage("theme", '#ff3f34'),
+      theme: useStorage<string>("theme", '#ff3f34'),
       // 歌单
-      playList: [],
+      playList: useStorage<number[]>("playList", [], sessionStorage),
       // 当前播放歌曲
-      currentSong: ""
+      currentSong: useStorage<number | null>("currentSong", null, sessionStorage)
     };
   },
   actions: {
-    // 获取音乐
-    async getSong(id: number | number[]) {
-      let res = await Discover.getSongUrl(id);
-      console.log(res);
+    // 播放音乐并添加到播放列表
+    playSong(id: number) {
+      if (id !== this.currentSong) {
+        this.currentSong = id;
+
+        if (!this.playList.includes(id)) {
+          this.playList.push(id);
+        }
+      }
     }
   },
   getters: {},

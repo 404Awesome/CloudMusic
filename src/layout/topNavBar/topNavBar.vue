@@ -109,7 +109,7 @@ onMounted(async () => {
 
 .topNavBar {
   position: relative;
-  z-index: 999;
+  z-index: 700;
   display: flex;
   align-items: center;
   height: 100%;

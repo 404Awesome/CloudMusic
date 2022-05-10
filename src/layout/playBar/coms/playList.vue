@@ -1,7 +1,7 @@
 <!-- 播放列表 -->
 <template>
-  <el-drawer @close="emit('close')" custom-class="playListDrawer" modal-class="playListModal" size="350px"
-    :z-index="800" :append-to-body="true" v-model="isShow" :with-header="false">
+  <el-drawer custom-class="playListDrawer" modal-class="playListModal" size="350px" :z-index="200"
+    :append-to-body="true" v-model="isShow" :with-header="false">
     <!-- 头部 -->
     <header class="header">
       <h1 class="title">当前播放</h1>
@@ -28,8 +28,8 @@
       <el-scrollbar always>
         <div class="list">
           <ul>
-            <li :class="{ active: item == store.currentSong }" v-for="item in store.playList" :key="item">{{ item }}
-            </li>
+            <li :class="{ active: item.song.id == store.currentSong?.song.id }" v-for="item in store.playList"
+              :key="item.song.id">{{ item.song.name }}</li>
           </ul>
         </div>
       </el-scrollbar>
@@ -40,17 +40,13 @@
 <script setup lang="ts">
 import { useMainStore } from "store/index";
 const store = useMainStore();
-const emit = defineEmits(["close"]);
-let props = defineProps({
-  isShow: {
-    type: Boolean,
-    required: true,
-  }
-})
+
 let isShow = ref<boolean>(false);
-watch(() => props.isShow, (newVal) => {
-  isShow.value = newVal;
-}, { immediate: true });
+let toggle = () => {
+  isShow.value = !isShow.value;
+}
+
+defineExpose({ toggle })
 </script>
 
 <style lang="scss" scoped>
@@ -110,7 +106,7 @@ header.header {
 }
 
 .active {
-  color: red;
+  color: var(--theme-bg-color);
 }
 </style>
 <style lang="scss">

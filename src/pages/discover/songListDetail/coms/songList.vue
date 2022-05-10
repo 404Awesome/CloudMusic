@@ -1,7 +1,7 @@
 <!-- 歌曲列表 -->
 <template>
   <div class="songList">
-    <el-table @row-dblclick="(song: any) => store.playSong(song.id)" :data="songList" stripe style="width: 100%">
+    <el-table @row-dblclick="playSong" :data="songList" stripe style="width: 100%">
       <el-table-column class-name="index" :width="50" align="center" type="index" :index="handleIndex" />
       <el-table-column :width="50">
         <template v-slot="{ row }">
@@ -21,7 +21,10 @@
       </el-table-column>
       <el-table-column label="专辑">
         <template v-slot="{ row }">
-          <p v-if="row.al.name.length" class="special">{{ row.al.name }}</p>
+          <p v-if="row.al.name.length" class="special">
+            <span>{{ row.al.name }}</span>
+            <span v-if="row.al.tns.length">&nbsp;({{ row.al.tns.join(",") }})</span>
+          </p>
           <p v-else>未知专辑</p>
         </template>
       </el-table-column>
@@ -38,6 +41,14 @@ const route = useRoute();
 const store = useMainStore();
 let id = parseInt(route.params.id as string);
 
+// 播放歌曲
+let playSong = (songInfo: any) => {
+  let { ar, al, id, name, tns = [] } = toRaw(songInfo);
+  let artist = ar;
+  let album = al;
+  let song = { id, name, tns };
+  store.playSong({ artist, album, song });
+}
 
 // 处理表格索引
 let handleIndex = (index: number): any => {
@@ -58,8 +69,18 @@ let download = (id: number) => {
 let songList = reactive<any>([]);
 onMounted(async () => {
   try {
-    let { code, songs }: any = await Discover.getPlayListTrackAll(id);
-    if (code == 200) songList.push(...songs);
+    let bool: boolean = true;
+    let offset: number = 0;
+    let litmit: number = 100;
+    while (bool) {
+      let { code, songs }: any = await Discover.getPlayListTrackAll(id, litmit, offset);
+      if (code == 200 && songs.length) {
+        songList.push(...songs);
+        songs.length < litmit ? bool = false : offset += litmit;
+      } else {
+        bool = false;
+      }
+    }
   } catch (err) {
     ElMessage.error('获取音乐列表失败!');
   }

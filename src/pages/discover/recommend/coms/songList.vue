@@ -1,7 +1,7 @@
 <!-- 个性推荐 推荐歌单 -->
 <template>
   <ul class="playlist">
-    <li v-for="item in playlist" :key="item.id" @click="$router.push(`/playListDetal/${item.id}`)">
+    <li v-for="item in playlist" :key="item.id" @click="$router.push(`/songListDetal/${item.id}`)">
       <div class="frontCover">
         <el-image :src="item.picUrl" fit="cover" />
         <p class="playCount">

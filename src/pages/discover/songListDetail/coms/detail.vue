@@ -182,12 +182,7 @@ onMounted(async () => {
 
   .nickname {
     color: var(--theme-bg-color);
-    opacity: .9;
     cursor: pointer;
-
-    &:hover {
-      opacity: 1;
-    }
   }
 }
 
@@ -249,12 +244,7 @@ onMounted(async () => {
 
   .tag {
     color: var(--theme-bg-color);
-    opacity: .9;
     cursor: pointer;
-
-    &:hover {
-      opacity: 1;
-    }
   }
 
   .count {

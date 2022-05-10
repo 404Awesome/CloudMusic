@@ -17,7 +17,7 @@
 <script setup lang="ts" name="recommend">
 import Carousel from "@/components/common/carousel/carousel.vue";
 import NavBar from "@/components/common/navBar/navBar.vue";
-import PlayList from "./coms/playList.vue";
+import SongList from "./coms/songList.vue";
 import Broadcast from "./coms/broadcast.vue";
 import NewSong from "./coms/newSong.vue";
 import Radio from "./coms/radio.vue";
@@ -29,7 +29,7 @@ let renderList = reactive([
   {
     title: "推荐歌单",
     path: "/discover/playList",
-    component: shallowRef(PlayList),
+    component: shallowRef(SongList),
   },
   {
     title: "独家放送",

@@ -19,6 +19,6 @@ export const handerTime = (time: number): string => {
 
 // 处理艺人
 export const handleArtists = (artists: any) => {
-  let artistsList = artists.map((item: any) => `<span class="name" id="${item.id}">${item.name}</span>`);
+  let artistsList = artists.map((item: any) => `<span class="name" data-id="${item.id}">${item.name}</span>`);
   return artistsList.length == 1 ? artistsList[0] : artistsList.join("<span> / </span>");
 }

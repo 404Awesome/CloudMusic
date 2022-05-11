@@ -31,6 +31,8 @@ export const useMainStore = defineStore("main", {
       isDark: useStorage<boolean>("isDark", false, sessionStorage),
       // 主题色
       theme: useStorage<string>("theme", '#ff3f34'),
+      // 是否折叠侧边栏
+      isFolding: useStorage<boolean>("isFolding", false, sessionStorage),
       // 歌单
       playList: useStorage<SongInfo[]>("playList", [], sessionStorage),
       // 当前播放歌曲
@@ -53,6 +55,12 @@ export const useMainStore = defineStore("main", {
     // 获取当前播放歌曲在播放列表中的位置
     getCurrentSongIndex() {
       return this.playList.findIndex(item => item.song.id == this.currentSong?.song.id);
+    },
+    // 清空播放列表
+    emptyPlayList() {
+      if (this.playList.length) {
+        this.playList.splice(0);
+      }
     }
   },
 });

@@ -128,7 +128,7 @@ onMounted(async () => {
   if (code == 200) {
     let { playCount, trackCount, shareCount, createTime, description, creator, name, coverImgUrl, subscribedCount, tags } = playlist;
     // 处理描述
-    handleDescribe(playlist.description);
+    handleDescribe(description);
     Object.assign(detail, {
       // 封面
       coverImgUrl,
@@ -257,9 +257,12 @@ onMounted(async () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    white-space: nowrap;
+
+    gap: 15px;
 
     .more {
-      font-size: 20px;
+      font-size: 22px;
       cursor: pointer;
       transition: transform 0.3s ease-in-out;
       transform: rotate(180deg);
@@ -277,6 +280,6 @@ onMounted(async () => {
 
 // 文本
 .text {
-  color: rgba($color: #000000, $alpha: .6);
+  color: rgba($color: #000000, $alpha: .5);
 }
 </style>

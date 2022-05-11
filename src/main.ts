@@ -6,6 +6,6 @@ import "plyr/dist/plyr.css";
 import "./assets/css/base.css";
 
 let app = createApp(App);
-app.use(router);
 app.use(createPinia());
+app.use(router);
 app.mount("#app");

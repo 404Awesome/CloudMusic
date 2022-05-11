@@ -29,7 +29,7 @@ onMounted(async () => {
   margin-top: 15px;
   padding-bottom: 30px;
 
-  gap: 30px;
+  gap: 20px 30px;
   grid-template-columns: repeat(3, 1fr);
 
   li {

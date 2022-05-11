@@ -2,21 +2,23 @@
 <template>
   <div class="topNavBar">
     <!-- 标题 -->
-    <h1 class="title" hidden md:block @click="$router.push('/')">CloudMusic</h1>
+    <h1 class="title" hidden md:block @click="goRouter('/')">CloudMusic</h1>
 
     <!-- 导航栏 -->
     <nav class="nav">
       <!-- 路由 -->
       <section class="router">
-        <p v-if="$route.meta.tablist">
-          <span v-for="item in ($route.meta.tablist as any)" :class="{ active: $route.fullPath == item.path }"
-            @click="$router.push(item.path)">
-            {{ item.title }}
-          </span>
-        </p>
-        <p v-else>
-          <span class="active">{{ $route.meta.title }}</span>
-        </p>
+        <div v-show="!store.isFolding">
+          <p v-if="$route.meta.tablist">
+            <span v-for="item in ($route.meta.tablist as any)" :class="{ active: $route.fullPath == item.path }"
+              @click="$router.push(item.path)">
+              {{ item.title }}
+            </span>
+          </p>
+          <p v-else>
+            <span class="active">{{ $route.meta.title }}</span>
+          </p>
+        </div>
       </section>
 
       <!-- 功能 -->
@@ -40,8 +42,8 @@
                   <h4>热搜榜</h4>
                 </el-divider>
                 <el-scrollbar height="200px" :always="true">
-                  <p class="trendingList" v-for="(item, index) in searchHot" :key="item.searchWord">
-                    <span :style="{ 'color': index < 3 ? '#ff3f34' : '' }">{{ index + 1 }}</span>
+                  <p class="trendingList" v-for="(item, index) in searchHotList" :key="item.searchWord">
+                    <span :style="{ 'color': index < 3 ? 'var(--theme-bg-color)' : '' }">{{ index + 1 }}</span>
                     <span>{{ item.searchWord }}</span>
                     <span>{{ item.score }}</span>
                   </p>
@@ -66,13 +68,13 @@
         </el-popover>
 
         <!-- 通知 -->
-        <span @click="$router.push('/notice')" class="i-heroicons-outline:bell"></span>
+        <span @click="goRouter('/notice')" class="i-heroicons-outline:bell"></span>
 
         <!-- 暗夜模式 -->
         <span @click="setDark" class="i-heroicons-outline:sun dark:i-heroicons-outline:moon"></span>
 
         <!-- 设置 -->
-        <span @click="$router.push('/setting')" class="i-heroicons-outline:cog"></span>
+        <span @click="goRouter('/setting')" class="i-heroicons-outline:cog"></span>
       </section>
     </nav>
   </div>
@@ -80,8 +82,10 @@
 
 <script lang="ts" setup>
 import { Operate } from "@/api/modules/operate";
+import { useRouter } from "vue-router";
 import { useMainStore } from "store/index";
 const store = useMainStore();
+const router = useRouter();
 
 // 主题选择
 let themeSelect = (event: Event) => {
@@ -96,12 +100,19 @@ let setDark = () => {
   store.isDark = !store.isDark;
 };
 
-let searchHot = reactive<any>([]);
+// 热搜列表
+let searchHotList = reactive<any>([]);
 onMounted(async () => {
   // 获取搜索热搜
   let { code, data }: any = await Operate.getSearchHot();
-  if (code == 200) searchHot.push(...data);
+  if (code == 200) searchHotList.push(...data);
 })
+
+// 跳转路由
+let goRouter = (path: string) => {
+  if (store.isFolding) store.isFolding = false;
+  router.push(path);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -249,7 +260,7 @@ onMounted(async () => {
       }
 
       &:hover {
-        color: #ff3f34;
+        color: var(--theme-bg-color);
       }
     }
   }

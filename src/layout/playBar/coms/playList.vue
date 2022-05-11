@@ -1,6 +1,6 @@
 <!-- 播放列表 -->
 <template>
-  <el-drawer custom-class="playListDrawer" modal-class="playListModal" size="350px" :z-index="200"
+  <el-drawer direction="rtl" custom-class="playListDrawer" modal-class="playListModal" size="350px" :z-index="200"
     :append-to-body="true" v-model="isShow" :with-header="false">
     <!-- 头部 -->
     <header class="header">
@@ -12,7 +12,7 @@
             <span class="icon i-eva:folder-add-outline"></span>
             <span>收藏全部</span>
           </p>
-          <p @click="store.playList.splice(0)">
+          <p @click="store.emptyPlayList">
             <span class="icon i-eva:trash-2-outline"></span>
             <span>清空列表</span>
           </p>
@@ -26,11 +26,17 @@
     <!-- 列表 -->
     <div class="scrollbar">
       <el-scrollbar always>
-        <div class="list">
-          <ul>
-            <li :class="{ active: item.song.id == store.currentSong?.song.id }" v-for="item in store.playList"
-              :key="item.song.id">{{ item.song.name }}</li>
-          </ul>
+        <!-- 列表 -->
+        <ul class="list" v-if="playList.length">
+          <li @dblclick="playSong(item)" :class="{ active: item.song.id == currentSong?.song.id }"
+            v-for="item in store.playList" :key="item.song.id">
+            <p>{{ item.song.name }}</p>
+            <p v-html="handleArtists(item.artist)"></p>
+          </li>
+        </ul>
+        <!-- 播放列表为空 -->
+        <div class="empty" v-else>
+          <el-empty description="播放列表为空!" :image-size="200" />
         </div>
       </el-scrollbar>
     </div>
@@ -38,15 +44,25 @@
 </template>
 
 <script setup lang="ts">
+import { handleArtists } from "@/utils/tools";
 import { useMainStore } from "store/index";
 const store = useMainStore();
+let { playList, currentSong } = toRefs(store);
 
+// 是否显示
 let isShow = ref<boolean>(false);
 let toggle = () => {
   isShow.value = !isShow.value;
 }
 
-defineExpose({ toggle })
+// 播放音乐
+let playSong = (song: any) => {
+  if (song.song.id !== currentSong.value?.song.id) {
+    store.playSong(song);
+  }
+}
+
+defineExpose({ toggle });
 </script>
 
 <style lang="scss" scoped>
@@ -60,7 +76,7 @@ header.header {
   background-color: #fff;
 
   .title {
-    color: var(--font-color);
+    color: var(--theme-bg-color);
     font-size: 20px;
   }
 
@@ -100,13 +116,42 @@ header.header {
   height: calc(100% - 80px - 1px);
   background-color: #fff;
 
-  .list {
-    padding: 15px;
-  }
-}
+  .list li {
+    display: flex;
+    overflow: hidden;
+    padding: 5px 10px;
+    color: var(--font-color);
+    white-space: nowrap;
+    font-size: 14px;
+    cursor: pointer;
 
-.active {
-  color: var(--theme-bg-color);
+    gap: 20px;
+
+    p {
+      overflow: hidden;
+      flex: 1;
+      text-overflow: ellipsis;
+    }
+
+    &:nth-child(even) {
+      background-color: #eee;
+    }
+
+    &:hover {
+      color: var(--theme-bg-color);
+    }
+
+    &.active {
+      color: var(--theme-bg-color);
+    }
+  }
+
+  .empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
 }
 </style>
 <style lang="scss">
@@ -119,6 +164,10 @@ header.header {
 
   .el-drawer__body {
     padding: 0px;
+
+    .el-scrollbar__view {
+      height: 100%;
+    }
   }
 }
 

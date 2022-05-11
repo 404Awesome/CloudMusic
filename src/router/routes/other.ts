@@ -18,7 +18,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/setting",
     component: Setting,
-    meta: { title: "设置" }
+    meta: { title: "设置" },
   },
   {
     path: '/:pathMatch(.*)',

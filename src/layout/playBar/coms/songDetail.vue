@@ -1,0 +1,240 @@
+<!-- 歌曲详情 -->
+<template>
+  <el-drawer direction="btt" custom-class="songDetailDrawer" modal-class="songDetailModal" :z-index="50"
+    :append-to-body="true" v-model="store.isFolding" :with-header="false">
+    <el-scrollbar>
+      <div id="songDetail">
+        <!-- 信息 -->
+        <section class="detail">
+          <!-- 功能 -->
+          <div class="function">
+            <!-- 封面 -->
+            <div class="cover" shadow-xl>
+              <el-image :src="currentSong?.album.picUrl" fit="cover" />
+            </div>
+            <!-- 操作 -->
+            <ul class="operate">
+              <li @click="item.method" v-for="item in operateList" :key="item.icon">
+                <span :class="item.icon"></span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 歌词 -->
+          <div class="lyrics">
+            <!-- 头部 -->
+            <header class="head">
+              <h1 class="title">{{ currentSong?.song.name }}</h1>
+              <div class="metaInfo">
+                <p>
+                  <span>专辑:&nbsp;</span>
+                  <span class="name">{{ currentSong?.album.name }}</span>
+                </p>
+                <p>
+                  <span>歌手:&nbsp;</span>
+                  <span class="artist" v-html="handleArtists(currentSong?.artist)"></span>
+                </p>
+              </div>
+            </header>
+            <!-- 歌词内容 -->
+            <main class="main"></main>
+          </div>
+        </section>
+
+        <!-- 评论 / 推荐 -->
+        <section class="aside">
+          <div class="comment">
+            <h2 class="title">听友评论</h2>
+          </div>
+          <div class="recommend">
+            <h2 class="title">包含这首歌的歌单</h2>
+          </div>
+        </section>
+      </div>
+    </el-scrollbar>
+  </el-drawer>
+</template>
+
+<script setup lang="ts">
+import { handleArtists } from "@/utils/tools";
+import { useMainStore } from "store/index";
+const store = useMainStore();
+let { currentSong } = toRefs(store);
+
+
+// 操作列表
+let operateList = reactive([{
+  // eva:heart-fill
+  icon: "i-eva:heart-outline",
+  method() {
+    console.log("喜欢");
+  }
+}, {
+  icon: "i-eva:folder-add-outline",
+  method() {
+    console.log("收藏");
+  }
+}, {
+  icon: "i-eva:cloud-download-outline",
+  method() {
+    console.log("下载");
+  }
+}, {
+  icon: "i-eva:external-link-outline",
+  method() {
+    console.log("分享");
+  }
+}]);
+
+
+// 是否显示
+let toggle = () => {
+  store.isFolding = !store.isFolding;
+}
+defineExpose({ toggle });
+</script>
+  
+<style lang="scss" scoped>
+#songDetail {
+  padding: 0px 100px;
+  color: var(--font-color);
+
+  .detail {
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    width: 100%;
+    height: calc(100vh - var(--topNavBarHeight) - var(--playBarHeight) - 40px);
+
+    gap: 40px;
+
+    .function {
+      display: flex;
+      align-items: center;
+      flex-flow: column nowrap;
+      flex-basis: 45%;
+      justify-content: center;
+
+      gap: 40px;
+    }
+
+    .lyrics {
+      display: flex;
+      flex: 1;
+      flex-flow: column nowrap;
+      padding: 30px 0px;
+    }
+  }
+
+  .aside {
+    display: flex;
+
+    gap: 30px;
+
+    .title {
+      height: 40px;
+      font-size: 17px;
+      line-height: 40px;
+    }
+
+    .comment {
+      flex: 1;
+    }
+
+    .recommend {
+      flex-basis: 30%;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+  }
+}
+
+// 封面
+.cover {
+  display: flex;
+  overflow: hidden;
+  width: 50%;
+  border-radius: 5px;
+}
+
+// 操作
+.operate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 40px;
+
+  li {
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #eee;
+    cursor: pointer;
+
+    span {
+      color: var(--font-color);
+      font-size: 22px;
+    }
+
+    &:hover {
+      background-color: #e4e4e4;
+
+      span {
+        color: var(--theme-bg-color);
+      }
+    }
+  }
+}
+
+// 歌词
+.lyrics {
+  .head {
+    flex-basis: 60px;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    .title {
+      color: var(--font-color);
+      font-size: 22px;
+    }
+
+    .metaInfo {
+      display: flex;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 14px;
+
+      gap: 15px;
+
+      .name {
+        color: var(--theme-bg-color);
+        cursor: pointer;
+      }
+
+      .artist :deep(.name) {
+        color: var(--theme-bg-color);
+        cursor: pointer;
+      }
+    }
+  }
+
+  .main {
+    flex: 1;
+  }
+}
+</style>
+<style lang="scss">
+.songDetailDrawer {
+  margin-bottom: var(--playBarHeight);
+  height: calc(100vh - var(--playBarHeight) - var(--topNavBarHeight)) !important;
+  background-image: #e9e9e9;
+
+  .el-drawer__body {
+    padding: 0px;
+  }
+}
+
+.songDetailModal {
+  background-color: transparent;
+}
+</style>

@@ -222,13 +222,13 @@ let volumeIcon = computed(() => {
 
   .controlLine {
     display: flex;
+    justify-content: space-between;
     height: 100%;
 
     gap: 15px;
 
     section {
       overflow: hidden;
-      flex: 1;
     }
   }
 }
@@ -252,6 +252,7 @@ let volumeIcon = computed(() => {
   }
 
   span {
+    flex-shrink: 0;
     color: var(--font-color);
     font-size: 20px;
     cursor: pointer;

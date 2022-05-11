@@ -41,7 +41,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/notice",
     component: Notice,
-    meta: { title: "消息", auth: true }
+    meta: { title: "消息", auth: true },
   },
 ];
 

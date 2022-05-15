@@ -21,10 +21,12 @@
           </div>
 
           <!-- 歌词 -->
-          <div class="lyrics">
+          <div class="info">
             <!-- 头部 -->
             <header class="head">
+              <!-- 标题 -->
               <h1 class="title">{{ currentSong?.song.name }}</h1>
+              <!-- 元信息 -->
               <div class="metaInfo">
                 <p>
                   <span>专辑:&nbsp;</span>
@@ -37,7 +39,7 @@
               </div>
             </header>
             <!-- 歌词内容 -->
-            <main class="main"></main>
+            <main class="lyrics"></main>
           </div>
         </section>
 
@@ -118,7 +120,7 @@ defineExpose({ toggle });
       gap: 40px;
     }
 
-    .lyrics {
+    .info {
       display: flex;
       flex: 1;
       flex-flow: column nowrap;
@@ -187,7 +189,7 @@ defineExpose({ toggle });
 }
 
 // 歌词
-.lyrics {
+.info {
   .head {
     flex-basis: 60px;
     flex-grow: 0;

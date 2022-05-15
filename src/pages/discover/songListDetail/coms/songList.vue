@@ -8,7 +8,7 @@
           <!-- eva:heart-fill -->
           <!-- eva:heart-outline -->
           <p flex justify-between>
-            <span @click.stop="likeSong(row.id)" class="icon  i-eva:heart-outline"></span>
+            <span @click.stop="likeSong(row.id)" class="icon i-eva:heart-outline"></span>
             <span @click.stop="download(row.id)" class="icon i-eva:cloud-download-outline"></span>
           </p>
         </template>
@@ -31,7 +31,7 @@
     </el-table>
   </div>
 </template>
-  
+
 <script setup lang="ts">
 import { handleArtists } from "@/utils/tools";
 import { Discover } from "@/api/modules/discover";
@@ -48,22 +48,22 @@ let playSong = (songInfo: any) => {
   let album = al;
   let song = { id, name, tns };
   store.playSong({ artist, album, song });
-}
+};
 
 // 处理表格索引
 let handleIndex = (index: number): any => {
   return (index + 1).toString().padStart(2, "0");
-}
+};
 
 // 喜欢歌曲
 let likeSong = (id: number) => {
   console.log("喜欢的歌曲", id);
-}
+};
 
 // 下载歌曲
 let download = (id: number) => {
   console.log(id);
-}
+};
 
 // 歌曲列表
 let songList = reactive<any>([]);
@@ -73,18 +73,22 @@ onMounted(async () => {
     let offset: number = 0;
     let litmit: number = 100;
     while (bool) {
-      let { code, songs }: any = await Discover.getPlayListTrackAll(id, litmit, offset);
+      let { code, songs }: any = await Discover.getPlayListTrackAll(
+        id,
+        litmit,
+        offset
+      );
       if (code == 200 && songs.length) {
         songList.push(...songs);
-        songs.length < litmit ? bool = false : offset += litmit;
+        songs.length < litmit ? (bool = false) : (offset += litmit);
       } else {
         bool = false;
       }
     }
   } catch (err) {
-    ElMessage.error('获取音乐列表失败!');
+    ElMessage.error("获取音乐列表失败!");
   }
-})
+});
 </script>
 
 <style lang="scss" scoped>
@@ -105,11 +109,11 @@ onMounted(async () => {
 
   :deep(.el-table) {
     .index .cell {
-      color: rgba($color: #000000, $alpha: .4);
+      color: rgba($color: #000000, $alpha: 0.4);
     }
 
     .is-leaf {
-      color: rgba($color: #000000, $alpha: .4);
+      color: rgba($color: #000000, $alpha: 0.4);
       font-weight: 500;
       font-size: 14px;
     }

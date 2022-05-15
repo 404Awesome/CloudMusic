@@ -7,65 +7,17 @@
     <!-- 导航栏 -->
     <nav class="nav">
       <!-- 路由 -->
-      <section class="router">
-        <div v-show="!store.isFolding">
-          <p v-if="$route.meta.tablist">
-            <span v-for="item in ($route.meta.tablist as any)" :class="{ active: $route.fullPath == item.path }"
-              @click="$router.push(item.path)">
-              {{ item.title }}
-            </span>
-          </p>
-          <p v-else>
-            <span class="active">{{ $route.meta.title }}</span>
-          </p>
-        </div>
+      <section flex-1>
+        <RouterNav />
       </section>
 
       <!-- 功能 -->
       <section class="function">
         <!-- 搜索 -->
-        <el-popover width="200px" placement="bottom-start" trigger="click">
-          <template #reference>
-            <span class="i-heroicons-outline:search"></span>
-          </template>
-          <template #default>
-            <div class="search">
-              <!-- 表单 -->
-              <div class="form">
-                <input type="text" placeholder="搜索" />
-                <button>搜索</button>
-              </div>
-
-              <!-- 热搜榜 -->
-              <div class="trending">
-                <el-divider>
-                  <h4>热搜榜</h4>
-                </el-divider>
-                <el-scrollbar height="200px" :always="true">
-                  <p class="trendingList" v-for="(item, index) in searchHotList" :key="item.searchWord">
-                    <span :style="{ 'color': index < 3 ? 'var(--theme-bg-color)' : '' }">{{ index + 1 }}</span>
-                    <span>{{ item.searchWord }}</span>
-                    <span>{{ item.score }}</span>
-                  </p>
-                </el-scrollbar>
-              </div>
-            </div>
-          </template>
-        </el-popover>
+        <Search />
 
         <!-- 主题 -->
-        <el-popover placement="bottom" trigger="click">
-          <template #reference>
-            <span class="i-heroicons-outline:color-swatch"></span>
-          </template>
-          <template #default>
-            <ul class="themeSelect" @click="themeSelect">
-              <li data-color="#ff3f34"></li>
-              <li data-color="#575fcf"></li>
-              <li data-color="#6ab04c"></li>
-            </ul>
-          </template>
-        </el-popover>
+        <ThemeSelect />
 
         <!-- 通知 -->
         <span @click="goRouter('/notice')" class="i-heroicons-outline:bell"></span>
@@ -81,32 +33,18 @@
 </template>
 
 <script lang="ts" setup>
-import { Operate } from "@/api/modules/operate";
+import RouterNav from "./coms/routerNav.vue";
+import Search from "./coms/search.vue";
+import ThemeSelect from "./coms/themeSelect.vue";
 import { useRouter } from "vue-router";
 import { useMainStore } from "store/index";
 const store = useMainStore();
 const router = useRouter();
 
-// 主题选择
-let themeSelect = (event: Event) => {
-  let color = (event.target as any).getAttribute("data-color");
-  if (!color || color == store.theme) return;
-  store.theme = color;
-  document.documentElement.style.setProperty("--theme-bg-color", color);
-};
-
 // 黑夜模式
 let setDark = () => {
   store.isDark = !store.isDark;
 };
-
-// 热搜列表
-let searchHotList = reactive<any>([]);
-onMounted(async () => {
-  // 获取搜索热搜
-  let { code, data }: any = await Operate.getSearchHot();
-  if (code == 200) searchHotList.push(...data);
-})
 
 // 跳转路由
 let goRouter = (path: string) => {
@@ -140,16 +78,6 @@ let goRouter = (path: string) => {
     @include flexBasis(var(--sideNavBarWidth), 0, 0);
   }
 
-  span {
-    color: rgba($color: #fff, $alpha: .7);
-    white-space: nowrap;
-    cursor: pointer;
-
-    &:hover {
-      color: #fff;
-    }
-  }
-
   // 导航栏
   .nav {
     display: flex;
@@ -162,132 +90,22 @@ let goRouter = (path: string) => {
   }
 }
 
-.router {
-  flex: 1;
-
-  p {
-    display: flex;
-    color: rgba($color: #fff, $alpha: 0.7);
-
-    gap: 10px;
-
-    span {
-      font-size: 15px;
-      cursor: pointer;
-
-      &.active {
-        color: #fff;
-      }
-    }
-  }
-}
-
 .function {
   display: flex;
   align-items: center;
 
   gap: 10px;
 
-  span {
+  span,
+  :deep(.icon) {
     flex: 1;
+    color: rgba($color: #fff, $alpha: .7);
+    white-space: nowrap;
     font-size: 19px;
-  }
-}
-
-.search {
-
-  .form {
-    display: flex;
-
-    gap: 5px;
-
-    input {
-      box-sizing: border-box;
-      padding: 5px 10px;
-      width: 130px;
-      outline: none;
-      border: none;
-      border-radius: 5px;
-      background-color: #eee;
-      color: var(--font-color);
-      font-size: 14px;
-    }
-
-    button {
-      flex: 1;
-      border: none;
-      border-radius: 5px;
-      background-color: var(--theme-bg-color);
-      color: #fff;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-  }
-
-  .trending {
-    margin-top: 10px;
-
-    h4 {
-      color: var(--font-color);
-    }
-
-    .trendingList {
-      display: flex;
-      overflow: hidden;
-      margin-bottom: 5px;
-      color: var(--font-color);
-      font-size: 14px;
-      cursor: pointer;
-
-
-      span {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
-        &:nth-child(1) {
-          width: 25px;
-          text-align: center;
-        }
-
-        &:nth-child(2) {
-          margin-right: 5px;
-        }
-
-        &:nth-child(3) {
-          color: rgba($color: #000000, $alpha: .3);
-        }
-      }
-
-      &:hover {
-        color: var(--theme-bg-color);
-      }
-    }
-  }
-}
-
-.themeSelect {
-  display: flex;
-  justify-content: center;
-
-  gap: 20px;
-
-  li {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
     cursor: pointer;
 
-    &:nth-child(1) {
-      background-color: #ff3f34;
-    }
-
-    &:nth-child(2) {
-      background-color: #575fcf;
-    }
-
-    &:nth-child(3) {
-      background-color: #6ab04c;
+    &:hover {
+      color: #fff;
     }
   }
 }

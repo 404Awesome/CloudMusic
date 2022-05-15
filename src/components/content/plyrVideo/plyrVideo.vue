@@ -8,9 +8,13 @@
 </template>
 
 <script setup lang="ts">
+import emitter from "@/utils/useMitt";
 import Plyr from "plyr";
 let props = defineProps({
-  // 视频资源
+  /* 视频资源
+   * 格式如下
+   * 画质: 对应链接
+   */
   source: {
     type: Object,
     required: true,
@@ -18,7 +22,7 @@ let props = defineProps({
 });
 
 // plyr实例
-let plyr = ref<Plyr | null>(null);
+let videoPlyr = ref<Plyr>();
 // video元素
 let playerEl = ref<HTMLElement | null>(null);
 onMounted(() => {
@@ -31,8 +35,7 @@ onMounted(() => {
       .sort((x: any, y: any) => {
         return y - x;
       });
-
-    plyr.value = new Plyr(playerEl.value!, {
+    videoPlyr.value = new Plyr(playerEl.value!, {
       settings: ["speed", "quality"],
       quality: {
         default: Math.max(...qualityArr),
@@ -58,9 +61,20 @@ onMounted(() => {
         },
       },
     });
+    // 视频播放 
+    videoPlyr.value.on("play", () => {
+      // 暂停歌曲播放
+      emitter.emit("audioPause");
+    })
   });
 });
 
 // 销毁视频
-onBeforeUnmount(() => plyr.value?.destroy());
+onBeforeUnmount(() => videoPlyr.value?.destroy());
+// 暂停视频播放
+emitter.on("videoPause", () => {
+  if (videoPlyr.value?.playing) {
+    videoPlyr.value.pause();
+  }
+})
 </script>

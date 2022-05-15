@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts" name="mvDetails">
-import PlyrVideo from "@/components/common/plyrVideo/plyrVideo.vue";
+import PlyrVideo from "@/components/content/plyrVideo/plyrVideo.vue";
 import Relevant from "./coms/relevant.vue";
 import Detail from "./coms/detail.vue";
 import Comment from "./coms/comment.vue";
@@ -62,9 +62,9 @@ watch(route, (val) => {
     status.value = false;
     loadData(mvid.value);
   }
-}, { immediate: true })
+}, { immediate: true });
 </script>
-
+ 
 <style lang="scss" scoped>
 .mvDetails {
   display: grid;

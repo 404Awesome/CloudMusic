@@ -21,9 +21,9 @@ let props = defineProps({
 
 <style lang="scss" scoped>
 .navLine {
-  width: 100%;
   display: flex;
   align-items: center;
+  width: 100%;
   color: var(--font-color);
 
   h4 {

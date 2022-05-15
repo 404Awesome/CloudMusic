@@ -1,7 +1,7 @@
 <!-- 个性推荐 最新音乐 -->
 <template>
   <ul class="newSong">
-    <li v-for="(item, index) in newSong" :key="item.id">
+    <li @dblclick="playSong(item)" v-for="(item, index) in newSong" :key="item.id">
       <div class="frontCover">
         <el-image :src="item.picUrl" />
       </div>
@@ -18,6 +18,8 @@
 
 <script setup lang="ts">
 import { Discover } from "@/api/modules/discover";
+import { useMainStore } from "store/index";
+const store = useMainStore();
 
 let newSong = reactive<any[]>([]);
 onMounted(async () => {
@@ -25,6 +27,18 @@ onMounted(async () => {
   result.length = 6;
   if (code == 200) newSong.push(...result);
 });
+
+// 播放歌曲
+let playSong = async (songInfo: any) => {
+  let { code, songs }: any = await Discover.getSongDetail(songInfo.id);
+  if (code == 200) {
+    let { ar, al, id, name, tns = [] } = toRaw(songs[0]);
+    let artist = ar;
+    let album = al;
+    let song = { id, name, tns };
+    store.playSong({ artist, album, song });
+  }
+};
 
 // 获取演艺人
 let getArtists = (artists: any[]): string => {

@@ -54,6 +54,14 @@ export const Discover = {
       params: { id, limit, offset }
     })
   },
+  // 获取歌曲详情
+  getSongDetail(ids: number) {
+    return Request({
+      url: "/song/detail",
+      method: "GET",
+      params: { ids }
+    })
+  },
   // 获取音乐 url
   // getSongUrl(idParams: number | number[]) {
   //   let id = Array.isArray(idParams) ? idParams.join(",") : idParams;

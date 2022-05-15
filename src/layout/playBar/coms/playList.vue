@@ -76,7 +76,7 @@ header.header {
   background-color: #fff;
 
   .title {
-    color: var(--theme-bg-color);
+    color: var(--font-color);
     font-size: 20px;
   }
 
@@ -133,15 +133,12 @@ header.header {
       text-overflow: ellipsis;
     }
 
-    &:nth-child(even) {
-      background-color: #eee;
-    }
-
     &:hover {
       color: var(--theme-bg-color);
     }
 
     &.active {
+      background-color: #f5f7fa;
       color: var(--theme-bg-color);
     }
   }

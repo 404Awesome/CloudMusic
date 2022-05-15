@@ -30,11 +30,11 @@ onMounted(async () => {
 });
 
 // 将歌单添加到当前歌单中, 并播放第一首歌
-let playSong = (id: number) => {
+let playSong = async (id: number) => {
   console.log(id);
 };
 </script>
-
+  
 <style lang="scss" scoped>
 .playlist {
   display: grid;

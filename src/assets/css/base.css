@@ -63,3 +63,12 @@ aside {
 .el-loading-spinner .el-loading-text {
   color: var(--theme-bg-color) !important;
 }
+
+/* 修改修改elementui el-pagination */
+.el-pagination .is-active {
+  background-color: var(--theme-bg-color) !important;
+  color: #fff !important;
+}
+.el-pagination.is-background .el-pager li:not(.is-disabled):hover {
+  color: var(--theme-bg-color) !important;
+}

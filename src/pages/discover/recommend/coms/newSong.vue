@@ -9,7 +9,7 @@
         <p class="order">{{ (index + 1).toString().padStart(2, "0") }}</p>
         <div class="info">
           <p>{{ item.name }}</p>
-          <p truncate>{{ getArtists(item.song.artists) }}</p>
+          <p v-html="handleArtists(item.song.artists)"></p>
         </div>
       </div>
     </li>
@@ -18,13 +18,14 @@
 
 <script setup lang="ts">
 import { Discover } from "@/api/modules/discover";
+import { handleArtists } from "@/utils/tools";
 import { useMainStore } from "store/index";
 const store = useMainStore();
 
 let newSong = reactive<any[]>([]);
 onMounted(async () => {
   let { code, result }: any = await Discover.getNewSong();
-  result.length = 6;
+  if (result.length > 6) result.length = 6;
   if (code == 200) newSong.push(...result);
 });
 
@@ -37,15 +38,6 @@ let playSong = async (songInfo: any) => {
     let album = al;
     let song = { id, name, tns };
     store.playSong({ artist, album, song });
-  }
-};
-
-// 获取演艺人
-let getArtists = (artists: any[]): string => {
-  if (artists.length == 1) {
-    return artists[0].name;
-  } else {
-    return artists.map((item: any) => item.name).join("/");
   }
 };
 </script>
@@ -83,6 +75,7 @@ let getArtists = (artists: any[]): string => {
 
     .details {
       display: flex;
+      overflow: hidden;
       align-items: center;
       flex: 1;
 
@@ -102,21 +95,26 @@ let getArtists = (artists: any[]): string => {
         height: 100%;
 
         p {
-          display: -webkit-box;
           overflow: hidden;
-          -webkit-box-orient: vertical;
           color: var(--font-color);
           text-overflow: ellipsis;
 
-          -webkit-line-clamp: 2;
-
           &:first-child {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
             font-size: 15px;
+
+            -webkit-line-clamp: 2;
           }
 
           &:last-child {
             color: rgba($color: #000000, $alpha: 0.5);
+            white-space: nowrap;
             font-size: 14px;
+
+            :deep(.name):hover {
+              color: var(--theme-bg-color);
+            }
           }
         }
       }

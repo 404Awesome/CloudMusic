@@ -28,7 +28,7 @@ import { Discover } from "@/api/modules/discover";
 let renderList = reactive([
   {
     title: "推荐歌单",
-    path: "/discover/playList",
+    path: "/discover/songList",
     component: shallowRef(SongList),
   },
   {

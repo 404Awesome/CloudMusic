@@ -20,12 +20,13 @@ let props = defineProps({
     type: Boolean,
     default: false,
   },
+  currentType: String
 });
 let typeList = toRaw(props.typeList);
 let loading = toRef(props, "loading");
 
 // 当前类型
-let currentType = ref<string>(typeList[0]);
+let currentType = ref<string>(props.currentType || typeList[0]);
 // 事件
 let emit = defineEmits(["selected"]);
 // 选择类型

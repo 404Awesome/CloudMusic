@@ -1,3 +1,5 @@
+import { SongInfo } from "store/index";
+
 // 处理次数 如播放次数等
 export const handleCount = (count: number): string => {
   let num = (count / 10000).toFixed(0);
@@ -21,4 +23,18 @@ export const handerTime = (time: number): string => {
 export const handleArtists = (artists: any) => {
   let artistsList = artists.map((item: any) => `<span class="name" data-id="${item.id}">${item.name}</span>`);
   return artistsList.length == 1 ? artistsList[0] : artistsList.join("<span> / </span>");
+}
+
+// 处理歌曲信息
+export const handleSongInfo = (songInfo: any): SongInfo => {
+  let { ar, al, id, name, tns = [] } = songInfo;
+  let artist = ar;
+  let album = al;
+  let song = { id, name, tns };
+  return { artist, album, song };
+}
+
+// 处理歌单列表中歌曲信息
+export const handleSongList = (songList: any): SongInfo[] => {
+  return songList.map((item: any) => handleSongInfo(item));
 }

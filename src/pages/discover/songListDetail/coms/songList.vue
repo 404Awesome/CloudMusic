@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { handleArtists } from "@/utils/tools";
+import { handleArtists, handleSongInfo } from "@/utils/tools";
 import { Discover } from "@/api/modules/discover";
 import { useMainStore } from "store/index";
 import { useRoute } from "vue-router";
@@ -43,11 +43,8 @@ let id = parseInt(route.params.id as string);
 
 // 播放歌曲
 let playSong = (songInfo: any) => {
-  let { ar, al, id, name, tns = [] } = toRaw(songInfo);
-  let artist = ar;
-  let album = al;
-  let song = { id, name, tns };
-  store.playSong({ artist, album, song });
+  songInfo = handleSongInfo(songInfo);
+  store.playSong(songInfo);
 };
 
 // 处理表格索引

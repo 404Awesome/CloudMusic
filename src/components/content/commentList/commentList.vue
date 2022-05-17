@@ -163,15 +163,4 @@ onMounted(() => loadData(0));
     }
   }
 }
-
-:deep(.el-pagination) {
-  .is-active {
-    background-color: var(--theme-bg-color) !important;
-    color: #fff !important;
-  }
-
-  &.is-background .el-pager li:not(.is-disabled):hover {
-    color: var(--theme-bg-color);
-  }
-}
 </style>

@@ -1,7 +1,7 @@
 <!-- 个性推荐 推荐歌单 -->
 <template>
-  <ul class="playlist">
-    <li v-for="item in playlist" :key="item.id" @click="$router.push(`/songListDetal/${item.id}`)">
+  <ul class="songList">
+    <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetal/${item.id}`)">
       <div class="frontCover">
         <el-image :src="item.picUrl" fit="cover" />
         <p class="playCount">
@@ -9,7 +9,7 @@
           <span>{{ handleCount(item.playCount) }}</span>
         </p>
         <p class="playIcon">
-          <span @click.stop="playSong(item.id)" class="i-heroicons-outline:play"></span>
+          <span @click.stop="addSongList(item.id)" class="i-heroicons-outline:play"></span>
         </p>
       </div>
       <p class="title">{{ item.name }}</p>
@@ -18,25 +18,30 @@
 </template>
 
 <script setup lang="ts">
-import { handleCount } from "@/utils/tools";
+import { handleCount, handleSongList } from "@/utils/tools";
 import { Discover } from "@/api/modules/discover";
 import { useMainStore } from "@/store";
 const store = useMainStore();
 
-let playlist = reactive<any[]>([]);
+let songList = reactive<any[]>([]);
 onMounted(async () => {
   let { code, result }: any = await Discover.getPersonalized(12);
-  if (code == 200) playlist.push(...result);
+  if (code == 200) songList.push(...result);
 });
 
-// 将歌单添加到当前歌单中, 并播放第一首歌
-let playSong = async (id: number) => {
-  console.log(id);
+
+// 添加歌单列表到播放列表
+let addSongList = async (id: number) => {
+  let { code, songs }: any = await Discover.getPlayListTrackAll(id, 20, 0);
+  if (code == 200) {
+    let songList = handleSongList(songs);
+    store.addPlayList(songList);
+  }
 };
 </script>
   
 <style lang="scss" scoped>
-.playlist {
+.songList {
   display: grid;
   margin-top: 15px;
 
@@ -86,13 +91,13 @@ let playSong = async (id: number) => {
 
       .playIcon {
         position: absolute;
-        z-index: 2;
-        bottom: 2px;
-        transition: opacity 0.3s linear;
         right: 6px;
-        font-size: 26px;
+        bottom: 2px;
+        z-index: 2;
         color: rgba($color: #fff, $alpha: 0.7);
+        font-size: 26px;
         opacity: 0;
+        transition: opacity 0.3s linear;
 
         &:hover {
           color: #fff;

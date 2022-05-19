@@ -43,6 +43,7 @@ let offset = ref<number>(0);
 // mv列表
 let mvList = reactive<any>([]);
 
+// 当前选择的类型
 let currentType = reactive<any>({});
 // 类型列表
 let typeList = reactive([{
@@ -65,6 +66,7 @@ watch(currentType, () => {
   loadData(offset.value, limit);
 });
 
+// 分页发生改变
 let change = (page: number) => {
   offset.value = page * limit;
   isLoading.value = true;

@@ -16,6 +16,7 @@
 body {
   margin: 0;
   padding: 0;
+  color: var(--font-color);
 }
 
 img,
@@ -69,6 +70,6 @@ aside {
   background-color: var(--theme-bg-color) !important;
   color: #fff !important;
 }
-.el-pagination.is-background .el-pager li:not(.is-disabled):hover {
+.el-pagination.is-background .el-pager li:not(.is-active):hover {
   color: var(--theme-bg-color) !important;
 }

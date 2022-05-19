@@ -105,6 +105,10 @@ let { id, cover, artists, name, playCount, isFlex } = markRaw(props);
       opacity: 0;
       transition: opacity 0.3s linear;
       transform: translate(-50%, -50%);
+
+      &:hover {
+        background-color: rgba($color: #fff, $alpha: 0.8);
+      }
     }
 
     &:hover .playIcon {

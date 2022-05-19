@@ -9,7 +9,14 @@ export const Video = {
       method: "GET",
       params: { id }
     })
-  }
+  },
+  // 获取所有视频分类 - 需要登陆
+  getCategoryList() {
+    return Request({
+      url: "/video/category/list",
+      method: "GET",
+    })
+  },
 }
 
 // MV相关api及interface

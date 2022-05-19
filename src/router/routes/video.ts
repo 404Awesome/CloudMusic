@@ -24,12 +24,13 @@ const routes: RouteRecordRaw[] = [
     meta: {
       title: "视频",
       tablist: [
-        { title: "视频", path: "/video/videoList" },
+        { title: "视频", path: "/video/videoList", auth: true },
         { title: "MV", path: "/video/mvList" },
       ]
     },
     children: [{
       path: "videoList",
+      meta: { auth: true },
       component: VideoList
     }, {
       path: "mvList",
@@ -44,7 +45,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/videoDetail",
     component: VideoDetail,
-    meta: { title: "视频详情" }
+    meta: { title: "视频详情", auth: true }
   },
   {
     path: "/allMV",

@@ -36,6 +36,10 @@ let selectType = (type: string) => {
     emit("selected", type);
   }
 };
+// 监听 props.currentType 的变动
+watch(() => props.currentType, (newVal) => {
+  currentType.value = newVal!;
+})
 </script>
 
 <style lang="scss" scoped>
@@ -45,11 +49,11 @@ let selectType = (type: string) => {
   justify-content: flex-end;
 
   user-select: none;
-  gap: 10px;
+  gap: 5px;
 
   li {
     flex: 1;
-    padding-right: 10px;
+    padding-right: 5px;
     border-right: 1px solid #eee;
 
     &:last-child {
@@ -58,7 +62,7 @@ let selectType = (type: string) => {
     }
 
     p {
-      padding: 3px 6px;
+      padding: 3px 10px;
       color: var(--font-color);
       text-align: center;
       white-space: nowrap;
@@ -66,7 +70,7 @@ let selectType = (type: string) => {
       cursor: pointer;
 
       &.active {
-        border-radius: 5%;
+        border-radius: 20px;
         background-color: #fdf6f5;
         color: #b82712;
       }

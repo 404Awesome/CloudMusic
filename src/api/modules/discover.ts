@@ -71,4 +71,29 @@ export const Discover = {
   //     params: { id }
   //   })
   // },
+
+
+
+  // 歌单分类
+  getPlayListCatlist() {
+    return Request({
+      url: "/playlist/catlist",
+      method: "GET",
+    })
+  },
+  // 热门歌单分类
+  getPlayListHot() {
+    return Request({
+      url: "/playlist/hot",
+      method: "GET",
+    })
+  },
+  // 歌单
+  getTopPlaylist(cat: string, offset: number = 0, limit: number = 30) {
+    return Request({
+      url: "/top/playlist",
+      method: "GET",
+      params: { cat, offset, limit }
+    })
+  },
 }

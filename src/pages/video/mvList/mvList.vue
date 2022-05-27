@@ -1,6 +1,6 @@
 <!-- MV -->
 <template>
-  <div mx-auto w="8/10" pb-8>
+  <div class="wrapper" pb-8>
     <!-- 最新mv -->
     <NewMV />
 

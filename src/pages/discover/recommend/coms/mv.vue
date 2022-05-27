@@ -1,6 +1,6 @@
 <!-- 个性推荐 MV -->
 <template>
-  <ul class="mv">
+  <ul gap-5 lg:gap-7 grid-cols-2 lg:grid-cols-4 class="mv">
     <li v-for="item in mvList" :key="item.id" @click="$router.push(`/mvDetail/${item.id}`)">
       <!-- 封面 -->
       <div class="frontCover">
@@ -35,9 +35,6 @@ onMounted(async () => {
 .mv {
   display: grid;
   padding-top: 15px;
-
-  gap: 30px;
-  grid-template-columns: repeat(4, 1fr);
 
   li {
     overflow: hidden;

@@ -23,7 +23,7 @@ const store = useMainStore();
   display: flex;
   color: rgba($color: #fff, $alpha: 0.7);
 
-  gap: 10px;
+  gap: 15px;
 
   span {
     font-size: 15px;

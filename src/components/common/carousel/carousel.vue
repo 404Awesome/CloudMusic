@@ -3,7 +3,7 @@
   <div v-if="data.length" class="carousel">
     <el-carousel :interval="3000" type="card" height="190px">
       <el-carousel-item v-for="item in data" :key="item.url">
-        <el-image :src="item.imageUrl || item.pic" fit="contain" />
+        <el-image class="img" :src="item.imageUrl || item.pic" fit="cover" />
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -37,6 +37,12 @@ let data = toRef(props, "data");
         border-radius: 5px;
       }
     }
+  }
+}
+
+@media screen and (max-width: 1140px) {
+  .carousel .img {
+    height: 150px;
   }
 }
 </style>

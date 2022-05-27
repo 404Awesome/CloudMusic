@@ -1,6 +1,6 @@
 <!-- 个性推荐 推荐歌单 -->
 <template>
-  <ul class="songList">
+  <ul gap-5 lg:gap-7 grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="songList">
     <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetal/${item.id}`)">
       <div class="frontCover">
         <el-image :src="item.picUrl" fit="cover" />
@@ -30,7 +30,7 @@ onMounted(async () => {
 });
 
 
-// 添加歌单列表到播放列表
+// 取歌单列表前20首添加到播放列表
 let addSongList = async (id: number) => {
   let { code, songs }: any = await Discover.getPlayListTrackAll(id, 20, 0);
   if (code == 200) {
@@ -44,9 +44,6 @@ let addSongList = async (id: number) => {
 .songList {
   display: grid;
   margin-top: 15px;
-
-  gap: 30px;
-  grid-template-columns: repeat(6, 1fr);
 
   li {
     cursor: pointer;

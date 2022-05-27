@@ -1,21 +1,23 @@
 <!-- 电台 -->
 <template>
-  <!-- 轮播图 -->
-  <Carousel :data="banner" />
+  <div>
+    <!-- 轮播图 -->
+    <Carousel :data="banner" />
 
-  <!-- 电台分类 -->
-  <CateList />
+    <!-- 电台分类 -->
+    <CateList />
 
-  <!-- 付费精选 -->
-  <PaidBoutique />
+    <!-- 付费精选 -->
+    <PaidBoutique />
 
-  <!-- 渲染列表 -->
-  <div v-for="item in renderList" :key="item.cateId">
-    <component :is="CateRadio" v-bind="item" />
+    <!-- 渲染列表 -->
+    <div v-for="item in renderList" :key="item.cateId">
+      <component :is="CateRadio" v-bind="item" />
+    </div>
   </div>
 </template>
 
-<script setup lang="ts" name="radioStation">
+<script setup lang="ts">
 import Carousel from "@/components/common/carousel/carousel.vue";
 import CateList from "./coms/cateList.vue";
 import PaidBoutique from "./coms/paidBoutique.vue";

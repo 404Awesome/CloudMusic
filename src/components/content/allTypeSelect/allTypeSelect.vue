@@ -9,7 +9,7 @@
         </section>
       </template>
 
-      <div class="wrapper">
+      <div>
         <!-- 标题 -->
         <header class="header">
           <h1 @click="currentSelect = defaultType" :class="{ active: currentSelect == defaultType }" class="item">
@@ -107,6 +107,13 @@ nav.nav {
   }
 
   .hotTypeList {
+    display: none;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width: 1140px) {
+  nav.nav .hotTypeList {
     display: flex;
     align-items: center;
   }
@@ -120,6 +127,10 @@ nav.nav {
   .header,
   .categoryList {
     padding: 10px 15px;
+  }
+
+  .header {
+    display: flex;
   }
 
   .list {
@@ -156,6 +167,12 @@ nav.nav {
       background-color: #fdf6f5;
       color: #b82712;
     }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .allTypeSelect {
+    width: 70% !important;
   }
 }
 </style>

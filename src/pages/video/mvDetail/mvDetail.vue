@@ -11,7 +11,9 @@
     </div>
 
     <!-- 相关推荐 -->
-    <Relevant :id="mvid!" />
+    <div>
+      <Relevant :id="mvid!" />
+    </div>
   </div>
 
   <!-- 加载状态 -->
@@ -68,7 +70,7 @@ watch(route, (val) => {
 <style lang="scss" scoped>
 .mvDetails {
   display: grid;
-  padding: 15px 30px;
+  padding: 15px 20px;
 
   gap: 30px;
   grid-template-columns: 2fr 1fr;

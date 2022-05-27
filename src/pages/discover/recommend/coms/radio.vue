@@ -1,6 +1,6 @@
 <!-- 个性推荐 主播电台 -->
 <template>
-  <ul class="radio">
+  <ul gap-5 lg:gap-7 grid-cols-2 lg:grid-cols-3 class="radio">
     <li v-for="item in data" :key="item.id">
       <el-image :src="item.picUrl" fit="cover" lazy />
       <div class="details">
@@ -28,9 +28,6 @@ onMounted(async () => {
   display: grid;
   margin-top: 15px;
   padding-bottom: 30px;
-
-  gap: 20px 30px;
-  grid-template-columns: repeat(3, 1fr);
 
   li {
     display: flex;

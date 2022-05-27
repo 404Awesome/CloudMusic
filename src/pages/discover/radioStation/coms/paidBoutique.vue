@@ -1,11 +1,11 @@
 <!-- 付费精品 -->
 <template>
-  <div class="wrapper">
+  <div class="wrapper" mb-7 mt-3>
     <!-- 导航栏 -->
     <NavBar title="付费精品" path="/123123" />
 
     <!-- 列表 -->
-    <ul v-if="paygift.length" class="content">
+    <ul gap-5 lg:gap-7 v-if="paygift.length" class="content">
       <li v-for="item in paygift" :key="item.id">
         <section>
           <el-image :src="item.picUrl" fit="cover" lazy />
@@ -42,17 +42,11 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-  margin: 30px auto;
-  width: 80%;
-}
-
 .content {
   display: grid;
   margin-top: 15px;
 
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px 30px;
 
   li {
     display: flex;

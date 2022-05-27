@@ -1,95 +1,105 @@
 <!-- 歌单详情 -->
 <template>
-  <div v-if="detail.name" class="detail">
-    <!-- 封面 -->
-    <el-image flex-none h-60 rounded :src="detail.coverImgUrl" fit="cover" />
+  <div v-if="detail.name">
+    <div ref="detailEl" class="detail">
+      <!-- 封面 -->
+      <el-image flex-none h-60 rounded :src="detail.coverImgUrl" fit="cover" />
 
-    <!-- 详情 -->
-    <div flex-1>
-      <section h-60 class="content">
-        <!-- 标题 -->
-        <h1 text-xl>{{ detail.name }}</h1>
-        <!-- 创建者 -->
-        <div class="creator">
-          <el-image w-8 rounded-full :src="detail.creator.avatarUrl" fit="cover" />
-          <p class="nickname">{{ detail.creator.nickname }}</p>
-          <p class="text createTime">{{ detail.createTime }}</p>
-        </div>
-
-        <!-- 操作 -->
-        <ul class="operate">
-          <li class="playAll">
-            <p>
-              <span class="icon i-heroicons-outline:play"></span>
-              <span>播放全部</span>
-            </p>
-            <span class="icon i-heroicons-outline:plus-sm"></span>
-          </li>
-          <li>
-            <span class="icon i-heroicons-outline:folder-add"></span>
-            <span>收藏({{ handleCount(detail.subscribedCount) }})</span>
-          </li>
-          <li>
-            <span class="icon i-heroicons-outline:external-link"></span>
-            <span>分享({{ handleCount(detail.shareCount) }})</span>
-          </li>
-          <li>
-            <span class="icon i-eva:cloud-download-outline"></span>
-            <span>下载全部</span>
-          </li>
-        </ul>
-
-        <!-- 元信息 -->
-        <div class="metaInfo">
-          <!-- 标签 -->
-          <p>
-            <span>标&emsp;签:&nbsp;</span>
-            <span v-for="(item, index) in detail.tags" :key="item">
-              <span class="tag">{{ item }}</span>
-              <span v-if="index < detail.tags.length - 1">&nbsp;/&nbsp;</span>
-            </span>
-          </p>
-
-          <!-- 次数 -->
-          <div class="count">
-            <p>
-              <span>歌曲数:&nbsp;</span>
-              <span class="text">{{ detail.trackCount }}</span>
-            </p>
-            <p>
-              <span>播放数:&nbsp;</span>
-              <span class="text">{{ handleCount(detail.playCount) }}</span>
-            </p>
+      <!-- 详情 -->
+      <div flex-1>
+        <section h-60 class="content">
+          <!-- 标题 -->
+          <h1 text-xl class="title">{{ detail.name }}</h1>
+          <!-- 创建者 -->
+          <div class="creator">
+            <el-image w-8 rounded-full :src="detail.creator.avatarUrl" fit="cover" />
+            <p class="nickname">{{ detail.creator.nickname }}</p>
+            <p class="text createTime">{{ detail.createTime }}</p>
           </div>
 
-          <!-- 描述 -->
-          <div v-if="describe.content" class="describe">
+          <!-- 操作 -->
+          <ul class="operate">
+            <li class="playAll">
+              <p @click.once="playAll">
+                <span class="icon i-heroicons-outline:play"></span>
+                <span>播放全部</span>
+              </p>
+              <span @click="addPlayList" class="icon i-heroicons-outline:plus-sm"></span>
+            </li>
+            <li @click="collection">
+              <span class="icon i-heroicons-outline:folder-add"></span>
+              <span>收藏({{ handleCount(detail.subscribedCount) }})</span>
+            </li>
+            <li @click="share">
+              <span class="icon i-heroicons-outline:external-link"></span>
+              <span>分享({{ handleCount(detail.shareCount) }})</span>
+            </li>
+            <li @click="download">
+              <span class="icon i-eva:cloud-download-outline"></span>
+              <span>下载全部</span>
+            </li>
+          </ul>
+
+          <!-- 元信息 -->
+          <div class="metaInfo">
+            <!-- 标签 -->
             <p>
-              <span>简&emsp;介:&nbsp;</span>
-              <span class="text">{{ describe.content || "" }}</span>
-              <span v-if="describe.more">
-                <span class="text" v-show="!showMore">...</span>
+              <span>标&emsp;签:&nbsp;</span>
+              <span v-for="(item, index) in detail.tags" :key="item">
+                <span class="tag">{{ item }}</span>
+                <span v-if="index < detail.tags.length - 1">&nbsp;/&nbsp;</span>
               </span>
             </p>
-            <span v-if="describe.more" @click="showMore = !showMore" class="more i-eva:arrow-up-fill"
-              :class="{ active: showMore }"></span>
-          </div>
-        </div>
-      </section>
 
-      <!-- 更多描述 -->
-      <section whitespace-pre-wrap v-show="showMore" class="text">{{ describe.more || "" }}</section>
+            <!-- 次数 -->
+            <div class="count">
+              <p>
+                <span>歌曲数:&nbsp;</span>
+                <span class="text">{{ detail.trackCount }}</span>
+              </p>
+              <p>
+                <span>播放数:&nbsp;</span>
+                <span class="text">{{ handleCount(detail.playCount) }}</span>
+              </p>
+            </div>
+
+            <!-- 描述 -->
+            <div v-if="describe.content" class="describe">
+              <p>
+                <span>简&emsp;介:&nbsp;</span>
+                <span class="text">{{ describe.content || "" }}</span>
+                <span v-if="describe.more">
+                  <span class="text" v-show="!showMore">...</span>
+                </span>
+              </p>
+              <span v-if="describe.more" @click="showMore = !showMore" class="more i-eva:arrow-up-fill"
+                :class="{ active: showMore }"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 更多描述 -->
+        <section whitespace-pre-wrap v-show="showMore" class="text">{{ describe.more || "" }}</section>
+      </div>
     </div>
+
+    <!-- 折叠 -->
+    <slot name="fold" :playAll="playAll" :download="download" :share=share :collection="collection" :title="detail.name"
+      :height="detailEl?.offsetHeight || 0">
+    </slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { handleCount } from "@/utils/tools";
+import { handleCount, handleSongList } from "@/utils/tools";
 import { Discover } from "@/api/modules/discover";
+import { useMainStore } from "store/index";
 import { useRoute } from "vue-router";
 const route = useRoute();
+const store = useMainStore();
 let id = parseInt(route.params.id as string);
-
+//  元素DOM
+let detailEl = ref<HTMLElement | null>(null);
 // 详情
 let detail = reactive<any>({});
 // 描述
@@ -122,14 +132,42 @@ let handleDescribe = (desc: string) => {
   }
 }
 
+// 播放全部
+// 不播放全部, 取前20首
+let playAll = async () => {
+  let { code, songs }: any = await Discover.getPlayListTrackAll(detail.id, 20, 0);
+  if (code == 200) {
+    console.log(songs);
+    let songList = handleSongList(songs);
+    store.addPlayList(songList);
+  }
+}
+// 添加到歌单
+let addPlayList = () => {
+  console.log(detail.id);
+}
+// 收藏
+let collection = () => {
+  console.log(detail.id);
+}
+// 分享
+let share = () => {
+  console.log(detail.id);
+}
+// 下载
+let download = () => {
+  console.log(detail.id);
+}
 // 获取歌单详情
 onMounted(async () => {
   let { code, playlist }: any = await Discover.getPlayListDetail(id);
   if (code == 200) {
-    let { playCount, trackCount, shareCount, createTime, description, creator, name, coverImgUrl, subscribedCount, tags } = playlist;
+    let { playCount, trackCount, shareCount, createTime, description, creator, name, coverImgUrl, subscribedCount, tags, id } = playlist;
     // 处理描述
     handleDescribe(description);
     Object.assign(detail, {
+      // ID
+      id,
       // 封面
       coverImgUrl,
       // 创建者信息
@@ -154,15 +192,15 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/mixins.scss";
+
 .detail {
   display: flex;
-  margin: 0 auto;
   padding: 15px 0px 30px;
-  width: 80%;
   color: var(--font-color);
   font-size: 14px;
 
-  gap: 30px;
+  gap: 20px;
 
   .content {
     display: flex;
@@ -171,6 +209,11 @@ onMounted(async () => {
     flex-flow: column nowrap;
     justify-content: space-between;
   }
+}
+
+// 标题
+.title {
+  @include oneOmit;
 }
 
 // 创建人
@@ -189,8 +232,10 @@ onMounted(async () => {
 // 操作
 .operate {
   display: flex;
+  flex-flow: row wrap;
+  min-width: calc(130px * 2 + 15px);
 
-  gap: 10px;
+  gap: 10px 15px;
 
   li {
     display: flex;
@@ -203,6 +248,7 @@ onMounted(async () => {
     white-space: nowrap;
     cursor: pointer;
 
+    user-select: none;
     gap: 5px;
 
     span {

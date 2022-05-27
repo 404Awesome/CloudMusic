@@ -1,6 +1,6 @@
 <!-- 发现音乐 - 歌单 -->
 <template>
-  <div class="songList">
+  <div class="songList wrapper">
     <!-- 分类列表 -->
     <CategoryList :isLoading="isLoading" @selected="cateSelected" />
 
@@ -46,8 +46,6 @@ let loadList = async (offset: number) => {
 
 <style lang="scss" scoped>
 .songList {
-  margin: 0 auto;
   padding: 15px 0px 30px;
-  width: 80%;
 }
 </style>

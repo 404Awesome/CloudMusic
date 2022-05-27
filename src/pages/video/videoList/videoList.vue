@@ -1,6 +1,6 @@
 <!-- Video -->
 <template>
-  <div class="videoList">
+  <div class="wrapper videoList">
     <!-- 分类导航 -->
     <AllTypeSelect @selected="typeSelected" defaultType="全部视频" :hotTypeList="hotTypeList" />
   </div>
@@ -26,7 +26,6 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .videoList {
-  margin: 15px auto 0px;
-  width: 80%;
+  padding-top: 15px;
 }
 </style>

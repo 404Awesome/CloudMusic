@@ -1,6 +1,6 @@
 <!-- 全部mv排行榜 -->
 <template>
-  <div class="ranking">
+  <div class="wrapper ranking">
     <MVRanking :limit="50">
       <p class="title">
         <span>最近更新: 今天</span>
@@ -23,10 +23,7 @@ import MVRanking from "@/components/content/mvRanking/mvRanking.vue";
 
 <style lang="scss" scoped>
 .ranking {
-  margin: 0px auto;
-  margin-top: 15px;
-  padding-bottom: 30px;
-  width: 80%;
+  padding: 15px 0px 30px;
 
   .title {
     color: var(--font-color);

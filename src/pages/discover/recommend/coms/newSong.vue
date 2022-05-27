@@ -1,6 +1,6 @@
 <!-- 个性推荐 最新音乐 -->
 <template>
-  <ul class="newSong">
+  <ul gap-5 lg:gap-7 grid-cols-2 lg:grid-cols-3 class="newSong">
     <li @dblclick="playSong(item)" v-for="(item, index) in newSong" :key="item.id">
       <div class="frontCover">
         <el-image :src="item.picUrl" />
@@ -46,9 +46,6 @@ let playSong = async (songInfo: any) => {
 .newSong {
   display: grid;
   margin-top: 15px;
-
-  gap: 20px 30px;
-  grid-template-columns: repeat(3, 1fr);
 
   li {
     display: flex;

@@ -13,6 +13,17 @@
   --sideNavBarWidth: 230px;
 }
 
+/* 容器 */
+.wrapper {
+  margin: 0 auto;
+  width: 80%;
+}
+@media screen and (max-width: 960px) {
+  .wrapper {
+    width: 95%;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;

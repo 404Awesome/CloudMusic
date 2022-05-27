@@ -5,7 +5,7 @@
     <Carousel :data="banner" />
 
     <!-- 渲染列表 -->
-    <div class="renderList" v-for="item in renderList" :key="item.path">
+    <div class="wrapper" pt-7 v-for="item in renderList" :key="item.path">
       <!-- 导航栏 -->
       <NavBar :path="item.path" :title="item.title" />
       <!-- 动态组件 -->
@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script setup lang="ts" name="recommend">
+<script setup lang="ts">
 import Carousel from "@/components/common/carousel/carousel.vue";
 import NavBar from "@/components/common/navBar/navBar.vue";
 import SongList from "./coms/songList.vue";
@@ -60,10 +60,3 @@ onMounted(async () => {
   banner.push(...banners);
 });
 </script>
-
-<style lang="scss" scoped>
-.renderList {
-  margin: 30px auto 0px;
-  width: 80%;
-}
-</style>

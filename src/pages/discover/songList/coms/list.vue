@@ -1,9 +1,10 @@
 <!-- 歌单列表 -->
 <template>
-  <ul class="list" element-loading-text="Loading..." v-loading="isLoading">
+  <ul gap-5 lg:gap-7 grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="list" element-loading-text="Loading..."
+    v-loading="isLoading">
     <li @click="$router.push(`/songListDetal/${item.id}`)" v-for="item in songList" :key="item.id">
       <div class="cover">
-        <el-image :src="item.coverImgUrl" />
+        <el-image fit-="cover" lazy :src="item.coverImgUrl" />
         <p class="count">
           <span class="icon i-eva:arrow-right-outline"></span>
           <span>{{ handleCount(item.playCount) }}</span>
@@ -40,8 +41,12 @@ const props = defineProps({
 
 let { isLoading, songList } = toRefs(props);
 
+// 当前播放的歌单ID
+let currentID = ref(0);
 // 添加歌单列表到播放列表
 let addSongList = async (id: number) => {
+  if (currentID.value == id) return null;
+  currentID.value = id;
   let { code, songs }: any = await Discover.getPlayListTrackAll(id, 20, 0);
   if (code == 200) {
     let songList = handleSongList(songs);
@@ -55,9 +60,6 @@ let addSongList = async (id: number) => {
   display: grid;
   margin: 20px 0px;
   min-height: 200px;
-
-  grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
 
   li {
     overflow: hidden;

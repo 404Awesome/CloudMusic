@@ -62,7 +62,7 @@ watch(() => props.currentType, (newVal) => {
     }
 
     p {
-      padding: 3px 10px;
+      padding: 3px 6px;
       color: var(--font-color);
       text-align: center;
       white-space: nowrap;

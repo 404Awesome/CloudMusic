@@ -5,8 +5,15 @@
   flex-wrap: $wrap;
 }
 
+// 单行省略
+@mixin oneOmit {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 // 多行省略
-@mixin MultilineOmit($line: 2) {
+@mixin multilineOmit($line: 2) {
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;

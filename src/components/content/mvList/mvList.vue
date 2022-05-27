@@ -1,7 +1,8 @@
 <!-- mv列表 -->
 <template>
-  <ul class="mvList" element-loading-text="Loading..." v-loading="loading">
-    <li v-for="item in list" :key="item.id">
+  <ul gap-5 lg:gap-7 grid-cols-2 md:grid-cols-3 lg-grid-cols-4 class="mvList" element-loading-text="Loading..."
+    v-loading="loading">
+    <li overflow-hidden v-for="item in list" :key="item.id">
       <MVlistItem v-bind="item" />
     </li>
   </ul>
@@ -27,12 +28,5 @@ let { list, loading } = toRefs(props);
 .mvList {
   display: grid;
   min-height: 150px;
-
-  gap: 30px;
-  grid-template-columns: repeat(4, 1fr);
-
-  li {
-    overflow: hidden;
-  }
 }
 </style>

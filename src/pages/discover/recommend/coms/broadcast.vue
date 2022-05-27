@@ -1,6 +1,6 @@
 <!-- 个性推荐 独家放送 -->
 <template>
-  <div class="broadcast">
+  <div gap-5 lg:gap-7 grid-cols-2 lg:grid-cols-4 class="broadcast">
     <el-card @click="$router.push(`/mvDetail/${item.id}`)" shadow="never" v-for="item in broadcastData" :key="item.id">
       <span class="icon i-heroicons-outline:play"></span>
       <el-image :src="item.picUrl" fit="cover" />
@@ -24,10 +24,8 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .broadcast {
-  display: flex;
+  display: grid;
   margin-top: 15px;
-
-  gap: 30px;
 
   :deep(.el-card) {
     background-color: #f5f7fa;

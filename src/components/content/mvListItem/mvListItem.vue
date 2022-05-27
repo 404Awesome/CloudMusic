@@ -164,7 +164,7 @@ let { id, cover, artists, name, playCount, isFlex } = markRaw(props);
       .title {
         white-space: normal;
 
-        @include MultilineOmit(2);
+        @include multilineOmit(2);
       }
     }
   }

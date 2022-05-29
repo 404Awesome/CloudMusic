@@ -33,7 +33,7 @@ let renderList = reactive([
   },
   {
     title: "独家放送",
-    path: "/discover/broadcast",
+    path: "/broadcast",
     component: shallowRef(Broadcast),
   },
   {

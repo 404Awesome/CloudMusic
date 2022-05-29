@@ -4,10 +4,7 @@
     <!-- 类型列表 -->
     <ul class="type">
       <li v-for="item in typeList" :key="item.title">
-        <!-- 标题 -->
-        <span class="title">{{ item.title }}:</span>
-        <!-- 类型 -->
-        <TypeSelect @selected="(type: string) => currentType[item.name] = type" :loading="isLoading"
+        <TypeSelect @selected="(type: string) => currentType[item.name] = type" :title="item.title" :loading="isLoading"
           :currentType="currentType[item.name]" :typeList="item.type" />
       </li>
     </ul>

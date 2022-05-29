@@ -1,6 +1,6 @@
 <!-- MV -->
 <template>
-  <div class="wrapper" pb-8>
+  <div class="wrapper" pt-4 pb-8>
     <!-- 最新mv -->
     <NewMV />
 

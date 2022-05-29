@@ -96,4 +96,12 @@ export const Discover = {
       params: { cat, offset, limit }
     })
   },
+  // 歌手列表
+  getArtistList(type: string, area: string, initial: string, offset: number = 0, limit: number = 30) {
+    return Request({
+      url: "/artist/list",
+      method: "GET",
+      params: { type, area, initial, offset, limit }
+    })
+  },
 }

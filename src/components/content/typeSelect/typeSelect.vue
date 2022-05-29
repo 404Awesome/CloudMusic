@@ -1,17 +1,26 @@
 <!-- 类型选择组件 -->
 <template>
-  <ul class="typeSelect">
-    <li v-for="item in typeList" :key="item">
-      <p @click="selectType(item)" :class="{ active: currentType === item }">
-        {{ item }}
-      </p>
-    </li>
-  </ul>
+  <div class="typeSelect">
+    <!-- 标题 -->
+    <span class="title">{{ title.length ? `${title}:` : '' }}</span>
+    <!-- 类型列表 -->
+    <ul class="list">
+      <li v-for="item in typeList" :key="item">
+        <p @click="selectType(item)" :class="{ active: currentType === item }">
+          {{ item }}
+        </p>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { PropType } from "vue";
 let props = defineProps({
+  title: {
+    type: String,
+    default: ""
+  },
   typeList: {
     type: Array as PropType<string[]>,
     required: true,
@@ -24,6 +33,7 @@ let props = defineProps({
 });
 let typeList = toRaw(props.typeList);
 let loading = toRef(props, "loading");
+let title = toRef(props, "title");
 
 // 当前类型
 let currentType = ref<string>(props.currentType || typeList[0]);
@@ -43,16 +53,30 @@ watch(() => props.currentType, (newVal) => {
 </script>
 
 <style lang="scss" scoped>
-.typeSelect {
+.typeSelect,
+.list {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
 
   user-select: none;
   gap: 5px;
+}
+
+.typeSelect {
+  color: var(--font-color);
+  font-size: 14px;
+
+  .title {
+    padding-top: 3px;
+  }
+}
+
+.list {
+  align-items: center;
+  flex: 1;
+  flex-flow: row wrap;
+
 
   li {
-    flex: 1;
     padding-right: 5px;
     border-right: 1px solid #eee;
 
@@ -63,10 +87,8 @@ watch(() => props.currentType, (newVal) => {
 
     p {
       padding: 3px 6px;
-      color: var(--font-color);
       text-align: center;
       white-space: nowrap;
-      font-size: 14px;
       cursor: pointer;
 
       &.active {

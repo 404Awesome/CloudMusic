@@ -1,7 +1,7 @@
 <!-- MV相关 -->
 <template>
   <div class="mvDetails" v-if="status">
-    <div>
+    <div col-span-full lg:col-span-1>
       <!-- MV视频 -->
       <PlyrVideo :source="source" />
       <!-- 详情 -->
@@ -11,7 +11,7 @@
     </div>
 
     <!-- 相关推荐 -->
-    <div>
+    <div hidden lg:block>
       <Relevant :id="mvid!" />
     </div>
   </div>

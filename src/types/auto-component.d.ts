@@ -24,6 +24,7 @@ declare module '@vue/runtime-core' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    InfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
     Lottie: typeof import('./../components/common/lottie/lottie.vue')['default']
     MvList: typeof import('./../components/content/mvList/mvList.vue')['default']

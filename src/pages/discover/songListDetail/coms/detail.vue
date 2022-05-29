@@ -79,7 +79,7 @@
         </section>
 
         <!-- 更多描述 -->
-        <section whitespace-pre-wrap v-show="showMore" class="text">{{ describe.more || "" }}</section>
+        <section whitespace-pre-wrap leading-6 v-show="showMore" class="text">{{ describe.more || "" }}</section>
       </div>
     </div>
 
@@ -137,7 +137,6 @@ let handleDescribe = (desc: string) => {
 let playAll = async () => {
   let { code, songs }: any = await Discover.getPlayListTrackAll(detail.id, 20, 0);
   if (code == 200) {
-    console.log(songs);
     let songList = handleSongList(songs);
     store.addPlayList(songList);
   }
@@ -303,7 +302,6 @@ onMounted(async () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    white-space: nowrap;
 
     gap: 15px;
 

@@ -66,16 +66,17 @@ const routes: RouteRecordRaw[] = [
       path: "dailySongs",
       component: DailySongs,
       meta: { title: "每日推荐", auth: true }
-    }, {
-      path: "broadcast",
-      meta: { title: "独家放送" },
-      component: Broadcast
     }]
   },
   {
     path: "/songListDetal/:id",
-    meta: { title: "歌单详情" },
+    meta: { title: "歌单详情", scroll: true },
     component: SongListDetail
+  },
+  {
+    path: "/broadcast",
+    meta: { title: "独家放送" },
+    component: Broadcast
   }
 ];
 

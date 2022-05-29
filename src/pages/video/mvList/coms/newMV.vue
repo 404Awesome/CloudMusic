@@ -1,9 +1,9 @@
 <!-- 最新MV -->
 <template>
-  <div mt-4>
+  <div>
     <!-- 导航栏 -->
     <nav flex mb-4>
-      <NavBar title="最新MV" path="/allMV/?area=内地&type=全部&order=最新" />
+      <NavBar flex-1 title="最新MV" path="/allMV/?area=内地&type=全部&order=最新" />
       <TypeSelect :loading="isLoading" :typeList="areaList" @selected="selected" />
     </nav>
 

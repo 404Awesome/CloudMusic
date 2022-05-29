@@ -11,7 +11,7 @@
     </div>
 
     <!-- 详情 -->
-    <div class="detail">
+    <div hidden md:block class="detail">
       <!-- 信息 -->
       <div class="info">
         <p @click="openSongDetail" class="name">

@@ -15,6 +15,7 @@
 
 /* 容器 */
 .wrapper {
+  overflow: hidden;
   margin: 0 auto;
   width: 80%;
 }

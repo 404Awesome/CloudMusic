@@ -11,12 +11,13 @@
       <PlayBar />
     </section>
     <section class="view">
-      <router-view v-slot="{ Component }">
-        <keep-alive :exclude="['mvDetails', 'playListDetail', 'allMV']">
-          <el-scrollbar :always="true" @scroll="scroll">
-            <component :scrollTop='scrollTop' :is="Component" />
-          </el-scrollbar>
-        </keep-alive>
+      <router-view v-slot="{ Component, route }">
+        <el-scrollbar @scroll="scroll">
+          <keep-alive :exclude="['mvDetails', 'playListDetail', 'allMV']">
+            <component v-if="route.meta.scroll" :scrollTop="scrollTop" :is="Component" />
+            <component v-else :key="route.fullPath" :is="Component" />
+          </keep-alive>
+        </el-scrollbar>
       </router-view>
     </section>
   </main>

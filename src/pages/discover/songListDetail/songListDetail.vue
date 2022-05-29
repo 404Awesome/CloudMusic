@@ -2,7 +2,7 @@
 <template>
   <div class="wrapper">
     <!-- 歌单描述 -->
-    <Detail :scrollTop="scrollTop">
+    <Detail>
       <template #fold="{ title, height, collection, share, download, playAll }">
         <div :class="{ hidden: scrollTop <= height }" class="detailFold">
           <div class="content">
@@ -47,7 +47,7 @@ import SongList from "./coms/songList.vue";
 import Comment from "./coms/comment.vue";
 import Collector from "./coms/collector.vue";
 const props = defineProps(['scrollTop']);
-const scrollTop = toRef(props, 'scrollTop')
+let scrollTop = toRef(props, 'scrollTop');
 </script>
 
 <style lang="scss" scoped>

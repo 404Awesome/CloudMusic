@@ -8,6 +8,7 @@ declare module '@vue/runtime-core' {
     AllTypeSelect: typeof import('./../components/content/allTypeSelect/allTypeSelect.vue')['default']
     Carousel: typeof import('./../components/common/carousel/carousel.vue')['default']
     CommentList: typeof import('./../components/content/commentList/commentList.vue')['default']
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']

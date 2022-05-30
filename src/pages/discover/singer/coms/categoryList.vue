@@ -1,6 +1,6 @@
 <!-- 类型列表 -->
 <template>
-  <div class="categoryList">
+  <div class="categoryList" v-loading="isLoading" element-loading-spinner="null">
     <TypeSelect v-for="item in typeList" :key="item.title" @selected="item.selected" title="语种" :typeList="item.list" />
   </div>
 </template>
@@ -8,12 +8,21 @@
 <script setup lang="ts">
 import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
 const emit = defineEmits(['selected']);
+const props = defineProps({
+  isLoading: {
+    type: Boolean,
+    default: false
+  }
+})
+let isLoading = toRef(props, 'isLoading');
 
+// 当前类型
 let currentVal = reactive({
   area: '-1',
   type: '-1',
   initial: '-1'
 });
+// 类型列表
 let typeList = reactive([
   {
     title: "语种",

@@ -136,6 +136,7 @@ let scrollTop = toRef(props, 'scrollTop');
 
   &.hidden {
     opacity: 0;
+    transition: all .2s ease-out;
     transform: translateY(-80px);
   }
 }

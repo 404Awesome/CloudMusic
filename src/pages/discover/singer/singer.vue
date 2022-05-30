@@ -2,18 +2,24 @@
 <template>
   <div pt-4 class="wrapper">
     <!-- 分类列表 -->
-    <categoryList @selected="cateSelected" />
+    <categoryList @selected="cateSelected" :isLoading="isLoading" />
 
     <!-- 歌手列表 -->
-    <ul v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled">
-      <li></li>
+    <ul gap-5 lg:gap-7 grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 grid-row-auto class="singerList"
+      v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled">
+      <li v-for="item in artistsList" :key="item.id">
+        <el-avatar :size="120" shape="square" :src="item.picUrl" />
+        <p class="info">
+          <span class="name">{{ item.name }}</span>
+        </p>
+      </li>
     </ul>
-
-    <!-- 分割线 -->
-    <el-divider>
-      <span class="tip">{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
-    </el-divider>
   </div>
+
+  <!-- 分割线 -->
+  <el-divider>
+    <span class="tip">{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
+  </el-divider>
 </template>
 
 <script setup lang="ts">
@@ -26,33 +32,69 @@ let offset = ref(0);
 let limit = 30;
 // 是否禁用加载
 let disabled = ref(false);
+// 是否正在加载
+let isLoading = ref(false);
 
 // 分类已选择
+let typeList = reactive({
+  area: "",
+  type: "",
+  initial: ""
+})
 let cateSelected = (category: any) => {
-  let { area, type, initial } = category;
   offset.value = 0;
-  loadData(type, area, initial);
+  artistsList.splice(0, artistsList.length);
+  Object.assign(typeList, category);
+  loadData();
 }
 
 // 歌手列表
 let artistsList = reactive<any>([]);
 // 加载数据
-let loadData = async (type: string, area: string, initial: string) => {
-  console.log(123);
-
-
+let loadData = async () => {
+  isLoading.value = true;
+  let { area, type, initial } = toRaw(typeList);
   let { artists, code, more }: any = await Discover.getArtistList(type, area, initial, offset.value, limit);
   if (code == 200) {
     artistsList.push(...artists);
-    console.log(artistsList);
+    offset.value = artistsList.length;
 
     // 无法加载更多
     if (!more) {
       disabled.value = true;
     }
   }
+  isLoading.value = false;
 }
 </script>
 
 <style lang="scss" scoped>
+.singerList {
+  margin-top: 15px;
+  display: grid;
+
+  li {
+    cursor: pointer;
+
+    &:hover .info .name {
+      color: var(--theme-bg-color);
+    }
+
+    .info {
+      margin-top: 5px;
+
+      .name {
+        font-size: 15px;
+        color: var(--font-color);
+      }
+    }
+  }
+}
+
+// 提示信息
+.tip {
+  padding-bottom: 15px;
+  color: var(--font-color);
+  font-size: 17px;
+}
 </style>

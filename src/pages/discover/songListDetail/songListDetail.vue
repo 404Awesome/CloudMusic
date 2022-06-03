@@ -1,44 +1,46 @@
 <!-- 歌单详情 -->
 <template>
-  <div class="wrapper">
-    <!-- 歌单描述 -->
-    <Detail>
-      <template #fold="{ title, height, collection, share, download, playAll }">
-        <div :class="{ hidden: scrollTop <= height }" class="detailFold">
-          <div class="content">
-            <h1 class="title">{{ title }}</h1>
-            <ul class="operate">
-              <li @click.once="playAll">
-                <span class="icon i-eva:arrow-right-fill"></span>
-              </li>
-              <li @click="collection">
-                <span class="icon i-heroicons-outline:folder-add"></span>
-              </li>
-              <li @click="share">
-                <span class="icon i-heroicons-outline:external-link"></span>
-              </li>
-              <li @click="download">
-                <span class="icon i-eva:cloud-download-outline"></span>
-              </li>
-            </ul>
+  <el-scrollbar @scroll="scroll">
+    <div class="wrapper">
+      <!-- 歌单描述 -->
+      <Detail>
+        <template #fold="{ title, height, collection, share, download, playAll }">
+          <div :class="{ hidden: scrollTop <= height }" class="detailFold">
+            <div class="content">
+              <h1 class="title">{{ title }}</h1>
+              <ul class="operate">
+                <li @click.once="playAll">
+                  <span class="icon i-eva:arrow-right-fill"></span>
+                </li>
+                <li @click="collection">
+                  <span class="icon i-heroicons-outline:folder-add"></span>
+                </li>
+                <li @click="share">
+                  <span class="icon i-heroicons-outline:external-link"></span>
+                </li>
+                <li @click="download">
+                  <span class="icon i-eva:cloud-download-outline"></span>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </template>
-    </Detail>
+        </template>
+      </Detail>
 
-    <!-- 歌曲详情 -->
-    <el-tabs class="tabs">
-      <el-tab-pane label="歌曲列表">
-        <SongList />
-      </el-tab-pane>
-      <el-tab-pane label="评论">
-        <Comment />
-      </el-tab-pane>
-      <el-tab-pane label="收藏者">
-        <Collector />
-      </el-tab-pane>
-    </el-tabs>
-  </div>
+      <!-- 歌曲详情 -->
+      <el-tabs class="tabs">
+        <el-tab-pane label="歌曲列表">
+          <SongList />
+        </el-tab-pane>
+        <el-tab-pane label="评论">
+          <Comment />
+        </el-tab-pane>
+        <el-tab-pane label="收藏者">
+          <Collector />
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+  </el-scrollbar>
 </template>
 
 <script setup lang="ts" name="playListDetail">
@@ -46,8 +48,13 @@ import Detail from "./coms/detail.vue";
 import SongList from "./coms/songList.vue";
 import Comment from "./coms/comment.vue";
 import Collector from "./coms/collector.vue";
-const props = defineProps(['scrollTop']);
-let scrollTop = toRef(props, 'scrollTop');
+import { useThrottleFn } from "@vueuse/core";
+
+// 视图滚动事件
+let scrollTop = ref(0);
+let scroll = useThrottleFn((event) => {
+  scrollTop.value = event.scrollTop;
+}, 100);
 </script>
 
 <style lang="scss" scoped>

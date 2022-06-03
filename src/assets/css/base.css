@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "MiSans";
+  src: url("../font/MiSans-Regular.ttf");
+}
+
 :root {
   /* 主题色 */
   --theme-bg-color: #ff3f34;
@@ -29,6 +34,7 @@ body {
   margin: 0;
   padding: 0;
   color: var(--font-color);
+ font-family: 'MiSans', sans-serif;
 }
 
 img,

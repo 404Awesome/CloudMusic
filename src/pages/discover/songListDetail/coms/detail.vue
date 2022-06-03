@@ -3,7 +3,7 @@
   <div v-if="detail.name">
     <div ref="detailEl" class="detail">
       <!-- 封面 -->
-      <el-image flex-none h-60 rounded :src="detail.coverImgUrl" fit="cover" />
+      <el-image flex-none h-60 w-60 rounded :src="detail.coverImgUrl" fit="cover" />
 
       <!-- 详情 -->
       <div flex-1>

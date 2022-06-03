@@ -1,6 +1,6 @@
 <!-- 相关视频 -->
 <template>
-  <div overflow-hidden>
+  <div>
     <!-- 标题 -->
     <h4 class="title">相关推荐</h4>
     <!-- 列表 -->

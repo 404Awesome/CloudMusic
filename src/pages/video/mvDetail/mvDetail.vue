@@ -74,5 +74,9 @@ watch(route, (val) => {
 
   gap: 30px;
   grid-template-columns: 2fr 1fr;
+
+  &>div {
+    overflow: hidden;
+  }
 }
 </style>

@@ -11,11 +11,10 @@
       <PlayBar />
     </section>
     <section class="view">
-      <router-view v-slot="{ Component, route }">
-        <el-scrollbar @scroll="scroll">
+      <router-view v-slot="{ Component }">
+        <el-scrollbar>
           <keep-alive :exclude="['mvDetails', 'playListDetail', 'allMV']">
-            <component v-if="route.meta.scroll" :scrollTop="scrollTop" :is="Component" />
-            <component v-else :key="route.fullPath" :is="Component" />
+            <component :is="Component" />
           </keep-alive>
         </el-scrollbar>
       </router-view>
@@ -27,16 +26,9 @@
 import TopNavBar from "./topNavBar/topNavBar.vue";      // 顶部导航栏
 import SideNavBar from "./sideNavBar/sideNavBar.vue";   // 侧边导航栏
 import PlayBar from "./playBar/playBar.vue";            // 播放栏
-import { useThrottleFn } from "@vueuse/core";
 import { useMainStore } from "store/index";
 const store = useMainStore();
 let { isFolding } = toRefs(store);
-
-// 视图滚动事件
-let scrollTop = ref(0);
-let scroll = useThrottleFn((event) => {
-  scrollTop.value = event.scrollTop;
-}, 200);
 </script>
 
 <style lang="scss" scoped>

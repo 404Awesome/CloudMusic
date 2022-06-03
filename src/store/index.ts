@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { useStorage, StorageSerializers } from "@vueuse/core";
+import useStore from "element-plus/es/components/table/src/store";
 
 // 歌曲信息
 export interface SongInfo {
@@ -33,6 +34,8 @@ export const useMainStore = defineStore("main", {
       theme: useStorage<string>("theme", '#ff3f34'),
       // 是否折叠侧边栏
       isFolding: useStorage<boolean>("isFolding", false, sessionStorage),
+      // 音量大小
+      volume: useStorage<number>("volume", 50, localStorage),
       // 播放列表
       playList: useStorage<SongInfo[]>("playList", [], sessionStorage),
       // 当前播放歌曲

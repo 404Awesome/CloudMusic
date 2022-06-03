@@ -65,7 +65,7 @@ let audioPlyr = ref<Plyr | null>(null);
 // 播放状态
 let playing = ref<boolean>(false);
 // 音量
-let volume = ref<number>(50);
+let volume = ref<number>(store.volume);
 // 歌曲持续时间
 let songDuration = ref<number>(0);
 // 歌曲当前播放时间
@@ -148,16 +148,19 @@ let changeSong = useDebounceFn((control: boolean) => {
   }
 }, 500);
 // 改变音量
-let volumeChange = (volume: number) => {
-  audioPlyr.value!.volume = volume / 100;
+let volumeChange = (currentVolume: number) => {
+  audioPlyr.value!.volume = currentVolume / 100;
+  store.volume = currentVolume;
 }
 // 设置静音
 let setMute = () => {
   if (volume.value == 0) {
     volume.value = 50;
+    store.volume = 50;
     audioPlyr.value!.volume = 0.5;
   } else {
     volume.value = 0;
+    store.volume = 0;
     audioPlyr.value!.volume = 0;
   }
 }

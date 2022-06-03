@@ -22,6 +22,8 @@ let RadioStation = () => import("@/pages/discover/radioStation/radioStation.vue"
 let DailySongs = () => import("@/pages/discover/dailySongs/dailySongs.vue")
 let Broadcast = () => import("@/pages/discover/broadcast/broadcast.vue");
 let SongListDetail = () => import("@/pages/discover/songListDetail/songListDetail.vue");
+let SingerDetail = () => import("@/pages/discover/singerDetail/singerDetail.vue");
+
 
 // 默认为发现音乐
 const routes: RouteRecordRaw[] = [
@@ -77,6 +79,11 @@ const routes: RouteRecordRaw[] = [
     path: "/broadcast",
     meta: { title: "独家放送" },
     component: Broadcast
+  },
+  {
+    path: "/singerDetail",
+    meta: { title: "歌手详情" },
+    component: SingerDetail
   }
 ];
 

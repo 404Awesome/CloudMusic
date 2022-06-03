@@ -7,7 +7,7 @@
     <!-- 歌手列表 -->
     <ul gap-5 lg:gap-7 grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 grid-row-auto class="singerList"
       v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled">
-      <li v-for="item in artistsList" :key="item.id">
+      <li @click="$router.push({ path: '/singerDetail', query: item })" v-for="item in artistsList" :key="item.id">
         <el-avatar :size="120" shape="square" :src="item.picUrl" />
         <p class="info">
           <span class="name">{{ item.name }}</span>

@@ -6,6 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AllTypeSelect: typeof import('./../components/content/allTypeSelect/allTypeSelect.vue')['default']
+    BroadcastItem: typeof import('./../components/content/broadcastItem/broadcastItem.vue')['default']
     Carousel: typeof import('./../components/common/carousel/carousel.vue')['default']
     CommentList: typeof import('./../components/content/commentList/commentList.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']

@@ -1,76 +1,21 @@
 <!-- 个性推荐 独家放送 -->
 <template>
-  <div gap-5 lg:gap-7 grid-cols-2 lg:grid-cols-4 class="broadcast">
-    <el-card @click="$router.push(`/mvDetail/${item.id}`)" shadow="never" v-for="item in broadcastData" :key="item.id">
-      <span class="icon i-heroicons-outline:play"></span>
-      <el-image :src="item.picUrl" fit="cover" />
-      <p>{{ item.copywriter }}</p>
-    </el-card>
+  <div grid mt-4 gap-5 lg:gap-7 grid-cols-2 lg:grid-cols-4>
+    <BroadcastItem v-for="item in broadcastList" :key="item.id" :id="item.id" :picUrl="item.picUrl"
+      :copywriter="item.copywriter" />
   </div>
 </template>
 
 <script setup lang="ts">
+import BroadcastItem from "@/components/content/broadcastItem/broadcastItem.vue";
 import { Discover } from "@/api/modules/discover";
 
-let broadcastData = reactive<any>([]);
+let broadcastList = reactive<any>([]);
 onMounted(async () => {
   let { code, result }: any = await Discover.getBroadcastList(0, 4);
   // 获取成功
   if (code == 200) {
-    broadcastData.push(...result);
+    broadcastList.push(...result);
   }
 });
 </script>
-
-<style lang="scss" scoped>
-.broadcast {
-  display: grid;
-  margin-top: 15px;
-
-  :deep(.el-card) {
-    background-color: #f5f7fa;
-    cursor: pointer;
-
-    .el-card__body {
-      position: relative;
-      padding: 0px;
-
-      .icon {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 99;
-        color: #fff;
-        font-size: 20px;
-        opacity: 0.5;
-      }
-
-      p {
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-box-orient: vertical;
-        margin: 10px;
-        color: var(--font-color);
-        text-overflow: ellipsis;
-        font-size: 14px;
-
-        -webkit-line-clamp: 2;
-      }
-    }
-
-    &:hover {
-      transform: translateY(-7px);
-
-      .el-card__body {
-        .icon {
-          opacity: 1;
-        }
-
-        p {
-          color: var(--theme-bg-color);
-        }
-      }
-    }
-  }
-}
-</style>

@@ -54,6 +54,7 @@ let cateSelected = (category: any) => {
 let artistsList = reactive<any>([]);
 // 加载数据
 let loadData = async () => {
+  if (isLoading.value) return;
   isLoading.value = true;
   let { area, type, initial } = toRaw(typeList);
   let { artists, code, more }: any = await Discover.getArtistList(type, area, initial, offset.value, limit);

@@ -1,4 +1,5 @@
 import Request from "@/api";
+import { Ref } from "vue";
 
 // 发现音乐相关api
 export const Discover = {
@@ -102,6 +103,22 @@ export const Discover = {
       url: "/artist/list",
       method: "GET",
       params: { type, area, initial, offset, limit }
+    })
+  },
+  // 获取歌手专辑
+  getArtistAlbum(id: number, offset: number = 0, limit: number = 30) {
+    return Request({
+      url: "/artist/album",
+      method: "GET",
+      params: { id, offset, limit }
+    })
+  },
+  // 获取专辑内容
+  getAlbum(id: number) {
+    return Request({
+      url: "/album",
+      method: "GET",
+      params: { id }
     })
   },
 }

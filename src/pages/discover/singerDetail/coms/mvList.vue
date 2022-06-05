@@ -1,15 +1,15 @@
-<!-- 歌单收藏者 -->
+<!-- 歌手详情 MV列表 -->
 <template>
   <div>
-    <p>收藏者</p>
+    <p>MV</p>
   </div>
 </template>
 
 <script setup lang="ts">
 let props = defineProps(['activeComs']);
 
-// 收藏者列表
-let collectorList = reactive([]);
+// MV列表
+let mvList = reactive([]);
 
 // 加载数据
 let loadData = () => {
@@ -18,7 +18,7 @@ let loadData = () => {
 
 // 监听当前组件的激活状态
 watch(() => props.activeComs, (newVal) => {
-  if (newVal == "Collector" && collectorList.length == 0) loadData();
+  if (newVal == "MV" && mvList.length == 0) loadData();
 })
 </script>
 

@@ -5,7 +5,7 @@
       <!-- 歌单描述 -->
       <Detail>
         <template #fold="{ title, height, collection, share, download, playAll }">
-          <div :class="{ hidden: scrollTop <= height }" class="detailFold">
+          <div :class="{ hidden: scrollTop <= height, disabled: activeComs !== 'SongList' }" class="detailFold">
             <div class="content">
               <h1 class="title">{{ title }}</h1>
               <ul class="operate">
@@ -28,15 +28,9 @@
       </Detail>
 
       <!-- 歌曲详情 -->
-      <el-tabs class="tabs">
-        <el-tab-pane label="歌曲列表">
-          <SongList />
-        </el-tab-pane>
-        <el-tab-pane label="评论">
-          <Comment />
-        </el-tab-pane>
-        <el-tab-pane label="收藏者">
-          <Collector />
+      <el-tabs v-model="activeComs">
+        <el-tab-pane v-for="item in tabPaneList" :key="item.name" :label="item.label" :name="item.name">
+          <component :activeComs="activeComs" :is="item.component" />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -50,6 +44,27 @@ import Comment from "./coms/comment.vue";
 import Collector from "./coms/collector.vue";
 import { useThrottleFn } from "@vueuse/core";
 
+// 当前激活的组件
+let activeComs = ref("SongList");
+// tab列表
+let tabPaneList = reactive([
+  {
+    label: "歌曲列表",
+    name: "SongList",
+    component: shallowRef(SongList)
+  },
+  {
+    label: "评论",
+    name: "Comment",
+    component: shallowRef(Comment)
+  },
+  {
+    label: "收藏者",
+    name: "Collector",
+    component: shallowRef(Collector)
+  }
+]);
+
 // 视图滚动事件
 let scrollTop = ref(0);
 let scroll = useThrottleFn((event) => {
@@ -58,26 +73,6 @@ let scroll = useThrottleFn((event) => {
 </script>
 
 <style lang="scss" scoped>
-.tabs {
-  :deep(.el-tabs__header) {
-    margin: 0px;
-  }
-
-  :deep(.el-tabs__nav) {
-    .el-tabs__item {
-      color: var(--font-color);
-
-      &.is-active {
-        color: var(--theme-bg-color);
-      }
-    }
-
-    .el-tabs__active-bar {
-      background-color: var(--theme-bg-color);
-    }
-  }
-}
-
 // 详情折叠
 .detailFold {
   position: fixed;
@@ -145,6 +140,10 @@ let scroll = useThrottleFn((event) => {
     opacity: 0;
     transition: all .2s ease-out;
     transform: translateY(-80px);
+  }
+
+  &.disabled {
+    display: none !important;
   }
 }
 

@@ -34,13 +34,15 @@ let limit = 30;
 let disabled = ref(false);
 // 是否正在加载
 let isLoading = ref(false);
-
-// 分类已选择
+// 类型列表
 let typeList = reactive({
   area: "",
   type: "",
   initial: ""
 })
+
+
+// 分类已选择
 let cateSelected = (category: any) => {
   offset.value = 0;
   artistsList.splice(0, artistsList.length);
@@ -70,8 +72,8 @@ let loadData = async () => {
 
 <style lang="scss" scoped>
 .singerList {
-  margin-top: 15px;
   display: grid;
+  margin-top: 15px;
 
   li {
     cursor: pointer;
@@ -84,8 +86,8 @@ let loadData = async () => {
       margin-top: 5px;
 
       .name {
-        font-size: 15px;
         color: var(--font-color);
+        font-size: 15px;
       }
     }
   }

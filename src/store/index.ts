@@ -31,7 +31,7 @@ export const useMainStore = defineStore("main", {
       // 暗夜模式
       isDark: useStorage<boolean>("isDark", false, sessionStorage),
       // 主题色
-      theme: useStorage<string>("theme", '#ff3f34'),
+      theme: useStorage<string>("theme", '#d95047'),
       // 是否折叠侧边栏
       isFolding: useStorage<boolean>("isFolding", false, sessionStorage),
       // 音量大小

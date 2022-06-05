@@ -13,7 +13,7 @@
     <section class="view">
       <router-view v-slot="{ Component }">
         <el-scrollbar>
-          <keep-alive :exclude="['mvDetails', 'playListDetail', 'allMV']">
+          <keep-alive :exclude="excludeList">
             <component :is="Component" />
           </keep-alive>
         </el-scrollbar>
@@ -29,6 +29,8 @@ import PlayBar from "./playBar/playBar.vue";            // 播放栏
 import { useMainStore } from "store/index";
 const store = useMainStore();
 let { isFolding } = toRefs(store);
+// keepAlive排除路由列表
+let excludeList = reactive<string[]>(['mvDetails', 'playListDetail', 'allMV', 'singerDetail']);
 </script>
 
 <style lang="scss" scoped>

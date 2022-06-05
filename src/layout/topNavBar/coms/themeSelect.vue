@@ -6,9 +6,9 @@
     </template>
     <template #default>
       <ul class="themeSelect" @click="themeSelect">
-        <li data-color="#ff3f34"></li>
-        <li data-color="#575fcf"></li>
-        <li data-color="#6ab04c"></li>
+        <li bg-color="#d95047"></li>
+        <li bg-color="#575fcf"></li>
+        <li bg-color="#fa8231"></li>
       </ul>
     </template>
   </el-popover>
@@ -20,7 +20,7 @@ const store = useMainStore();
 
 // 主题选择
 let themeSelect = (event: Event) => {
-  let color = (event.target as any).getAttribute("data-color");
+  let color = (event.target as any).getAttribute("bg-color");
   if (!color || color == store.theme) return;
   store.theme = color;
   document.documentElement.style.setProperty("--theme-bg-color", color);
@@ -41,7 +41,7 @@ let themeSelect = (event: Event) => {
     cursor: pointer;
 
     &:nth-child(1) {
-      background-color: #ff3f34;
+      background-color: #d95047;
     }
 
     &:nth-child(2) {
@@ -49,7 +49,7 @@ let themeSelect = (event: Event) => {
     }
 
     &:nth-child(3) {
-      background-color: #6ab04c;
+      background-color: #fa8231;
     }
   }
 }

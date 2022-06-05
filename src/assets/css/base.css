@@ -1,6 +1,8 @@
 @font-face {
   font-family: "MiSans";
   src: url("../font/MiSans-Regular.ttf");
+
+  font-display: auto;
 }
 
 :root {
@@ -34,7 +36,7 @@ body {
   margin: 0;
   padding: 0;
   color: var(--font-color);
- font-family: 'MiSans', sans-serif;
+  font-family: "MiSans", sans-serif;
 }
 
 img,
@@ -90,4 +92,18 @@ aside {
 }
 .el-pagination.is-background .el-pager li:not(.is-active):hover {
   color: var(--theme-bg-color) !important;
+}
+
+/* 修改修改elementui tabs */
+.el-tabs .el-tabs__header {
+  margin: 0px;
+}
+.el-tabs .el-tabs__nav .el-tabs__item {
+  color: var(--font-color);
+}
+.el-tabs .el-tabs__nav .el-tabs__item.is-active {
+  color: var(--theme-bg-color);
+}
+.el-tabs .el-tabs__nav .el-tabs__active-bar {
+  background-color: var(--theme-bg-color);
 }

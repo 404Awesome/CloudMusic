@@ -1,15 +1,17 @@
 <!-- 独家放送 -->
 <template>
-  <div pt-4 grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-6 class="wrapper" v-infinite-scroll="load"
-    :infinite-scroll-disabled="disabled">
-    <BroadcastItem v-for="item in broadcastList" :key="item.id" :id="item.id" :picUrl="item.picUrl"
-      :copywriter="item.copywriter" />
-  </div>
+  <div class="wrapper">
+    <div pt-4 grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-6 v-infinite-scroll="loadData"
+      :infinite-scroll-disabled="disabled">
+      <BroadcastItem v-for="item in broadcastList" :key="item.id" :id="item.id" :picUrl="item.picUrl"
+        :copywriter="item.copywriter" />
+    </div>
 
-  <!-- 分割线 -->
-  <el-divider>
-    <span class="tip">{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
-  </el-divider>
+    <!-- 提示 -->
+    <el-divider w-full>
+      <span class="tip">{{ disabled ? '无法加载更多!' : 'Loading...' }}</span>
+    </el-divider>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -24,8 +26,8 @@ let disabled = ref(false);
 let broadcastList = reactive<any>([]);
 // 偏移量
 let offset = ref(0);
-// 加载
-let load = async () => {
+// 加载数据
+let loadData = async () => {
   isLoading.value = true;
   let { code, result, more }: any = await Discover.getBroadcastList(offset.value);
   if (code == 200) {
@@ -37,7 +39,7 @@ let load = async () => {
   isLoading.value = false;
 };
 onMounted(() => {
-  if (!isLoading.value) load();
+  if (!isLoading.value) loadData();
 })
 </script>
 

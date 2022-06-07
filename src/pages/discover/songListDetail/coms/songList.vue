@@ -124,6 +124,7 @@ onMounted(async () => {
       color: var(--font-color);
       white-space: nowrap;
       font-size: 13px;
+      cursor: default;
 
       p {
         overflow: hidden;

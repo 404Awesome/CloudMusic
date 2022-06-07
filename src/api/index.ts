@@ -3,7 +3,8 @@ import axios, { AxiosRequestConfig } from "axios";
 // 实例
 const instance = axios.create({
   baseURL: "https://awesome404.vercel.app/",
-  timeout: 5000
+  timeout: 5000,
+  withCredentials: true
 })
 
 // 请求拦截器

@@ -5,7 +5,7 @@
       <li v-for="album in albumList" :key="album.id">
         <!-- 专辑封面  -->
         <section>
-          <el-image rounded w-40 h-40 fit="cover" lazy :src="album.picUrl" />
+          <el-image w-40 h-40 rounded shadow-lg fit="cover" lazy :src="album.picUrl" />
           <p text-sm>{{ album.time }}</p>
         </section>
 
@@ -23,7 +23,7 @@
             </section>
           </header>
           <!-- 列表 -->
-          <div class="list">
+          <div class="list no-select">
             <el-table @row-dblclick="playSong" :data="album.songs" stripe :show-header="false">
               <el-table-column class-name="index" :width="35" align="center" type="index" :index="handleIndex" />
               <el-table-column :width="50">
@@ -169,12 +169,19 @@ let showMore = () => {
     gap: 30px;
 
     .name {
+      overflow: hidden;
+      flex: 1;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       font-weight: 500;
       font-size: 17px;
       cursor: pointer;
     }
 
     .operate {
+      flex-grow: 0;
+      flex-shrink: 0;
+
       .icon {
         color: rgba($color: #000000, $alpha: .5);
         font-size: 22px;
@@ -193,6 +200,7 @@ let showMore = () => {
   }
 
   .list {
+
     .icon {
       display: flex;
       font-size: 17px;
@@ -232,12 +240,12 @@ let showMore = () => {
 
   .more {
     display: flex;
-    height: 40px;
     align-items: center;
     justify-content: flex-end;
+    height: 40px;
+    color: rgba($color: #000000, $alpha: .6);
     font-size: 14px;
     cursor: pointer;
-    color: rgba($color: #000000, $alpha: .6);
 
     &:hover {
       color: var(--font-color);

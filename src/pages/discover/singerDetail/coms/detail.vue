@@ -7,9 +7,9 @@
     <!-- 歌手信息 -->
     <div class="info">
       <!-- 姓名 -->
-      <h1>{{ name }}</h1>
+      <h1 class="name">{{ name }}</h1>
       <!-- 别名 -->
-      <p>{{ typeof alias == 'string' ? alias : alias.join("; ") }}</p>
+      <p class="alias" v-if="alias">{{ typeof alias == 'string' ? alias : alias.join("; ") }}</p>
       <!-- 收藏 -->
       <div @click="collection" class="collection" :class="{ collected: followed }">
         <span class="icon i-heroicons-outline:folder-add"></span>
@@ -45,9 +45,18 @@ let collection = () => {
 
   .info {
     display: flex;
+    overflow: hidden;
     flex: 1;
     flex-flow: column nowrap;
     padding-top: 15px;
+
+    .name,
+    .alias,
+    .count li {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
     .alias {
       margin-top: 5px;

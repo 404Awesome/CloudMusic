@@ -9,12 +9,12 @@
     <!-- 控制栏 -->
     <div class="controlLine">
       <!-- 歌曲信息 -->
-      <section flex-auto lg:flex-1>
+      <section flex-1>
         <SongInfo :currentTime="songCurrentTime" :duration="songDuration" v-if="store.currentSong" />
       </section>
 
       <!-- 控制按钮 -->
-      <section flex-auto lg:flex-1 class="control">
+      <section class="control">
         <!-- eva:heart-fill -->
         <span class="i-eva:heart-outline"></span>
         <span @click="changeSong(false)" class="change i-eva:skip-back-fill"></span>
@@ -26,7 +26,7 @@
       </section>
 
       <!-- 操作 -->
-      <section flex-auto lg:flex-1 class="operate">
+      <section flex-1 class="operate">
         <!-- 打开播放列表 -->
         <span @click="openPlayList" class="i-eva:inbox-outline"></span>
         <!-- 音量 -->
@@ -244,9 +244,8 @@ let volumeIcon = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 215px;
 
-  gap: 20px;
+  gap: 15px;
 
   .play {
     padding: 3px;
@@ -285,6 +284,7 @@ let volumeIcon = computed(() => {
   gap: 15px;
 
   span {
+    flex-shrink: 0;
     color: var(--font-color);
     font-size: 20px;
     cursor: pointer;

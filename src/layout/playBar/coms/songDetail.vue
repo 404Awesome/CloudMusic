@@ -3,11 +3,11 @@
   <el-drawer direction="btt" custom-class="songDetailDrawer" modal-class="songDetailModal" :z-index="50"
     :append-to-body="true" v-model="store.isFolding" :with-header="false">
     <el-scrollbar>
-      <div id="songDetail">
+      <div class="songDetail wrapper">
         <!-- 信息 -->
         <section class="detail">
           <!-- 功能 -->
-          <div class="function">
+          <div hidden md:flex class="function">
             <!-- 封面 -->
             <div class="cover" shadow-xl>
               <el-image :src="currentSong?.album.picUrl" fit="cover" />
@@ -97,8 +97,7 @@ defineExpose({ toggle });
 </script>
   
 <style lang="scss" scoped>
-#songDetail {
-  padding: 0px 100px;
+.songDetail {
   color: var(--font-color);
 
   .detail {
@@ -111,7 +110,6 @@ defineExpose({ toggle });
     gap: 40px;
 
     .function {
-      display: flex;
       align-items: center;
       flex-flow: column nowrap;
       flex-basis: 45%;
@@ -124,7 +122,7 @@ defineExpose({ toggle });
       display: flex;
       flex: 1;
       flex-flow: column nowrap;
-      padding: 30px 0px;
+      padding: 15px 0px 20px;
     }
   }
 
@@ -135,6 +133,7 @@ defineExpose({ toggle });
 
     .title {
       height: 40px;
+      white-space: nowrap;
       font-size: 17px;
       line-height: 40px;
     }
@@ -190,23 +189,33 @@ defineExpose({ toggle });
 
 // 歌词
 .info {
+  overflow: hidden;
+
   .head {
     flex-basis: 60px;
     flex-grow: 0;
     flex-shrink: 0;
 
     .title {
+      overflow: hidden;
       color: var(--font-color);
+      text-overflow: ellipsis;
+      white-space: nowrap;
       font-size: 22px;
     }
 
     .metaInfo {
       display: flex;
       overflow: hidden;
-      white-space: nowrap;
       font-size: 14px;
 
       gap: 15px;
+
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
       .name {
         color: var(--theme-bg-color);

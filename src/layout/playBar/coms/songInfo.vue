@@ -11,15 +11,18 @@
     </div>
 
     <!-- 详情 -->
-    <div hidden md:block class="detail">
+    <div hidden md:inline-block class="detail">
       <!-- 信息 -->
       <div class="info">
-        <p @click="openSongDetail" class="name">
-          <span>{{ currentSong?.song.name }}</span>
+        <!-- 标题 -->
+        <p @click="openSongDetail" class="title">
+          <span w-full sm:max-w-32 xl:max-w-62>{{ currentSong?.song.name }}</span>
           <span v-if="currentSong?.song.tns.length">({{ currentSong.song.tns.join("/") }})</span>
         </p>
-        <span class="artist" v-html="handleArtists(currentSong?.artist)"></span>
+        <!-- 歌手名字 -->
+        <p class="artist" v-html="handleArtists(currentSong?.artist)"></p>
       </div>
+
       <!-- 时间 -->
       <p class="time">
         <span>{{ handleTime(props.currentTime) }}</span>
@@ -68,6 +71,7 @@ let openSongDetail = () => {
 <style lang="scss" scoped>
 .songInfo {
   display: flex;
+  overflow: hidden;
   align-items: center;
   padding-left: 6px;
   height: 100%;
@@ -77,6 +81,7 @@ let openSongDetail = () => {
   .cover {
     position: relative;
     overflow: hidden;
+    min-width: calc(var(--playBarHeight) - 12px);
     width: calc(var(--playBarHeight) - 12px);
     height: calc(var(--playBarHeight) - 12px);
     border: 1px solid #eee;
@@ -108,18 +113,14 @@ let openSongDetail = () => {
     }
   }
 
-
   .detail {
-    overflow: hidden;
     flex: 1;
   }
 }
 
 .info .artist,
 .time {
-  overflow: hidden;
   color: rgba($color: #000000, $alpha: .4);
-  text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 12px;
 }
@@ -131,14 +132,21 @@ let openSongDetail = () => {
 
   gap: 10px;
 
-  .name {
+  .title {
+    display: flex;
+    overflow: hidden;
     color: var(--font-color);
-    white-space: nowrap;
     font-size: 14px;
+    cursor: pointer;
+
+    span:first-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
     &:hover {
       color: var(--theme-bg-color);
-      cursor: pointer;
     }
   }
 

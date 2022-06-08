@@ -2,7 +2,7 @@
 <template>
   <div class="topNavBar">
     <!-- 标题 -->
-    <h1 class="title" hidden md:block @click="goRouter('/')">CloudMusic</h1>
+    <h1 class="title no-select" hidden md:block @click="goRouter('/')">CloudMusic</h1>
 
     <!-- 导航栏 -->
     <nav class="nav">

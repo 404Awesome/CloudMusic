@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { handleCount, handleArtists } from "@/utils/tools";
+import { handleCount, handleArtists } from "@/utils/handle";
 let props = defineProps({
   id: {
     type: Number,

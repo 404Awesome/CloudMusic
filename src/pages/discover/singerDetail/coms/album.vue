@@ -1,7 +1,7 @@
 <!-- 歌手详情 专辑 -->
 <template>
   <div>
-    <!-- 热门50首歌曲 -->
+    <!-- -->
     <div class="hotSongs" mt-4>
       <!-- 封面 -->
       <section w-40 h-40 rounded shadow-lg class="cover">

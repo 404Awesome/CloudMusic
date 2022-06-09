@@ -68,7 +68,7 @@ export const useMainStore = defineStore("main", {
     addPlayList(songList: SongInfo[]) {
       /*
        * 清空歌单
-       * 将歌单中20首歌曲添加到播放列表当中
+       * 将传进来的歌曲全部传入当前播放列表
        * 并播放第一首歌
        */
       this.emptyPlayList();

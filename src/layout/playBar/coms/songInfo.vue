@@ -15,10 +15,7 @@
       <!-- 信息 -->
       <div class="info">
         <!-- 标题 -->
-        <p @click="openSongDetail" class="title">
-          <span w-full sm:max-w-32 xl:max-w-62>{{ currentSong?.song.name }}</span>
-          <span v-if="currentSong?.song.tns.length">({{ currentSong.song.tns.join("/") }})</span>
-        </p>
+        <p @click="openSongDetail" sm:max-w-32 xl:max-w-62 class="title">{{ currentSong?.song.name }}</p>
         <!-- 歌手名字 -->
         <p class="artist" v-html="handleArtists(currentSong?.artist)"></p>
       </div>
@@ -133,17 +130,12 @@ let openSongDetail = () => {
   gap: 10px;
 
   .title {
-    display: flex;
     overflow: hidden;
     color: var(--font-color);
     font-size: 14px;
     cursor: pointer;
-
-    span:first-child {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     &:hover {
       color: var(--theme-bg-color);

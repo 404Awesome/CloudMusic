@@ -1,7 +1,7 @@
 <!-- 歌单列表 -->
 <template>
-  <ul gap-5 lg:gap-7 grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="list" element-loading-text="Loading..."
-    v-loading="isLoading">
+  <ul gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="list"
+    element-loading-text="Loading..." v-loading="isLoading">
     <li @click="$router.push(`/songListDetal/${item.id}`)" v-for="item in songList" :key="item.id">
       <div class="cover">
         <el-image fit-="cover" lazy :src="item.coverImgUrl" />

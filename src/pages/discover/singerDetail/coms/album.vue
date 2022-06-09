@@ -17,7 +17,7 @@
             <h4 class="name" @click.stop="showMore">{{ album.name }}</h4>
             <!-- 操作 -->
             <section class="operate">
-              <span class="icon i-heroicons-outline:play"></span>
+              <span @click="addSongList(album.songs)" class="icon i-heroicons-outline:play"></span>
               <span class="splitLine">|</span>
               <span class="icon i-heroicons-outline:folder-add"></span>
             </section>
@@ -57,7 +57,7 @@
 
 <script setup lang="ts">
 import { Discover } from "@/api/modules/discover";
-import { handleSongInfo } from "@/utils/tools";
+import { handleSongInfo, handleSongList } from "@/utils/tools";
 import { useMainStore } from "store/index";
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -134,6 +134,11 @@ let likeSong = (id: number) => {
 let download = (id: number) => {
   console.log(id);
 }
+// 将全部歌曲添加到播放列表
+let addSongList = (songs: any) => {
+  let songList = handleSongList(songs);
+  store.addPlayList(songList);
+}
 
 // 查看更多
 let showMore = () => {
@@ -166,11 +171,10 @@ let showMore = () => {
     align-items: center;
     margin: 10px;
 
-    gap: 30px;
+    gap: 20px;
 
     .name {
       overflow: hidden;
-      flex: 1;
       text-overflow: ellipsis;
       white-space: nowrap;
       font-weight: 500;

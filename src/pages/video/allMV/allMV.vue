@@ -1,6 +1,6 @@
 <!-- 全部MV -->
 <template>
-  <div class="allMV" v-if="currentType.type">
+  <div class="wrapper" pt-4 pb-8 v-if="currentType.type">
     <!-- 类型列表 -->
     <ul class="type">
       <li v-for="item in typeList" :key="item.title">
@@ -10,7 +10,7 @@
     </ul>
 
     <!-- 列表 -->
-    <div class="list">
+    <div>
       <!-- mv列表 -->
       <MVList :loading="isLoading" :list="mvList" />
       <!-- 分页 -->
@@ -90,29 +90,23 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.allMV {
-  margin: 15px auto 0px;
-  padding-bottom: 30px;
-  width: 80%;
+.type {
+  display: flex;
+  flex-flow: column nowrap;
+  margin-bottom: 15px;
 
-  .type {
+  gap: 10px;
+
+  .title {
+    color: var(--font-color);
+    font-size: 14px;
+  }
+
+  li {
     display: flex;
-    flex-flow: column nowrap;
-    margin-bottom: 15px;
+    align-items: center;
 
     gap: 10px;
-
-    .title {
-      color: var(--font-color);
-      font-size: 14px;
-    }
-
-    li {
-      display: flex;
-      align-items: center;
-
-      gap: 10px;
-    }
   }
 }
 </style>

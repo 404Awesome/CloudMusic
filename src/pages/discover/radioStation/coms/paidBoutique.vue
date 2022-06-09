@@ -7,17 +7,17 @@
     <!-- 列表 -->
     <ul gap-5 lg:gap-7 v-if="paygift.length" class="content">
       <li v-for="item in paygift" :key="item.id">
-        <section>
-          <el-image :src="item.picUrl" fit="cover" lazy />
-        </section>
-        <section>
-          <p class="name">{{ item.name }}</p>
+        <!-- 封面 -->
+        <el-image rounded cursor="pointer" basis="1/4" :src="item.picUrl" fit="cover" />
+        <!-- 简介 -->
+        <div class="info">
+          <p cursor="pointer" class="name">{{ item.name }}</p>
           <p class="describe">
             <span truncate>{{ item.rcmdText }}</span>
             <span truncate>{{ item.lastProgramName }}</span>
           </p>
           <p class="price">{{ item.originalPrice }}</p>
-        </section>
+        </div>
       </li>
     </ul>
   </div>
@@ -50,47 +50,33 @@ onMounted(async () => {
 
   li {
     display: flex;
-
     gap: 15px;
 
-    section {
-      &:first-child {
-        display: flex;
-        flex-basis: 25%;
-        flex-grow: 0;
-        flex-shrink: 0;
-        cursor: pointer;
+    .info {
+      display: flex;
+      flex: 1;
+      flex-flow: column nowrap;
+      justify-content: space-around;
+      color: var(--font-color);
+      overflow: hidden;
+      cursor: default;
 
-        :deep(.el-image__inner) {
-          border-radius: 5px;
-        }
+      .name:hover {
+        color: var(--theme-bg-color);
       }
 
-      &:last-child {
+      .price {
+        color: #d63031;
+      }
+
+      .describe {
         display: flex;
-        flex: 1;
         flex-flow: column nowrap;
-        justify-content: space-around;
-        color: var(--font-color);
-
-        .name {
-          cursor: pointer;
-
-          &:hover {
-            color: var(--theme-bg-color);
-          }
-        }
-
-        .price {
-          color: #d63031;
-        }
-
-        .describe {
-          display: flex;
-          flex-flow: column nowrap;
-          color: #8395a7;
-          font-size: 13px;
-        }
+        color: #8395a7;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 13px;
       }
     }
   }

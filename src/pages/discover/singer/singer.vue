@@ -5,7 +5,7 @@
     <categoryList @selected="cateSelected" :isLoading="isLoading" />
 
     <!-- 歌手列表 -->
-    <ul gap-5 lg:gap-7 grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 grid-row-auto class="singerList"
+    <ul gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="singerList"
       v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled">
       <li @click="$router.push({ path: '/singerDetail', query: item })" v-for="item in artistsList" :key="item.id">
         <el-avatar :size="120" shape="square" :src="item.picUrl" />
@@ -14,12 +14,12 @@
         </p>
       </li>
     </ul>
-  </div>
 
-  <!-- 分割线 -->
-  <el-divider>
-    <span class="tip">{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
-  </el-divider>
+    <!-- 分割线 -->
+    <el-divider>
+      <span class="tip">{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
+    </el-divider>
+  </div>
 </template>
 
 <script setup lang="ts">

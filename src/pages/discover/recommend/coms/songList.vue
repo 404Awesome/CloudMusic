@@ -1,6 +1,6 @@
 <!-- 个性推荐 推荐歌单 -->
 <template>
-  <ul gap-5 lg:gap-7 grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="songList">
+  <ul gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="songList">
     <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetal/${item.id}`)">
       <div class="frontCover">
         <el-image :src="item.picUrl" fit="cover" />

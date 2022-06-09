@@ -5,7 +5,7 @@
     <NavBar :title="title" :path="path" />
 
     <!-- 列表 -->
-    <ul gap-5 lg:gap-7 grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 v-if="result.length" class="content">
+    <ul gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 v-if="result.length" class="content">
       <li v-for="item in result" :key="item.id">
         <div class="avatar">
           <el-image :src="item.picUrl" lazy />

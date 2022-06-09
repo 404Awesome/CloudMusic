@@ -1,5 +1,4 @@
 import Request from "@/api";
-import { Ref } from "vue";
 
 // 发现音乐相关api
 export const Discover = {
@@ -63,18 +62,6 @@ export const Discover = {
       params: { ids }
     })
   },
-  // 获取音乐 url
-  // getSongUrl(idParams: number | number[]) {
-  //   let id = Array.isArray(idParams) ? idParams.join(",") : idParams;
-  //   return Request({
-  //     url: "/song/url",
-  //     method: "GET",
-  //     params: { id }
-  //   })
-  // },
-
-
-
   // 歌单分类
   getPlayListCatlist() {
     return Request({
@@ -117,6 +104,14 @@ export const Discover = {
   getAlbum(id: number) {
     return Request({
       url: "/album",
+      method: "GET",
+      params: { id }
+    })
+  },
+  // 歌手热门50首歌曲
+  getArtistTopSong(id: number) {
+    return Request({
+      url: "/artist/top/song",
       method: "GET",
       params: { id }
     })

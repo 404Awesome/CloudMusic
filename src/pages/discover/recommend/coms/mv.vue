@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { handleCount, handleArtists } from "@/utils/tools";
+import { handleCount, handleArtists } from "@/utils/handle";
 import { MV } from "@/api/modules/video";
 
 let mvList = reactive<any[]>([]);

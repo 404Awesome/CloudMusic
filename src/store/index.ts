@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { useStorage, StorageSerializers } from "@vueuse/core";
-import useStore from "element-plus/es/components/table/src/store";
 
 // 歌曲信息
 export interface SongInfo {
@@ -38,6 +37,8 @@ export const useMainStore = defineStore("main", {
       volume: useStorage<number>("volume", 50, localStorage),
       // 播放列表
       playList: useStorage<SongInfo[]>("playList", [], sessionStorage),
+      // 当前歌单ID
+      songListID: useStorage<number>("songListID", 0, sessionStorage),
       // 当前播放歌曲
       currentSong: useStorage<SongInfo | null>("currentSong", null, sessionStorage, { serializer: StorageSerializers.object })
     };

@@ -9,7 +9,7 @@
           <!-- eva:heart-outline -->
           <p flex justify-between>
             <span @click.stop="likeSong(row.id)" class="icon i-eva:heart-outline"></span>
-            <span @click.stop="download(row.id)" class="icon i-eva:cloud-download-outline"></span>
+            <span @click.stop="downloadSong(row.id)" class="icon i-eva:cloud-download-outline"></span>
           </p>
         </template>
       </el-table-column>
@@ -33,34 +33,13 @@
 </template>
 
 <script setup lang="ts">
-import { handleArtists, handleSongInfo } from "@/utils/tools";
+import { handleArtists, handleIndex } from "@/utils/handle";
+import { downloadSong, likeSong } from "@/utils/operate";
+import { playSong } from "@/utils/operate";
 import { Discover } from "@/api/modules/discover";
-import { useMainStore } from "store/index";
 import { useRoute } from "vue-router";
 const route = useRoute();
-const store = useMainStore();
 let id = parseInt(route.params.id as string);
-
-// 播放歌曲
-let playSong = (songInfo: any) => {
-  songInfo = handleSongInfo(songInfo);
-  store.playSong(songInfo);
-};
-
-// 处理表格索引
-let handleIndex = (index: number): any => {
-  return (index + 1).toString().padStart(2, "0");
-};
-
-// 喜欢歌曲
-let likeSong = (id: number) => {
-  console.log("喜欢的歌曲", id);
-};
-
-// 下载歌曲
-let download = (id: number) => {
-  console.log(id);
-};
 
 // 歌曲列表
 let songList = reactive<any>([]);

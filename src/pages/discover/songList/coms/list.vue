@@ -13,7 +13,7 @@
           <span class="icon i-eva:smiling-face-outline"></span>
           <span class="name">{{ item.creator.nickname }}</span>
         </p>
-        <div @click.stop="addSongList(item.id)" class="playIcon">
+        <div @click.stop="playSongList(item.id)" class="playIcon">
           <span class="i-eva:arrow-right-fill"></span>
         </div>
       </div>
@@ -23,11 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import { Discover } from "@/api/modules/discover";
-import { handleCount, handleSongList } from "@/utils/tools";
+import { handleCount } from "@/utils/handle";
+import { playSongList } from "@/utils/operate";
 import { PropType } from "vue";
-import { useMainStore } from "store/index";
-const store = useMainStore();
 const props = defineProps({
   isLoading: {
     type: Boolean,
@@ -40,19 +38,6 @@ const props = defineProps({
 });
 
 let { isLoading, songList } = toRefs(props);
-
-// 当前播放的歌单ID
-let currentID = ref(0);
-// 添加歌单列表到播放列表
-let addSongList = async (id: number) => {
-  if (currentID.value == id) return null;
-  currentID.value = id;
-  let { code, songs }: any = await Discover.getPlayListTrackAll(id, 20, 0);
-  if (code == 200) {
-    let songList = handleSongList(songs);
-    store.addPlayList(songList);
-  }
-};
 </script>
 
 <style lang="scss" scoped>

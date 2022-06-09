@@ -38,3 +38,16 @@ export const handleSongInfo = (songInfo: any): SongInfo => {
 export const handleSongList = (songList: any): SongInfo[] => {
   return songList.map((item: any) => handleSongInfo(item));
 }
+
+// 处理索引
+export const handleIndex = (index: number): any => {
+  return (index + 1).toString().padStart(2, "0");
+};
+
+// 处理时间戳
+export const handleTimeStamp = (time: number) => {
+  let timeArr = new Date(time).toLocaleDateString('cn').split("/");
+  timeArr[1] = timeArr[1].padStart(2, "0");
+  timeArr[2] = timeArr[2].padStart(2, "0");
+  return timeArr.join("-");
+}

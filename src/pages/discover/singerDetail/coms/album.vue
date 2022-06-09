@@ -1,7 +1,21 @@
 <!-- 歌手详情 专辑 -->
 <template>
   <div>
-    <ul class="album" v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled">
+    <!-- 热门50首歌曲 -->
+    <div class="hotSongs" mt-4>
+      <!-- 封面 -->
+      <section w-40 h-40 rounded shadow-lg class="cover">
+        <span>Top</span>
+        <span>50</span>
+      </section>
+      <!-- 歌单列表 -->
+      <section>
+        <!-- <SongList name="热门50首" :songs="topSongs" /> -->
+      </section>
+    </div>
+
+    <!-- 专辑列表 -->
+    <ul class="album" pb-4 v-infinite-scroll="loadAlbumData" :infinite-scroll-disabled="disabled">
       <li v-for="album in albumList" :key="album.id">
         <!-- 专辑封面  -->
         <section>
@@ -10,38 +24,12 @@
         </section>
 
         <!-- 歌单列表 -->
-        <section class="songList" flex-1>
-          <!-- 头部 -->
-          <header class="head">
-            <!-- 名字 -->
-            <h4 class="name" @click.stop="showMore">{{ album.name }}</h4>
-            <!-- 操作 -->
-            <section class="operate">
-              <span @click="addSongList(album.songs)" class="icon i-heroicons-outline:play"></span>
-              <span class="splitLine">|</span>
-              <span class="icon i-heroicons-outline:folder-add"></span>
-            </section>
-          </header>
-          <!-- 列表 -->
-          <div class="list no-select">
-            <el-table @row-dblclick="playSong" :data="album.songs" stripe :show-header="false">
-              <el-table-column class-name="index" :width="35" align="center" type="index" :index="handleIndex" />
-              <el-table-column :width="50">
-                <template v-slot="{ row }">
-                  <!-- eva:heart-fill -->
-                  <!-- eva:heart-outline -->
-                  <p flex justify-between>
-                    <span @click.stop="likeSong(row.id)" class="icon i-eva:heart-outline"></span>
-                    <span @click.stop="download(row.id)" class="icon i-eva:cloud-download-outline"></span>
-                  </p>
-                </template>
-              </el-table-column>
-              <el-table-column prop="name" />
-            </el-table>
-          </div>
-          <!-- 是否显示更多 -->
-          <div class="more" v-if="album.more" @click.stop="showMore">
-            <span>查看更多</span>
+        <section flex-1>
+          <!-- 歌单列表 -->
+          <SongList :name="album.name" :songs="album.songs" :origin="album.origin" :id="album.id" />
+          <!-- 是否显示全部 -->
+          <div class="more" v-if="album.more">
+            <span>查看全部</span>
             <span class="icon i-eva:arrow-ios-forward-outline"></span>
           </div>
         </section>
@@ -56,12 +44,11 @@
 </template>
 
 <script setup lang="ts">
+import SongList from "./songList.vue";
+import { handleTimeStamp } from "@/utils/handle";
 import { Discover } from "@/api/modules/discover";
-import { handleSongInfo, handleSongList } from "@/utils/tools";
-import { useMainStore } from "store/index";
 import { useRoute } from "vue-router";
 const route = useRoute();
-const store = useMainStore();
 const id = parseInt(route.query.id as string);
 
 
@@ -75,39 +62,35 @@ let offset = ref(0);
 let limit = 5;
 // 专辑列表
 let albumList = reactive<any>([]);
-// 加载数据
-let loadData = async () => {
+// 加载专辑数据
+let loadAlbumData = async () => {
   if (isLoading.value) return;
   isLoading.value = true;
   let { more, code, hotAlbums }: any = await Discover.getArtistAlbum(id, offset.value, limit);
   if (code == 200) {
-    // 加载专辑内容
-    loadAlbumData(hotAlbums);
+    // 加载专辑信息
+    loadAlbumInfo(hotAlbums);
     offset.value += limit;
     // 无法加载更多
     if (!more) disabled.value = true;
   }
   isLoading.value = false;
 }
-// 加载专辑内容
-let loadAlbumData = (hotAlbums: any) => {
+// 加载专辑信息
+let loadAlbumInfo = (hotAlbums: any) => {
   hotAlbums.map(async (item: any) => {
-    let { code, album, songs }: any = await Discover.getAlbum(item.id);
+    let { code, album, songs: origin }: any = await Discover.getAlbum(item.id);
     if (code == 200) {
       // 处理时间
-      let time = new Date(album.publishTime).toLocaleDateString('cn');
+      let time = handleTimeStamp(album.publishTime);
       // 处理歌曲列表长度
-      let more;
-      if (songs.length > 10) {
-        songs.length = 10;
-        more = true;
-      } else {
-        more = false;
-      }
+      let more = origin.length > 10 ? true : false;
+      let songs = origin.length > 10 ? origin.slice(0, 10) : origin.slice(0);
       albumList.push({
         songs,
         time,
         more,
+        origin,
         picUrl: album.picUrl,
         id: album.id,
         name: album.name,
@@ -116,148 +99,79 @@ let loadAlbumData = (hotAlbums: any) => {
   });
 }
 
-// 处理表格索引
-let handleIndex = (index: number): any => {
-  return (index + 1).toString().padStart(2, "0");
-};
+// 热门歌曲列表
+let topSongs = reactive<any>([]);
+// 加载歌手热门50首歌曲
+onMounted(async () => {
+  // isLoading.value = true;
+  // let { code, songs }: any = await Discover.getArtistTopSong(id);
+  // if (code == 200) {
+  //   console.log(songs);
+  //   topSongs.push(songs);
+  // }
+  // isLoading.value = false;
 
-// 播放歌曲
-let playSong = (songInfo: any) => {
-  songInfo = handleSongInfo(songInfo);
-  store.playSong(songInfo);
-};
-// 喜欢歌曲
-let likeSong = (id: number) => {
-  console.log(id);
-}
-// 下载歌曲
-let download = (id: number) => {
-  console.log(id);
-}
-// 将全部歌曲添加到播放列表
-let addSongList = (songs: any) => {
-  let songList = handleSongList(songs);
-  store.addPlayList(songList);
-}
-
-// 查看更多
-let showMore = () => {
-  console.log("查看更多!");
-}
+  // 加载专辑数据
+  loadAlbumData();
+})
 </script>
 
 <style lang="scss" scoped>
-.album {
+.hotSongs,
+.album li {
   display: flex;
-  flex-flow: column nowrap;
-  padding: 20px 0px;
 
-  gap: 40px;
+  gap: 25px;
 
-  li {
+  &>section {
+    overflow: hidden;
+  }
+}
+
+.hotSongs {
+  margin-bottom: 40px;
+
+  .cover {
     display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    justify-content: center;
+    background-image: linear-gradient(to bottom, #565760 0%, #715361 100%);
 
-    gap: 25px;
+    span {
+      color: #fff;
+      font-weight: 600;
+      font-size: 50px;
 
-    section {
-      overflow: hidden;
+      &:last-child {
+        transform: translateY(-10px);
+      }
     }
   }
 }
 
-.songList {
-  .head {
-    display: flex;
-    align-items: center;
-    margin: 10px;
+.album {
+  display: flex;
+  flex-flow: column nowrap;
 
-    gap: 20px;
+  gap: 40px;
+}
 
-    .name {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-weight: 500;
-      font-size: 17px;
-      cursor: pointer;
-    }
+.more {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 40px;
+  color: rgba($color: #000000, $alpha: .6);
+  font-size: 14px;
+  cursor: pointer;
 
-    .operate {
-      flex-grow: 0;
-      flex-shrink: 0;
-
-      .icon {
-        color: rgba($color: #000000, $alpha: .5);
-        font-size: 22px;
-        cursor: pointer;
-
-        &:hover {
-          color: var(--theme-bg-color);
-        }
-      }
-
-      .splitLine {
-        margin: 0px 7px;
-        color: rgba($color: #000000, $alpha: .3);
-      }
-    }
+  &:hover {
+    color: var(--font-color);
   }
 
-  .list {
-
-    .icon {
-      display: flex;
-      font-size: 17px;
-      cursor: pointer;
-
-      &:hover {
-        color: var(--theme-bg-color);
-      }
-
-      &.liked {
-        color: #f74e40;
-      }
-    }
-
-    :deep(.el-table) {
-      .index .cell {
-        color: rgba($color: #000000, $alpha: 0.4);
-      }
-
-      .cell {
-        padding: 0px 5px;
-        color: var(--font-color);
-        white-space: nowrap;
-        cursor: default;
-      }
-
-      td.el-table__cell,
-      th.el-table__cell.is-leaf {
-        border-bottom: none;
-      }
-
-      .el-table__inner-wrapper::before {
-        height: 0px;
-      }
-    }
-  }
-
-  .more {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    height: 40px;
-    color: rgba($color: #000000, $alpha: .6);
-    font-size: 14px;
-    cursor: pointer;
-
-    &:hover {
-      color: var(--font-color);
-    }
-
-    .icon {
-      font-size: 18px;
-    }
+  .icon {
+    font-size: 18px;
   }
 }
 

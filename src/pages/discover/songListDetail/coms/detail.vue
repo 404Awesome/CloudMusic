@@ -20,23 +20,19 @@
           <!-- 操作 -->
           <ul class="operate">
             <li class="playAll">
-              <p @click.once="playAll">
+              <p @click="playSongList(id)">
                 <span class="icon i-heroicons-outline:play"></span>
                 <span>播放全部</span>
               </p>
               <span @click="addPlayList" class="icon i-heroicons-outline:plus-sm"></span>
             </li>
-            <li @click="collection">
+            <li @click="collectSongList(id)">
               <span class="icon i-heroicons-outline:folder-add"></span>
               <span>收藏({{ handleCount(detail.subscribedCount) }})</span>
             </li>
             <li @click="share">
               <span class="icon i-heroicons-outline:external-link"></span>
               <span>分享({{ handleCount(detail.shareCount) }})</span>
-            </li>
-            <li @click="download">
-              <span class="icon i-eva:cloud-download-outline"></span>
-              <span>下载全部</span>
             </li>
           </ul>
 
@@ -84,20 +80,19 @@
     </div>
 
     <!-- 折叠 -->
-    <slot name="fold" :playAll="playAll" :download="download" :share=share :collection="collection" :title="detail.name"
-      :height="detailEl?.offsetHeight || 0">
+    <slot :id="id" :share="share" name="fold" :title="detail.name" :height="detailEl?.offsetHeight || 0">
     </slot>
   </div>
 </template>
 
 <script setup lang="ts">
-import { handleCount, handleSongList } from "@/utils/tools";
+import { handleCount, handleTimeStamp } from "@/utils/handle";
+import { playSongList, collectSongList, shareInfo } from "@/utils/operate";
 import { Discover } from "@/api/modules/discover";
-import { useMainStore } from "store/index";
 import { useRoute } from "vue-router";
 const route = useRoute();
-const store = useMainStore();
-let id = parseInt(route.params.id as string);
+const id = parseInt(route.params.id as string);
+
 //  元素DOM
 let detailEl = ref<HTMLElement | null>(null);
 // 详情
@@ -109,15 +104,6 @@ let describe = reactive<{ [prop: string]: string | null }>({
 });
 // 展示更多
 let showMore = ref<boolean>(false);
-
-// 处理创建时间
-let handleCreateTime = (time: number) => {
-  let Time = new Date(time);
-  let year = Time.getFullYear();
-  let month = (Time.getMonth() + 1).toString().padStart(2, "0");
-  let day = Time.getDate();
-  return `${year}-${month}-${day} 创建`;
-};
 
 // 处理描述
 let handleDescribe = (desc: string) => {
@@ -132,29 +118,16 @@ let handleDescribe = (desc: string) => {
   }
 }
 
-// 播放全部
-// 不播放全部, 取前20首
-let playAll = async () => {
-  let { code, songs }: any = await Discover.getPlayListTrackAll(detail.id, 20, 0);
-  if (code == 200) {
-    let songList = handleSongList(songs);
-    store.addPlayList(songList);
-  }
-}
-// 添加到歌单
-let addPlayList = () => {
-  console.log(detail.id);
-}
-// 收藏
-let collection = () => {
-  console.log(detail.id);
-}
 // 分享
 let share = () => {
-  console.log(detail.id);
+  let href = location.href;
+  let title = detail.name;
+  let cover = detail.coverImgUrl;
+  shareInfo(title, href, "song", cover);
 }
-// 下载
-let download = () => {
+
+// 添加到歌单
+let addPlayList = () => {
   console.log(detail.id);
 }
 // 获取歌单详情
@@ -174,7 +147,7 @@ onMounted(async () => {
       // 标题
       name,
       // 创建时间
-      createTime: handleCreateTime(createTime),
+      createTime: `${handleTimeStamp(createTime)} 创建`,
       // 收藏次数
       subscribedCount,
       // 分享次数

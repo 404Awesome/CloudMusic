@@ -4,22 +4,19 @@
     <div class="wrapper">
       <!-- 歌单描述 -->
       <Detail>
-        <template #fold="{ title, height, collection, share, download, playAll }">
+        <template #fold="{ id, title, height, share }">
           <div :class="{ hidden: scrollTop <= height, disabled: activeComs !== 'SongList' }" class="detailFold">
             <div class="content">
               <h1 class="title">{{ title }}</h1>
               <ul class="operate">
-                <li @click.once="playAll">
+                <li @click="playSongList(id)">
                   <span class="icon i-eva:arrow-right-fill"></span>
                 </li>
-                <li @click="collection">
+                <li @click="collectSongList(id)">
                   <span class="icon i-heroicons-outline:folder-add"></span>
                 </li>
                 <li @click="share">
                   <span class="icon i-heroicons-outline:external-link"></span>
-                </li>
-                <li @click="download">
-                  <span class="icon i-eva:cloud-download-outline"></span>
                 </li>
               </ul>
             </div>
@@ -42,6 +39,7 @@ import Detail from "./coms/detail.vue";
 import SongList from "./coms/songList.vue";
 import Comment from "./coms/comment.vue";
 import Collector from "./coms/collector.vue";
+import { playSongList, collectSongList } from "@/utils/operate";
 import { useThrottleFn } from "@vueuse/core";
 
 // 当前激活的组件

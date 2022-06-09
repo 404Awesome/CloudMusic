@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { handleArtists, handleCount } from "@/utils/tools";
+import { handleArtists, handleCount } from "@/utils/handle";
 let props = defineProps({
   detail: {
     type: Object,

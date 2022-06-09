@@ -12,14 +12,8 @@
 
     <!-- 详情 -->
     <div hidden md:inline-block class="detail">
-      <!-- 信息 -->
-      <div class="info">
-        <!-- 标题 -->
-        <p @click="openSongDetail" sm:max-w-32 xl:max-w-62 class="title">{{ currentSong?.song.name }}</p>
-        <!-- 歌手名字 -->
-        <p class="artist" v-html="handleArtists(currentSong?.artist)"></p>
-      </div>
-
+      <!-- 标题 -->
+      <p @click="openSongDetail" sm:max-w-32 xl:max-w-62 class="title">{{ currentSong?.song.name }}</p>
       <!-- 时间 -->
       <p class="time">
         <span>{{ handleTime(props.currentTime) }}</span>
@@ -35,7 +29,6 @@
 
 <script setup lang="ts">
 import SongDetail from "./songDetail.vue";
-import { handleArtists } from "@/utils/tools";
 import { useMainStore } from "store/index";
 const store = useMainStore();
 let { currentSong } = toRefs(store);
@@ -115,42 +108,22 @@ let openSongDetail = () => {
   }
 }
 
-.info .artist,
+.title {
+  overflow: hidden;
+  color: var(--font-color);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--theme-bg-color);
+  }
+}
+
 .time {
   color: rgba($color: #000000, $alpha: .4);
   white-space: nowrap;
   font-size: 12px;
-}
-
-.info {
-  display: flex;
-  overflow: hidden;
-  align-items: center;
-
-  gap: 10px;
-
-  .title {
-    overflow: hidden;
-    color: var(--font-color);
-    font-size: 14px;
-    cursor: pointer;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-
-    &:hover {
-      color: var(--theme-bg-color);
-    }
-  }
-
-  .artist {
-    :deep(.name) {
-      color: rgba($color: #000000, $alpha: .4);
-      cursor: pointer;
-
-      &:hover {
-        color: var(--theme-bg-color);
-      }
-    }
-  }
 }
 </style>

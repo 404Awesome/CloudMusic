@@ -99,7 +99,7 @@ onMounted(() => {
       if (!songDuration.value) songDuration.value = audioPlyr.value!.duration;
       songCurrentTime.value = audioPlyr.value!.currentTime;
       clearTimeout(timer);
-    }, 200);
+    }, 300);
   })
   // 暂停时触发
   audioPlyr.value.on("pause", () => {

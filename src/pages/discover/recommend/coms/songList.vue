@@ -9,7 +9,7 @@
           <span>{{ handleCount(item.playCount) }}</span>
         </p>
         <p class="playIcon">
-          <span @click.stop="addSongList(item.id)" class="i-heroicons-outline:play"></span>
+          <span @click.stop="playSongList(item.id)" class="i-heroicons-outline:play"></span>
         </p>
       </div>
       <p class="title">{{ item.name }}</p>
@@ -18,26 +18,16 @@
 </template>
 
 <script setup lang="ts">
-import { handleCount, handleSongList } from "@/utils/tools";
+import { handleCount } from "@/utils/handle";
+import { playSongList } from "@/utils/operate";
 import { Discover } from "@/api/modules/discover";
-import { useMainStore } from "@/store";
-const store = useMainStore();
 
+// 歌单列表
 let songList = reactive<any[]>([]);
 onMounted(async () => {
   let { code, result }: any = await Discover.getPersonalized(12);
   if (code == 200) songList.push(...result);
 });
-
-
-// 取歌单列表前20首添加到播放列表
-let addSongList = async (id: number) => {
-  let { code, songs }: any = await Discover.getPlayListTrackAll(id, 20, 0);
-  if (code == 200) {
-    let songList = handleSongList(songs);
-    store.addPlayList(songList);
-  }
-};
 </script>
   
 <style lang="scss" scoped>

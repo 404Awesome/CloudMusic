@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { Discover } from "@/api/modules/discover";
-import { handleArtists } from "@/utils/tools";
+import { handleArtists } from "@/utils/handle";
 import { useMainStore } from "store/index";
 const store = useMainStore();
 

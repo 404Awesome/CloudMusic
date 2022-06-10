@@ -7,7 +7,7 @@
     <!-- 歌手列表 -->
     <ul gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="singerList"
       v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled">
-      <li @click="$router.push({ path: '/singerDetail', query: item })" v-for="item in artistsList" :key="item.id">
+      <li v-for="item in artistsList" :key="item.id" @click="goSingerDetail(item)">
         <el-avatar :size="120" shape="square" :src="item.picUrl" />
         <p class="info">
           <span class="name">{{ item.name }}</span>
@@ -25,6 +25,8 @@
 <script setup lang="ts">
 import categoryList from "./coms/categoryList.vue";
 import { Discover } from "@/api/modules/discover";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 // 请求偏移量
 let offset = ref(0);
@@ -40,7 +42,6 @@ let typeList = reactive({
   type: "",
   initial: ""
 })
-
 
 // 分类已选择
 let cateSelected = (category: any) => {
@@ -68,6 +69,15 @@ let loadData = async () => {
     }
   }
   isLoading.value = false;
+}
+
+// 跳转到歌手详情页面
+let goSingerDetail = (singer: any) => {
+  let { id, alias, followed, name } = toRaw(singer);
+  router.push({
+    path: '/singerDetail',
+    query: { id, alias, followed, name }
+  })
 }
 </script>
 

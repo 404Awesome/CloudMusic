@@ -124,4 +124,36 @@ export const Discover = {
       params: { id }
     })
   },
+  // 获取歌手详情
+  getArtistDetail(id: number) {
+    return Request({
+      url: "/artist/detail",
+      method: "GET",
+      params: { id }
+    })
+  },
+  // 获取歌手描述
+  getArtistDesc(id: number) {
+    return Request({
+      url: "/artist/desc",
+      method: "GET",
+      params: { id }
+    })
+  },
+  // 获取相似歌手 需要登陆
+  getSimiArtist(id: number) {
+    return Request({
+      url: "/simi/artist",
+      method: "GET",
+      params: { id }
+    })
+  },
+  // 获取歌单评论
+  getCommentPlayList(id: number, offset: number = 0, limit: number = 20, before?: number) {
+    return Request({
+      url: "/comment/playlist",
+      method: "GET",
+      params: { id, offset, limit, before }
+    })
+  },
 }

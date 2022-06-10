@@ -24,7 +24,7 @@ import { handleCount, handerDuration } from "@/utils/handle";
 import { Discover } from "@/api/modules/discover";
 import { useRoute } from "vue-router";
 const route = useRoute();
-const id = parseInt(route.query.id as string);
+const { id }: any = route.query;
 const props = defineProps(['activeComs']);
 
 // MV列表

@@ -1,26 +1,24 @@
 <!-- 歌单评论 -->
 <template>
-  <div>
-    <p>歌单评论</p>
+  <div py-4>
+    <!-- 发送评论 -->
+    <SendComment @getComment="getComment" />
+
+    <!-- 评论列表 -->
+    <CommentList :id="id" :RequestData="Discover.getCommentPlayList" />
   </div>
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['activeComs']);
+import SendComment from "@/components/content/sendComment/sendComment.vue";
+import CommentList from "@/components/content/commentList/commentList.vue";
+import { Discover } from "@/api/modules/discover";
+import { useRoute } from "vue-router";
+const route = useRoute();
+const id = parseInt(route.params.id as string);
 
-// 评论列表
-let commentList = reactive([]);
-
-// 加载数据
-let loadData = () => {
-  console.log("loading...");
+// 获取评论
+let getComment = (comment: string) => {
+  console.log(comment);
 }
-
-// 监听当前组件的激活状态
-watch(() => props.activeComs, (newVal) => {
-  if (newVal == "Comment" && commentList.length == 0) loadData();
-})
 </script>
-
-<style lang="scss" scoped>
-</style>

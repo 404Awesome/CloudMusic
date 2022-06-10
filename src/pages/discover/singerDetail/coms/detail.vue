@@ -2,7 +2,7 @@
 <template>
   <div class="detail">
     <!-- 歌手图片 -->
-    <el-image flex-none h-60 w-60 rounded :src="picUrl" fit="cover" />
+    <el-image flex-none h-60 w-60 rounded :src="singerDetail.cover" fit="cover" />
 
     <!-- 歌手信息 -->
     <div class="info">
@@ -17,23 +17,33 @@
       </div>
       <!-- 数量 -->
       <ul class="count">
-        <li>单曲数: {{ musicSize }}</li>
-        <li>专辑数: {{ albumSize }}</li>
+        <li>单曲数: {{ singerDetail.musicSize }}</li>
+        <li>专辑数: {{ singerDetail.albumSize }}</li>
+        <li>MV数: {{ singerDetail.mvSize }}</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Discover } from "@/api/modules/discover";
 import { useRoute } from "vue-router";
 const route = useRoute();
-let { name, alias, picUrl, musicSize, albumSize }: any = route.query;
+const { alias, id, name }: any = route.query;
 let followed = ref(route.query.followed == 'true');
 
 // 收藏
 let collection = () => {
   followed.value = !followed.value;
 }
+
+// 歌手详情
+let singerDetail = reactive<any>({});
+// 获取歌手详情
+onMounted(async () => {
+  let { code, data: { artist } }: any = await Discover.getArtistDetail(id);
+  if (code == 200) Object.assign(singerDetail, artist);
+})
 </script>
 
 <style lang="scss" scoped>

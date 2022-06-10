@@ -111,11 +111,11 @@ let showAll = ref(false);
 // 加载歌手热门50首歌曲
 onMounted(async () => {
   isLoading.value = true;
-  // let { code, songs }: any = await Discover.getArtistTopSong(id);
-  // if (code == 200) {
-  //   topSongs.push(...songs);
-  // }
-  // isLoading.value = false;
+  let { code, songs }: any = await Discover.getArtistTopSong(id);
+  if (code == 200) {
+    topSongs.push(...songs);
+  }
+  isLoading.value = false;
 })
 </script>
 

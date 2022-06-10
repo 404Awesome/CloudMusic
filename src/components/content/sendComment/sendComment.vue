@@ -1,26 +1,38 @@
 <!-- 发送评论 -->
 <template>
   <div>
-    <h4 class="title">听友评论</h4>
-    <el-input rows="3" :autosize="{ minRows: 3 }" v-model="content" maxlength="140" placeholder="输入评论或@朋友"
+    <!-- 标题 -->
+    <h4 v-if="title" class="title">{{ title }}</h4>
+    <!-- 表单 -->
+    <el-input rows="3" :autosize="{ minRows: 3 }" v-model.lazy.trim="content" maxlength="140" placeholder="输入评论或@朋友"
       show-word-limit type="textarea" />
+    <!-- 导航 -->
     <nav class="nav">
       <section></section>
-      <button>评论</button>
+      <button @click="sendComment">评论</button>
     </nav>
   </div>
 </template>
 
 <script setup lang="ts">
-let props = defineProps({
-  id: {
-    type: Number,
-    required: true
-  }
-})
+const emit = defineEmits(["getComment"]);
+const props = defineProps({
+  title: String
+});
+let { title } = toRaw(props);
 
 // 评论内容
 let content = ref<string>("");
+// 发送评论
+let sendComment = () => {
+  if (!content.value.length) {
+    ElMessage({
+      message: '请输入内容!',
+      type: 'warning',
+    })
+  }
+  emit("getComment", content.value);
+}
 </script>
 
 <style lang="scss" scoped>

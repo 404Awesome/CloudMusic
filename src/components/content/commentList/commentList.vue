@@ -7,8 +7,8 @@
     <!-- 内容 -->
     <div element-loading-text="Loading..." v-loading="loading">
       <!-- 评论列表 -->
-      <ul>
-        <li class="commentItem" v-for="item in result" :key="item.commentId">
+      <ul min-h-60>
+        <li class="commentItem" v-for="(item, index) in result" :key="item.commentId">
           <!-- 头像 -->
           <el-image cursor="pointer" flex-none w-10 h-10 rounded-full :src="item.user.avatarUrl" fit="cover" lazy />
           <!-- 详细 -->
@@ -40,13 +40,13 @@
             </section>
 
             <!-- 分割线 -->
-            <el-divider />
+            <el-divider v-show="(index + 1) !== limit" />
           </div>
         </li>
       </ul>
 
       <!-- 分页 -->
-      <div flex justify-center>
+      <div flex justify-center mt-7>
         <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit"
           :total="total" />
       </div>
@@ -55,7 +55,6 @@
 </template>
 
 <script setup lang="ts">
-import { MV } from "@/api/modules/video";
 let props = defineProps({
   id: {
     type: Number,
@@ -64,9 +63,13 @@ let props = defineProps({
   limit: {
     type: Number,
     default: 10
+  },
+  RequestData: {
+    type: Function,
+    required: true
   }
 })
-let { id, limit } = toRaw(props);
+let { id, limit, RequestData } = toRaw(props);
 
 
 // 评论加载状态
@@ -77,7 +80,7 @@ let total = ref<number>(0);
 let result = reactive<any>([]);
 let loadData = async (offset: number, before: number = 0) => {
   loading.value = true;
-  let { code, comments, total: totalVal }: any = await MV.getComment(id, offset, limit, before);
+  let { code, comments, total: totalVal }: any = await RequestData(id, offset, limit, before);
   if (code == 200) {
     total.value = totalVal;
     result.splice(0, result.length, ...comments);
@@ -86,8 +89,10 @@ let loadData = async (offset: number, before: number = 0) => {
 }
 // 分页改变时触发
 let change = (current: any) => {
-  let time: number = result[limit - 1].time;
-  loadData(current - 1, time);
+  let before: number = result[limit - 1].time;
+  // 清空数组
+  result.splice(0, result.length);
+  loadData(current - 1, before);
 }
 onMounted(() => loadData(0));
 </script>

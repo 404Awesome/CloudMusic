@@ -123,7 +123,7 @@ let share = () => {
   let href = location.href;
   let title = detail.name;
   let cover = detail.coverImgUrl;
-  shareInfo(title, href, "song", cover);
+  shareInfo(title, href, "歌单", cover);
 }
 
 // 添加到歌单

@@ -1,7 +1,7 @@
 <!-- 歌手详情 专辑 -->
 <template>
   <div>
-    <!-- -->
+    <!-- top50 -->
     <div class="hotSongs" mt-4>
       <!-- 封面 -->
       <section w-40 h-40 rounded shadow-lg class="cover">
@@ -9,8 +9,13 @@
         <span>50</span>
       </section>
       <!-- 歌单列表 -->
-      <section>
-        <!-- <SongList name="热门50首" :songs="topSongs" /> -->
+      <section flex-1>
+        <SongList name="热门50首" :songs="showAll ? topSongs : topSongs.slice(0, 10)" />
+        <!-- 是否显示全部 -->
+        <div v-if="!showAll" class="more" @click="showAll = !showAll">
+          <span>查看全部50首</span>
+          <span class="icon i-eva:arrow-ios-forward-outline"></span>
+        </div>
       </section>
     </div>
 
@@ -101,18 +106,16 @@ let loadAlbumInfo = (hotAlbums: any) => {
 
 // 热门歌曲列表
 let topSongs = reactive<any>([]);
+// 显示全部
+let showAll = ref(false);
 // 加载歌手热门50首歌曲
 onMounted(async () => {
-  // isLoading.value = true;
+  isLoading.value = true;
   // let { code, songs }: any = await Discover.getArtistTopSong(id);
   // if (code == 200) {
-  //   console.log(songs);
-  //   topSongs.push(songs);
+  //   topSongs.push(...songs);
   // }
   // isLoading.value = false;
-
-  // 加载专辑数据
-  loadAlbumData();
 })
 </script>
 

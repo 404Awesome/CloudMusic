@@ -12,8 +12,8 @@ export const handleCount = (count: number): string => {
   }
 }
 
-// 处理时间 -> 02:23
-export const handerTime = (time: number): string => {
+// 处理时长 -> 02:23
+export const handerDuration = (time: number): string => {
   time = time / 1000 / 60;
   let arr = `${time.toFixed(2)}`.split(".");
   return `${arr[0].padStart(2, "0")}:${arr[1]}`;

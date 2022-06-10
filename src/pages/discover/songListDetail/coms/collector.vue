@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-let props = defineProps(['activeComs']);
+const props = defineProps(['activeComs']);
 
 // 收藏者列表
 let collectorList = reactive([]);

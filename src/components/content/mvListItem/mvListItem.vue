@@ -84,7 +84,7 @@ let { id, cover, artists, name, playCount, isFlex } = markRaw(props);
       font-size: 14px;
 
       .icon {
-        font-size: 18px;
+        font-size: 20px;
       }
     }
 

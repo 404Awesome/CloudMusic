@@ -116,4 +116,12 @@ export const Discover = {
       params: { id }
     })
   },
+  // 获取歌手 mv
+  getArtistMV(id: number) {
+    return Request({
+      url: "/artist/mv",
+      method: "GET",
+      params: { id }
+    })
+  },
 }

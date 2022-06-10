@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-let props = defineProps(['activeComs']);
+const props = defineProps(['activeComs']);
 
 // 评论列表
 let commentList = reactive([]);

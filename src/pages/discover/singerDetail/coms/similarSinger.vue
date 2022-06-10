@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-let props = defineProps(['activeComs']);
+const props = defineProps(['activeComs']);
 
 // 相似歌手
 let similarSinger = reactive([]);

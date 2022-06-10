@@ -124,6 +124,7 @@ header.header {
     white-space: nowrap;
     font-size: 14px;
     cursor: pointer;
+    user-select: none;
 
     gap: 20px;
 

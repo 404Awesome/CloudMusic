@@ -3,22 +3,24 @@
   <div v-if="detail.name">
     <div ref="detailEl" class="detail">
       <!-- 封面 -->
-      <el-image flex-none h-60 w-60 rounded :src="detail.coverImgUrl" fit="cover" />
+      <el-image transition-all duration-300 ease-linear flex-none h-35 w-35 md:h-50 md:w-50 rounded
+        :src="detail.coverImgUrl" fit="cover" />
 
       <!-- 详情 -->
-      <div flex-1>
-        <section h-60 class="content">
+      <div flex-1 overflow-hidden>
+        <section md:h-50 class="content">
           <!-- 标题 -->
           <h1 text-xl class="title">{{ detail.name }}</h1>
+
           <!-- 创建者 -->
-          <div class="creator">
+          <div my-3 md:my-0 class="creator">
             <el-image w-8 rounded-full :src="detail.creator.avatarUrl" fit="cover" />
             <p class="nickname">{{ detail.creator.nickname }}</p>
             <p class="text createTime">{{ detail.createTime }}</p>
           </div>
 
           <!-- 操作 -->
-          <ul class="operate">
+          <ul mb-3 md:my-0 class="operate">
             <li class="playAll">
               <p @click="playSongList(id)">
                 <span class="icon i-heroicons-outline:play"></span>
@@ -80,8 +82,7 @@
     </div>
 
     <!-- 折叠 -->
-    <slot :id="id" :share="share" name="fold" :title="detail.name" :height="detailEl?.offsetHeight || 0">
-    </slot>
+    <slot :id="id" :share="share" name="fold" :title="detail.name" :height="detailEl?.offsetHeight || 0"></slot>
   </div>
 </template>
 
@@ -194,6 +195,11 @@ onMounted(async () => {
   align-items: center;
 
   gap: 10px;
+
+  .nickname,
+  .createTime {
+    @include oneOmit;
+  }
 
   .nickname {
     color: var(--theme-bg-color);

@@ -15,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import { useDebounceFn } from '@vueuse/shared';
 const emit = defineEmits(["getComment"]);
 const props = defineProps({
   title: String
@@ -24,15 +25,15 @@ let { title } = toRaw(props);
 // 评论内容
 let content = ref<string>("");
 // 发送评论
-let sendComment = () => {
+let sendComment = useDebounceFn(() => {
   if (!content.value.length) {
-    ElMessage({
+    return ElMessage({
       message: '请输入内容!',
       type: 'warning',
     })
   }
   emit("getComment", content.value);
-}
+}, 500);
 </script>
 
 <style lang="scss" scoped>

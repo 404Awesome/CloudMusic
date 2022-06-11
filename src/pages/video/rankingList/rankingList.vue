@@ -28,6 +28,7 @@ import MVRanking from "@/components/content/mvRanking/mvRanking.vue";
   .title {
     color: var(--font-color);
     font-size: 15px;
+    white-space: nowrap;
 
     span:last-child {
       margin-left: 5px;

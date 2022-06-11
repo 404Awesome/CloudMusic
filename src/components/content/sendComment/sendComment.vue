@@ -26,12 +26,7 @@ let { title } = toRaw(props);
 let content = ref<string>("");
 // 发送评论
 let sendComment = useDebounceFn(() => {
-  if (!content.value.length) {
-    return ElMessage({
-      message: '请输入内容!',
-      type: 'warning',
-    })
-  }
+  if (!content.value.length) return ElMessage.warning('请输入内容!');
   emit("getComment", content.value);
 }, 500);
 </script>

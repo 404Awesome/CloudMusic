@@ -28,16 +28,19 @@
               <h1 class="title">{{ currentSong?.song.name }}</h1>
               <!-- 元信息 -->
               <div class="metaInfo">
-                <p>
+                <!-- 专辑 -->
+                <section>
                   <span>专辑:&nbsp;</span>
-                  <span class="name">{{ currentSong?.album.name }}</span>
-                </p>
-                <p>
+                  <span class="albumName">{{ currentSong?.album.name }}</span>
+                </section>
+                <!-- 歌手 -->
+                <section>
                   <span>歌手:&nbsp;</span>
-                  <span class="artist" v-html="handleArtists(currentSong?.artist)"></span>
-                </p>
+                  <div overflow-hidden v-html="handleArtists(currentSong?.artist)"></div>
+                </section>
               </div>
             </header>
+
             <!-- 歌词内容 -->
             <main class="lyrics"></main>
           </div>
@@ -63,7 +66,6 @@ import { useMainStore } from "store/index";
 const store = useMainStore();
 let { currentSong } = toRefs(store);
 
-
 // 操作列表
 let operateList = reactive([{
   // eva:heart-fill
@@ -88,15 +90,14 @@ let operateList = reactive([{
   }
 }]);
 
-
 // 是否显示
-let toggle = () => {
-  store.isFolding = !store.isFolding;
-}
+let toggle = () => store.isFolding = !store.isFolding;
 defineExpose({ toggle });
 </script>
   
 <style lang="scss" scoped>
+@import "@/scss/mixins.scss";
+
 .songDetail {
   color: var(--font-color);
 
@@ -206,25 +207,23 @@ defineExpose({ toggle });
 
     .metaInfo {
       display: flex;
-      overflow: hidden;
       font-size: 14px;
 
       gap: 15px;
 
-      p {
+      section {
+        display: flex;
         overflow: hidden;
-        text-overflow: ellipsis;
+        align-items: center;
+        flex: 1;
         white-space: nowrap;
       }
 
-      .name {
+      .albumName {
         color: var(--theme-bg-color);
         cursor: pointer;
-      }
 
-      .artist :deep(.name) {
-        color: var(--theme-bg-color);
-        cursor: pointer;
+        @include oneOmit;
       }
     }
   }

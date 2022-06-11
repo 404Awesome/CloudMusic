@@ -14,9 +14,9 @@
         </template>
       </el-table-column>
       <el-table-column prop="name" label="音乐标题" />
-      <el-table-column class-name="artists" label="歌手">
+      <el-table-column label="歌手">
         <template v-slot="{ row }">
-          <p class="artists" v-html="handleArtists(row.ar)"></p>
+          <div v-html="handleArtists(row.ar)"></div>
         </template>
       </el-table-column>
       <el-table-column label="专辑">
@@ -62,7 +62,7 @@ onMounted(async () => {
       }
     }
   } catch (err) {
-    ElMessage.error("获取音乐列表失败!");
+    ElMessage.error("加载音乐列表失败!");
   }
 });
 </script>
@@ -94,10 +94,6 @@ onMounted(async () => {
       font-size: 14px;
     }
 
-    .artists.is-leaf .cell {
-      padding: 0px 25px;
-    }
-
     .cell {
       padding: 0px 5px;
       color: var(--font-color);
@@ -109,14 +105,6 @@ onMounted(async () => {
         overflow: hidden;
         text-overflow: ellipsis;
         cursor: pointer;
-      }
-
-      .artists {
-        padding: 0px 20px;
-
-        .name:hover {
-          color: var(--theme-bg-color);
-        }
       }
 
       .special:hover {

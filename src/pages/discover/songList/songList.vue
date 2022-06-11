@@ -1,14 +1,16 @@
 <!-- 发现音乐 - 歌单 -->
 <template>
-  <div class="songList wrapper">
+  <!-- 占位,防止v-loading遮住阴影 -->
+  <div h-4></div>
+  <div element-loading-text="Loading..." v-loading="loading" pb-4 class="wrapper">
     <!-- 分类列表 -->
-    <CategoryList :isLoading="isLoading" @selected="cateSelected" />
+    <CategoryList :loading="loading" @selected="cateSelected" />
 
     <!-- 歌单列表 -->
-    <List :isLoading="isLoading" :songList="songList" />
+    <List :loading="loading" :songList="songList" />
 
     <!-- 分页 -->
-    <div element-loading-spinner="null" v-loading="isLoading" flex justify-center>
+    <div v-show="songList.length" flex justify-center>
       <el-pagination @current-change="loadList" background layout="prev, pager, next" :page-size="limit"
         :total="total" />
     </div>
@@ -20,11 +22,18 @@ import CategoryList from "./coms/categoryList.vue";
 import List from "./coms/list.vue";
 import { Discover } from "@/api/modules/discover";
 
-let isLoading = ref<boolean>(false);
+// 是否正在加载
+let loading = ref<boolean>(false);
+// 当前类型
 let currentType = ref<string>("");
+// 列表总条数
 let total = ref<number>(0);
-let limit = ref<number>(30);
+// 限制请求的个数
+let limit = 30;
+// 歌单列表
 let songList = reactive<any>([]);
+
+// 分类选择事件
 let cateSelected = (type: any) => {
   total.value = 0;
   currentType.value = type;
@@ -33,19 +42,19 @@ let cateSelected = (type: any) => {
 
 // 加载歌单列表
 let loadList = async (offset: number) => {
-  isLoading.value = true;
-  offset = (offset - 1) * limit.value;
-  let { code, playlists, total: count }: any = await Discover.getTopPlaylist(currentType.value, offset, limit.value);
-  if (code == 200) {
-    if (!total.value) total.value = count;
-    songList.splice(0, songList.length, ...playlists);
+  try {
+    loading.value = true;
+    songList.splice(0, songList.length);
+    offset = (offset - 1) * limit;
+    let { code, playlists, total: count }: any = await Discover.getTopPlaylist(currentType.value, offset, limit);
+    if (code == 200) {
+      if (!total.value) total.value = count;
+      songList.splice(0, songList.length, ...playlists);
+    }
+  } catch (err: any) {
+    ElMessage.error("加载歌单列表失败!");
+  } finally {
+    loading.value = false;
   }
-  isLoading.value = false;
 }
 </script>
-
-<style lang="scss" scoped>
-.songList {
-  padding: 15px 0px 30px;
-}
-</style>

@@ -26,7 +26,7 @@ export const useMainStore = defineStore("main", {
   state: () => {
     return {
       // 登陆状态
-      auth: useStorage("auth", false),
+      auth: useStorage<string>("auth", "", localStorage),
       // 暗夜模式
       isDark: useStorage<boolean>("isDark", false, sessionStorage),
       // 主题色
@@ -61,9 +61,11 @@ export const useMainStore = defineStore("main", {
       return this.playList.findIndex(item => item.song.id == this.currentSong?.song.id);
     },
     emptyPlayList() {
-      // 清空播放列表
       if (this.playList.length) {
+        // 清空播放列表
         this.playList.splice(0);
+        // 清空当前歌单ID
+        this.songListID = 0;
       }
     },
     addPlayList(songList: SongInfo[]) {

@@ -1,14 +1,14 @@
 import { RouteRecordRaw } from "vue-router";
 let Video = () => import("@/views/video/video.vue");
 
-// {
-//   VideoList: "视频列表",
-//   VideoDetail: "视频详情",
-//   MVList: "mv列表",
-//   MVDetail: "mv详情",
-//   AllMV: "全部mv",
-//   RankingList: "MV排行榜",
-// }
+/*
+ * VideoList: "视频列表",
+ * VideoDetail: "视频详情",
+ * MVList: "mv列表",
+ * MVDetail: "mv详情",
+ * AllMV: "全部mv",
+ * RankingList: "MV排行榜",
+ */
 let VideoList = () => import("@/pages/video/videoList/videoList.vue");
 let MVList = () => import("@/pages/video/mvList/mvList.vue");
 let MVDetail = () => import("@/pages/video/mvDetail/mvDetail.vue");
@@ -20,38 +20,45 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/video",
     component: Video,
-    redirect: "/video/videoList",
+    redirect: "/video/mvList",
     meta: {
       title: "视频",
       tablist: [
-        { title: "视频", path: "/video/videoList", auth: true },
         { title: "MV", path: "/video/mvList" },
+        { title: "视频", path: "/video/videoList", auth: true }
       ]
     },
     children: [{
       path: "videoList",
-      meta: { auth: true },
-      component: VideoList
+      component: VideoList,
+      beforeEnter() {
+        let auth = localStorage.getItem("auth");
+        return auth ? true : "/account/login";
+      },
     }, {
       path: "mvList",
       component: MVList
     }]
   },
+  // MV详情
   {
     path: "/mvDetail/:id",
     component: MVDetail,
     meta: { title: "MV详情" }
   },
+  // 视频详情
   {
     path: "/videoDetail",
     component: VideoDetail,
     meta: { title: "视频详情", auth: true }
   },
+  // 全部MV
   {
     path: "/allMV",
     component: AllMV,
     meta: { title: "全部MV" }
   },
+  // MV排行榜
   {
     path: "/mvRankingList",
     component: RankingList,

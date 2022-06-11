@@ -21,8 +21,8 @@ export const handerDuration = (time: number): string => {
 
 // 处理艺人
 export const handleArtists = (artists: any) => {
-  let artistsList = artists.map((item: any) => `<span class="name" data-id="${item.id}">${item.name}</span>`);
-  return artistsList.length == 1 ? artistsList[0] : artistsList.join("<span> / </span>");
+  let artistsList = artists.map((item: any) => `<span class="artistsName" data-id="${item.id}">${item.name}</span>`);
+  return artistsList.length == 1 ? `<p class="artists">${artistsList[0]}</p>` : `<p class="artists">${artistsList.join("<span> / </span>")}</p>`;
 }
 
 // 处理歌曲信息

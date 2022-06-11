@@ -19,28 +19,29 @@ import BroadcastItem from "@/components/content/broadcastItem/broadcastItem.vue"
 import { Discover } from "@/api/modules/discover";
 
 // 是否正在加载
-let isLoading = ref(false);
+let loading = ref(false);
 // 是否禁用无限滚动
 let disabled = ref(false);
 // 独家放送列表
 let broadcastList = reactive<any>([]);
-// 偏移量
-let offset = ref(0);
+
 // 加载数据
 let loadData = async () => {
-  isLoading.value = true;
-  let { code, result, more }: any = await Discover.getBroadcastList(offset.value);
-  if (code == 200) {
-    broadcastList.push(...result);
-    offset.value = broadcastList.length;
-    // 无法加载更多
-    if (!more) disabled.value = true;
+  if (loading.value) return;
+  loading.value = true;
+  try {
+    let { code, result, more }: any = await Discover.getBroadcastList(broadcastList.length, 30);
+    if (code == 200) {
+      broadcastList.push(...result);
+      // 无法加载更多
+      if (!more) disabled.value = true;
+    }
+  } catch (err: any) {
+    ElMessage.error("加载独家放送失败!");
+  } finally {
+    loading.value = false;
   }
-  isLoading.value = false;
 };
-onMounted(() => {
-  if (!isLoading.value) loadData();
-})
 </script>
 
 <style lang="scss" scoped>

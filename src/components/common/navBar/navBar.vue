@@ -1,13 +1,13 @@
 <!-- 导航栏 -->
 <template>
   <nav class="navLine">
-    <h4 @click="$router.push(props.path)">{{ props.title }}</h4>
-    <span class="i-heroicons-outline:chevron-right"></span>
+    <h4 class="title" @click="$router.push(path)">{{ title }}</h4>
+    <span class="icon i-heroicons-outline:chevron-right"></span>
   </nav>
 </template>
 
 <script setup lang="ts">
-let props = defineProps({
+const props = defineProps({
   path: {
     type: String,
     required: true
@@ -16,7 +16,8 @@ let props = defineProps({
     type: String,
     required: true
   }
-})
+});
+const { path, title } = toRaw(props);
 </script>
 
 <style lang="scss" scoped>
@@ -26,24 +27,25 @@ let props = defineProps({
   width: 100%;
   color: var(--font-color);
 
-  h4 {
+  .title {
     margin: 0;
     margin-right: 5px;
     font-weight: 400;
     font-size: 17px;
     cursor: pointer;
+    white-space: nowrap;
 
     &:hover {
       color: var(--theme-bg-color);
 
-      &+span {
+      &+.icon {
         color: var(--theme-bg-color);
         transform: translateX(5px);
       }
     }
   }
 
-  span {
+  .icon {
     font-size: 20px;
     transition: transform 0.2s ease-in-out;
   }

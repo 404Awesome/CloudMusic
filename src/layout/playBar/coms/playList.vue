@@ -30,8 +30,10 @@
         <ul class="list" v-if="playList.length">
           <li @dblclick="playSong(item)" :class="{ active: item.song.id == currentSong?.song.id }"
             v-for="item in store.playList" :key="item.song.id">
-            <p>{{ item.song.name }}</p>
-            <p v-html="handleArtists(item.artist)"></p>
+            <!-- 歌名 -->
+            <p class="songName">{{ item.song.name }}</p>
+            <!-- 艺术家 -->
+            <div flex-1 v-html="handleArtists(item.artist)"></div>
           </li>
         </ul>
         <!-- 播放列表为空 -->
@@ -124,18 +126,22 @@ header.header {
     white-space: nowrap;
     font-size: 14px;
     cursor: pointer;
-    user-select: none;
 
+    user-select: none;
     gap: 20px;
 
-    p {
+    .songName {
       overflow: hidden;
       flex: 1;
       text-overflow: ellipsis;
     }
 
     &:hover {
-      color: var(--theme-bg-color);
+      background-color: #f5f7fa;
+
+      .songName {
+        color: var(--theme-bg-color);
+      }
     }
 
     &.active {

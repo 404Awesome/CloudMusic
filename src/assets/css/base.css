@@ -86,6 +86,21 @@ aside {
   box-sizing: border-box;
 }
 
+/* 艺术家 */
+.artists {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.artists .artistsName {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 14px;
+  cursor: pointer;
+}
+.artists .artistsName:hover {
+  color: var(--theme-bg-color);
+}
+
 /* 修改elementui v-loading 样式 */
 .el-loading-spinner svg circle {
   stroke: var(--theme-bg-color) !important;

@@ -1,12 +1,14 @@
 <!-- 侧边导航栏 -->
 <template>
   <main class="navbar">
-    <!-- 登陆状态 -->
     <header class="loginStatus">
-      <section v-if="store.auth">
-        <img class="avatar" src="" />
-        <p></p>
+      <!-- 已登陆 -->
+      <section v-if="store.auth" @click="$router.push('/myHomePage')">
+        <!-- <img class="avatar" src="" /> -->
+        <!-- <p></p> -->
       </section>
+
+      <!-- 未登陆 -->
       <section v-else @click="$router.push('/account/login')">
         <span class="i-heroicons-outline:login"></span>
         <p>未登陆</p>
@@ -16,7 +18,7 @@
     <!-- 列表 -->
     <ul class="list">
       <li @click="$router.push(item.path)" :class="{ active: $route.matched[0]?.path == item.path }"
-        v-for="item in list" :key="item.title">
+        v-for="item in navList" :key="item.title">
         <span :class="item.icon"></span>
         <p>{{ item.title }}</p>
       </li>
@@ -27,9 +29,16 @@
 <script setup lang="ts">
 import { useMainStore } from "store/index";
 const store = useMainStore();
+interface ListItem {
+  icon: string,
+  title: string,
+  path: string
+}
 
-// 列表
-let list = reactive([
+// 导航列表
+let navList = reactive<ListItem[]>([]);
+// 无需登陆列表
+let noLogin: ListItem[] = [
   {
     icon: "i-heroicons-outline:music-note",
     title: "发现音乐",
@@ -40,19 +49,31 @@ let list = reactive([
     title: "视频",
     path: "/video",
   },
-]);
-
-// 登陆后添加
-//  {
-//     icon: "i-heroicons-outline:users",
-//     title: "关注",
-//     path: "/following",
-//   }
-// {
-//   icon: "i-heroicons-outline:status-online",
-//   title: "私人FM",
-//   path: "/privateFM",
-// },
+];
+// 需要登陆列表
+let needLogin: ListItem[] = [
+  {
+    icon: "i-heroicons-outline:users",
+    title: "关注",
+    path: "/following",
+  },
+  {
+    icon: "i-heroicons-outline:status-online",
+    title: "私人FM",
+    path: "/privateFM",
+  }
+];
+// 监视store中的auth状态
+watch(() => store.auth, (newVal) => {
+  navList.splice(0, navList.length);
+  if (newVal) {
+    // 已登陆
+    navList.push(...noLogin, ...needLogin);
+  } else {
+    // 未登陆
+    navList.push(...noLogin);
+  }
+}, { immediate: true });
 </script>
 
 <style lang="scss" scoped>

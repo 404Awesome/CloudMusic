@@ -9,6 +9,8 @@ declare module '@vue/runtime-core' {
     BroadcastItem: typeof import('./../components/content/broadcastItem/broadcastItem.vue')['default']
     Carousel: typeof import('./../components/common/carousel/carousel.vue')['default']
     CommentList: typeof import('./../components/content/commentList/commentList.vue')['default']
+    ElAlert: typeof import('element-plus/es')['ElAlert']
+    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']

@@ -1,7 +1,7 @@
 <!-- mv列表item -->
 <template>
-  <div @click="$router.replace(`/mvDetail/${id}`)" class="mvListItem" :class="{ flex: isFlex }">
-    <div class="cover">
+  <div class="mvListItem" :class="{ flex: isFlex }">
+    <div class="cover" @click="$router.push(`/mvDetail/${id}`)">
       <!-- 封面 -->
       <el-image w-full h-30 fit="cover" lazy :src="cover" />
       <!-- 播放次数 -->
@@ -17,8 +17,10 @@
 
     <!-- 详情 -->
     <div class="detail">
-      <p class="title">{{ name }}</p>
-      <p class="artist" v-html="handleArtists(artists)"></p>
+      <!-- 标题 -->
+      <p @click="$router.push(`/mvDetail/${id}`)" class="title">{{ name }}</p>
+      <!-- 艺术家 -->
+      <div v-html="handleArtists(artists)"></div>
     </div>
   </div>
 </template>
@@ -121,27 +123,9 @@ let { id, cover, artists, name, playCount, isFlex } = markRaw(props);
     margin-top: 5px;
 
     .title {
-      overflow: hidden;
-      color: var(--font-color);
-      text-overflow: ellipsis;
-      white-space: nowrap;
       font-size: 15px;
-    }
 
-    .artist {
-      overflow: hidden;
-      color: var(--font-color);
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: 13px;
-
-      :deep(.name) {
-        color: rgba(0, 0, 0, 0.5);
-
-        &:hover {
-          color: var(--theme-bg-color);
-        }
-      }
+      @include oneOmit;
     }
   }
 
@@ -154,18 +138,15 @@ let { id, cover, artists, name, playCount, isFlex } = markRaw(props);
 
     gap: 10px;
 
-    .cover {
+    .cover,
+    .detail {
       width: 50%;
     }
 
-    .detail {
-      width: 50%;
+    .detail .title {
+      white-space: normal;
 
-      .title {
-        white-space: normal;
-
-        @include multilineOmit(2);
-      }
+      @include multilineOmit(2);
     }
   }
 }

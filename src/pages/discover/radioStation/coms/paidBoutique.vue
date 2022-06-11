@@ -29,7 +29,7 @@ import NavBar from "@/components/common/navBar/navBar.vue";
 
 let paygift = reactive<any[]>([]);
 onMounted(async () => {
-  // 获取付费精选
+  // 加载付费精选
   let { code, data }: any = await RadioStation.getPaygift(0, 4);
   if (code == 200) {
     data = data.list.map((item: any) => {
@@ -50,15 +50,16 @@ onMounted(async () => {
 
   li {
     display: flex;
+
     gap: 15px;
 
     .info {
       display: flex;
+      overflow: hidden;
       flex: 1;
       flex-flow: column nowrap;
       justify-content: space-around;
       color: var(--font-color);
-      overflow: hidden;
       cursor: default;
 
       .name:hover {
@@ -71,11 +72,11 @@ onMounted(async () => {
 
       .describe {
         display: flex;
+        overflow: hidden;
         flex-flow: column nowrap;
         color: #8395a7;
-        white-space: nowrap;
         text-overflow: ellipsis;
-        overflow: hidden;
+        white-space: nowrap;
         font-size: 13px;
       }
     }

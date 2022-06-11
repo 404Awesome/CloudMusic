@@ -3,24 +3,24 @@
   <div v-if="detail.name">
     <div ref="detailEl" class="detail">
       <!-- 封面 -->
-      <el-image transition-all duration-300 ease-linear flex-none h-35 w-35 md:h-50 md:w-50 rounded
+      <el-image transition-all duration-300 ease-linear flex-none h-35 w-35 lg:h-50 lg:w-50 rounded
         :src="detail.coverImgUrl" fit="cover" />
 
       <!-- 详情 -->
       <div flex-1 overflow-hidden>
-        <section md:h-50 class="content">
+        <section lg:h-50 class="content">
           <!-- 标题 -->
           <h1 text-xl class="title">{{ detail.name }}</h1>
 
           <!-- 创建者 -->
-          <div my-3 md:my-0 class="creator">
+          <div my-3 lg:my-0 class="creator">
             <el-image w-8 rounded-full :src="detail.creator.avatarUrl" fit="cover" />
             <p class="nickname">{{ detail.creator.nickname }}</p>
             <p class="text createTime">{{ detail.createTime }}</p>
           </div>
 
           <!-- 操作 -->
-          <ul mb-3 md:my-0 class="operate">
+          <ul mb-3 lg:my-0 class="operate">
             <li class="playAll">
               <p @click="playSongList(id)">
                 <span class="icon i-heroicons-outline:play"></span>
@@ -41,7 +41,7 @@
           <!-- 元信息 -->
           <div class="metaInfo">
             <!-- 标签 -->
-            <p>
+            <p class="tags">
               <span>标&emsp;签:&nbsp;</span>
               <span v-for="(item, index) in detail.tags" :key="item">
                 <span class="tag">{{ item }}</span>
@@ -131,7 +131,7 @@ let share = () => {
 let addPlayList = () => {
   console.log(detail.id);
 }
-// 获取歌单详情
+// 加载歌单详情
 onMounted(async () => {
   let { code, playlist }: any = await Discover.getPlayListDetail(id);
   if (code == 200) {
@@ -210,10 +210,10 @@ onMounted(async () => {
 // 操作
 .operate {
   display: flex;
+  align-content: center;
   flex-flow: row wrap;
-  min-width: calc(130px * 2 + 15px);
 
-  gap: 10px 15px;
+  gap: 7px 10px;
 
   li {
     display: flex;
@@ -265,6 +265,11 @@ onMounted(async () => {
 // 元信息
 .metaInfo {
   font-size: 14px;
+
+  .tags,
+  .count>p {
+    @include oneOmit;
+  }
 
   .tag {
     color: var(--theme-bg-color);

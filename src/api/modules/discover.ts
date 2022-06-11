@@ -149,11 +149,19 @@ export const Discover = {
     })
   },
   // 获取歌单评论
-  getCommentPlayList(id: number, offset: number = 0, limit: number = 20, before?: number) {
+  getCommentPlayList(id: number, offset: number = 0, limit: number = 20) {
     return Request({
       url: "/comment/playlist",
       method: "GET",
-      params: { id, offset, limit, before }
+      params: { id, offset, limit }
+    })
+  },
+  // 歌单收藏者
+  getPlaylistSub(id: number, offset: number = 0, limit: number = 20) {
+    return Request({
+      url: "/playlist/subscribers",
+      method: "GET",
+      params: { id, offset, limit }
     })
   },
 }

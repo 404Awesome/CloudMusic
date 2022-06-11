@@ -1,7 +1,6 @@
 <!-- 歌单列表 -->
 <template>
-  <ul gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="list"
-    element-loading-text="Loading..." v-loading="isLoading">
+  <ul min-h-30 gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="list">
     <li @click="$router.push(`/songListDetal/${item.id}`)" v-for="item in songList" :key="item.id">
       <div class="cover">
         <el-image fit-="cover" lazy :src="item.coverImgUrl" />
@@ -27,7 +26,7 @@ import { handleCount } from "@/utils/handle";
 import { playSongList } from "@/utils/operate";
 import { PropType } from "vue";
 const props = defineProps({
-  isLoading: {
+  loading: {
     type: Boolean,
     default: false
   },
@@ -37,14 +36,13 @@ const props = defineProps({
   }
 });
 
-let { isLoading, songList } = toRefs(props);
+let { loading, songList } = toRefs(props);
 </script>
 
 <style lang="scss" scoped>
 .list {
   display: grid;
   margin: 20px 0px;
-  min-height: 200px;
 
   li {
     overflow: hidden;

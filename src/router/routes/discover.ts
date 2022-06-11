@@ -1,17 +1,17 @@
 import { RouteRecordRaw } from "vue-router";
 
-// {
-//   Discover: "发现音乐",
-//   Recommend: "个性推荐",
-//   PlayList: "歌单",
-//   Ranking: "排行榜",
-//   Singer: "歌手",
-//   NewSong: "最新音乐",
-//   RadioStation: "主播电台",
-//   DailySongs: "每日歌曲推荐",
-//   Broadcast: "独家放送",
-//   PlayListDetail: "歌单详情",
-// }
+/*
+ * Discover: "发现音乐",
+ * Recommend: "个性推荐",
+ * PlayList: "歌单",
+ * Ranking: "排行榜",
+ * Singer: "歌手",
+ * NewSong: "最新音乐",
+ * RadioStation: "主播电台",
+ * DailySongs: "每日歌曲推荐",
+ * Broadcast: "独家放送",
+ * PlayListDetail: "歌单详情",
+ */
 let Discover = () => import("@/views/discover/discover.vue");
 let Recommend = () => import("@/pages/discover/recommend/recommend.vue");
 let SongList = () => import("@/pages/discover/songList/songList.vue");
@@ -64,22 +64,27 @@ const routes: RouteRecordRaw[] = [
     }, {
       path: "radioStation",
       component: RadioStation
-    }, {
-      path: "dailySongs",
-      component: DailySongs,
-      meta: { title: "每日推荐", auth: true }
     }]
   },
+  // 每日推荐
+  {
+    path: "/dailySongs",
+    component: DailySongs,
+    meta: { title: "每日推荐", auth: true }
+  },
+  // 歌单详情
   {
     path: "/songListDetal/:id",
-    meta: { title: "歌单详情", scroll: true },
+    meta: { title: "歌单详情" },
     component: SongListDetail
   },
+  // 独家放送
   {
     path: "/broadcast",
     meta: { title: "独家放送" },
     component: Broadcast
   },
+  // 歌手详情
   {
     path: "/singerDetail",
     meta: { title: "歌手详情" },
@@ -87,4 +92,4 @@ const routes: RouteRecordRaw[] = [
   }
 ];
 
-export default routes;
+export default routes;  

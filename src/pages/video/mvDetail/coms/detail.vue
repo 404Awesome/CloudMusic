@@ -1,10 +1,10 @@
 <!-- MV详情 -->
 <template>
-  <div class="detail">
+  <div pt-4 pb-8>
     <!-- 艺术家信息 -->
-    <div class="artistsInfo">
+    <div flex items-center>
       <!-- <el-image :src="" fit="cover" /> -->
-      <p class="artists" v-html="handleArtists(detail.artists)"></p>
+      <div v-html="handleArtists(detail.artists)"></div>
     </div>
 
     <!-- mv信息 -->
@@ -73,25 +73,6 @@ let showDesc = ref(false);
 </script>
 
 <style lang="scss" scoped>
-.detail {
-  margin: 15px 0px 30px;
-}
-
-.artistsInfo {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-
-  p.artists {
-    color: var(--font-color);
-    font-size: 14px;
-
-    :deep(.name):hover {
-      color: var(--theme-bg-color);
-    }
-  }
-}
-
 .mvInfo {
   margin-top: 10px;
 
@@ -129,7 +110,7 @@ let showDesc = ref(false);
   .describe {
     padding: 10px;
     border-radius: 5px;
-    background-color: #eee;
+    background-color: #f4f4f5;
     color: var(--font-color);
     font-size: 14px;
   }

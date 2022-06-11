@@ -97,11 +97,11 @@ export const MV = {
     })
   },
   // 获取mv评论
-  getComment(id: number, offset: number = 0, limit: number = 20, before?: number) {
+  getComment(id: number, offset: number = 0, limit: number = 20) {
     return Request({
       url: "/comment/mv",
       method: "GET",
-      params: { id, offset, limit, before }
+      params: { id, offset, limit }
     })
   }
 }

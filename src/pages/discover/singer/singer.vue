@@ -2,7 +2,7 @@
 <template>
   <div pt-4 class="wrapper">
     <!-- 分类列表 -->
-    <categoryList @selected="cateSelected" :isLoading="isLoading" />
+    <categoryList @selected="cateSelected" :loading="loading" />
 
     <!-- 歌手列表 -->
     <ul gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="singerList"
@@ -28,47 +28,42 @@ import { Discover } from "@/api/modules/discover";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-// 请求偏移量
-let offset = ref(0);
-// 请求限制数据个数
-let limit = 30;
 // 是否禁用加载
 let disabled = ref(false);
 // 是否正在加载
-let isLoading = ref(false);
+let loading = ref(false);
 // 类型列表
-let typeList = reactive({
-  area: "",
-  type: "",
-  initial: ""
-})
+let typeList = {};
+// 歌手列表
+let artistsList = reactive<any>([]);
+
+// 加载数据
+let loadData = async () => {
+  if (loading.value) return;
+  loading.value = true;
+  try {
+    let { area, type, initial }: any = typeList;
+    let { artists, code, more }: any = await Discover.getArtistList(type, area, initial, artistsList.length, 30);
+    if (code == 200) {
+      artistsList.push(...artists);
+      // 无法加载更多
+      if (!more) disabled.value = true;
+    }
+  } catch (err: any) {
+    ElMessage.error("加载歌手列表失败!");
+  } finally {
+    loading.value = false;
+  }
+}
 
 // 分类已选择
 let cateSelected = (category: any) => {
-  offset.value = 0;
+  // 清空数组
   artistsList.splice(0, artistsList.length);
+  // 合并分类
   Object.assign(typeList, category);
+  // 加载数据
   loadData();
-}
-
-// 歌手列表
-let artistsList = reactive<any>([]);
-// 加载数据
-let loadData = async () => {
-  if (isLoading.value) return;
-  isLoading.value = true;
-  let { area, type, initial } = toRaw(typeList);
-  let { artists, code, more }: any = await Discover.getArtistList(type, area, initial, offset.value, limit);
-  if (code == 200) {
-    artistsList.push(...artists);
-    offset.value = artistsList.length;
-
-    // 无法加载更多
-    if (!more) {
-      disabled.value = true;
-    }
-  }
-  isLoading.value = false;
 }
 
 // 跳转到歌手详情页面

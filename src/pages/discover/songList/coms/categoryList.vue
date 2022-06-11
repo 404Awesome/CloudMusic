@@ -1,6 +1,6 @@
 <!-- 分类列表 -->
 <template>
-  <AllTypeSelect :isLoading="isLoading" @selected="categorySelected" defaultType="全部歌单" :hotTypeList="hotTypeList">
+  <AllTypeSelect :loading="loading" @selected="categorySelected" defaultType="全部歌单" :hotTypeList="hotTypeList">
     <template #customize="{ currentSelect, selected }">
       <div class="category" v-for="category in allCategoryList" :key="category.name">
         <div class="info">
@@ -25,7 +25,7 @@ import AllTypeSelect from "@/components/content/allTypeSelect/allTypeSelect.vue"
 import { Discover } from "@/api/modules/discover";
 const emit = defineEmits(['selected']);
 const props = defineProps({
-  isLoading: {
+  loading: {
     type: Boolean,
     default: false
   }
@@ -37,7 +37,7 @@ let hotTypeList = reactive<string[]>([]);
 // 全部分类列表
 let allCategoryList = reactive<any>([]);
 onMounted(async () => {
-  // 获取热门歌单分类
+  // 加载热门歌单分类
   let PlayListHot: any = await Discover.getPlayListHot();
   if (PlayListHot.code == 200) {
     let tagsName = PlayListHot.tags.map((tag: any) => {
@@ -46,7 +46,7 @@ onMounted(async () => {
     hotTypeList.push(...tagsName);
   }
 
-  // 获取歌单分类
+  // 加载歌单分类
   let playListCatList: any = await Discover.getPlayListCatlist();
   if (playListCatList.code == 200) {
     let icon = ['i-eva:globe-outline', 'i-heroicons-outline:sparkles', 'i-eva:umbrella-outline', 'i-eva:smiling-face-outline', 'i-eva:grid-outline'];
@@ -66,7 +66,7 @@ onMounted(async () => {
 
 // 分类已选择
 let categorySelected = (type: string) => {
-  if (!props.isLoading) {
+  if (!props.loading) {
     emit('selected', type);
   }
 }

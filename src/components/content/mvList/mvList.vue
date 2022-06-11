@@ -1,9 +1,10 @@
 <!-- mv列表 -->
 <template>
-  <ul gap-5 lg:gap-7 grid-cols-2 md:grid-cols-3 lg-grid-cols-4 class="mvList" element-loading-text="Loading..."
-    v-loading="loading">
-    <li overflow-hidden v-for="item in list" :key="item.id">
-      <MVlistItem v-bind="item" />
+  <ul grid min-h-30 gap-5 lg:gap-7 grid-cols-2 md:grid-cols-3 lg-grid-cols-4 element-loading-text="Loading..."
+    v-loading="loading" class="mvList">
+    <li overflow-hidden v-for="mv in list" :key="mv.id">
+      <MVlistItem :id="mv.id" :cover="mv.cover || mv.picUrl" :name="mv.name" :artists="mv.artists"
+        :playCount="mv.playCount" />
     </li>
   </ul>
 </template>
@@ -23,10 +24,3 @@ const props = defineProps({
 });
 let { list, loading } = toRefs(props);
 </script>
-
-<style lang="scss" scoped>
-.mvList {
-  display: grid;
-  min-height: 150px;
-}
-</style>

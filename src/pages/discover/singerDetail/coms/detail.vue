@@ -39,7 +39,7 @@ let collection = () => {
 
 // 歌手详情
 let singerDetail = reactive<any>({});
-// 获取歌手详情
+// 加载歌手详情
 onMounted(async () => {
   let { code, data: { artist } }: any = await Discover.getArtistDetail(id);
   if (code == 200) Object.assign(singerDetail, artist);

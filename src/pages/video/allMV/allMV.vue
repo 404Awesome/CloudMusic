@@ -4,17 +4,17 @@
     <!-- 类型列表 -->
     <ul class="type">
       <li v-for="item in typeList" :key="item.title">
-        <TypeSelect @selected="(type: string) => currentType[item.name] = type" :title="item.title" :loading="isLoading"
+        <TypeSelect @selected="(type: string) => currentType[item.name] = type" :title="item.title" :loading="loading"
           :currentType="currentType[item.name]" :typeList="item.type" />
       </li>
     </ul>
 
-    <!-- 列表 -->
     <div>
       <!-- mv列表 -->
-      <MVList :loading="isLoading" :list="mvList" />
+      <MVList :loading="loading" :list="mvList" />
+
       <!-- 分页 -->
-      <div element-loading-spinner="null" v-loading="isLoading" flex justify-center mt-4>
+      <div v-show="mvList.length" flex justify-center mt-4>
         <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit"
           :total="total" />
       </div>
@@ -30,7 +30,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 
 // 是否加载
-let isLoading = ref(false);
+let loading = ref(false);
 // mv总条数
 let total = ref<number>(100);
 // limit限制
@@ -58,7 +58,6 @@ let typeList = reactive([{
 }]);
 // 监听类型列表并请求
 watch(currentType, () => {
-  isLoading.value = true;
   offset.value = 0;
   loadData(offset.value, limit);
 });
@@ -66,17 +65,23 @@ watch(currentType, () => {
 // 分页发生改变
 let change = (page: number) => {
   offset.value = page * limit;
-  isLoading.value = true;
   loadData(offset.value, limit);
 }
 
 // 加载数据
 let loadData = async (offset: number, limit: number) => {
-  let { area, type, order } = toRaw(currentType);
-  let { code, data, count }: any = await MV.getAllMV(area, type, order, offset, limit);
-  if (code == 200 && !total.value) total.value = count;
-  if (code == 200) mvList.splice(0, mvList.length, ...data);
-  isLoading.value = false;
+  try {
+    loading.value = true;
+    mvList.splice(0, mvList.length);
+    let { area, type, order } = toRaw(currentType);
+    let { code, data, count }: any = await MV.getAllMV(area, type, order, offset, limit);
+    if (code == 200 && !total.value) total.value = count;
+    if (code == 200) mvList.splice(0, mvList.length, ...data);
+  } catch (err: any) {
+    ElMessage.error("加载全部MV失败!");
+  } finally {
+    loading.value = false;
+  }
 }
 
 // 初始化mv类型

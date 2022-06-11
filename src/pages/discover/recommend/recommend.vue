@@ -53,10 +53,14 @@ let renderList = reactive([
   },
 ]);
 
-// 获取 banner
+// 加载banner
 let banner: any = reactive([]);
 onMounted(async () => {
-  let { banners }: any = await Discover.getBanner();
-  banner.push(...banners);
+  try {
+    let { code, banners }: any = await Discover.getBanner();
+    if (code == 200) banner.push(...banners);
+  } catch (err: any) {
+    ElMessage.error("加载Banner失败!");
+  }
 });
 </script>

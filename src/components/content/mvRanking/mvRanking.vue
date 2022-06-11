@@ -11,13 +11,12 @@
     </nav>
 
     <!-- 列表 -->
-    <ul class="rankingList" element-loading-text="Loading..." v-loading="loading">
-      <li class="rankingItem" v-for="(item, index) in result" :key="item.id">
+    <ul min-h-30 grid-cols-1 md:grid-cols-2 class="rankingList" element-loading-text="Loading..." v-loading="loading">
+      <li class="rankingItem" v-for="(mv, index) in raningList" :key="mv.id">
+        <!-- 排名 -->
         <p class="rank">{{ index + 1 }}</p>
-
-        <div class="mvListItem">
-          <MVlistItem v-bind="item" :isFlex="true" />
-        </div>
+        <MVlistItem :id="mv.id" :cover="mv.cover" :name="mv.name" :artists="mv.artists" :playCount="mv.playCount"
+          :isFlex="true" flex-1 overflow-hidden />
       </li>
     </ul>
   </div>
@@ -39,17 +38,19 @@ let loading = ref(false);
 // 地区列表
 let areaList = reactive<MVArea[]>(["内地", "港台", "欧美", "日本", "韩国"]);
 // 选中类型
-let selected = (area: MVArea) => {
-  loading.value = true;
-  loadData(area);
-};
+let selected = (area: MVArea) => loadData(area);
 
-// 获取排行榜的结果
-let result = reactive<any>([]);
+// 加载排行榜的结果
+let raningList = reactive<any>([]);
 let loadData = async (area: MVArea) => {
-  let { code, data }: any = await MV.getTop(area, 0, props.limit);
-  if (code == 200) {
-    result.splice(0, result.length, ...data);
+  try {
+    loading.value = true;
+    raningList.splice(0, raningList.length);
+    let { code, data }: any = await MV.getTop(area, 0, props.limit);
+    if (code == 200) raningList.splice(0, raningList.length, ...data);
+  } catch (err: any) {
+    ElMessage.error("加载MV排行榜失败!");
+  } finally {
     loading.value = false;
   }
 };
@@ -60,7 +61,6 @@ onMounted(() => loadData(areaList[0]));
 .rankingList {
   display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
   gap: 30px 20px;
 
   li {
@@ -80,11 +80,6 @@ onMounted(() => loadData(areaList[0]));
     justify-content: center;
     color: #999999;
     font-size: 25px;
-  }
-
-  .mvListItem {
-    overflow: hidden;
-    flex: 1;
   }
 }
 </style>

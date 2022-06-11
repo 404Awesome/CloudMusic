@@ -1,15 +1,20 @@
 <!-- 个性推荐 最新音乐 -->
 <template>
-  <ul gap-5 lg:gap-7 grid-cols-2 lg:grid-cols-3 class="newSong">
-    <li @dblclick="playSong(item)" v-for="(item, index) in newSong" :key="item.id">
-      <div class="frontCover">
-        <el-image :src="item.picUrl" />
-      </div>
+  <ul gap-5 lg:gap-x-7 grid-cols-2 lg:grid-cols-3 class="newSong">
+    <li v-for="(song, index) in newSongList" :key="song.id">
+      <!-- 封面 -->
+      <el-image @click="play(song.id)" cursor="pointer" w-18 h-18 rounded :src="song.picUrl" />
+
+      <!-- 详情 -->
       <div class="details">
+        <!-- 排名 -->
         <p class="order">{{ (index + 1).toString().padStart(2, "0") }}</p>
+        <!-- 信息 -->
         <div class="info">
-          <p>{{ item.name }}</p>
-          <p v-html="handleArtists(item.song.artists)"></p>
+          <!-- 歌名 -->
+          <p class="songName">{{ song.name }}</p>
+          <!-- 歌曲艺术家 -->
+          <div v-html="handleArtists(song.song.artists)"></div>
         </div>
       </div>
     </li>
@@ -19,30 +24,27 @@
 <script setup lang="ts">
 import { Discover } from "@/api/modules/discover";
 import { handleArtists } from "@/utils/handle";
-import { useMainStore } from "store/index";
-const store = useMainStore();
+import { playSong } from "@/utils/operate";
 
-let newSong = reactive<any[]>([]);
+// 新歌列表
+let newSongList = reactive<any[]>([]);
+// 加载新歌列表
 onMounted(async () => {
   let { code, result }: any = await Discover.getNewSong();
   if (result.length > 6) result.length = 6;
-  if (code == 200) newSong.push(...result);
+  if (code == 200) newSongList.push(...result);
 });
 
 // 播放歌曲
-let playSong = async (songInfo: any) => {
-  let { code, songs }: any = await Discover.getSongDetail(songInfo.id);
-  if (code == 200) {
-    let { ar, al, id, name, tns = [] } = toRaw(songs[0]);
-    let artist = ar;
-    let album = al;
-    let song = { id, name, tns };
-    store.playSong({ artist, album, song });
-  }
+let play = async (id: number) => {
+  let { code, songs }: any = await Discover.getSongDetail(id);
+  if (code == 200) playSong(songs[0]);
 };
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/mixins.scss";
+
 .newSong {
   display: grid;
   margin-top: 15px;
@@ -51,23 +53,13 @@ let playSong = async (songInfo: any) => {
     display: flex;
     overflow: hidden;
     border-radius: 5px;
-    cursor: pointer;
 
     &:hover {
       background-color: #f5f7fa;
 
-      .info p:first-child {
+      .info .songName {
         color: var(--theme-bg-color);
       }
-    }
-
-    .frontCover {
-      display: flex;
-      overflow: hidden;
-      flex-basis: 30%;
-      flex-grow: 0;
-      flex-shrink: 0;
-      border-radius: 5px;
     }
 
     .details {
@@ -77,9 +69,9 @@ let playSong = async (songInfo: any) => {
       flex: 1;
 
       .order {
-        padding-left: 15px;
+        padding-left: 10px;
         color: rgba($color: #000000, $alpha: 0.5);
-        font-size: 17px;
+        font-size: 16px;
       }
 
       .info {
@@ -87,32 +79,14 @@ let playSong = async (songInfo: any) => {
         overflow: hidden;
         flex: 1;
         flex-flow: column nowrap;
-        justify-content: space-evenly;
-        padding: 0px 15px;
+        justify-content: center;
+        padding: 0px 10px;
         height: 100%;
 
-        p {
-          overflow: hidden;
-          color: var(--font-color);
-          text-overflow: ellipsis;
+        .songName {
+          font-size: 15px;
 
-          &:first-child {
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            font-size: 15px;
-
-            -webkit-line-clamp: 2;
-          }
-
-          &:last-child {
-            color: rgba($color: #000000, $alpha: 0.5);
-            white-space: nowrap;
-            font-size: 14px;
-
-            :deep(.name):hover {
-              color: var(--theme-bg-color);
-            }
-          }
+          @include oneOmit;
         }
       }
     }

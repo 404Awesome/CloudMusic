@@ -1,13 +1,13 @@
 <!-- 电台分类列表 -->
 <template>
-  <div class="category" v-if="categories.length">
+  <div class="category" v-if="cateList.length">
     <div class="left">
       <span @click="leftMove" class="i-heroicons-outline:chevron-left"></span>
     </div>
 
     <el-scrollbar ref="scrollbar" flex-1 pb-4>
       <ul class="list" ref="innerEl">
-        <li v-for="item in categories" :key="item.id">
+        <li v-for="item in cateList" :key="item.id">
           <div class="icon">
             <div :style="{ backgroundImage: `url(${item.picMacUrl})` }"></div>
           </div>
@@ -25,11 +25,12 @@
 <script setup lang="ts">
 import { RadioStation } from "@/api/modules/radioStation";
 
-let categories = reactive<any>([]);
+// 分类列表
+let cateList = reactive<any>([]);
+// 加载电台分类
 onMounted(async () => {
-  // 获取电台分类
-  let catelistRes: any = await RadioStation.getCatelist();
-  if (catelistRes.code == 200) categories.push(...catelistRes.categories);
+  let { code, categories }: any = await RadioStation.getCatelist();
+  if (code == 200) cateList.push(...categories);
 });
 
 let scrollbar = ref<any>();

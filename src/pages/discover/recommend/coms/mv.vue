@@ -1,109 +1,21 @@
 <!-- 个性推荐 MV -->
 <template>
-  <ul gap-5 lg:gap-7 grid-cols-2 lg:grid-cols-4 class="mv">
-    <li v-for="item in mvList" :key="item.id" @click="$router.push(`/mvDetail/${item.id}`)">
-      <!-- 封面 -->
-      <div class="frontCover">
-        <el-image :src="item.picUrl" fit="cover" w-full h-30 lazy />
-        <p class="playCount">
-          <span class="icon i-eva:arrow-right-outline"></span>
-          <span>{{ handleCount(item.playCount) }}</span>
-        </p>
-      </div>
-
-      <!-- 描述 -->
-      <div class="details">
-        <p>{{ item.name }}</p>
-        <p class="artist" v-html="handleArtists(item.artists)"></p>
-      </div>
-    </li>
-  </ul>
+  <MVList mt-4 :list="mvList" />
 </template>
 
 <script setup lang="ts">
-import { handleCount, handleArtists } from "@/utils/handle";
+import MVList from "@/components/content/mvList/mvList.vue";
 import { MV } from "@/api/modules/video";
 
+// mv列表
 let mvList = reactive<any[]>([]);
+// 加载mv列表
 onMounted(async () => {
-  let { code, result }: any = await MV.getPersonalized();
-  if (code == 200) mvList.push(...result);
+  try {
+    let { code, result }: any = await MV.getPersonalized();
+    if (code == 200) mvList.push(...result);
+  } catch (err: any) {
+    ElMessage.error("加载MV列表失败!");
+  }
 });
 </script>
-
-<style lang="scss" scoped>
-.mv {
-  display: grid;
-  padding-top: 15px;
-
-  li {
-    overflow: hidden;
-    cursor: pointer;
-
-    &:hover .details p:first-child {
-      color: var(--theme-bg-color);
-    }
-
-    .frontCover {
-      position: relative;
-      display: flex;
-      overflow: hidden;
-      border-radius: 5px;
-
-      &::after {
-        position: absolute;
-        top: 0px;
-        left: 0;
-        z-index: 1;
-        width: 100%;
-        height: 100%;
-        background-color: rgba($color: #000000, $alpha: 0.2);
-        content: "";
-      }
-
-      .playCount {
-        position: absolute;
-        top: 2px;
-        right: 6px;
-        z-index: 2;
-        color: #fff;
-        font-size: 14px;
-
-        .icon {
-          font-size: 18px;
-        }
-      }
-    }
-
-    .details {
-      margin-top: 5px;
-
-      p {
-        &:first-child {
-          overflow: hidden;
-          color: var(--font-color);
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          font-size: 15px;
-        }
-
-        &.artist {
-          overflow: hidden;
-          color: var(--font-color);
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          font-size: 13px;
-
-          :deep(.name) {
-            color: rgba(0, 0, 0, 0.5);
-
-            &:hover {
-              color: var(--theme-bg-color);
-            }
-          }
-        }
-      }
-    }
-  }
-}
-</style>

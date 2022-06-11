@@ -38,7 +38,7 @@ import { Operate } from "@/api/modules/operate";
 // 热搜列表
 let searchHotList = reactive<any>([]);
 onMounted(async () => {
-  // 获取搜索热搜
+  // 加载搜索热搜
   let { code, data }: any = await Operate.getSearchHot();
   if (code == 200) searchHotList.push(...data);
 })

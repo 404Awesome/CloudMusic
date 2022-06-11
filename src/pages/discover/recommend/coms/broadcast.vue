@@ -10,12 +10,15 @@
 import BroadcastItem from "@/components/content/broadcastItem/broadcastItem.vue";
 import { Discover } from "@/api/modules/discover";
 
+// 独家放送列表
 let broadcastList = reactive<any>([]);
+// 加载独家放送列表
 onMounted(async () => {
-  let { code, result }: any = await Discover.getBroadcastList(0, 4);
-  // 获取成功
-  if (code == 200) {
-    broadcastList.push(...result);
+  try {
+    let { code, result }: any = await Discover.getBroadcastList(0, 4);
+    if (code == 200) broadcastList.push(...result);
+  } catch (err: any) {
+    ElMessage.error("加载独家放送列表失败!");
   }
 });
 </script>

@@ -45,8 +45,8 @@ let renderList = reactive([{
 
 // Banner图
 let banner = reactive<any>([]);
+// 加载Banner图
 onMounted(async () => {
-  // 获取Banner图
   let bannerRes: any = await RadioStation.getBanner();
   if (bannerRes.code == 200) banner.push(...bannerRes.data);
 });

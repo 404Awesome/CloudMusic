@@ -31,7 +31,7 @@
 
     <!-- 热门分类 -->
     <section class="hotTypeList" v-if="hotTypeList.length">
-      <TypeSelect :loading="isLoading" @selected="(type: string) => currentSelect = type" :currentType="currentSelect"
+      <TypeSelect :loading="loading" @selected="(type: string) => currentSelect = type" :currentType="currentSelect"
         :typeList="hotTypeList" />
     </section>
   </nav>
@@ -50,12 +50,12 @@ const props = defineProps({
     type: Array as PropType<string[]>,
     required: true
   },
-  isLoading: {
+  loading: {
     type: Boolean,
     default: false
   }
 });
-const { hotTypeList, defaultType, isLoading } = toRefs(props);
+const { hotTypeList, defaultType, loading } = toRefs(props);
 
 
 // 当前选中
@@ -63,13 +63,11 @@ let currentSelect = ref(defaultType.value || '');
 // 监听当前类型的改变并发出事件
 watch(currentSelect, () => {
   emit("selected", currentSelect.value);
-}, {
-  immediate: true
-})
+}, { immediate: true });
 
 // 改变了选择
 let selected = (type: string) => {
-  if (type !== currentSelect.value && !isLoading.value) {
+  if (type !== currentSelect.value && !loading.value) {
     currentSelect.value = type;
   }
 }

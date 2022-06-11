@@ -58,7 +58,7 @@ const id = parseInt(route.query.id as string);
 
 
 // 是否正在加载
-let isLoading = ref(false);
+let loading = ref(false);
 // 是否禁用无限滚动
 let disabled = ref(false);
 // 偏移量
@@ -69,17 +69,22 @@ let limit = 5;
 let albumList = reactive<any>([]);
 // 加载专辑数据
 let loadAlbumData = async () => {
-  if (isLoading.value) return;
-  isLoading.value = true;
-  let { more, code, hotAlbums }: any = await Discover.getArtistAlbum(id, offset.value, limit);
-  if (code == 200) {
-    // 加载专辑信息
-    loadAlbumInfo(hotAlbums);
-    offset.value += limit;
-    // 无法加载更多
-    if (!more) disabled.value = true;
+  try {
+    if (loading.value) return;
+    loading.value = true;
+    let { more, code, hotAlbums }: any = await Discover.getArtistAlbum(id, offset.value, limit);
+    if (code == 200) {
+      // 加载专辑信息
+      loadAlbumInfo(hotAlbums);
+      offset.value += limit;
+      // 无法加载更多
+      if (!more) disabled.value = true;
+    }
+  } catch (err: any) {
+    ElMessage.error("加载专辑列表失败!");
+  } finally {
+    loading.value = false;
   }
-  isLoading.value = false;
 }
 // 加载专辑信息
 let loadAlbumInfo = (hotAlbums: any) => {
@@ -110,12 +115,17 @@ let topSongs = reactive<any>([]);
 let showAll = ref(false);
 // 加载歌手热门50首歌曲
 onMounted(async () => {
-  isLoading.value = true;
-  let { code, songs }: any = await Discover.getArtistTopSong(id);
-  if (code == 200) {
-    topSongs.push(...songs);
+  try {
+    loading.value = true;
+    let { code, songs }: any = await Discover.getArtistTopSong(id);
+    if (code == 200) {
+      topSongs.push(...songs);
+    }
+  } catch (err: any) {
+    ElMessage.error("加载Top50失败!");
+  } finally {
+    loading.value = false;
   }
-  isLoading.value = false;
 })
 </script>
 

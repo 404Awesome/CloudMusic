@@ -57,7 +57,7 @@ let loadData = async (mvid: number) => {
     Object.assign(detail, result[0].data, result[1]);
   }
 }
-// 监听路由 -> 获取数据
+// 监听路由 ->加载数据
 watch(route, (val) => {
   if (val.fullPath.startsWith("/mvDetail")) {
     mvid.value = parseInt(val.params.id as string);

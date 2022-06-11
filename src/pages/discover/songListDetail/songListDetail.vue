@@ -7,7 +7,9 @@
         <template #fold="{ id, title, height, share }">
           <div :class="{ hidden: scrollTop <= height, disabled: activeComs !== 'SongList' }" class="detailFold">
             <div class="content">
+              <!-- 标题 -->
               <h1 class="title">{{ title }}</h1>
+              <!-- 操作 -->
               <ul class="operate">
                 <li @click="playSongList(id)">
                   <span class="icon i-eva:arrow-right-fill"></span>
@@ -71,6 +73,8 @@ let scroll = useThrottleFn((event) => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/mixins.scss";
+
 // 详情折叠
 .detailFold {
   position: fixed;
@@ -98,6 +102,8 @@ let scroll = useThrottleFn((event) => {
     .title {
       color: var(--font-color);
       font-size: 19px;
+
+      @include oneOmit;
     }
 
     .operate {

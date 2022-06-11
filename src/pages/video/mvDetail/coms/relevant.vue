@@ -20,7 +20,7 @@ let props = defineProps({
   },
 });
 
-// 获取相关mv
+// 加载相关mv
 let relevant = reactive<any[]>([]);
 onMounted(async () => {
   let { code, mvs }: any = await MV.getRelevant(props.id);
@@ -33,6 +33,6 @@ onMounted(async () => {
   margin: 0px 0px 10px 0px;
   color: var(--font-color);
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
 }
 </style>

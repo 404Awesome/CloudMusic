@@ -1,9 +1,9 @@
 <!-- 个性推荐 最新音乐 -->
 <template>
   <ul gap-5 lg:gap-x-7 grid-cols-2 lg:grid-cols-3 class="newSong">
-    <li v-for="(song, index) in newSongList" :key="song.id">
+    <li v-for="({ song, id, picUrl }, index) in newSongList" :key="id">
       <!-- 封面 -->
-      <el-image @click="play(song.id)" cursor="pointer" w-18 h-18 rounded :src="song.picUrl" />
+      <el-image @click="play(song.id)" cursor="pointer" w-18 h-18 rounded :src="picUrl" />
 
       <!-- 详情 -->
       <div class="details">
@@ -13,8 +13,8 @@
         <div class="info">
           <!-- 歌名 -->
           <p class="songName">{{ song.name }}</p>
-          <!-- 歌曲艺术家 -->
-          <div v-html="handleArtists(song.song.artists)"></div>
+          <!-- 艺术家 -->
+          <handleArtists :artists="song.artists" />
         </div>
       </div>
     </li>
@@ -31,8 +31,10 @@ let newSongList = reactive<any[]>([]);
 // 加载新歌列表
 onMounted(async () => {
   let { code, result }: any = await Discover.getNewSong();
-  if (result.length > 6) result.length = 6;
-  if (code == 200) newSongList.push(...result);
+  if (code == 200) {
+    if (result.length > 6) result.length = 6;
+    newSongList.push(...result)
+  };
 });
 
 // 播放歌曲

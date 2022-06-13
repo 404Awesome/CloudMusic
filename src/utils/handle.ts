@@ -1,4 +1,6 @@
 import { SongInfo } from "store/index";
+import { PropType } from "vue";
+import { useRouter } from "vue-router";
 
 // 处理次数 如播放次数等
 export const handleCount = (count: number): string => {
@@ -20,10 +22,30 @@ export const handerDuration = (time: number): string => {
 };
 
 // 处理艺人
-export const handleArtists = (artists: any) => {
-  let artistsList = artists.map((item: any) => `<span class="artistsName" data-id="${item.id}">${item.name}</span>`);
-  return artistsList.length == 1 ? `<p class="artists">${artistsList[0]}</p>` : `<p class="artists">${artistsList.join("<span> / </span>")}</p>`;
-}
+export const handleArtists = defineComponent({
+  props: {
+    artists: {
+      type: Array as PropType<any[]>,
+      required: true
+    }
+  },
+  setup(props, ctx) {
+    let { artists } = props;
+    const router = useRouter();
+    let artistsList = artists.map(({ name, id }: any) => {
+      return h('span', {
+        class: "artistsName",
+        onClick() {
+          router.push({
+            path: `/singerDetail`,
+            query: { id, name }
+          });
+        }
+      }, name);
+    });
+    return () => h("p", { class: "artists" }, artistsList);
+  }
+});
 
 // 处理歌曲信息
 export const handleSongInfo = (songInfo: any): SongInfo => {

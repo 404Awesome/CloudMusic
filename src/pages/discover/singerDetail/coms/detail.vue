@@ -2,21 +2,22 @@
 <template>
   <div class="detail">
     <!-- 歌手图片 -->
-    <el-image flex-none h-60 w-60 rounded :src="singerDetail.cover" fit="cover" />
+    <el-image flex-none transition-all duration-300 ease-linear h-35 w-35 lg:h-50 lg:w-50 rounded
+      :src="singerDetail.cover" fit="cover" />
 
     <!-- 歌手信息 -->
-    <div class="info">
+    <div class="info" pt-2>
       <!-- 姓名 -->
       <h1 class="name">{{ name }}</h1>
       <!-- 别名 -->
-      <p class="alias" v-if="alias">{{ typeof alias == 'string' ? alias : alias.join("; ") }}</p>
+      <p class="alias" mt-1 v-if="alias">{{ typeof alias == 'string' ? alias : alias.join("; ") }}</p>
       <!-- 收藏 -->
-      <div @click="collection" class="collection" :class="{ collected: followed }">
+      <div v-if="store.auth" @click="collection" mt-3 lg:mt-5 class="collection" :class="{ collected: followed }">
         <span class="icon i-heroicons-outline:folder-add"></span>
         <span>{{ followed ? '已收藏' : '收藏' }}</span>
       </div>
       <!-- 数量 -->
-      <ul class="count">
+      <ul class="count" mt-3 lg:mt-5>
         <li>单曲数: {{ singerDetail.musicSize }}</li>
         <li>专辑数: {{ singerDetail.albumSize }}</li>
         <li>MV数: {{ singerDetail.mvSize }}</li>
@@ -27,15 +28,16 @@
 
 <script setup lang="ts">
 import { Discover } from "@/api/modules/discover";
+import { useMainStore } from "store/index";
 import { useRoute } from "vue-router";
+const store = useMainStore();
 const route = useRoute();
-const { alias, id, name }: any = route.query;
-let followed = ref(route.query.followed == 'true');
+const { id, name, alias }: any = route.query;
 
-// 收藏
-let collection = () => {
-  followed.value = !followed.value;
-}
+// 收藏状态
+let followed = ref(false);
+// 收藏 需登陆
+let collection = () => { }
 
 // 歌手详情
 let singerDetail = reactive<any>({});
@@ -58,7 +60,6 @@ onMounted(async () => {
     overflow: hidden;
     flex: 1;
     flex-flow: column nowrap;
-    padding-top: 15px;
 
     .name,
     .alias,
@@ -69,7 +70,6 @@ onMounted(async () => {
     }
 
     .alias {
-      margin-top: 5px;
       color: rgba($color: #000000, $alpha: .5);
       font-size: 14px;
     }
@@ -78,7 +78,6 @@ onMounted(async () => {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 20px 0px;
       width: 80px;
       border: 1px solid #eee;
       border-radius: 20px;

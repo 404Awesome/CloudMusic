@@ -94,8 +94,18 @@ aside {
 }
 .artists .artistsName {
   color: rgba(0, 0, 0, 0.5);
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
+}
+.artists .artistsName:last-child::after {
+  display: none;
+}
+.artists .artistsName::after {
+  display: inline-block;
+  padding: 0px 5px;
+  color: rgba(0, 0, 0, 0.45);
+  content: "/";
+  cursor: default;
 }
 .artists .artistsName:hover {
   color: var(--theme-bg-color);

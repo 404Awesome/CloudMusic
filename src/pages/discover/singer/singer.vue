@@ -66,13 +66,13 @@ let cateSelected = (category: any) => {
   loadData();
 }
 
-// 跳转到歌手详情页面
+// 跳转歌手页面
 let goSingerDetail = (singer: any) => {
-  let { id, alias, followed, name } = toRaw(singer);
+  let { alias, name, id } = toRaw(singer);
   router.push({
-    path: '/singerDetail',
-    query: { id, alias, followed, name }
-  })
+    path: `/singerDetail`,
+    query: { id, name, alias }
+  });
 }
 </script>
 

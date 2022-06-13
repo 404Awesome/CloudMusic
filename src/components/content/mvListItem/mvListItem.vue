@@ -20,7 +20,7 @@
       <!-- 标题 -->
       <p @click="$router.push(`/mvDetail/${id}`)" class="title">{{ name }}</p>
       <!-- 艺术家 -->
-      <div v-html="handleArtists(artists)"></div>
+      <handleArtists :artists="artists" />
     </div>
   </div>
 </template>

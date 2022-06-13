@@ -49,14 +49,14 @@ watch(() => props.activeComs, (newVal) => {
 }
 
 .title {
-  font-size: 16px;
   margin-bottom: 15px;
+  font-size: 16px;
 }
 
 .content {
-  font-size: 14px;
   color: rgba($color: #000000, $alpha: .45);
-  line-height: 1.7em;
   white-space: pre-wrap;
+  font-size: 14px;
+  line-height: 1.7em;
 }
 </style>

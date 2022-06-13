@@ -33,7 +33,7 @@
             <!-- 歌名 -->
             <p class="songName">{{ item.song.name }}</p>
             <!-- 艺术家 -->
-            <div flex-1 v-html="handleArtists(item.artist)"></div>
+            <handleArtists :artists="item.artist" />
           </li>
         </ul>
         <!-- 播放列表为空 -->

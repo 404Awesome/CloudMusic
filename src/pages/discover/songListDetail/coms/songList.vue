@@ -16,7 +16,7 @@
       <el-table-column prop="name" label="音乐标题" />
       <el-table-column label="歌手">
         <template v-slot="{ row }">
-          <div v-html="handleArtists(row.ar)"></div>
+          <handleArtists :artists="row.ar" />
         </template>
       </el-table-column>
       <el-table-column label="专辑">

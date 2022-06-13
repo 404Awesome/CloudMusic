@@ -45,8 +45,8 @@ watch(() => props.activeComs, (newVal) => {
 
 <style lang="scss" scoped>
 .singerMV {
-  padding: 15px 0px;
   display: grid;
+  padding: 15px 0px;
 
   li {
     cursor: pointer;
@@ -66,8 +66,8 @@ watch(() => props.activeComs, (newVal) => {
 
       &::after {
         position: absolute;
-        z-index: 1;
         top: 0px;
+        z-index: 1;
         width: 100%;
         height: 100%;
         background-color: rgba($color: #000000, $alpha: 0.2);
@@ -89,8 +89,8 @@ watch(() => props.activeComs, (newVal) => {
 
       .duration {
         position: absolute;
-        bottom: 2px;
         right: 6px;
+        bottom: 2px;
         z-index: 2;
         color: #fff;
         font-size: 14px;
@@ -98,11 +98,11 @@ watch(() => props.activeComs, (newVal) => {
     }
 
     .title {
-      margin-top: 5px;
-      font-size: 15px;
-      white-space: nowrap;
       overflow: hidden;
+      margin-top: 5px;
       text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 15px;
     }
   }
 }

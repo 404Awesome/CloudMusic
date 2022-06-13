@@ -1,30 +1,31 @@
 <!-- 歌手详情 专辑 -->
 <template>
   <div>
-    <!-- top50 -->
-    <div class="hotSongs" mt-4>
-      <!-- 封面 -->
-      <section w-40 h-40 rounded shadow-lg class="cover">
-        <span>Top</span>
-        <span>50</span>
-      </section>
-      <!-- 歌单列表 -->
-      <section flex-1>
-        <SongList name="热门50首" :songs="showAll ? topSongs : topSongs.slice(0, 10)" />
-        <!-- 是否显示全部 -->
-        <div v-if="!showAll" class="more" @click="showAll = !showAll">
-          <span>查看全部50首</span>
-          <span class="icon i-eva:arrow-ios-forward-outline"></span>
-        </div>
-      </section>
-    </div>
-
-    <!-- 专辑列表 -->
     <ul class="album" pb-4 v-infinite-scroll="loadAlbumData" :infinite-scroll-disabled="disabled">
+      <!-- top50 -->
+      <li class="hotSongs" mt-4>
+        <!-- 封面 -->
+        <section transition-all duration-200 ease-linear w-35 h-35 lg:w-40 lg:h-40 rounded shadow-lg class="cover">
+          <span>Top</span>
+          <span>50</span>
+        </section>
+        <!-- 歌单列表 -->
+        <section flex-1>
+          <SongList name="热门50首" :songs="showAll ? topSongs : topSongs.slice(0, 10)" />
+          <!-- 是否显示全部 -->
+          <div v-if="!showAll" class="more" @click="showAll = !showAll">
+            <span>查看全部50首</span>
+            <span class="icon i-eva:arrow-ios-forward-outline"></span>
+          </div>
+        </section>
+      </li>
+
+      <!-- 专辑列表 -->
       <li v-for="album in albumList" :key="album.id">
         <!-- 专辑封面  -->
         <section>
-          <el-image w-40 h-40 rounded shadow-lg fit="cover" lazy :src="album.picUrl" />
+          <el-image transition-all duration-200 ease-linear w-35 h-35 lg:w-40 lg:h-40 rounded shadow-lg fit="cover" lazy
+            :src="album.picUrl" />
           <p text-sm>{{ album.time }}</p>
         </section>
 
@@ -54,7 +55,7 @@ import { handleTimeStamp } from "@/utils/handle";
 import { Discover } from "@/api/modules/discover";
 import { useRoute } from "vue-router";
 const route = useRoute();
-const id = parseInt(route.query.id as string);
+const { id }: any = route.query;
 
 
 // 是否正在加载
@@ -141,24 +142,20 @@ onMounted(async () => {
   }
 }
 
-.hotSongs {
-  margin-bottom: 40px;
+.hotSongs .cover {
+  display: flex;
+  align-items: center;
+  flex-flow: column nowrap;
+  justify-content: center;
+  background-image: linear-gradient(to bottom, #565760 0%, #715361 100%);
 
-  .cover {
-    display: flex;
-    align-items: center;
-    flex-flow: column nowrap;
-    justify-content: center;
-    background-image: linear-gradient(to bottom, #565760 0%, #715361 100%);
+  span {
+    color: #fff;
+    font-weight: 600;
+    font-size: 50px;
 
-    span {
-      color: #fff;
-      font-weight: 600;
-      font-size: 50px;
-
-      &:last-child {
-        transform: translateY(-10px);
-      }
+    &:last-child {
+      transform: translateY(-10px);
     }
   }
 }

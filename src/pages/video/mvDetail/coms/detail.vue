@@ -1,10 +1,10 @@
 <!-- MV详情 -->
 <template>
   <div pt-4 pb-8>
-    <!-- 艺术家信息 -->
+    <!-- 艺术家 -->
     <div flex items-center>
       <!-- <el-image :src="" fit="cover" /> -->
-      <div v-html="handleArtists(detail.artists)"></div>
+      <handleArtists :artists="detail.artists" />
     </div>
 
     <!-- mv信息 -->

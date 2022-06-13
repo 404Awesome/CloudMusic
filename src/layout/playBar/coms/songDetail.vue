@@ -33,10 +33,10 @@
                   <span>专辑:&nbsp;</span>
                   <span class="albumName">{{ currentSong?.album.name }}</span>
                 </section>
-                <!-- 歌手 -->
+                <!-- 艺术家 -->
                 <section>
                   <span>歌手:&nbsp;</span>
-                  <div overflow-hidden v-html="handleArtists(currentSong?.artist)"></div>
+                  <handleArtists :artists="(currentSong?.artist as any)" />
                 </section>
               </div>
             </header>

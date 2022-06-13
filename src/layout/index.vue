@@ -30,7 +30,7 @@ import { useMainStore } from "store/index";
 const store = useMainStore();
 let { isFolding } = toRefs(store);
 // keepAlive排除路由列表
-let excludeList = reactive<string[]>(['mvDetails', 'playListDetail', 'allMV', 'singerDetail']);
+let excludeList = reactive<string[]>(['singerDetail', 'mvDetails', 'playListDetail', 'allMV']);
 </script>
 
 <style lang="scss" scoped>

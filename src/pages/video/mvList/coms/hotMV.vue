@@ -14,16 +14,17 @@
 <script setup lang="ts">
 import NavBar from "@/components/common/navBar/navBar.vue";
 import MVList from "@/components/content/mvList/mvList.vue";
-import { MV } from "@/api/modules/video";
+import { MVAPI } from "api";
 
 // 加载状态
 let loading = ref(false);
-// mv列表
-let mvList = reactive<any>([])
+// 热播MV列表
+let mvList = reactive<any>([]);
+// 加载热播MV列表
 onMounted(async () => {
   try {
     loading.value = true;
-    let { code, data }: any = await MV.getAllMV("全部", "全部", "最热", 0, 8);
+    let { code, data }: any = await MVAPI.getAllMV("全部", "全部", "最热", 0, 8);
     if (code == 200) mvList.push(...data);
   } catch (err: any) {
     ElMessage.error("加载热播MV失败!");

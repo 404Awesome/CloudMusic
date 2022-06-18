@@ -27,15 +27,15 @@
 </template>
 
 <script setup lang="ts">
-import { useMainStore } from "store/index";
+import { useMainStore } from "store";
 const store = useMainStore();
+
+// 导航列表
 interface ListItem {
   icon: string,
   title: string,
   path: string
 }
-
-// 导航列表
 let navList = reactive<ListItem[]>([]);
 // 无需登陆列表
 let noLogin: ListItem[] = [

@@ -33,13 +33,13 @@
 </template>
 
 <script setup lang="ts">
-import { Operate } from "@/api/modules/operate";
+import { SearchAPI } from "api";
 
 // 热搜列表
 let searchHotList = reactive<any>([]);
 onMounted(async () => {
   // 加载搜索热搜
-  let { code, data }: any = await Operate.getSearchHot();
+  let { code, data }: any = await SearchAPI.getSearchHot();
   if (code == 200) searchHotList.push(...data);
 })
 

@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { Discover } from '@/api/modules/discover';
+import { ArtistAPI } from "api";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const { id }: any = route.query;
@@ -14,10 +14,9 @@ const props = defineProps(['activeComs']);
 
 // 相似歌手
 let similarSinger = reactive([]);
-
-// 加载数据 需要登陆
+// 加载相似歌手 需要登陆
 let loadData = async () => {
-  // let res = await Discover.getSimiArtist(id);
+  // let res = await ArtistAPI.getSimilar(id);
 }
 
 // 监听当前组件的激活状态

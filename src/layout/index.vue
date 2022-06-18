@@ -26,10 +26,9 @@
 import TopNavBar from "./topNavBar/topNavBar.vue";      // 顶部导航栏
 import SideNavBar from "./sideNavBar/sideNavBar.vue";   // 侧边导航栏
 import PlayBar from "./playBar/playBar.vue";            // 播放栏
-import { useMainStore } from "store/index";
+import { useMainStore } from "store";
 const store = useMainStore();
 let { isFolding } = toRefs(store);
-// keepAlive排除路由列表
 let excludeList = reactive<string[]>(['singerDetail', 'mvDetails', 'playListDetail', 'allMV']);
 </script>
 

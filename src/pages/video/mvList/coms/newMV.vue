@@ -16,7 +16,7 @@
 import NavBar from "@/components/common/navBar/navBar.vue";
 import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
 import MVList from "@/components/content/mvList/mvList.vue";
-import { MV } from "@/api/modules/video";
+import { MVAPI } from "api";
 
 // 加载状态
 let loading = ref(false);
@@ -30,7 +30,7 @@ let list = reactive<any>([]);
 let loadData = async (area: string, limit: number = 8) => {
   try {
     loading.value = true;
-    let { code, data }: any = await MV.getNewMV(area, limit);
+    let { code, data }: any = await MVAPI.getNewMV(area, limit);
     if (code == 200) {
       list.splice(0, list.length, ...data);
     }

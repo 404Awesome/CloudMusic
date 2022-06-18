@@ -22,19 +22,19 @@
           <!-- 操作 -->
           <ul mb-3 lg:my-0 class="operate">
             <li class="playAll">
-              <p @click="playSongList(id)">
+              <p @click="Operate.playSongList(id)">
                 <span class="icon i-heroicons-outline:play"></span>
                 <span>播放全部</span>
               </p>
               <span @click="addPlayList" class="icon i-heroicons-outline:plus-sm"></span>
             </li>
-            <li @click="collectSongList(id)">
+            <li @click="Operate.collectSongList(id)">
               <span class="icon i-heroicons-outline:folder-add"></span>
-              <span>收藏({{ handleCount(detail.subscribedCount) }})</span>
+              <span>收藏({{ Handle.Count(detail.subscribedCount) }})</span>
             </li>
             <li @click="share">
               <span class="icon i-heroicons-outline:external-link"></span>
-              <span>分享({{ handleCount(detail.shareCount) }})</span>
+              <span>分享({{ Handle.Count(detail.shareCount) }})</span>
             </li>
           </ul>
 
@@ -57,7 +57,7 @@
               </p>
               <p>
                 <span>播放数:&nbsp;</span>
-                <span class="text">{{ handleCount(detail.playCount) }}</span>
+                <span class="text">{{ Handle.Count(detail.playCount) }}</span>
               </p>
             </div>
 
@@ -87,9 +87,8 @@
 </template>
 
 <script setup lang="ts">
-import { handleCount, handleTimeStamp } from "@/utils/handle";
-import { playSongList, collectSongList, shareInfo } from "@/utils/operate";
-import { Discover } from "@/api/modules/discover";
+import { Handle, Operate } from "utils";
+import { SongListAPI } from "api";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const id = parseInt(route.params.id as string);
@@ -124,7 +123,7 @@ let share = () => {
   let href = location.href;
   let title = detail.name;
   let cover = detail.coverImgUrl;
-  shareInfo(title, href, "歌单", cover);
+  Operate.shareInfo(title, href, "歌单", cover);
 }
 
 // 添加到歌单
@@ -133,7 +132,7 @@ let addPlayList = () => {
 }
 // 加载歌单详情
 onMounted(async () => {
-  let { code, playlist }: any = await Discover.getPlayListDetail(id);
+  let { code, playlist }: any = await SongListAPI.getDetail(id);
   if (code == 200) {
     let { playCount, trackCount, shareCount, createTime, description, creator, name, coverImgUrl, subscribedCount, tags, id } = playlist;
     // 处理描述
@@ -148,7 +147,7 @@ onMounted(async () => {
       // 标题
       name,
       // 创建时间
-      createTime: `${handleTimeStamp(createTime)} 创建`,
+      createTime: `${Handle.TimeStamp(createTime)} 创建`,
       // 收藏次数
       subscribedCount,
       // 分享次数

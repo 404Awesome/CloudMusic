@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import AllTypeSelect from "@/components/content/allTypeSelect/allTypeSelect.vue";
-import { Discover } from "@/api/modules/discover";
+import { SongListAPI } from "api";
 const emit = defineEmits(['selected']);
 const props = defineProps({
   loading: {
@@ -38,7 +38,7 @@ let hotTypeList = reactive<string[]>([]);
 let allCategoryList = reactive<any>([]);
 onMounted(async () => {
   // 加载热门歌单分类
-  let PlayListHot: any = await Discover.getPlayListHot();
+  let PlayListHot: any = await SongListAPI.getHotList();
   if (PlayListHot.code == 200) {
     let tagsName = PlayListHot.tags.map((tag: any) => {
       return tag.name;
@@ -47,7 +47,7 @@ onMounted(async () => {
   }
 
   // 加载歌单分类
-  let playListCatList: any = await Discover.getPlayListCatlist();
+  let playListCatList: any = await SongListAPI.getCateList();
   if (playListCatList.code == 200) {
     let icon = ['i-eva:globe-outline', 'i-heroicons-outline:sparkles', 'i-eva:umbrella-outline', 'i-eva:smiling-face-outline', 'i-eva:grid-outline'];
     let { categories, sub } = playListCatList;

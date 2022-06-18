@@ -6,10 +6,10 @@
         <el-image :src="item.picUrl" fit="cover" />
         <p class="playCount">
           <span class="icon i-eva:arrow-right-outline"></span>
-          <span>{{ handleCount(item.playCount) }}</span>
+          <span>{{ Handle.Count(item.playCount) }}</span>
         </p>
         <p class="playIcon">
-          <span @click.stop="playSongList(item.id)" class="i-heroicons-outline:play"></span>
+          <span @click.stop="Operate.playSongList(item.id)" class="i-heroicons-outline:play"></span>
         </p>
       </div>
       <p class="title">{{ item.name }}</p>
@@ -18,19 +18,21 @@
 </template>
 
 <script setup lang="ts">
-import { handleCount } from "@/utils/handle";
-import { playSongList } from "@/utils/operate";
-import { Discover } from "@/api/modules/discover";
+import { Handle, Operate } from "utils";
+import { SongListAPI } from "api";
 
-// 歌单列表
+// 推荐歌单列表
 let songList = reactive<any[]>([]);
+// 加载推荐歌单列表
 onMounted(async () => {
-  let { code, result }: any = await Discover.getPersonalized(12);
+  let { code, result }: any = await SongListAPI.getPersonalized(12);
   if (code == 200) songList.push(...result);
 });
 </script>
   
 <style lang="scss" scoped>
+@import "@/scss/mixins.scss";
+
 .songList {
   display: grid;
   margin-top: 15px;
@@ -93,15 +95,10 @@ onMounted(async () => {
     }
 
     .title {
-      display: -webkit-box;
-      overflow: hidden;
-      -webkit-box-orient: vertical;
       margin-top: 5px;
-      color: var(--font-color);
-      text-overflow: ellipsis;
       font-size: 14px;
 
-      -webkit-line-clamp: 2;
+      @include multilineOmit(2);
     }
   }
 }

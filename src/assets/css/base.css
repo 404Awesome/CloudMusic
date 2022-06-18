@@ -86,31 +86,6 @@ aside {
   box-sizing: border-box;
 }
 
-/* 艺术家 */
-.artists {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.artists .artistsName {
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 13px;
-  cursor: pointer;
-}
-.artists .artistsName:last-child::after {
-  display: none;
-}
-.artists .artistsName::after {
-  display: inline-block;
-  padding: 0px 5px;
-  color: rgba(0, 0, 0, 0.45);
-  content: "/";
-  cursor: default;
-}
-.artists .artistsName:hover {
-  color: var(--theme-bg-color);
-}
-
 /* 修改elementui v-loading 样式 */
 .el-loading-spinner svg circle {
   stroke: var(--theme-bg-color) !important;

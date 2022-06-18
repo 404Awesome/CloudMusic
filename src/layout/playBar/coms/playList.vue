@@ -4,7 +4,7 @@
     :append-to-body="true" v-model="isShow" :with-header="false">
     <!-- 头部 -->
     <header class="header">
-      <h1 class="title">当前播放</h1>
+      <h1 text-xl>当前播放</h1>
       <div class="content">
         <p text-gray-400>总{{ store.playList.length }}首</p>
         <div class="operate">
@@ -33,9 +33,10 @@
             <!-- 歌名 -->
             <p class="songName">{{ item.song.name }}</p>
             <!-- 艺术家 -->
-            <handleArtists :artists="item.artist" />
+            <Artists flex-1 :artists="item.artist" />
           </li>
         </ul>
+
         <!-- 播放列表为空 -->
         <div class="empty" v-else>
           <el-empty description="播放列表为空!" :image-size="200" />
@@ -46,10 +47,10 @@
 </template>
 
 <script setup lang="ts">
-import { handleArtists } from "@/utils/handle";
-import { useMainStore } from "store/index";
+import Artists from "@/components/content/artists/artists.vue";
+import { useMainStore } from "store";
 const store = useMainStore();
-let { playList, currentSong } = toRefs(store);
+const { playList, currentSong } = toRefs(store);
 
 // 是否显示
 let isShow = ref<boolean>(false);
@@ -74,13 +75,7 @@ header.header {
   justify-content: space-between;
   box-sizing: border-box;
   padding: 10px 15px;
-  height: 80px;
   background-color: #fff;
-
-  .title {
-    color: var(--font-color);
-    font-size: 20px;
-  }
 
   .content {
     display: flex;
@@ -121,7 +116,7 @@ header.header {
   .list li {
     display: flex;
     overflow: hidden;
-    padding: 5px 10px;
+    padding: 5px 15px;
     color: var(--font-color);
     white-space: nowrap;
     font-size: 14px;
@@ -132,7 +127,7 @@ header.header {
 
     .songName {
       overflow: hidden;
-      flex: 1;
+      flex-basis: 50%;
       text-overflow: ellipsis;
     }
 

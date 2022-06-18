@@ -30,10 +30,10 @@ const { path, title } = toRaw(props);
   .title {
     margin: 0;
     margin-right: 5px;
+    white-space: nowrap;
     font-weight: 400;
     font-size: 17px;
     cursor: pointer;
-    white-space: nowrap;
 
     &:hover {
       color: var(--theme-bg-color);

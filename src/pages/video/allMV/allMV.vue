@@ -25,7 +25,7 @@
 <script setup lang="ts" name="allMV">
 import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
 import MVList from "@/components/content/mvList/mvList.vue";
-import { MV } from "@/api/modules/video";
+import { MVAPI } from "api";
 import { useRoute } from "vue-router";
 const route = useRoute();
 
@@ -74,7 +74,7 @@ let loadData = async (offset: number, limit: number) => {
     loading.value = true;
     mvList.splice(0, mvList.length);
     let { area, type, order } = toRaw(currentType);
-    let { code, data, count }: any = await MV.getAllMV(area, type, order, offset, limit);
+    let { code, data, count }: any = await MVAPI.getAllMV(area, type, order, offset, limit);
     if (code == 200 && !total.value) total.value = count;
     if (code == 200) mvList.splice(0, mvList.length, ...data);
   } catch (err: any) {

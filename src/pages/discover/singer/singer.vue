@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import categoryList from "./coms/categoryList.vue";
-import { Discover } from "@/api/modules/discover";
+import { ArtistAPI } from "api";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
@@ -43,7 +43,7 @@ let loadData = async () => {
   loading.value = true;
   try {
     let { area, type, initial }: any = typeList;
-    let { artists, code, more }: any = await Discover.getArtistList(type, area, initial, artistsList.length, 30);
+    let { artists, code, more }: any = await ArtistAPI.getList(type, area, initial, artistsList.length, 30);
     if (code == 200) {
       artistsList.push(...artists);
       // 无法加载更多

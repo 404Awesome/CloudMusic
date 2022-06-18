@@ -1,19 +1,17 @@
 <!-- 电台 -->
 <template>
-  <div>
-    <!-- 轮播图 -->
-    <Carousel :data="banner" />
+  <!-- 轮播图 -->
+  <Carousel :data="banner" />
 
-    <!-- 电台分类 -->
-    <CateList />
+  <!-- 电台分类 -->
+  <CateList />
 
-    <!-- 付费精选 -->
-    <PaidBoutique />
+  <!-- 付费精选 -->
+  <PaidBoutique />
 
-    <!-- 渲染列表 -->
-    <div v-for="item in renderList" :key="item.cateId">
-      <component :is="CateRadio" v-bind="item" />
-    </div>
+  <!-- 渲染列表 -->
+  <div v-for="item in renderList" :key="item.cateId">
+    <component :is="CateRadio" v-bind="item" />
   </div>
 </template>
 
@@ -22,7 +20,7 @@ import Carousel from "@/components/common/carousel/carousel.vue";
 import CateList from "./coms/cateList.vue";
 import PaidBoutique from "./coms/paidBoutique.vue";
 import CateRadio from "./coms/cateRadio.vue";
-import { RadioStation } from "@/api/modules/radioStation";
+import { RadioAPI } from "api";
 
 // 渲染列表
 let renderList = reactive([{
@@ -44,10 +42,10 @@ let renderList = reactive([{
 }]);
 
 // Banner图
-let banner = reactive<any>([]);
+let banner = reactive<string[]>([]);
 // 加载Banner图
 onMounted(async () => {
-  let bannerRes: any = await RadioStation.getBanner();
-  if (bannerRes.code == 200) banner.push(...bannerRes.data);
+  let { code, data }: any = await RadioAPI.getBanner();
+  if (code == 200) banner.push(...data);
 });
 </script>

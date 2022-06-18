@@ -1,23 +1,22 @@
 <!-- MV相关 -->
 <template>
-  <div class="mvDetails" v-if="status">
+  <div class="mvDetails" :key="($route.params.id as string)">
     <div col-span-full lg:col-span-1>
-      <!-- MV视频 -->
-      <PlyrVideo :source="source" />
-      <!-- 详情 -->
-      <Detail :detail="detail" />
+      <div v-if="mvSource.length">
+        <!-- MV视频 -->
+        <PlyrVideo :source="mvSource" />
+        <!-- 详情 -->
+        <Detail v-bind="mvDetail" />
+      </div>
       <!-- 评论 -->
-      <Comment :id="mvid!" />
+      <Comment :id="parseInt($route.params.id as string)" />
     </div>
 
     <!-- 相关推荐 -->
     <div hidden lg:block>
-      <Relevant :id="mvid!" />
+      <Relevant />
     </div>
   </div>
-
-  <!-- 加载状态 -->
-  <div v-else v-loading="true" element-loading-text="Loading..." h-full></div>
 </template>
 
 <script setup lang="ts" name="mvDetails">
@@ -25,45 +24,39 @@ import PlyrVideo from "@/components/content/plyrVideo/plyrVideo.vue";
 import Relevant from "./coms/relevant.vue";
 import Detail from "./coms/detail.vue";
 import Comment from "./coms/comment.vue";
-import { MV } from "@/api/modules/video";
+import { MVAPI } from "api";
 import { useRoute } from "vue-router";
 const route = useRoute();
 
-// MVID
-let mvid = ref<number | null>(null);
-// 状态 -> 用于确保加载完毕
-let status = ref(false);
 // 请求到MV资源
-let source = reactive<any>({});
-let getResolution = async (qualityArr: object[]) => {
-  let request = qualityArr.map((quality: any) => {
-    return MV.getAddress(mvid.value!, quality.br);
-  });
+let mvSource = reactive<any>([]);
+// 获取mv所有分辨率的视频地址
+let getResolution = async (qualityArr: object[], id: number) => {
+  let request = qualityArr.map((quality: any) => MVAPI.getAddress(id, quality.br));
   let result = await Promise.all(request);
-  result.map(({ code, data }: any) => {
-    if (code == 200) source[data.r] = data.url;
-  });
-  status.value = true;
+  mvSource.push(...result.map(({ code, data }: any) => {
+    if (code == 200) return { r: data.r, url: data.url };
+  }));
 };
-// 详情
-let detail = reactive<any>({});
-let loadData = async (mvid: number) => {
+// mv详情
+let mvDetail = reactive<any>({});
+// 加载mv详情
+let loadMVDetail = async (id: number) => {
+  try {
+    let [{ data: { brs, artists, publishTime, playCount, desc, name, subCount } }, { likedCount, shareCount }]: any = await Promise.all([MVAPI.getDetail(id), MVAPI.getDetailInfo(id)]);
+    getResolution(brs, id);
+    Object.assign(mvDetail, { artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount });
+  } catch (err: any) {
+    ElMessage.error("加载mv详情失败!");
+  }
+};
+
+// 监听路由id的变化 -> 加载数据
+watch(() => route.params.id, (newVal) => {
+  // 清空数组,以便于id改变时,重新渲染
+  mvSource.splice(0, mvSource.length);
   // 加载mv详情
-  let result: any = await Promise.all([MV.getDetail(mvid), MV.getDetailInfo(mvid)]);
-  if (result[0].code == 200) {
-    // 请求所有MV分辨率的视频地址;
-    getResolution(result[0].data.brs);
-    // 合并详情
-    Object.assign(detail, result[0].data, result[1]);
-  }
-}
-// 监听路由 ->加载数据
-watch(route, (val) => {
-  if (val.fullPath.startsWith("/mvDetail")) {
-    mvid.value = parseInt(val.params.id as string);
-    status.value = false;
-    loadData(mvid.value);
-  }
+  loadMVDetail(parseInt(newVal as string));
 }, { immediate: true });
 </script>
  

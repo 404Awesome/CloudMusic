@@ -1,22 +1,22 @@
 <!-- 歌曲列表 -->
 <template>
   <div class="songList no-select">
-    <el-table @row-dblclick="playSong" :data="songList" stripe style="width: 100%">
-      <el-table-column class-name="index" :width="50" align="center" type="index" :index="handleIndex" />
+    <el-table @row-dblclick="Operate.playSong" :data="songList" stripe style="width: 100%">
+      <el-table-column class-name="index" :width="50" align="center" type="index" :index="(index) => index + 1" />
       <el-table-column :width="50">
         <template v-slot="{ row }">
           <!-- eva:heart-fill -->
           <!-- eva:heart-outline -->
           <p flex justify-between>
-            <span @click.stop="likeSong(row.id)" class="icon i-eva:heart-outline"></span>
-            <span @click.stop="downloadSong(row.id)" class="icon i-eva:cloud-download-outline"></span>
+            <span @click.stop="Operate.likeSong(row.id)" class="icon i-eva:heart-outline"></span>
+            <span @click.stop="Operate.downloadSong(row.id)" class="icon i-eva:cloud-download-outline"></span>
           </p>
         </template>
       </el-table-column>
       <el-table-column prop="name" label="音乐标题" />
       <el-table-column label="歌手">
         <template v-slot="{ row }">
-          <handleArtists :artists="row.ar" />
+          <Artists :artists="row.ar" />
         </template>
       </el-table-column>
       <el-table-column label="专辑">
@@ -33,10 +33,9 @@
 </template>
 
 <script setup lang="ts">
-import { handleArtists, handleIndex } from "@/utils/handle";
-import { downloadSong, likeSong } from "@/utils/operate";
-import { playSong } from "@/utils/operate";
-import { Discover } from "@/api/modules/discover";
+import Artists from "@/components/content/artists/artists.vue";
+import { Operate } from "utils";
+import { SongListAPI } from "api";
 import { useRoute } from "vue-router";
 const route = useRoute();
 let id = parseInt(route.params.id as string);
@@ -47,16 +46,12 @@ onMounted(async () => {
   try {
     let bool: boolean = true;
     let offset: number = 0;
-    let litmit: number = 100;
+    let limit: number = 100;
     while (bool) {
-      let { code, songs }: any = await Discover.getPlayListTrackAll(
-        id,
-        litmit,
-        offset
-      );
+      let { code, songs }: any = await SongListAPI.getTrackAll(id, offset, limit);
       if (code == 200 && songs.length) {
         songList.push(...songs);
-        songs.length < litmit ? (bool = false) : (offset += litmit);
+        songs.length < limit ? (bool = false) : (offset += limit);
       } else {
         bool = false;
       }
@@ -96,7 +91,6 @@ onMounted(async () => {
 
     .cell {
       padding: 0px 5px;
-      color: var(--font-color);
       white-space: nowrap;
       font-size: 13px;
       cursor: default;

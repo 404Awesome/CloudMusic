@@ -2,8 +2,11 @@
 <template>
   <div class="broadcastItem">
     <el-card @click="$router.push(`/mvDetail/${id}`)" shadow="never">
+      <!-- 播放图标 -->
       <span class="icon i-heroicons-outline:play"></span>
-      <el-image lazy :src="picUrl" fit="cover" />
+      <!-- 封面 -->
+      <el-image h-25 lazy :src="picUrl" fit="cover" />
+      <!-- 描述 -->
       <p>{{ copywriter }}</p>
     </el-card>
   </div>
@@ -28,6 +31,8 @@ let { id, picUrl, copywriter } = toRaw(props);
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/mixins.scss";
+
 .broadcastItem {
   :deep(.el-card) {
     background-color: #f5f7fa;
@@ -43,20 +48,16 @@ let { id, picUrl, copywriter } = toRaw(props);
         left: 7px;
         z-index: 99;
         color: #fff;
-        font-size: 25px;
-        opacity: 0.5;
+        font-size: 27px;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
       }
 
       p {
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-box-orient: vertical;
         margin: 10px;
-        color: var(--font-color);
-        text-overflow: ellipsis;
         font-size: 14px;
 
-        -webkit-line-clamp: 2;
+        @include multilineOmit(2);
       }
     }
 

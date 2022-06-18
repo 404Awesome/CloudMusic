@@ -15,7 +15,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "store/*": ["src/store/*"]
+      "api": ["src/api/index.ts"],
+      "store": ["src/store/index.ts"],
+      "utils": ["src/utils/index.ts"]
     },
     "types": ["element-plus/global"]
   },

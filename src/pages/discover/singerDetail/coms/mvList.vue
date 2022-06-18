@@ -8,10 +8,10 @@
         <!-- 播放次数 -->
         <p class="playCount">
           <span class="icon i-eva:arrow-right-outline"></span>
-          <span>{{ handleCount(mv.playCount) }}</span>
+          <span>{{ Handle.Count(mv.playCount) }}</span>
         </p>
         <!-- mv时长 -->
-        <p class="duration">{{ handerDuration(mv.duration) }}</p>
+        <p class="duration">{{ Handle.Duration(mv.duration) }}</p>
       </div>
       <!-- 标题 -->
       <p class="title">{{ mv.name }}</p>
@@ -20,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import { handleCount, handerDuration } from "@/utils/handle";
-import { Discover } from "@/api/modules/discover";
+import { Handle } from "utils";
+import { ArtistAPI } from "api";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const { id }: any = route.query;
@@ -31,10 +31,8 @@ const props = defineProps(['activeComs']);
 let mvList = reactive<any>([]);
 // 加载数据
 let loadData = async () => {
-  let { hasMore, code, mvs }: any = await Discover.getArtistMV(id);
-  if (code == 200) {
-    mvList.push(...mvs);
-  }
+  let { hasMore, code, mvs }: any = await ArtistAPI.getMV(id);
+  if (code == 200) mvList.push(...mvs);
 }
 
 // 监听当前组件的激活状态

@@ -23,13 +23,13 @@
 </template>
 
 <script setup lang="ts">
-import { RadioStation } from "@/api/modules/radioStation";
+import { RadioAPI } from "api";
 
 // 分类列表
 let cateList = reactive<any>([]);
 // 加载电台分类
 onMounted(async () => {
-  let { code, categories }: any = await RadioStation.getCatelist();
+  let { code, categories }: any = await RadioAPI.getCatelist();
   if (code == 200) cateList.push(...categories);
 });
 

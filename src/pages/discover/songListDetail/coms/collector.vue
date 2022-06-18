@@ -30,14 +30,13 @@
 </template>
 
 <script setup lang="ts">
-import { Discover } from "@/api/modules/discover";
-import { useMainStore } from "store/index";
+import { SongListAPI } from "api";
+import { useMainStore } from "store";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const store = useMainStore();
 const id = parseInt(route.params.id as string);
 const props = defineProps(['activeComs']);
-
 
 // 是否正在加载
 let loading = ref(false);
@@ -50,7 +49,7 @@ let collectorList = reactive<any>([]);
 // 加载数据
 let loadData = async (offset: number = 0) => {
   loading.value = true;
-  let { code, subscribers, total: totalVal }: any = await Discover.getPlaylistSub(id, offset, limit);
+  let { code, subscribers, total: totalVal }: any = await SongListAPI.getSubscribers(id, offset, limit);
   if (code == 200) {
     if (!total.value) total.value = totalVal;
     collectorList.push(...subscribers);
@@ -61,7 +60,6 @@ let loadData = async (offset: number = 0) => {
 watch(() => props.activeComs, (newVal) => {
   if (newVal == "Collector" && collectorList.length == 0) loadData();
 })
-
 
 // 分页发生变化
 let change = (page: number) => {

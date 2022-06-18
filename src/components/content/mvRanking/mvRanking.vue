@@ -25,8 +25,9 @@
 <script setup lang="ts">
 import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
 import MVlistItem from "@/components/content/mvListItem/mvListItem.vue";
-import { MV, MVArea } from "@/api/modules/video";
-let props = defineProps({
+import navBarVue from "@/components/common/navBar/navBar.vue";
+import { MVAPI } from "api";
+const props = defineProps({
   limit: {
     type: Number,
     required: true,
@@ -36,17 +37,17 @@ let props = defineProps({
 // 加载状态
 let loading = ref(false);
 // 地区列表
-let areaList = reactive<MVArea[]>(["内地", "港台", "欧美", "日本", "韩国"]);
+let areaList = reactive<string[]>(["内地", "港台", "欧美", "日本", "韩国"]);
 // 选中类型
-let selected = (area: MVArea) => loadData(area);
+let selected = (area: string) => loadData(area);
 
 // 加载排行榜的结果
 let raningList = reactive<any>([]);
-let loadData = async (area: MVArea) => {
+let loadData = async (area: string) => {
   try {
     loading.value = true;
     raningList.splice(0, raningList.length);
-    let { code, data }: any = await MV.getTop(area, 0, props.limit);
+    let { code, data }: any = await MVAPI.getTopMV(area, 0, props.limit);
     if (code == 200) raningList.splice(0, raningList.length, ...data);
   } catch (err: any) {
     ElMessage.error("加载MV排行榜失败!");

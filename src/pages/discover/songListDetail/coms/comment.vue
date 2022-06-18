@@ -5,14 +5,14 @@
     <SendComment @getComment="getComment" />
 
     <!-- 评论列表 -->
-    <CommentList :id="id" :RequestData="Discover.getCommentPlayList" />
+    <CommentList :id="id" :RequestData="SongListAPI.getComment" />
   </div>
 </template>
 
 <script setup lang="ts">
 import SendComment from "@/components/content/sendComment/sendComment.vue";
 import CommentList from "@/components/content/commentList/commentList.vue";
-import { Discover } from "@/api/modules/discover";
+import { SongListAPI } from "api";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const id = parseInt(route.params.id as string);

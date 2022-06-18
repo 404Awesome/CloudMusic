@@ -8,14 +8,14 @@
 
 <script setup lang="ts">
 import BroadcastItem from "@/components/content/broadcastItem/broadcastItem.vue";
-import { Discover } from "@/api/modules/discover";
+import { MVAPI } from "api";
 
 // 独家放送列表
 let broadcastList = reactive<any>([]);
 // 加载独家放送列表
 onMounted(async () => {
   try {
-    let { code, result }: any = await Discover.getBroadcastList(0, 4);
+    let { code, result }: any = await MVAPI.getBroadcastList(0, 4);
     if (code == 200) broadcastList.push(...result);
   } catch (err: any) {
     ElMessage.error("加载独家放送列表失败!");

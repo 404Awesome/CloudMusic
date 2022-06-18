@@ -27,8 +27,8 @@
 </template>
 
 <script setup lang="ts">
-import { Discover } from "@/api/modules/discover";
-import { useMainStore } from "store/index";
+import { ArtistAPI } from "api";
+import { useMainStore } from "store";
 import { useRoute } from "vue-router";
 const store = useMainStore();
 const route = useRoute();
@@ -43,8 +43,12 @@ let collection = () => { }
 let singerDetail = reactive<any>({});
 // 加载歌手详情
 onMounted(async () => {
-  let { code, data: { artist } }: any = await Discover.getArtistDetail(id);
-  if (code == 200) Object.assign(singerDetail, artist);
+  try {
+    let { code, data: { artist } }: any = await ArtistAPI.getDetail(id);
+    if (code == 200) Object.assign(singerDetail, artist);
+  } catch (err: any) {
+    ElMessage.error("加载歌手详情失败!");
+  }
 })
 </script>
 

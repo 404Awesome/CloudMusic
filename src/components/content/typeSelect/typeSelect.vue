@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
-let props = defineProps({
+const props = defineProps({
   title: {
     type: String,
     default: ""

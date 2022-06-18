@@ -1,38 +1,29 @@
-<!-- 相关视频 -->
+<!-- 相关mv -->
 <template>
-  <div>
-    <!-- 标题 -->
-    <h4 class="title">相关推荐</h4>
-    <!-- 列表 -->
-    <section mb-4 v-for="item in relevant" :key="item.id">
-      <MVListItem v-bind="item" :isFlex="true" />
-    </section>
-  </div>
+  <!-- 标题 -->
+  <h4 text-lg mb-2>相关推荐</h4>
+  <!-- 列表 -->
+  <section mb-4 v-for="item in relevantList" :key="item.id">
+    <MVListItem v-bind="item" :isFlex="true" />
+  </section>
 </template>
 
 <script setup lang="ts">
-import { MV } from "@/api/modules/video";
 import MVListItem from "@/components/content/mvListItem/mvListItem.vue";
-let props = defineProps({
-  id: {
-    type: Number,
-    required: true,
-  },
-});
+import { MVAPI } from "api";
+import { useRoute } from "vue-router";
+const route = useRoute();
 
+// 相关mv列表
+let relevantList = reactive<any[]>([]);
 // 加载相关mv
-let relevant = reactive<any[]>([]);
 onMounted(async () => {
-  let { code, mvs }: any = await MV.getRelevant(props.id);
-  if (code == 200) relevant.push(...mvs);
+  try {
+    let id = parseInt(route.params.id as string);
+    let { code, mvs }: any = await MVAPI.getRelevant(id);
+    if (code == 200) relevantList.push(...mvs);
+  } catch (err: any) {
+    ElMessage.error("加载相关mv失败!");
+  }
 });
 </script>
-
-<style lang="scss" scoped>
-.title {
-  margin: 0px 0px 10px 0px;
-  color: var(--font-color);
-  font-weight: 400;
-  font-size: 18px;
-}
-</style>

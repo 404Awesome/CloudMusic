@@ -3,7 +3,7 @@
   <ul gap-5 lg:gap-x-7 grid-cols-2 lg:grid-cols-3 class="newSong">
     <li v-for="({ song, id, picUrl }, index) in newSongList" :key="id">
       <!-- 封面 -->
-      <el-image @click="play(song.id)" cursor="pointer" w-18 h-18 rounded :src="picUrl" />
+      <el-image @click="playSong(song.id)" cursor="pointer" w-18 h-18 rounded :src="picUrl" />
 
       <!-- 详情 -->
       <div class="details">
@@ -14,7 +14,7 @@
           <!-- 歌名 -->
           <p class="songName">{{ song.name }}</p>
           <!-- 艺术家 -->
-          <handleArtists :artists="song.artists" />
+          <Artists :artists="song.artists" />
         </div>
       </div>
     </li>
@@ -22,25 +22,25 @@
 </template>
 
 <script setup lang="ts">
-import { Discover } from "@/api/modules/discover";
-import { handleArtists } from "@/utils/handle";
-import { playSong } from "@/utils/operate";
+import Artists from "@/components/content/artists/artists.vue";
+import { Operate } from "utils";
+import { SongAPI } from "api";
 
 // 新歌列表
 let newSongList = reactive<any[]>([]);
 // 加载新歌列表
 onMounted(async () => {
-  let { code, result }: any = await Discover.getNewSong();
+  let { code, result }: any = await SongAPI.getNewSong();
   if (code == 200) {
     if (result.length > 6) result.length = 6;
-    newSongList.push(...result)
+    newSongList.push(...result);
   };
 });
 
 // 播放歌曲
-let play = async (id: number) => {
-  let { code, songs }: any = await Discover.getSongDetail(id);
-  if (code == 200) playSong(songs[0]);
+let playSong = async (id: number) => {
+  let { code, songs }: any = await SongAPI.getDetail(id);
+  if (code == 200) Operate.playSong(songs[0]);
 };
 </script>
 

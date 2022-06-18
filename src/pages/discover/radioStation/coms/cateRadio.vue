@@ -18,9 +18,10 @@
 </template>
 
 <script setup lang="ts">
-import { RadioStation } from "@/api/modules/radioStation";
 import NavBar from "@/components/common/navBar/navBar.vue";
-let props = defineProps({
+import { RadioAPI } from "api";
+
+const props = defineProps({
   cateId: {
     type: Number,
     required: true,
@@ -34,11 +35,11 @@ let props = defineProps({
     required: true,
   },
 });
-let { cateId, title, path } = toRefs(props);
+const { cateId, title, path } = toRefs(props);
 
 let result = reactive<any[]>([]);
 onMounted(async () => {
-  let { code, djRadios }: any = await RadioStation.getCateRadioHot(cateId.value, 0, 6);
+  let { code, djRadios }: any = await RadioAPI.getCateRadioHot(cateId.value, 0, 6);
   if (code == 200) result.push(...djRadios.splice(0, 6));
 });
 </script>

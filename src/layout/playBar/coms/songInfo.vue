@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import SongDetail from "./songDetail.vue";
-import { useMainStore } from "store/index";
+import { useMainStore } from "store";
 const store = useMainStore();
 let { currentSong } = toRefs(store);
 

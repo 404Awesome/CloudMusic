@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-let props = defineProps({
+const props = defineProps({
   id: {
     type: Number,
     required: true

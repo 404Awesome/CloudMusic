@@ -2,7 +2,7 @@
 <template>
   <div>
     <!-- 标题 -->
-    <h4 v-if="title" class="title">{{ title }}</h4>
+    <h4 class="title">听友评论</h4>
     <!-- 表单 -->
     <el-input rows="3" :autosize="{ minRows: 3 }" v-model.lazy.trim="content" maxlength="140" placeholder="输入评论或@朋友"
       show-word-limit type="textarea" />
@@ -17,10 +17,6 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/shared';
 const emit = defineEmits(["getComment"]);
-const props = defineProps({
-  title: String
-});
-let { title } = toRaw(props);
 
 // 评论内容
 let content = ref<string>("");
@@ -34,7 +30,6 @@ let sendComment = useDebounceFn(() => {
 <style lang="scss" scoped>
 .title {
   margin-bottom: 10px;
-  color: var(--font-color);
   font-size: 18px;
 }
 
@@ -52,7 +47,6 @@ nav.nav {
     border: 1px solid #dcdfe6;
     border-radius: 20px;
     background-color: #fff;
-    color: var(--font-color);
     font-size: 14px;
     cursor: pointer;
 

@@ -1,18 +1,18 @@
 <!-- 歌单列表 -->
 <template>
   <ul min-h-30 gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="list">
-    <li @click="$router.push(`/songListDetal/${item.id}`)" v-for="item in songList" :key="item.id">
+    <li @click="$router.push(`/songListDetal/${item.id}`)" v-for="item in props.songList" :key="item.id">
       <div class="cover">
         <el-image fit-="cover" lazy :src="item.coverImgUrl" />
         <p class="count">
           <span class="icon i-eva:arrow-right-outline"></span>
-          <span>{{ handleCount(item.playCount) }}</span>
+          <span>{{ Handle.Count(item.playCount) }}</span>
         </p>
         <p class="info">
           <span class="icon i-eva:smiling-face-outline"></span>
           <span class="name">{{ item.creator.nickname }}</span>
         </p>
-        <div @click.stop="playSongList(item.id)" class="playIcon">
+        <div @click.stop="Operate.playSongList(item.id)" class="playIcon">
           <span class="i-eva:arrow-right-fill"></span>
         </div>
       </div>
@@ -22,21 +22,14 @@
 </template>
 
 <script setup lang="ts">
-import { handleCount } from "@/utils/handle";
-import { playSongList } from "@/utils/operate";
+import { Handle, Operate } from "utils";
 import { PropType } from "vue";
 const props = defineProps({
-  loading: {
-    type: Boolean,
-    default: false
-  },
   songList: {
     type: Array as PropType<any[]>,
     required: true
   }
 });
-
-let { loading, songList } = toRefs(props);
 </script>
 
 <style lang="scss" scoped>

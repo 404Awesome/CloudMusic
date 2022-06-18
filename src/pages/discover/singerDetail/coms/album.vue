@@ -11,6 +11,7 @@
         </section>
         <!-- 歌单列表 -->
         <section flex-1>
+          <!-- 歌单列表 -->
           <SongList name="热门50首" :songs="showAll ? topSongs : topSongs.slice(0, 10)" />
           <!-- 是否显示全部 -->
           <div v-if="!showAll" class="more" @click="showAll = !showAll">
@@ -51,12 +52,11 @@
 
 <script setup lang="ts">
 import SongList from "./songList.vue";
-import { handleTimeStamp } from "@/utils/handle";
-import { Discover } from "@/api/modules/discover";
+import { Handle } from "utils";
+import { ArtistAPI } from "api";
 import { useRoute } from "vue-router";
 const route = useRoute();
-const { id }: any = route.query;
-
+const id = parseInt(route.query.id as string);
 
 // 是否正在加载
 let loading = ref(false);
@@ -73,7 +73,7 @@ let loadAlbumData = async () => {
   try {
     if (loading.value) return;
     loading.value = true;
-    let { more, code, hotAlbums }: any = await Discover.getArtistAlbum(id, offset.value, limit);
+    let { more, code, hotAlbums }: any = await ArtistAPI.getAlbum(id, offset.value, limit);
     if (code == 200) {
       // 加载专辑信息
       loadAlbumInfo(hotAlbums);
@@ -89,25 +89,29 @@ let loadAlbumData = async () => {
 }
 // 加载专辑信息
 let loadAlbumInfo = (hotAlbums: any) => {
-  hotAlbums.map(async (item: any) => {
-    let { code, album, songs: origin }: any = await Discover.getAlbum(item.id);
-    if (code == 200) {
-      // 处理时间
-      let time = handleTimeStamp(album.publishTime);
-      // 处理歌曲列表长度
-      let more = origin.length > 10 ? true : false;
-      let songs = origin.length > 10 ? origin.slice(0, 10) : origin.slice(0);
-      albumList.push({
-        songs,
-        time,
-        more,
-        origin,
-        picUrl: album.picUrl,
-        id: album.id,
-        name: album.name,
-      })
-    }
-  });
+  try {
+    hotAlbums.map(async (item: any) => {
+      let { code, album, songs: origin }: any = await ArtistAPI.getAlbumInfo(item.id);
+      if (code == 200) {
+        // 处理时间
+        let time = Handle.TimeStamp(album.publishTime);
+        // 处理歌曲列表长度
+        let more = origin.length > 10 ? true : false;
+        let songs = origin.length > 10 ? origin.slice(0, 10) : origin.slice(0);
+        albumList.push({
+          songs,
+          time,
+          more,
+          origin,
+          picUrl: album.picUrl,
+          id: album.id,
+          name: album.name,
+        })
+      }
+    });
+  } catch (err: any) {
+    ElMessage.error("加载专辑内容失败!");
+  }
 }
 
 // 热门歌曲列表
@@ -118,7 +122,7 @@ let showAll = ref(false);
 onMounted(async () => {
   try {
     loading.value = true;
-    let { code, songs }: any = await Discover.getArtistTopSong(id);
+    let { code, songs }: any = await ArtistAPI.getTopSong(id);
     if (code == 200) {
       topSongs.push(...songs);
     }

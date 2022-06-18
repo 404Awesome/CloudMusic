@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import Lottie from "@/components/common/lottie/lottie.vue";
-import lottieAnima from "@/assets/lottie/login.json";
+import lottieAnima from "@/assets/lottieFile/login.json";
 </script>
 
 <style lang="scss" scoped>

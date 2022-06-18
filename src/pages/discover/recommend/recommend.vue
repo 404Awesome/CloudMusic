@@ -22,7 +22,7 @@ import Broadcast from "./coms/broadcast.vue";
 import NewSong from "./coms/newSong.vue";
 import Radio from "./coms/radio.vue";
 import MV from "./coms/mv.vue";
-import { Discover } from "@/api/modules/discover";
+import { OtherAPI } from "api";
 
 // 渲染列表
 let renderList = reactive([
@@ -57,7 +57,7 @@ let renderList = reactive([
 let banner: any = reactive([]);
 onMounted(async () => {
   try {
-    let { code, banners }: any = await Discover.getBanner();
+    let { code, banners }: any = await OtherAPI.getBanner();
     if (code == 200) banner.push(...banners);
   } catch (err: any) {
     ElMessage.error("加载Banner失败!");

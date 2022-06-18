@@ -5,7 +5,7 @@
 
 <script setup lang="ts">
 import lottie from "lottie-web";
-let props = defineProps({
+const props = defineProps({
   animationData: {
     type: Object,
     required: true,

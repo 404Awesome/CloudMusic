@@ -7,7 +7,7 @@
       <!-- 播放次数 -->
       <p class="playCount">
         <span class="icon i-eva:arrow-right-outline"></span>
-        <span>{{ handleCount(playCount) }}</span>
+        <span>{{ Handle.Count(playCount) }}</span>
       </p>
       <!-- hover:播放图标 -->
       <p class="playIcon">
@@ -20,14 +20,15 @@
       <!-- 标题 -->
       <p @click="$router.push(`/mvDetail/${id}`)" class="title">{{ name }}</p>
       <!-- 艺术家 -->
-      <handleArtists :artists="artists" />
+      <Artists :artists="artists" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { handleCount, handleArtists } from "@/utils/handle";
-let props = defineProps({
+import Artists from "@/components/content/artists/artists.vue";
+import { Handle } from "utils";
+const props = defineProps({
   id: {
     type: Number,
     required: true,
@@ -53,7 +54,7 @@ let props = defineProps({
     default: false,
   },
 });
-let { id, cover, artists, name, playCount, isFlex } = markRaw(props);
+let { id, cover, artists, name, playCount, isFlex } = toRaw(props);
 </script>
 
 <style lang="scss" scoped>

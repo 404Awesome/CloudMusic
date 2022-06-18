@@ -53,8 +53,8 @@
 import PlayList from "./coms/playList.vue";
 import SongInfo from "./coms/songInfo.vue";
 import Plyr from "plyr";
-import emitter from "@/utils/useMitt";
-import { useMainStore } from "store/index";
+import { useMitt } from "utils";
+import { useMainStore } from "store";
 import { useDebounceFn } from "@vueuse/shared";
 const store = useMainStore();
 
@@ -90,7 +90,7 @@ onMounted(() => {
   // 播放时触发
   audioPlyr.value.on("play", () => {
     // 音频播放,暂停视频播放
-    emitter.emit("videoPause");
+    useMitt.emit("videoPause");
     // 延迟100毫秒获取结果
     let timer = setTimeout(() => {
       // 改变当前playing的状态
@@ -117,7 +117,7 @@ onMounted(() => {
   })
 })
 // 暂停音频播放
-emitter.on("audioPause", () => {
+useMitt.on("audioPause", () => {
   if (audioPlyr.value?.playing) {
     audioPlyr.value.pause();
   }

@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { Discover } from "@/api/modules/discover";
+import { ArtistAPI } from "api";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const { id, name }: any = route.query;
@@ -23,9 +23,9 @@ const props = defineProps(['activeComs']);
 
 // 歌手描述
 let singerDesc = reactive<any>({});
-// 加载数据
+// 加载歌手描述
 let loadData = async () => {
-  let { briefDesc, code, introduction }: any = await Discover.getArtistDesc(id);
+  let { briefDesc, code, introduction }: any = await ArtistAPI.getDescribe(id);
   if (code == 200) Object.assign(singerDesc, { briefDesc, introduction, });
 }
 

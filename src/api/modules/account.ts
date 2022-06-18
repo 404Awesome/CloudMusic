@@ -1,13 +1,8 @@
-import Request from "@/api";
+import { POST } from "../request";
 
-// 账户相关api
-export const Account = {
+export default {
   // 获取用户详情
-  getUserDetails(uid: number) {
-    return Request({
-      url: "/user/detail",
-      method: "GET",
-      params: { uid }
-    })
+  getUserDetail(uid: number) {
+    return POST("/user/detail", { uid });
   }
 }

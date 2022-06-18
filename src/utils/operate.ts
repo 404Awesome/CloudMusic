@@ -1,62 +1,57 @@
-import { Discover } from "@/api/modules/discover";
-import { handleSongList, handleSongInfo } from "./handle";
+import { SongListAPI } from "api";
+import { Handle } from "utils";
 import { useDebounceFn } from "@vueuse/core";
-import { useMainStore } from "store/index";
-const store = useMainStore();
+import { useMainStore } from "store";
 
-// 将歌单列表前20首歌添加到播放列表
-export const playSongList = useDebounceFn(async (id: number) => {
-  if (store.songListID == id) {
-    ElMessage({
-      message: '请不要重复播放相同歌单!',
-      type: 'warning',
-    })
-    return null;
-  };
-  let { code, songs }: any = await Discover.getPlayListTrackAll(id, 20, 0);
-  if (code == 200) {
-    let songList = handleSongList(songs);
+// 防抖函数延迟时间
+const delay = 300;
+export default {
+  // 将歌单列表前20首歌添加到播放列表
+  playSongList: useDebounceFn(async (id: number) => {
+    const store = useMainStore();
+    if (store.songListID == id) return ElMessage.warning('请不要重复播放相同歌单!');
+    let { code, songs }: any = await SongListAPI.getTrackAll(id, 0, 20);
+    if (code == 200) {
+      let songList = Handle.SongList(songs);
+      store.addPlayList(songList);
+      store.songListID = id;
+    }
+  }, delay),
+  // 将歌曲列表添加到播放列表
+  addPlayList: useDebounceFn((songs: any, id: number) => {
+    const store = useMainStore();
+    if (store.songListID == id) return ElMessage.warning('请不要重复播放相同歌单!');
+    let songList = Handle.SongList(songs);
     store.addPlayList(songList);
     store.songListID = id;
+  }, delay),
+  // 播放歌曲
+  playSong(song: any) {
+    const store = useMainStore();
+    let songInfo = Handle.SongInfo(song);
+    store.playSong(songInfo);
+  },
+  // 下载歌曲
+  downloadSong: useDebounceFn((id: number) => {
+    console.log(id);
+  }, delay),
+  // 喜欢歌曲 / 取消 
+  likeSong: useDebounceFn((id: number) => {
+    console.log(id);
+  }, delay),
+  // 收藏专辑
+  collectAlbum: useDebounceFn((id: number) => {
+    console.log(id);
+  }, delay),
+  // 收藏歌单
+  collectSongList: useDebounceFn((id: number) => {
+    console.log(id);
+  }, delay),
+  // 分享信息
+  shareInfo: (title: string, href: string, type: string, cover: string) => {
+    console.log(title);
+    console.log(href);
+    console.log(type);
+    console.log(cover);
   }
-}, 500);
-
-// 将歌曲列表添加到播放列表
-export const addPlayList = (songs: any) => {
-  let songList = handleSongList(songs);
-  store.addPlayList(songList);
-}
-
-// 播放歌曲
-export const playSong = (song: any) => {
-  let songInfo = handleSongInfo(song);
-  store.playSong(songInfo);
-};
-
-// 下载歌曲
-export const downloadSong = useDebounceFn((id: number) => {
-  console.log(id);
-}, 500);
-
-// 喜欢歌曲 / 取消 
-export const likeSong = useDebounceFn((id: number) => {
-  console.log(id);
-}, 500);
-
-// 收藏专辑
-export const collectAlbum = useDebounceFn((id: number) => {
-  console.log(id);
-}, 500);
-
-// 收藏歌单
-export const collectSongList = useDebounceFn((id: number) => {
-  console.log(id);
-}, 500);
-
-// 分享信息
-export const shareInfo = (title: string, href: string, type: string, cover: string) => {
-  console.log(title);
-  console.log(href);
-  console.log(type);
-  console.log(cover);
 }

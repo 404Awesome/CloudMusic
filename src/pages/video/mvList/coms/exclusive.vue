@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import NavBar from "@/components/common/navBar/navBar.vue";
 import MVList from "@/components/content/mvList/mvList.vue";
-import { MV } from "@/api/modules/video";
+import { MVAPI } from "api";
 
 // 加载状态
 let loading = ref(false);
@@ -23,7 +23,7 @@ let list = reactive<any>([]);
 onMounted(async () => {
   try {
     loading.value = true;
-    let { code, data }: any = await MV.getExclusive(0, 8);
+    let { code, data }: any = await MVAPI.getExclusive(0, 8);
     if (code == 200) list.push(...data);
   } catch (err: any) {
     ElMessage.error("加载网易出品MV失败!");

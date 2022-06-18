@@ -1,7 +1,7 @@
 <!-- 他人的个人主页 -->
 <template>
   <div>
-    <h1>{{ route.params.uid }}</h1>
+    <h4>{{ route.params.uid }}</h4>
   </div>
 </template>
 

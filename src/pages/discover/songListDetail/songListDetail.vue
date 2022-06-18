@@ -11,10 +11,10 @@
               <h1 class="title">{{ title }}</h1>
               <!-- 操作 -->
               <ul class="operate">
-                <li @click="playSongList(id)">
+                <li @click="Operate.playSongList(id)">
                   <span class="icon i-eva:arrow-right-fill"></span>
                 </li>
-                <li @click="collectSongList(id)">
+                <li @click="Operate.collectSongList(id)">
                   <span class="icon i-heroicons-outline:folder-add"></span>
                 </li>
                 <li @click="share">
@@ -41,7 +41,7 @@ import Detail from "./coms/detail.vue";
 import SongList from "./coms/songList.vue";
 import Comment from "./coms/comment.vue";
 import Collector from "./coms/collector.vue";
-import { playSongList, collectSongList } from "@/utils/operate";
+import { Operate } from "utils";
 import { useThrottleFn } from "@vueuse/core";
 
 // 当前激活的组件

@@ -40,8 +40,9 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "src/"),
+      api: resolve(__dirname, "src/api"),
       store: resolve(__dirname, "src/store"),
-      utils: resolve(__dirname, "src/utils"),
+      utils: resolve(__dirname, "src/utils")
     },
   },
   server: {

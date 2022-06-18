@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import BroadcastItem from "@/components/content/broadcastItem/broadcastItem.vue";
-import { Discover } from "@/api/modules/discover";
+import { MVAPI } from "api";
 
 // 是否正在加载
 let loading = ref(false);
@@ -30,7 +30,7 @@ let loadData = async () => {
   if (loading.value) return;
   loading.value = true;
   try {
-    let { code, result, more }: any = await Discover.getBroadcastList(broadcastList.length, 30);
+    let { code, result, more }: any = await MVAPI.getBroadcastList(broadcastList.length, 30);
     if (code == 200) {
       broadcastList.push(...result);
       // 无法加载更多

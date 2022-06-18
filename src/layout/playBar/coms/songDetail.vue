@@ -36,7 +36,7 @@
                 <!-- 艺术家 -->
                 <section>
                   <span>歌手:&nbsp;</span>
-                  <handleArtists :artists="(currentSong?.artist as any)" />
+                  <Artists :artists="(currentSong?.artist as any)" />
                 </section>
               </div>
             </header>
@@ -61,8 +61,8 @@
 </template>
 
 <script setup lang="ts">
-import { handleArtists } from "@/utils/handle";
-import { useMainStore } from "store/index";
+import Artists from "@/components/content/artists/artists.vue";
+import { useMainStore } from "store";
 const store = useMainStore();
 let { currentSong } = toRefs(store);
 

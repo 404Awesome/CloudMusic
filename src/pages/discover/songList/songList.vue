@@ -7,7 +7,7 @@
     <CategoryList :loading="loading" @selected="cateSelected" />
 
     <!-- 歌单列表 -->
-    <List :loading="loading" :songList="songList" />
+    <List :songList="songList" />
 
     <!-- 分页 -->
     <div v-show="songList.length" flex justify-center>
@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import CategoryList from "./coms/categoryList.vue";
 import List from "./coms/list.vue";
-import { Discover } from "@/api/modules/discover";
+import { SongListAPI } from "api";
 
 // 是否正在加载
 let loading = ref<boolean>(false);
@@ -46,7 +46,7 @@ let loadList = async (offset: number) => {
     loading.value = true;
     songList.splice(0, songList.length);
     offset = (offset - 1) * limit;
-    let { code, playlists, total: count }: any = await Discover.getTopPlaylist(currentType.value, offset, limit);
+    let { code, playlists, total: count }: any = await SongListAPI.getTop(currentType.value, offset, limit);
     if (code == 200) {
       if (!total.value) total.value = count;
       songList.splice(0, songList.length, ...playlists);

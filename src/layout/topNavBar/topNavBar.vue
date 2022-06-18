@@ -37,7 +37,7 @@ import RouterNav from "./coms/routerNav.vue";
 import Search from "./coms/search.vue";
 import ThemeSelect from "./coms/themeSelect.vue";
 import { useRouter } from "vue-router";
-import { useMainStore } from "store/index";
+import { useMainStore } from "store";
 const store = useMainStore();
 const router = useRouter();
 

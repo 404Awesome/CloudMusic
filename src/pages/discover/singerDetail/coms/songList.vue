@@ -6,22 +6,22 @@
     <h4 class="title">{{ name }}</h4>
     <!-- 操作 -->
     <section class="operate">
-      <span @click="addPlayList(origin || songs)" class="icon i-heroicons-outline:play"></span>
+      <span @click="Operate.addPlayList(origin || songs, 0)" class="icon i-heroicons-outline:play"></span>
       <span v-if="id" class="splitLine">|</span>
-      <span v-if="id" @click="collectAlbum(id!)" class="icon i-heroicons-outline:folder-add"></span>
+      <span v-if="id" @click="Operate.collectAlbum(id!)" class="icon i-heroicons-outline:folder-add"></span>
     </section>
   </header>
   <!-- 列表 -->
   <div class="list no-select">
-    <el-table @row-dblclick="playSong" :data="songs" stripe :show-header="false">
-      <el-table-column class-name="index" :width="35" align="center" type="index" :index="handleIndex" />
+    <el-table @row-dblclick="Operate.playSong" :data="songs" stripe :show-header="false">
+      <el-table-column class-name="index" :width="35" align="center" type="index" :index="(index) => index + 1" />
       <el-table-column :width="50">
         <template v-slot="{ row }">
           <!-- eva:heart-fill -->
           <!-- eva:heart-outline -->
           <p flex justify-between>
-            <span @click.stop="likeSong(row.id)" class="icon i-eva:heart-outline"></span>
-            <span @click.stop="downloadSong(row.id)" class="icon i-eva:cloud-download-outline"></span>
+            <span @click.stop="Operate.likeSong(row.id)" class="icon i-eva:heart-outline"></span>
+            <span @click.stop="Operate.downloadSong(row.id)" class="icon i-eva:cloud-download-outline"></span>
           </p>
         </template>
       </el-table-column>
@@ -31,8 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { handleIndex } from "@/utils/handle";
-import { addPlayList, playSong, downloadSong, likeSong, collectAlbum } from "@/utils/operate";
+import { Operate } from "utils";
 
 const props = defineProps({
   id: Number,

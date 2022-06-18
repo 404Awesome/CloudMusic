@@ -2,8 +2,10 @@
 <template>
   <ul gap-5 lg:gap-7 grid-cols-2 lg:grid-cols-3 class="radio">
     <li v-for="item in data" :key="item.id">
+      <!-- 电台封面 -->
       <el-image :src="item.picUrl" fit="cover" lazy />
-      <div class="details">
+      <!-- 电台信息 -->
+      <div class="info">
         <p>{{ item.copywriter }}</p>
         <p truncate>{{ item.name }}</p>
       </div>
@@ -12,18 +14,18 @@
 </template>
 
 <script setup lang="ts">
-import { RadioStation } from "@/api/modules/radioStation";
+import { RadioAPI } from "api";
 
 let data = reactive<any>([]);
 onMounted(async () => {
-  let { djRadios, code }: any = await RadioStation.getHot(0, 6);
-  if (code == 200) {
-    data.push(...djRadios);
-  }
+  let { djRadios, code }: any = await RadioAPI.getHot(0, 6);
+  if (code == 200) data.push(...djRadios);
 });
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/mixins.scss";
+
 .radio {
   display: grid;
   margin-top: 15px;
@@ -42,22 +44,18 @@ onMounted(async () => {
       flex-shrink: 0;
     }
 
-    .details {
+    .info {
       display: flex;
       overflow: hidden;
       flex: 1;
       flex-flow: column nowrap;
       justify-content: space-evenly;
       padding: 10px;
-      color: var(--font-color);
 
       p {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        @include oneOmit;
 
         &:first-child {
-          color: var(--font-color);
           font-size: 15px;
         }
 

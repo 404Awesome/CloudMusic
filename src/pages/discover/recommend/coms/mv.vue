@@ -5,14 +5,14 @@
 
 <script setup lang="ts">
 import MVList from "@/components/content/mvList/mvList.vue";
-import { MV } from "@/api/modules/video";
+import { MVAPI } from "api";
 
 // mv列表
 let mvList = reactive<any[]>([]);
 // 加载mv列表
 onMounted(async () => {
   try {
-    let { code, result }: any = await MV.getPersonalized();
+    let { code, result }: any = await MVAPI.getPersonalized();
     if (code == 200) mvList.push(...result);
   } catch (err: any) {
     ElMessage.error("加载MV列表失败!");

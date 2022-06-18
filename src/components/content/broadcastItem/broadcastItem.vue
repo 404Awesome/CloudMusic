@@ -4,8 +4,10 @@
     <el-card @click="$router.push(`/mvDetail/${id}`)" shadow="never">
       <!-- 播放图标 -->
       <span class="icon i-heroicons-outline:play"></span>
+
       <!-- 封面 -->
-      <el-image h-25 lazy :src="picUrl" fit="cover" />
+      <el-image w-full h-26 lazy :src="picUrl" fit="cover" />
+
       <!-- 描述 -->
       <p>{{ copywriter }}</p>
     </el-card>

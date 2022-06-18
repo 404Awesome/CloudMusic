@@ -12,7 +12,7 @@
         <!-- 歌单列表 -->
         <section flex-1>
           <!-- 歌单列表 -->
-          <SongList name="热门50首" :songs="showAll ? topSongs : topSongs.slice(0, 10)" />
+          <SongList name="热门50首" :songs="showAll ? topSongs : topSongs.slice(0, 10)" :id="id" />
           <!-- 是否显示全部 -->
           <div v-if="!showAll" class="more" @click="showAll = !showAll">
             <span>查看全部50首</span>

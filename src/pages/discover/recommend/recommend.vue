@@ -2,7 +2,7 @@
 <template>
   <div>
     <!-- 轮播图 -->
-    <Carousel :data="banner" />
+    <Carousel :bannerList="bannerList" />
 
     <!-- 渲染列表 -->
     <div class="wrapper" pt-7 v-for="item in renderList" :key="item.path">
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import Carousel from "@/components/common/carousel/carousel.vue";
+import Carousel, { BannerItem } from "@/components/common/carousel/carousel.vue";
 import NavBar from "@/components/common/navBar/navBar.vue";
 import SongList from "./coms/songList.vue";
 import Broadcast from "./coms/broadcast.vue";
@@ -53,12 +53,13 @@ let renderList = reactive([
   },
 ]);
 
-// 加载banner
-let banner: any = reactive([]);
+// banner列表
+let bannerList = reactive<BannerItem[]>([]);
+// 加载banner列表
 onMounted(async () => {
   try {
     let { code, banners }: any = await OtherAPI.getBanner();
-    if (code == 200) banner.push(...banners);
+    if (code == 200) bannerList.push(...banners);
   } catch (err: any) {
     ElMessage.error("加载Banner失败!");
   }

@@ -1,7 +1,7 @@
 <!-- 电台 -->
 <template>
   <!-- 轮播图 -->
-  <Carousel :data="banner" />
+  <Carousel :bannerList="bannerList" />
 
   <!-- 电台分类 -->
   <CateList />
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import Carousel from "@/components/common/carousel/carousel.vue";
+import Carousel, { BannerItem } from "@/components/common/carousel/carousel.vue";
 import CateList from "./coms/cateList.vue";
 import PaidBoutique from "./coms/paidBoutique.vue";
 import CateRadio from "./coms/cateRadio.vue";
@@ -41,11 +41,11 @@ let renderList = reactive([{
   cateId: 8,
 }]);
 
-// Banner图
-let banner = reactive<string[]>([]);
-// 加载Banner图
+// banner列表
+let bannerList = reactive<BannerItem[]>([]);
+// 加载banner列表
 onMounted(async () => {
   let { code, data }: any = await RadioAPI.getBanner();
-  if (code == 200) banner.push(...data);
+  if (code == 200) bannerList.push(...data);
 });
 </script>

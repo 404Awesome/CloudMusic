@@ -25,7 +25,6 @@ const { path, title } = toRaw(props);
   display: flex;
   align-items: center;
   width: 100%;
-  color: var(--font-color);
 
   .title {
     margin: 0;

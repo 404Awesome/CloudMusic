@@ -6,9 +6,9 @@
     <h4 class="title">{{ name }}</h4>
     <!-- 操作 -->
     <section class="operate">
-      <span @click="Operate.addPlayList(origin || songs, 0)" class="icon i-heroicons-outline:play"></span>
+      <span @click="Operate.addPlayList(origin || songs, id)" class="icon i-heroicons-outline:play"></span>
       <span v-if="id" class="splitLine">|</span>
-      <span v-if="id" @click="Operate.collectAlbum(id!)" class="icon i-heroicons-outline:folder-add"></span>
+      <span v-if="id" @click="Operate.collectAlbum(id)" class="icon i-heroicons-outline:folder-add"></span>
     </section>
   </header>
   <!-- 列表 -->
@@ -34,8 +34,11 @@
 import { Operate } from "utils";
 
 const props = defineProps({
-  id: Number,
   origin: Array,
+  id: {
+    type: Number,
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -46,8 +49,7 @@ const props = defineProps({
   }
 })
 let songs = toRef(props, "songs");
-let origin = toRaw(props.origin);
-let { id, name } = toRaw(props);
+let { origin, id, name } = toRaw(props);
 </script>
 
 <style lang="scss" scoped>

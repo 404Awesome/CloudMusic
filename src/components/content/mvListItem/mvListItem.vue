@@ -84,10 +84,10 @@ let { id, cover, artists, name, playCount, isFlex } = toRaw(props);
       right: 6px;
       z-index: 2;
       color: #fff;
-      font-size: 14px;
+      font-size: 15px;
 
       .icon {
-        font-size: 20px;
+        font-size: 22px;
       }
     }
 

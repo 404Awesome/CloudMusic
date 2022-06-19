@@ -1,6 +1,7 @@
 <!-- 搜索 -->
 <template>
-  <el-popover width="200px" placement="bottom-start" trigger="click">
+  <el-popover @hide="searchText = ''" :hide-after="0" @show="showPopover" width="200px" placement="bottom-start"
+    trigger="click">
     <template #reference>
       <span class="icon i-heroicons-outline:search"></span>
     </template>
@@ -14,7 +15,7 @@
         </div>
 
         <!-- 热搜榜 -->
-        <div class="trending">
+        <div v-if="searchHotList.length" class="trending">
           <el-divider>
             <h4>热搜榜</h4>
           </el-divider>
@@ -37,14 +38,17 @@ import { SearchAPI } from "api";
 
 // 热搜列表
 let searchHotList = reactive<any>([]);
-onMounted(async () => {
-  // 加载搜索热搜
-  let { code, data }: any = await SearchAPI.getSearchHot();
-  if (code == 200) searchHotList.push(...data);
-})
+// 显示Popover时触发事件
+let showPopover = async () => {
+  if (!searchHotList.length) {
+    // 加载搜索热搜
+    let { code, data }: any = await SearchAPI.getSearchHot();
+    if (code == 200) searchHotList.push(...data);
+  }
+}
 
 // 搜索
-let searchText = ref<string>("");
+let searchText = ref("");
 let search = () => {
   if (searchText.value.length) {
     console.log(searchText.value);
@@ -58,7 +62,10 @@ let searchHot = (songInfo: any) => {
 </script>
 
 <style lang="scss" scoped>
+@import "@/scss/mixins.scss";
+
 .search {
+  color: var(--font-color);
 
   .form {
     display: flex;
@@ -73,7 +80,6 @@ let searchHot = (songInfo: any) => {
       border: none;
       border-radius: 5px;
       background-color: #eee;
-      color: var(--font-color);
       font-size: 14px;
     }
 
@@ -91,23 +97,16 @@ let searchHot = (songInfo: any) => {
   .trending {
     margin-top: 10px;
 
-    h4 {
-      color: var(--font-color);
-    }
-
     .trendingList {
       display: flex;
       overflow: hidden;
       margin-bottom: 5px;
-      color: var(--font-color);
+      padding-right: 6px;
       font-size: 14px;
       cursor: pointer;
 
-
       span {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        @include oneOmit;
 
         &:nth-child(1) {
           width: 25px;
@@ -115,11 +114,14 @@ let searchHot = (songInfo: any) => {
         }
 
         &:nth-child(2) {
+          flex: 1;
           margin-right: 5px;
         }
 
         &:nth-child(3) {
+          flex: 1;
           color: rgba($color: #000000, $alpha: .3);
+          font-size: 13px;
         }
       }
 

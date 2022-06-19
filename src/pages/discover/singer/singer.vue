@@ -5,8 +5,8 @@
     <categoryList @selected="cateSelected" :loading="loading" />
 
     <!-- 歌手列表 -->
-    <ul gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 class="singerList"
-      v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled">
+    <ul v-if="artistsList.length" gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6
+      class="singerList" v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled">
       <li v-for="item in artistsList" :key="item.id" @click="goSingerDetail(item)">
         <el-avatar :size="120" shape="square" :src="item.picUrl" />
         <p class="info">

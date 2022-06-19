@@ -1,5 +1,9 @@
 <!-- 歌手详情 相似歌手 -->
 <template>
+  <!-- 提示 -->
+  <el-alert v-if="!store.auth" mt-2 title="需登陆后进行查看!" type="warning" :closable="false" />
+
+  <!-- 相似歌手列表 -->
   <div>
     <p></p>
   </div>
@@ -7,8 +11,11 @@
 
 <script setup lang="ts">
 import { ArtistAPI } from "api";
+import { useMainStore } from "store";
 import { useRoute } from "vue-router";
+
 const route = useRoute();
+const store = useMainStore();
 const { id }: any = route.query;
 const props = defineProps(['activeComs']);
 

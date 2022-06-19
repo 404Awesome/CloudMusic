@@ -75,7 +75,7 @@ const routes: RouteRecordRaw[] = [
   // 歌单详情
   {
     path: "/songListDetal/:id",
-    meta: { title: "歌单详情" },
+    meta: { title: "歌单详情", scroll: true },
     component: SongListDetail
   },
   // 独家放送

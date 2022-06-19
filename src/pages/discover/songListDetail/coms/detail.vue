@@ -30,11 +30,11 @@
             </li>
             <li @click="Operate.collectSongList(id)">
               <span class="icon i-heroicons-outline:folder-add"></span>
-              <span>收藏({{ Handle.Count(detail.subscribedCount) }})</span>
+              <span v-once>收藏({{ Handle.Count(detail.subscribedCount) }})</span>
             </li>
             <li @click="share">
               <span class="icon i-heroicons-outline:external-link"></span>
-              <span>分享({{ Handle.Count(detail.shareCount) }})</span>
+              <span v-once>分享({{ Handle.Count(detail.shareCount) }})</span>
             </li>
           </ul>
 
@@ -57,7 +57,7 @@
               </p>
               <p>
                 <span>播放数:&nbsp;</span>
-                <span class="text">{{ Handle.Count(detail.playCount) }}</span>
+                <span v-once class="text">{{ Handle.Count(detail.playCount) }}</span>
               </p>
             </div>
 
@@ -169,7 +169,6 @@ onMounted(async () => {
 .detail {
   display: flex;
   padding: 15px 0px 30px;
-  color: var(--font-color);
   font-size: 14px;
 
   gap: 20px;

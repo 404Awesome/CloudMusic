@@ -1,39 +1,41 @@
 <!-- 歌单详情 -->
 <template>
-  <el-scrollbar @scroll="scroll">
-    <div class="wrapper">
-      <!-- 歌单描述 -->
-      <Detail>
-        <template #fold="{ id, title, height, share }">
-          <div :class="{ hidden: scrollTop <= height, disabled: activeComs !== 'SongList' }" class="detailFold">
-            <div class="content">
-              <!-- 标题 -->
-              <h1 class="title">{{ title }}</h1>
-              <!-- 操作 -->
-              <ul class="operate">
-                <li @click="Operate.playSongList(id)">
-                  <span class="icon i-eva:arrow-right-fill"></span>
-                </li>
-                <li @click="Operate.collectSongList(id)">
-                  <span class="icon i-heroicons-outline:folder-add"></span>
-                </li>
-                <li @click="share">
-                  <span class="icon i-heroicons-outline:external-link"></span>
-                </li>
-              </ul>
-            </div>
+  <div class="wrapper">
+    <!-- 歌单描述 -->
+    <Detail>
+      <template #fold="{ id, title, height, share }">
+        <div :class="{ hidden: store.scrollTop <= height, disabled: activeComs !== 'SongList' }" class="detailFold">
+          <div class="content">
+            <!-- 标题 -->
+            <h1 class="title">{{ title }}</h1>
+            <!-- 操作 -->
+            <ul class="operate">
+              <li @click="Operate.playSongList(id)">
+                <span class="icon i-eva:arrow-right-fill"></span>
+              </li>
+              <li @click="Operate.collectSongList(id)">
+                <span class="icon i-heroicons-outline:folder-add"></span>
+              </li>
+              <li @click="share">
+                <span class="icon i-heroicons-outline:external-link"></span>
+              </li>
+            </ul>
           </div>
-        </template>
-      </Detail>
+        </div>
+      </template>
+    </Detail>
 
-      <!-- 歌曲详情 -->
-      <el-tabs v-model="activeComs">
-        <el-tab-pane v-for="item in tabPaneList" :key="item.name" :label="item.label" :name="item.name">
-          <component :activeComs="activeComs" :is="item.component" />
-        </el-tab-pane>
-      </el-tabs>
+    <div h-200 bg-red-500>
+      <p>{{ Count() }}</p>
     </div>
-  </el-scrollbar>
+
+    <!-- 歌曲详情 -->
+    <!-- <el-tabs v-model="activeComs">
+      <el-tab-pane v-for="item in tabPaneList" :key="item.name" :label="item.label" :name="item.name">
+        <component :activeComs="activeComs" :is="item.component" />
+      </el-tab-pane>
+    </el-tabs> -->
+  </div>
 </template>
 
 <script setup lang="ts" name="playListDetail">
@@ -42,7 +44,12 @@ import SongList from "./coms/songList.vue";
 import Comment from "./coms/comment.vue";
 import Collector from "./coms/collector.vue";
 import { Operate } from "utils";
-import { useThrottleFn } from "@vueuse/core";
+import { useMainStore } from "store";
+const store = useMainStore();
+
+let Count = () => {
+  console.log(123);
+}
 
 // 当前激活的组件
 let activeComs = ref("SongList");
@@ -51,25 +58,19 @@ let tabPaneList = reactive([
   {
     label: "歌曲列表",
     name: "SongList",
-    component: shallowRef(SongList)
+    component: markRaw(SongList)
   },
   {
     label: "评论",
     name: "Comment",
-    component: shallowRef(Comment)
+    component: markRaw(Comment)
   },
   {
     label: "收藏者",
     name: "Collector",
-    component: shallowRef(Collector)
+    component: markRaw(Collector)
   }
 ]);
-
-// 视图滚动事件
-let scrollTop = ref(0);
-let scroll = useThrottleFn((event) => {
-  scrollTop.value = event.scrollTop;
-}, 100);
 </script>
 
 <style lang="scss" scoped>

@@ -1,18 +1,15 @@
 <!-- MV详情 -->
 <template>
-  <div pt-4 pb-8 v-if="props.artists">
+  <div pt-4 pb-8>
     <!-- 艺术家 -->
-    <div flex items-center>
-      <!-- <el-image :src="" fit="cover" /> -->
-      <Artists :artists="props.artists!" />
-    </div>
+    <Artists fontSize="15px" :artists="artists!" />
 
     <!-- mv信息 -->
     <div class="mvInfo">
       <!-- 标题 -->
       <h4 class="title">
-        <span>{{ props.name }}</span>
-        <span v-if="props.desc" @click="showDesc = !showDesc" :class="{ active: showDesc }"
+        <span>{{ name }}</span>
+        <span v-if="desc" @click="showDesc = !showDesc" :class="{ active: showDesc }"
           class="icon i-eva:arrow-up-fill"></span>
       </h4>
 
@@ -23,7 +20,7 @@
       </p>
 
       <!-- 简介 -->
-      <p class="describe" v-show="showDesc">{{ props.desc }}</p>
+      <p class="describe" v-show="showDesc">{{ desc }}</p>
 
       <!-- 操作 -->
       <div class="operate">
@@ -44,49 +41,33 @@
 
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
-import { ArtistAPI } from "api";
 import { Handle } from "utils";
 const props = defineProps({
-  artists: Array,
-  publishTime: String,
-  playCount: Number,
   desc: String,
   name: String,
+  artists: Array,
   subCount: Number,
+  playCount: Number,
   likedCount: Number,
-  shareCount: Number
+  shareCount: Number,
+  publishTime: String
 });
+const { artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount } = toRaw(props);
 
 // 赞 / 收藏 / 分享
-let control = reactive([
-  {
-    title: `赞 (${props.likedCount})`,
-    icon: "i-heroicons-outline:thumb-up",
-  },
-  {
-    title: `收藏 (${props.subCount})`,
-    icon: "i-heroicons-outline:folder-add",
-  },
-  {
-    title: `转发 (${props.shareCount})`,
-    icon: "i-heroicons-outline:external-link",
-  },
-]);
+let control = reactive([{
+  title: `赞 (${likedCount})`,
+  icon: "i-heroicons-outline:thumb-up",
+}, {
+  title: `收藏 (${subCount})`,
+  icon: "i-heroicons-outline:folder-add",
+}, {
+  title: `转发 (${shareCount})`,
+  icon: "i-heroicons-outline:external-link",
+}]);
 
 // 是否显示简介
 let showDesc = ref(false);
-
-// 歌手详情
-let singerDetail = reactive({});
-// 加载歌手详情
-onMounted(async () => {
-  // try {
-  //   let { code, data: { artist } }: any = await ArtistAPI.getDetail(detail.artists[0].id);
-  //   if (code == 200) Object.assign(singerDetail, artist);
-  // } catch (err: any) {
-  //   ElMessage.error("加载歌手详情失败!");
-  // }
-})
 </script>
 
 <style lang="scss" scoped>

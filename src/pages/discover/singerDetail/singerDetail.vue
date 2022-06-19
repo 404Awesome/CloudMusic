@@ -1,11 +1,11 @@
 <!-- 歌手详情 -->
 <template>
-  <div class="wrapper" py-4>
+  <div class="wrapper" py-4 :key="($route.query.id as string)">
     <!-- 个人详情 -->
     <Detail mb-4 />
 
     <!-- 个人成就 -->
-    <el-tabs v-model="activeComs">
+    <el-tabs v-model="activeComs" :lazy="true">
       <el-tab-pane v-for="item in tabPaneList" :key="item.name" :label="item.label" :name="item.name">
         <component :activeComs="activeComs" :is="item.component" />
       </el-tab-pane>
@@ -27,22 +27,22 @@ let tabPaneList = reactive([
   {
     label: "专辑",
     name: "Album",
-    component: shallowRef(Album)
+    component: markRaw(Album)
   },
   {
     label: "MV",
     name: "MV",
-    component: shallowRef(MVList)
+    component: markRaw(MVList)
   },
   {
     label: "歌手详情",
     name: "SingerInfo",
-    component: shallowRef(SingerInfo)
+    component: markRaw(SingerInfo)
   },
   {
     label: "相似歌手",
     name: "SimilarSinger",
-    component: shallowRef(SimilarSinger)
+    component: markRaw(SimilarSinger)
   }
 ]);
 </script>

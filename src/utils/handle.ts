@@ -14,10 +14,9 @@ export default {
   },
   // 处理时长 
   Duration(timeStamp: number): string {
-    console.log(timeStamp);
     timeStamp = timeStamp / 1000 / 60;
-    let arr = `${timeStamp.toFixed(2)}`.split(".");
-    return `${arr[0].padStart(2, "0")}:${arr[1]}`;
+    let timeArr = `${timeStamp.toFixed(2)}`.split(".");
+    return `${timeArr[0].padStart(2, "0")}:${timeArr[1]}`;
   },
   // 处理价格
   Price(price: number) {

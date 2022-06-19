@@ -1,7 +1,7 @@
 <!-- 艺术家 -->
 <template>
   <p class="artists">
-    <span @click="goArtistPage(artist)" v-for="artist in props.artists" :key="artist.id">
+    <span @click="goArtistPage(artist)" v-for="artist in artists" :key="artist.id">
       {{ artist.name }}
     </span>
   </p>
@@ -16,7 +16,12 @@ const props = defineProps({
     type: Array as PropType<any[]>,
     required: true,
   },
+  fontSize: {
+    type: String,
+    default: "13px",
+  }
 });
+let { artists, fontSize } = toRaw(props);
 
 // 跳转艺术家页面
 let goArtistPage = (artist: any) => {
@@ -32,15 +37,16 @@ let goArtistPage = (artist: any) => {
   @include oneOmit;
 
   span {
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 13px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: v-bind(fontSize);
     cursor: pointer;
 
     &::after {
       display: inline-block;
       padding: 0px 5px;
-      color: rgba(0, 0, 0, 0.45);
+      color: rgba(0, 0, 0, 0.4);
       content: "/";
+      font-size: v-bind(fontSize);
       cursor: default;
     }
 

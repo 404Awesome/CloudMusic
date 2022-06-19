@@ -1,6 +1,9 @@
 <!-- 歌单收藏者 -->
 <template>
-  <el-alert v-if="!store.auth && collectorList.length" mt-2 title="登陆后查看全部" type="warning" />
+  <!-- 提示 -->
+  <el-alert v-if="!store.auth && collectorList.length" mt-2 title="登陆后查看全部" type="warning" :closable="false" />
+
+  <!-- 收藏者列表 -->
   <div py-4 mt-1>
     <!-- 列表 -->
     <ul class="list" min-h-30 grid-cols-2 lg:grid-cols-3 element-loading-text="Loading..." v-loading="loading">

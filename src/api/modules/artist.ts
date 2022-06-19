@@ -1,4 +1,4 @@
-import { GET, POST } from "../request";
+import { GET } from "../request";
 
 export default {
   // 获取歌手分类列表
@@ -21,7 +21,7 @@ export default {
   },
   // 获取歌手详情
   getDetail(id: number) {
-    return POST("/artist/detail", { id })
+    return GET("/artist/detail", { id })
   },
   // 获取歌手mv
   getMV(id: number) {

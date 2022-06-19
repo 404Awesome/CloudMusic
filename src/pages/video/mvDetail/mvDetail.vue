@@ -1,6 +1,6 @@
 <!-- MV相关 -->
 <template>
-  <div class="mvDetails" :key="($route.params.id as string)">
+  <div class="mvDetails" :key="(route.params.id as string)">
     <div col-span-full lg:col-span-1>
       <div v-if="mvSource.length">
         <!-- MV视频 -->
@@ -9,7 +9,7 @@
         <Detail v-bind="mvDetail" />
       </div>
       <!-- 评论 -->
-      <Comment :id="parseInt($route.params.id as string)" />
+      <Comment :id="parseInt(route.params.id as string)" />
     </div>
 
     <!-- 相关推荐 -->
@@ -53,10 +53,12 @@ let loadMVDetail = async (id: number) => {
 
 // 监听路由id的变化 -> 加载数据
 watch(() => route.params.id, (newVal) => {
-  // 清空数组,以便于id改变时,重新渲染
-  mvSource.splice(0, mvSource.length);
-  // 加载mv详情
-  loadMVDetail(parseInt(newVal as string));
+  if (route.fullPath.startsWith("/mvDetail/")) {
+    // 清空数组,以便于id改变时,重新渲染
+    mvSource.splice(0, mvSource.length);
+    // 加载mv详情
+    loadMVDetail(parseInt(newVal as string));
+  }
 }, { immediate: true });
 </script>
  

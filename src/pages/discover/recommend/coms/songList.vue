@@ -61,7 +61,7 @@ onMounted(async () => {
         z-index: 1;
         width: 100%;
         height: 100%;
-        background-color: rgba($color: #000000, $alpha: 0.2);
+        background-color: rgba($color: #000000, $alpha: 0.25);
         content: "";
       }
 
@@ -71,20 +71,20 @@ onMounted(async () => {
         right: 6px;
         z-index: 2;
         color: #fff;
-        font-size: 14px;
+        font-size: 15px;
 
         .icon {
-          font-size: 18px;
+          font-size: 22px;
         }
       }
 
       .playIcon {
         position: absolute;
-        right: 6px;
-        bottom: 2px;
+        right: 5px;
+        bottom: 5px;
         z-index: 2;
         color: rgba($color: #fff, $alpha: 0.7);
-        font-size: 26px;
+        font-size: 28px;
         opacity: 0;
         transition: opacity 0.3s linear;
 

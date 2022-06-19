@@ -22,7 +22,7 @@ const emit = defineEmits(["getComment"]);
 let content = ref<string>("");
 // 发送评论
 let sendComment = useDebounceFn(() => {
-  if (!content.value.length) return ElMessage.warning('请输入内容!');
+  if (!content.value.length) return ElMessage.warning('请输入评论内容!');
   emit("getComment", content.value);
 }, 500);
 </script>

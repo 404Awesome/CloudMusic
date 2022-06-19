@@ -29,27 +29,27 @@ let renderList = reactive([
   {
     title: "推荐歌单",
     path: "/discover/songList",
-    component: shallowRef(SongList),
+    component: markRaw(SongList),
   },
   {
     title: "独家放送",
     path: "/broadcast",
-    component: shallowRef(Broadcast),
+    component: markRaw(Broadcast),
   },
   {
     title: "最新音乐",
     path: "/discover/newSong",
-    component: shallowRef(NewSong),
+    component: markRaw(NewSong),
   },
   {
     title: "推荐MV",
     path: "/video/mvList",
-    component: shallowRef(MV),
+    component: markRaw(MV),
   },
   {
     title: "主播电台",
     path: "/discover/radioStation",
-    component: shallowRef(Radio),
+    component: markRaw(Radio),
   },
 ]);
 

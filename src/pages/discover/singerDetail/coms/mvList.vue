@@ -27,6 +27,7 @@ const route = useRoute();
 const { id }: any = route.query;
 const props = defineProps(['activeComs']);
 
+
 // MV列表
 let mvList = reactive<any>([]);
 // 加载数据

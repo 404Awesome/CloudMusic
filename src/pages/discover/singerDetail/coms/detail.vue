@@ -32,7 +32,7 @@ import { useMainStore } from "store";
 import { useRoute } from "vue-router";
 const store = useMainStore();
 const route = useRoute();
-const { id, name, alias }: any = route.query;
+const { id, name, alias }: any = toRaw(route.query);
 
 // 收藏状态
 let followed = ref(false);
@@ -44,7 +44,7 @@ let singerDetail = reactive<any>({});
 // 加载歌手详情
 onMounted(async () => {
   try {
-    let { code, data: { artist } }: any = await ArtistAPI.getDetail(id);
+    let { code, data: { artist } }: any = await ArtistAPI.getDetail(parseInt(id as string));
     if (code == 200) Object.assign(singerDetail, artist);
   } catch (err: any) {
     ElMessage.error("加载歌手详情失败!");

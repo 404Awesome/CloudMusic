@@ -77,6 +77,10 @@ const props = defineProps({
         z-index: 2;
         display: flex;
         align-items: center;
+
+        span:last-child {
+          font-size: 15px;
+        }
       }
 
       .info {
@@ -114,7 +118,7 @@ const props = defineProps({
       }
 
       .icon {
-        font-size: 20px;
+        font-size: 22px;
       }
     }
 

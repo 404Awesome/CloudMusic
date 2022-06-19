@@ -1,8 +1,6 @@
 <!-- CloudMusic -->
 <template>
-  <main :class="{ dark: store.isDark }">
-    <Layout />
-  </main>
+  <Layout />
 </template>
 
 <script setup lang="ts">

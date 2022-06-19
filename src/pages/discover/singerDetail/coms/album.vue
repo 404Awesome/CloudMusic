@@ -45,7 +45,7 @@
 
     <!-- 提示 -->
     <el-divider>
-      <span class="tip">{{ disabled ? '无法加载更多!' : 'Loading...' }}</span>
+      <span class="tip">{{ disabled ? '已全部加载完成!' : 'Loading...' }}</span>
     </el-divider>
   </div>
 </template>

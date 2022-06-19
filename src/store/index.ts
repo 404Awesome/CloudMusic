@@ -29,6 +29,8 @@ export const useMainStore = defineStore("main", {
       auth: useStorage<string>("auth", "", localStorage),
       // 暗夜模式
       isDark: useStorage<boolean>("isDark", false, sessionStorage),
+      // 页面滚动距离
+      scrollTop: 0,
       // 主题色
       theme: useStorage<string>("theme", '#d95047'),
       // 是否折叠侧边栏

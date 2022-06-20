@@ -14,8 +14,18 @@
             </div>
             <!-- 操作 -->
             <ul class="operate">
-              <li @click="item.method" v-for="item in operateList" :key="item.icon">
-                <span :class="item.icon"></span>
+              <!-- eva:heart-fill -->
+              <li>
+                <span class="i-eva:heart-outline"></span>
+              </li>
+              <li>
+                <span class="i-eva:folder-add-outline"></span>
+              </li>
+              <li>
+                <span class="i-eva:cloud-download-outline"></span>
+              </li>
+              <li>
+                <span class="i-eva:external-link-outline"></span>
               </li>
             </ul>
           </div>
@@ -63,32 +73,9 @@
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
 import { useMainStore } from "store";
+import { toRef } from "vue";
 const store = useMainStore();
-let { currentSong } = toRefs(store);
-
-// 操作列表
-let operateList = reactive([{
-  // eva:heart-fill
-  icon: "i-eva:heart-outline",
-  method() {
-    console.log("喜欢");
-  }
-}, {
-  icon: "i-eva:folder-add-outline",
-  method() {
-    console.log("收藏");
-  }
-}, {
-  icon: "i-eva:cloud-download-outline",
-  method() {
-    console.log("下载");
-  }
-}, {
-  icon: "i-eva:external-link-outline",
-  method() {
-    console.log("分享");
-  }
-}]);
+let currentSong = toRef(store, 'currentSong');
 
 // 是否显示
 let toggle = () => store.isFolding = !store.isFolding;
@@ -164,8 +151,7 @@ defineExpose({ toggle });
   display: flex;
   align-items: center;
   justify-content: center;
-
-  gap: 40px;
+  gap: 30px;
 
   li {
     padding: 10px;
@@ -174,7 +160,6 @@ defineExpose({ toggle });
     cursor: pointer;
 
     span {
-      color: var(--font-color);
       font-size: 22px;
     }
 
@@ -182,7 +167,7 @@ defineExpose({ toggle });
       background-color: #e4e4e4;
 
       span {
-        color: var(--theme-color);
+        color: var(--theme-bg-color);
       }
     }
   }

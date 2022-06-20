@@ -12,10 +12,10 @@
 <script setup lang="ts">
 import SendComment from "@/components/content/sendComment/sendComment.vue";
 import CommentList from "@/components/content/commentList/commentList.vue";
-import { SongListAPI } from "api";
 import { useRoute } from "vue-router";
+import { SongListAPI } from "api";
 const route = useRoute();
-const id = parseInt(route.params.id as string);
+let id = parseInt(route.params.id as string);
 
 // 获取评论
 let getComment = (comment: string) => {

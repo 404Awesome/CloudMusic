@@ -8,6 +8,8 @@
 
 <script setup lang="ts">
 import BroadcastItem from "@/components/content/broadcastItem/broadcastItem.vue";
+import { reactive, onMounted } from "vue";
+import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
 // 独家放送列表

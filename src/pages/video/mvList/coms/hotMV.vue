@@ -14,6 +14,8 @@
 <script setup lang="ts">
 import NavBar from "@/components/common/navBar/navBar.vue";
 import MVList from "@/components/content/mvList/mvList.vue";
+import { ref, reactive, onMounted } from "vue";
+import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
 // 加载状态

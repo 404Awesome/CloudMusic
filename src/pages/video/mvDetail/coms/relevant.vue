@@ -10,8 +10,10 @@
 
 <script setup lang="ts">
 import MVItem from "@/components/content/mvItem/mvItem.vue";
-import { MVAPI } from "api";
+import { onMounted, reactive } from "vue";
+import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
+import { MVAPI } from "api";
 const route = useRoute();
 
 // 相关mv列表

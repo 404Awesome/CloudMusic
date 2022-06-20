@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { PropType } from "vue";
+import { PropType, toRaw } from "vue";
 const router = useRouter();
 const props = defineProps({
   artists: {

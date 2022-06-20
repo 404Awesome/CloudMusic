@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
+import { PropType, ref, onMounted, onBeforeUnmount } from "vue";
 import { useMitt } from "utils";
 import Plyr from "plyr";
 const props = defineProps({

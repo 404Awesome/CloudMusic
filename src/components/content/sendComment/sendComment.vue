@@ -15,6 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import { ElMessage } from "element-plus";
 import { useDebounceFn } from '@vueuse/shared';
 const emit = defineEmits(["getComment"]);
 

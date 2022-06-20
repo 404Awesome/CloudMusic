@@ -5,6 +5,8 @@
 
 <script setup lang="ts">
 import MVList from "@/components/content/mvList/mvList.vue";
+import { reactive, onMounted } from "vue";
+import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
 // mv列表

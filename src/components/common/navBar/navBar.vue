@@ -7,6 +7,8 @@
 </template>
 
 <script setup lang="ts">
+import { toRaw } from "vue";
+
 const props = defineProps({
   path: {
     type: String,

@@ -5,6 +5,7 @@
 
 <script setup lang="ts">
 import lottie from "lottie-web";
+import { onMounted, ref } from "vue";
 const props = defineProps({
   animationData: {
     type: Object,

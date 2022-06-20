@@ -48,9 +48,10 @@
 
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
+import { toRefs, ref } from "vue";
 import { useMainStore } from "store";
 const store = useMainStore();
-const { playList, currentSong } = toRefs(store);
+let { playList, currentSong } = toRefs(store);
 
 // 是否显示
 let isShow = ref<boolean>(false);

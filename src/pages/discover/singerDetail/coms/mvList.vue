@@ -20,13 +20,13 @@
 </template>
 
 <script setup lang="ts">
-import { Handle } from "utils";
-import { ArtistAPI } from "api";
+import { reactive, watch } from "vue";
 import { useRoute } from "vue-router";
+import { ArtistAPI } from "api";
+import { Handle } from "utils";
 const route = useRoute();
-const { id }: any = route.query;
 const props = defineProps(['activeComs']);
-
+let id = parseInt(route.query.id as string);
 
 // MV列表
 let mvList = reactive<any>([]);

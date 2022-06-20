@@ -23,6 +23,7 @@
 </template>
 
 <script setup lang="ts">
+import { reactive, onMounted, ref } from "vue";
 import { RadioAPI } from "api";
 
 // 分类列表

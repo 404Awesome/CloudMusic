@@ -33,13 +33,14 @@
 </template>
 
 <script setup lang="ts">
-import { SongListAPI } from "api";
-import { useMainStore } from "store";
+import { reactive, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import { useMainStore } from "store";
+import { SongListAPI } from "api";
+const props = defineProps(['activeComs']);
 const route = useRoute();
 const store = useMainStore();
-const id = parseInt(route.params.id as string);
-const props = defineProps(['activeComs']);
+let id = parseInt(route.params.id as string);
 
 // 是否正在加载
 let loading = ref(false);

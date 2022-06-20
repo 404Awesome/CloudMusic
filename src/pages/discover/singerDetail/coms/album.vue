@@ -52,9 +52,11 @@
 
 <script setup lang="ts">
 import SongList from "./songList.vue";
-import { Handle } from "utils";
-import { ArtistAPI } from "api";
+import { onMounted, reactive, ref } from "vue";
+import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
+import { ArtistAPI } from "api";
+import { Handle } from "utils";
 const route = useRoute();
 const id = parseInt(route.query.id as string);
 

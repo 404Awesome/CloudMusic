@@ -25,8 +25,10 @@
 <script setup lang="ts" name="allMV">
 import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
 import MVList from "@/components/content/mvList/mvList.vue";
-import { MVAPI } from "api";
+import { reactive, ref, watch, onMounted, toRaw } from "vue";
+import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
+import { MVAPI } from "api";
 const route = useRoute();
 
 // 是否加载

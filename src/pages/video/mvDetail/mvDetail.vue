@@ -24,8 +24,10 @@ import PlyrVideo from "@/components/content/plyrVideo/plyrVideo.vue";
 import Relevant from "./coms/relevant.vue";
 import Detail from "./coms/detail.vue";
 import Comment from "./coms/comment.vue";
-import { MVAPI } from "api";
+import { ElMessage } from "element-plus";
+import { reactive, watch } from "vue";
 import { useRoute } from "vue-router";
+import { MVAPI } from "api";
 const route = useRoute();
 
 // 请求到MV资源

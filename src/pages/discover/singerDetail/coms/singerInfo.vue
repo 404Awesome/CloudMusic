@@ -15,11 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import { ArtistAPI } from "api";
+import { reactive, watch } from "vue";
 import { useRoute } from "vue-router";
-const route = useRoute();
-const { id, name }: any = route.query;
+import { ArtistAPI } from "api";
 const props = defineProps(['activeComs']);
+const route = useRoute();
+let { id, name }: any = route.query;
 
 // 歌手描述
 let singerDesc = reactive<any>({});

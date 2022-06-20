@@ -16,6 +16,8 @@
 import NavBar from "@/components/common/navBar/navBar.vue";
 import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
 import MVList from "@/components/content/mvList/mvList.vue";
+import { reactive, ref, onMounted } from "vue";
+import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
 // 加载状态

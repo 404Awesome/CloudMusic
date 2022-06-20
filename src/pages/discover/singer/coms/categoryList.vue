@@ -7,6 +7,7 @@
 
 <script setup lang="ts">
 import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
+import { reactive, toRaw, watch } from "vue";
 const emit = defineEmits(['selected']);
 const props = defineProps({
   loading: {

@@ -34,6 +34,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref, reactive } from "vue";
 import { SearchAPI } from "api";
 
 // 热搜列表

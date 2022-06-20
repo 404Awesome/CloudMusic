@@ -20,6 +20,8 @@
 <script setup lang="ts">
 import CategoryList from "./coms/categoryList.vue";
 import List from "./coms/list.vue";
+import { ElMessage } from "element-plus";
+import { reactive, ref } from "vue";
 import { SongListAPI } from "api";
 
 // 是否正在加载

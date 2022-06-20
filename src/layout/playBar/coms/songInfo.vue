@@ -30,8 +30,9 @@
 <script setup lang="ts">
 import SongDetail from "./songDetail.vue";
 import { useMainStore } from "store";
+import { toRef, ref } from "vue";
 const store = useMainStore();
-let { currentSong } = toRefs(store);
+let currentSong = toRef(store, "currentSong");
 
 const props = defineProps({
   duration: {

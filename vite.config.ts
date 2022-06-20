@@ -1,19 +1,19 @@
-import { defineConfig } from "vite";
 import { resolve } from "path";
-import vue from "@vitejs/plugin-vue";
 import Unocss from "unocss/vite";
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import legacy from "@vitejs/plugin-legacy";
 import presetUno from "@unocss/preset-uno";
 import presetIcons from "@unocss/preset-icons";
+import vueSetupExtend from "vite-plugin-vue-setup-extend";
 import presetAttributify from "@unocss/preset-attributify";
-import AutoImport from "unplugin-auto-import/vite";
-import Components from 'unplugin-vue-components/vite';
-import vueSetupExtend from 'vite-plugin-vue-setup-extend';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 
 export default defineConfig({
   plugins: [
     vue(),
-    vueSetupExtend(),
+    legacy({
+      targets: ['defaults', 'not IE 11']
+    }),
     Unocss({
       mode: "vue-scoped",
       presets: [
@@ -22,28 +22,30 @@ export default defineConfig({
         presetIcons({
           extraProperties: {
             "display": "inline-block",
-            "vertical-align": "middle",
+            "vertical-align": "middle"
           },
-        }),
-      ],
+        })
+      ]
     }),
-    AutoImport({
-      imports: ["vue"],
-      resolvers: [ElementPlusResolver()],
-      dts: "src/types/auto-imports.d.ts",
-    }),
-    Components({
-      resolvers: [ElementPlusResolver()],
-      dts: "src/types/auto-component.d.ts",
-    }),
+    vueSetupExtend(),
   ],
   resolve: {
     alias: {
       "@": resolve(__dirname, "src/"),
       api: resolve(__dirname, "src/api"),
       store: resolve(__dirname, "src/store"),
-      utils: resolve(__dirname, "src/utils")
+      utils: resolve(__dirname, "src/utils"),
+      "vue": "https://esm.run/vue@3.2.25",
+      "plyr": "https://esm.run/plyr@3.7.2",
+      "mitt": "https://esm.run/mitt@3.0.0",
+      "axios": "https://esm.run/axios@0.27.1",
+      "pinia": "https://esm.run/pinia@2.0.13",
+      "lottie-web": "https://esm.run/lottie-web@5.9.3",
+      "@vueuse/core": "https://esm.run/@vueuse/core@8.3.1",
     },
+  },
+  optimizeDeps: {
+    exclude: ['vue', 'axios', 'lottie-web', 'plyr', '@vueuse/core', 'pinia', 'mitt']
   },
   server: {
     open: true

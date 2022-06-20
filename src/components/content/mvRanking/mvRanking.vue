@@ -25,6 +25,8 @@
 <script setup lang="ts">
 import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
 import MVItem from "@/components/content/mvItem/mvItem.vue";
+import { ref, reactive, onMounted } from "vue";
+import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 const props = defineProps({
   limit: {

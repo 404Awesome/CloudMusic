@@ -10,14 +10,14 @@
 </template>
 
 <script setup lang="ts">
-import { ArtistAPI } from "api";
-import { useMainStore } from "store";
+import { reactive, watch } from "vue";
 import { useRoute } from "vue-router";
-
-const route = useRoute();
-const store = useMainStore();
-const { id }: any = route.query;
+import { useMainStore } from "store";
+import { ArtistAPI } from "api";
 const props = defineProps(['activeComs']);
+const store = useMainStore();
+const route = useRoute();
+let id = parseInt(route.query.id as string);
 
 // 相似歌手
 let similarSinger = reactive([]);

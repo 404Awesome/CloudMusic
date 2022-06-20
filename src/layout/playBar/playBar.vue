@@ -55,7 +55,9 @@ import SongInfo from "./coms/songInfo.vue";
 import Plyr from "plyr";
 import { useMitt } from "utils";
 import { useMainStore } from "store";
+import { ElMessage } from "element-plus";
 import { useDebounceFn } from "@vueuse/shared";
+import { ref, watch, onMounted, computed } from "vue";
 const store = useMainStore();
 
 // audio元素

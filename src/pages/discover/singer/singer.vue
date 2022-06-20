@@ -24,8 +24,10 @@
 
 <script setup lang="ts">
 import categoryList from "./coms/categoryList.vue";
-import { ArtistAPI } from "api";
+import { ref, reactive, toRaw } from "vue";
+import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+import { ArtistAPI } from "api";
 const router = useRouter();
 
 // 是否禁用加载

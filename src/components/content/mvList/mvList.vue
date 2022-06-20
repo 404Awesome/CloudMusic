@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import MVItem from "@/components/content/mvItem/mvItem.vue";
-import { PropType } from "vue";
+import { PropType, toRefs } from "vue";
 const props = defineProps({
   list: {
     type: Array as PropType<any[]>,

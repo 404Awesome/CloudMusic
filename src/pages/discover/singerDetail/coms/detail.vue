@@ -27,12 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import { ArtistAPI } from "api";
-import { useMainStore } from "store";
+import { onMounted, reactive, ref, toRaw } from "vue";
+import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
+import { useMainStore } from "store";
+import { ArtistAPI } from "api";
 const store = useMainStore();
 const route = useRoute();
-const { id, name, alias }: any = toRaw(route.query);
+let { id, name, alias }: any = toRaw(route.query);
 
 // 收藏状态
 let followed = ref(false);

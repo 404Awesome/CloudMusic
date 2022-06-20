@@ -23,6 +23,7 @@
 
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
+import { reactive, onMounted } from "vue";
 import { Operate } from "utils";
 import { SongAPI } from "api";
 

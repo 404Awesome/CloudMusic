@@ -41,6 +41,7 @@
 
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
+import { toRaw, reactive, ref } from "vue";
 import { Handle } from "utils";
 const props = defineProps({
   desc: String,
@@ -52,7 +53,7 @@ const props = defineProps({
   shareCount: Number,
   publishTime: String
 });
-const { artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount } = toRaw(props);
+let { artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount } = toRaw(props);
 
 // 赞 / 收藏 / 分享
 let control = reactive([{

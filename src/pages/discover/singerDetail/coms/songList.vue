@@ -31,8 +31,8 @@
 </template>
 
 <script setup lang="ts">
+import { toRef, toRaw } from "vue";
 import { Operate } from "utils";
-
 const props = defineProps({
   origin: Array,
   id: {

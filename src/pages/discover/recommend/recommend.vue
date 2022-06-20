@@ -22,6 +22,8 @@ import Broadcast from "./coms/broadcast.vue";
 import NewSong from "./coms/newSong.vue";
 import Radio from "./coms/radio.vue";
 import MV from "./coms/mv.vue";
+import { onMounted, reactive, markRaw } from "vue";
+import { ElMessage } from "element-plus";
 import { OtherAPI } from "api";
 
 // 渲染列表

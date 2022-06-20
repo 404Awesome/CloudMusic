@@ -20,6 +20,7 @@ import Carousel, { BannerItem } from "@/components/common/carousel/carousel.vue"
 import CateList from "./coms/cateList.vue";
 import PaidBoutique from "./coms/paidBoutique.vue";
 import CateRadio from "./coms/cateRadio.vue";
+import { reactive, onMounted } from "vue";
 import { RadioAPI } from "api";
 
 // 渲染列表

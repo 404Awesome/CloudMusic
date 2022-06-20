@@ -39,8 +39,9 @@ import Detail from "./coms/detail.vue";
 import SongList from "./coms/songList.vue";
 import Comment from "./coms/comment.vue";
 import Collector from "./coms/collector.vue";
-import { Operate } from "utils";
+import { ref, reactive, markRaw } from "vue";
 import { useMainStore } from "store";
+import { Operate } from "utils";
 const store = useMainStore();
 
 // 当前激活的组件

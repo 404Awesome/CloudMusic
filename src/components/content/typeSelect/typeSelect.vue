@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from "vue";
+import { PropType, ref, toRaw, toRef, watch } from "vue";
 const props = defineProps({
   title: {
     type: String,
@@ -31,9 +31,8 @@ const props = defineProps({
   },
   currentType: String
 });
-let typeList = toRaw(props.typeList);
 let loading = toRef(props, "loading");
-let title = toRef(props, "title");
+let { typeList, title } = toRaw(props);
 
 // 当前类型
 let currentType = ref<string>(props.currentType || typeList[0]);

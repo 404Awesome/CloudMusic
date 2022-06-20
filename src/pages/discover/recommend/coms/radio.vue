@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import { reactive, onMounted } from "vue";
 import { RadioAPI } from "api";
 
 let data = reactive<any>([]);

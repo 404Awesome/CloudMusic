@@ -39,6 +39,7 @@
 
 <script setup lang="ts">
 import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
+import { ref, watch, toRef, toRaw } from "vue";
 import { PropType } from "vue";
 const emit = defineEmits(['selected'])
 const props = defineProps({
@@ -55,11 +56,11 @@ const props = defineProps({
     default: false
   }
 });
-const { hotTypeList, defaultType, loading } = toRefs(props);
-
+let loading = toRef(props, "loading");
+let { hotTypeList, defaultType } = toRaw(props);
 
 // 当前选中
-let currentSelect = ref(defaultType.value || '');
+let currentSelect = ref(defaultType || '');
 // 监听当前类型的改变并发出事件
 watch(currentSelect, () => {
   emit("selected", currentSelect.value);

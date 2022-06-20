@@ -19,6 +19,7 @@ import Album from "./coms/album.vue";
 import MVList from "./coms/mvList.vue";
 import SingerInfo from "./coms/singerInfo.vue";
 import SimilarSinger from "./coms/similarSinger.vue";
+import { reactive, ref, markRaw } from "vue";
 
 // 当前激活的组件
 let activeComs = ref("Album");

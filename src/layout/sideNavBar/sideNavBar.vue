@@ -28,6 +28,7 @@
 
 <script setup lang="ts">
 import { useMainStore } from "store";
+import { reactive, watch } from "vue";
 const store = useMainStore();
 
 // 导航列表

@@ -5,6 +5,7 @@
 
 <script setup lang="ts">
 import Layout from "@/layout/index.vue"; // 布局
+import { onMounted } from "vue";
 import { useMainStore } from "store";
 const store = useMainStore();
 

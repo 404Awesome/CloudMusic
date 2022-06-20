@@ -16,6 +16,8 @@
 
 <script setup lang="ts">
 import BroadcastItem from "@/components/content/broadcastItem/broadcastItem.vue";
+import { ref, reactive } from "vue";
+import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
 // 是否正在加载

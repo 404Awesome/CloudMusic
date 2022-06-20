@@ -87,11 +87,12 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, reactive, ref } from "vue";
 import { Handle, Operate } from "utils";
-import { SongListAPI } from "api";
 import { useRoute } from "vue-router";
+import { SongListAPI } from "api";
 const route = useRoute();
-const id = parseInt(route.params.id as string);
+let id = parseInt(route.params.id as string);
 
 //  元素DOM
 let detailEl = ref<HTMLElement | null>(null);

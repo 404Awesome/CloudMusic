@@ -22,6 +22,7 @@
 
 <script setup lang="ts">
 import AllTypeSelect from "@/components/content/allTypeSelect/allTypeSelect.vue";
+import { onMounted, reactive } from "vue";
 import { SongListAPI } from "api";
 const emit = defineEmits(['selected']);
 const props = defineProps({

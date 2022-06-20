@@ -34,9 +34,11 @@
 
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
-import { Operate } from "utils";
-import { SongListAPI } from "api";
+import { onMounted, reactive } from "vue";
+import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
+import { SongListAPI } from "api";
+import { Operate } from "utils";
 const route = useRoute();
 let id = parseInt(route.params.id as string);
 

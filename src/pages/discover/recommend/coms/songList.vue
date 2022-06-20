@@ -18,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, reactive } from "vue";
 import { Handle, Operate } from "utils";
 import { SongListAPI } from "api";
 

@@ -27,6 +27,7 @@
 
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
+import { toRaw } from "vue";
 import { Handle } from "utils";
 const props = defineProps({
   id: {

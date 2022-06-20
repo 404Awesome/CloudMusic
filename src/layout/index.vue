@@ -24,13 +24,14 @@
 import TopNavBar from "./topNavBar/topNavBar.vue";      // 顶部导航栏
 import SideNavBar from "./sideNavBar/sideNavBar.vue";   // 侧边导航栏
 import PlayBar from "./playBar/playBar.vue";            // 播放栏
+import { toRefs, ref, watch } from "vue";
 import { useThrottleFn } from "@vueuse/shared";
 import { useMainStore } from "store";
 import { useRoute } from "vue-router";
 const store = useMainStore();
 const route = useRoute();
 let { isFolding, isDark } = toRefs(store);
-let excludeList = reactive<string[]>(['singerDetail', 'mvDetails', 'playListDetail', 'allMV']);
+let excludeList: string[] = ['singerDetail', 'mvDetails', 'playListDetail', 'allMV'];
 
 // 滚动元素
 let scrollEl = ref<HTMLElement | null>(null);

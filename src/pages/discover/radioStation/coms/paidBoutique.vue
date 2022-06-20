@@ -2,7 +2,7 @@
 <template>
   <div class="wrapper" mb-7 mt-3>
     <!-- 导航栏 -->
-    <NavBar title="付费精品" path="/123123" />
+    <NavBar title="付费精品" path="/" />
 
     <!-- 列表 -->
     <ul gap-5 lg:gap-7 class="content">
@@ -32,8 +32,8 @@ import { Handle } from "utils";
 let paygiftList = reactive<any[]>([]);
 // 加载付费精选
 onMounted(async () => {
-  let { code, data }: any = await RadioAPI.getPaygift(0, 4);
-  if (code == 200) paygiftList.push(...data);
+  let { code, data: { list } }: any = await RadioAPI.getPaygift(0, 4);
+  if (code == 200) paygiftList.push(...list);
 });
 </script>
 

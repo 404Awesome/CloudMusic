@@ -97,7 +97,7 @@ header.header {
 
         &:hover {
           background-color: #f5f7fa;
-          color: var(--theme-bg-color);
+          color: var(--theme-color);
         }
 
         .icon {
@@ -135,13 +135,13 @@ header.header {
       background-color: #f5f7fa;
 
       .songName {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
     }
 
     &.active {
       background-color: #f5f7fa;
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
     }
   }
 

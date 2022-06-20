@@ -4,12 +4,12 @@
   <h4 text-lg mb-2>相关推荐</h4>
   <!-- 列表 -->
   <section mb-4 v-for="item in relevantList" :key="item.id">
-    <MVListItem v-bind="item" :isFlex="true" />
+    <MVItem v-bind="item" :isFlex="true" />
   </section>
 </template>
 
 <script setup lang="ts">
-import MVListItem from "@/components/content/mvListItem/mvListItem.vue";
+import MVItem from "@/components/content/mvItem/mvItem.vue";
 import { MVAPI } from "api";
 import { useRoute } from "vue-router";
 const route = useRoute();

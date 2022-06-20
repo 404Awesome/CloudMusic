@@ -21,9 +21,9 @@ const store = useMainStore();
 // 主题选择
 let themeSelect = (event: Event) => {
   let color = (event.target as any).getAttribute("bg-color");
-  if (!color || color == store.theme) return;
-  store.theme = color;
-  document.documentElement.style.setProperty("--theme-bg-color", color);
+  if (!color || color == store.themeColor) return;
+  store.themeColor = color;
+  document.documentElement.style.setProperty("--theme-color", color);
 };
 </script>
 

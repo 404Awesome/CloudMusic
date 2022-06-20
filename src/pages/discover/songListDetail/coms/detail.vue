@@ -200,7 +200,7 @@ onMounted(async () => {
   }
 
   .nickname {
-    color: var(--theme-bg-color);
+    color: var(--theme-color);
     cursor: pointer;
   }
 }
@@ -237,7 +237,7 @@ onMounted(async () => {
 
     &:hover {
       background-color: #f5f7fa;
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
     }
 
     &.playAll {
@@ -270,7 +270,7 @@ onMounted(async () => {
   }
 
   .tag {
-    color: var(--theme-bg-color);
+    color: var(--theme-color);
     cursor: pointer;
   }
 
@@ -294,7 +294,7 @@ onMounted(async () => {
       transform: rotate(180deg);
 
       &:hover {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
 
       &.active {

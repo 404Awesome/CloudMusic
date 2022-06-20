@@ -99,7 +99,7 @@ let change = (page: number) => {
   gap: 5px;
 
   &:hover .nickname {
-    color: var(--theme-bg-color)
+    color: var(--theme-color)
   }
 
   .nickname,

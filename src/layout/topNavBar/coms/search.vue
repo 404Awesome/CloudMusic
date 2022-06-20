@@ -22,7 +22,7 @@
           <el-scrollbar height="200px" :always="true">
             <p @click="searchHot(item)" class="trendingList" v-for="(item, index) in searchHotList"
               :key="item.searchWord">
-              <span :style="{ 'color': index < 3 ? 'var(--theme-bg-color)' : '' }">{{ index + 1 }}</span>
+              <span :style="{ 'color': index < 3 ? 'var(--theme-color)' : '' }">{{ index + 1 }}</span>
               <span>{{ item.searchWord }}</span>
               <span>{{ item.score }}</span>
             </p>
@@ -87,7 +87,7 @@ let searchHot = (songInfo: any) => {
       flex: 1;
       border: none;
       border-radius: 5px;
-      background-color: var(--theme-bg-color);
+      background-color: var(--theme-color);
       color: #fff;
       white-space: nowrap;
       cursor: pointer;
@@ -126,7 +126,7 @@ let searchHot = (songInfo: any) => {
       }
 
       &:hover {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
     }
   }

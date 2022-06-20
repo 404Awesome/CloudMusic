@@ -42,7 +42,7 @@ onMounted(async () => {
 
     &:hover {
       .title {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
 
       .playIcon {

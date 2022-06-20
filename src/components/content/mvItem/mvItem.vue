@@ -131,7 +131,7 @@ let { id, cover, artists, name, playCount, isFlex } = toRaw(props);
   }
 
   &:hover .detail .title {
-    color: var(--theme-bg-color);
+    color: var(--theme-color);
   }
 
   &.flex {

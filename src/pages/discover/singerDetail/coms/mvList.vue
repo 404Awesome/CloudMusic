@@ -52,7 +52,7 @@ watch(() => props.activeComs, (newVal) => {
 
     &:hover {
       .title {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
 
       :deep(.el-image) {

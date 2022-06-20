@@ -129,7 +129,7 @@ onMounted(() => loadData(0));
   font-size: 15px;
 
   .commentator span:first-child {
-    color: var(--theme-bg-color);
+    color: var(--theme-color);
     cursor: pointer;
   }
 
@@ -145,7 +145,7 @@ onMounted(() => loadData(0));
     }
 
     &.exist span:first-child {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
       cursor: pointer;
     }
   }
@@ -175,7 +175,7 @@ onMounted(() => loadData(0));
         }
 
         &:hover {
-          color: var(--theme-bg-color);
+          color: var(--theme-color);
         }
       }
     }

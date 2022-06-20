@@ -62,7 +62,7 @@ onMounted(async () => {
   cursor: default;
 
   .name:hover {
-    color: var(--theme-bg-color);
+    color: var(--theme-color);
   }
 
   .price {

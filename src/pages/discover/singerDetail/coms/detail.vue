@@ -102,12 +102,12 @@ onMounted(async () => {
 
       &:hover {
         background-color: #f5f7fa;
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
 
       &.collected {
         width: 90px;
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
     }
 

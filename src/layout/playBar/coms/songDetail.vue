@@ -182,7 +182,7 @@ defineExpose({ toggle });
       background-color: #e4e4e4;
 
       span {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
     }
   }
@@ -220,7 +220,7 @@ defineExpose({ toggle });
       }
 
       .albumName {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
         cursor: pointer;
 
         @include oneOmit;

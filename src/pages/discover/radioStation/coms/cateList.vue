@@ -86,7 +86,7 @@ let rightMove = () => {
       cursor: pointer;
 
       &:hover {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
     }
   }

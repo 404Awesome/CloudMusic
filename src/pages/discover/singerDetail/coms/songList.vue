@@ -79,7 +79,7 @@ let { origin, id, name } = toRaw(props);
       cursor: pointer;
 
       &:hover {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
     }
 
@@ -98,7 +98,7 @@ let { origin, id, name } = toRaw(props);
     cursor: pointer;
 
     &:hover {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
     }
 
     &.liked {

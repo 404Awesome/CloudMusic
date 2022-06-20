@@ -88,7 +88,7 @@ let tabPaneList = reactive([
     padding: 10px 0px;
     width: 80%;
     height: 100%;
-    border-bottom: 3px solid var(--theme-bg-color);
+    border-bottom: 3px solid var(--theme-color);
     border-radius: 0px 0px 3px 3px;
     background-color: #fff;
 
@@ -126,7 +126,7 @@ let tabPaneList = reactive([
           font-size: 20px;
 
           &:hover {
-            color: var(--theme-bg-color);
+            color: var(--theme-color);
           }
         }
       }

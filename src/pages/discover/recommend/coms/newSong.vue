@@ -60,7 +60,7 @@ let playSong = async (id: number) => {
       background-color: #f5f7fa;
 
       .info .songName {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
     }
 

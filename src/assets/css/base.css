@@ -9,11 +9,11 @@
 
 :root {
   /* 主题色 */
-  --theme-bg-color: #ff3f34;
+  --theme-color: #ff3f34;
   /* 字体颜色 */
   --font-color: #34495e;
   /* plyr主题色 */
-  --plyr-color-main: var(--theme-bg-color);
+  --plyr-color-main: var(--theme-color);
   /* 顶部导航栏高度 */
   --topNavBarHeight: 49px;
   /* 播放控件高度 */
@@ -88,19 +88,19 @@ aside {
 
 /* 修改elementui v-loading 样式 */
 .el-loading-spinner svg circle {
-  stroke: var(--theme-bg-color) !important;
+  stroke: var(--theme-color) !important;
 }
 .el-loading-spinner .el-loading-text {
-  color: var(--theme-bg-color) !important;
+  color: var(--theme-color) !important;
 }
 
 /* 修改修改elementui el-pagination */
 .el-pagination .is-active {
-  background-color: var(--theme-bg-color) !important;
+  background-color: var(--theme-color) !important;
   color: #fff !important;
 }
 .el-pagination.is-background .el-pager li:not(.is-active):hover {
-  color: var(--theme-bg-color) !important;
+  color: var(--theme-color) !important;
 }
 
 /* 修改修改elementui tabs */
@@ -111,8 +111,8 @@ aside {
   color: var(--font-color);
 }
 .el-tabs .el-tabs__nav .el-tabs__item.is-active {
-  color: var(--theme-bg-color);
+  color: var(--theme-color);
 }
 .el-tabs .el-tabs__nav .el-tabs__active-bar {
-  background-color: var(--theme-bg-color);
+  background-color: var(--theme-color);
 }

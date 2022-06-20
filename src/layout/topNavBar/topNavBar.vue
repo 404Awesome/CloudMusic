@@ -62,7 +62,7 @@ let goRouter = (path: string) => {
   display: flex;
   align-items: center;
   height: 100%;
-  background-color: var(--theme-bg-color);
+  background-color: var(--theme-color);
   box-shadow: 0 2px 5px rgba($color: #000000, $alpha: 0.2);
 
   user-select: none;

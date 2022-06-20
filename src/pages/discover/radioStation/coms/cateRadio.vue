@@ -53,7 +53,7 @@ onMounted(async () => {
     cursor: pointer;
 
     &:hover .title {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
     }
 
     .avatar {

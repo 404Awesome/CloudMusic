@@ -8,8 +8,8 @@ import Layout from "@/layout/index.vue"; // 布局
 import { useMainStore } from "store";
 const store = useMainStore();
 
-// 初始化主题
 onMounted(() => {
-  document.documentElement.style.setProperty("--theme-bg-color", store.theme);
+  // 初始化主题
+  document.documentElement.style.setProperty("--theme-color", store.themeColor);
 });
 </script>

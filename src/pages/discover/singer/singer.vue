@@ -85,7 +85,7 @@ let goSingerDetail = (singer: any) => {
     cursor: pointer;
 
     &:hover .info .name {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
     }
 
     .info {

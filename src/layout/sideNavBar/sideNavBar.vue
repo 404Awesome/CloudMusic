@@ -93,7 +93,7 @@ watch(() => store.auth, (newVal) => {
   }
 
   &:hover {
-    background-color: var(--theme-bg-color);
+    background-color: var(--theme-color);
 
     p,
     span {
@@ -141,7 +141,7 @@ watch(() => store.auth, (newVal) => {
       @extend .extend;
 
       &.active {
-        background: var(--theme-bg-color);
+        background: var(--theme-color);
         color: #fff;
       }
     }

@@ -70,7 +70,7 @@ onMounted(async () => {
     cursor: pointer;
 
     &:hover {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
     }
 
     &.liked {
@@ -102,7 +102,7 @@ onMounted(async () => {
       }
 
       .special:hover {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
     }
   }

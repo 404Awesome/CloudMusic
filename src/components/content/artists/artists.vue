@@ -55,7 +55,7 @@ let goArtistPage = (artist: any) => {
     }
 
     &:hover {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
     }
   }
 }

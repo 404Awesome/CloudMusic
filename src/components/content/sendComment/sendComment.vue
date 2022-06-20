@@ -34,7 +34,7 @@ let sendComment = useDebounceFn(() => {
 }
 
 :deep(.el-textarea__inner):focus {
-  box-shadow: 0 0 0 1px var(--theme-bg-color) inset;
+  box-shadow: 0 0 0 1px var(--theme-color) inset;
 }
 
 nav.nav {
@@ -52,7 +52,7 @@ nav.nav {
 
     &:hover {
       border: 1px solid transparent;
-      background-color: var(--theme-bg-color);
+      background-color: var(--theme-color);
       color: #fff;
       ;
     }

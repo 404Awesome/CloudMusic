@@ -44,7 +44,7 @@ const props = defineProps({
       cursor: pointer;
 
       .title {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
     }
 

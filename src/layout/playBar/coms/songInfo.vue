@@ -117,7 +117,7 @@ let openSongDetail = () => {
   cursor: pointer;
 
   &:hover {
-    color: var(--theme-bg-color);
+    color: var(--theme-color);
   }
 }
 

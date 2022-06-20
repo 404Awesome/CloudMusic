@@ -93,7 +93,7 @@ let showDesc = ref(false);
       }
 
       &:hover {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
       }
     }
   }
@@ -145,7 +145,7 @@ let showDesc = ref(false);
 
         &:hover {
           background-color: #f5f7fa;
-          color: var(--theme-bg-color);
+          color: var(--theme-color);
         }
 
         .icon {
@@ -159,7 +159,7 @@ let showDesc = ref(false);
       cursor: pointer;
 
       &:hover {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
 
       }
     }

@@ -225,7 +225,7 @@ let volumeIcon = computed(() => {
       --plyr-tooltip-radius: 2px;
 
       &:hover {
-        --plyr-range-thumb-background: var(--theme-bg-color);
+        --plyr-range-thumb-background: var(--theme-color);
       }
     }
   }
@@ -250,7 +250,7 @@ let volumeIcon = computed(() => {
   .play {
     padding: 3px;
     border-radius: 50%;
-    background-color: var(--theme-bg-color);
+    background-color: var(--theme-color);
 
     span.change {
       color: #fff;
@@ -264,11 +264,11 @@ let volumeIcon = computed(() => {
     cursor: pointer;
 
     &:hover {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
     }
 
     &.change {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
       font-size: 30px;
     }
   }
@@ -290,7 +290,7 @@ let volumeIcon = computed(() => {
     cursor: pointer;
 
     &:hover {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
     }
   }
 }
@@ -300,7 +300,7 @@ let volumeIcon = computed(() => {
   :deep(.el-slider) {
     height: 20px;
 
-    --el-slider-main-bg-color: var(--theme-bg-color);
+    --el-slider-main-bg-color: var(--theme-color);
 
     .el-slider__button {
       width: 15px;

@@ -15,7 +15,7 @@
       <li class="rankingItem" v-for="(mv, index) in raningList" :key="mv.id">
         <!-- 排名 -->
         <p class="rank">{{ index + 1 }}</p>
-        <MVlistItem :id="mv.id" :cover="mv.cover" :name="mv.name" :artists="mv.artists" :playCount="mv.playCount"
+        <MVItem :id="mv.id" :cover="mv.cover" :name="mv.name" :artists="mv.artists" :playCount="mv.playCount"
           :isFlex="true" flex-1 overflow-hidden />
       </li>
     </ul>
@@ -24,8 +24,7 @@
 
 <script setup lang="ts">
 import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
-import MVlistItem from "@/components/content/mvListItem/mvListItem.vue";
-import navBarVue from "@/components/common/navBar/navBar.vue";
+import MVItem from "@/components/content/mvItem/mvItem.vue";
 import { MVAPI } from "api";
 const props = defineProps({
   limit: {

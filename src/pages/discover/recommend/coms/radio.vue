@@ -67,7 +67,7 @@ onMounted(async () => {
     }
 
     &:hover .details p:first-child {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
     }
   }
 }

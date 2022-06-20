@@ -72,7 +72,7 @@ let { id, picUrl, copywriter } = toRaw(props);
         }
 
         p {
-          color: var(--theme-bg-color);
+          color: var(--theme-color);
         }
       }
     }

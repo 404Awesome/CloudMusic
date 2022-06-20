@@ -32,7 +32,7 @@ export const useMainStore = defineStore("main", {
       // 页面滚动距离
       scrollTop: 0,
       // 主题色
-      theme: useStorage<string>("theme", '#d95047'),
+      themeColor: useStorage<string>("theme", '#d95047'),
       // 是否折叠侧边栏
       isFolding: useStorage<boolean>("isFolding", false, sessionStorage),
       // 音量大小

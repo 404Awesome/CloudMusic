@@ -35,10 +35,10 @@ const { path, title } = toRaw(props);
     cursor: pointer;
 
     &:hover {
-      color: var(--theme-bg-color);
+      color: var(--theme-color);
 
       &+.icon {
-        color: var(--theme-bg-color);
+        color: var(--theme-color);
         transform: translateX(5px);
       }
     }

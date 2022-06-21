@@ -82,7 +82,7 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
     grid-column: 2/3;
 
     &:hover::-webkit-scrollbar {
-      width: 6px;
+      width: 5px;
     }
 
     &::-webkit-scrollbar {
@@ -92,7 +92,7 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
     /* 滚动条滑块 */
     &::-webkit-scrollbar-thumb {
       border-radius: 3px;
-      background: rgba(0, 0, 0, .2);
+      background-color: rgba(0, 0, 0, .15);
     }
   }
 }

@@ -2,7 +2,8 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import { createPinia } from "pinia";
-import ElementPlus from "element-plus"
+import ElementPlus from "element-plus";
+import "./assets/css/base.css";
 
 let app = createApp(App);
 app.use(router);

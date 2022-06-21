@@ -164,6 +164,7 @@ header.header {
 
   .el-drawer__body {
     padding: 0px;
+    overflow: hidden;
 
     .el-scrollbar__view {
       height: 100%;

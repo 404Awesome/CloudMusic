@@ -5,15 +5,15 @@ import vue from "@vitejs/plugin-vue";
 import legacy from "@vitejs/plugin-legacy";
 import presetUno from "@unocss/preset-uno";
 import presetIcons from "@unocss/preset-icons";
+import viteCompression from "vite-plugin-compression";
 import vueSetupExtend from "vite-plugin-vue-setup-extend";
 import presetAttributify from "@unocss/preset-attributify";
+import commonjs from 'rollup-plugin-commonjs';
+import externalGlobals from 'rollup-plugin-external-globals';
 
-export default defineConfig({
-  plugins: [
+export default ({ mode }) => {
+  const plugins = [
     vue(),
-    legacy({
-      targets: ['defaults', 'not IE 11']
-    }),
     Unocss({
       mode: "vue-scoped",
       presets: [
@@ -28,26 +28,49 @@ export default defineConfig({
       ]
     }),
     vueSetupExtend(),
-  ],
-  resolve: {
-    alias: {
-      "@": resolve(__dirname, "src/"),
-      api: resolve(__dirname, "src/api"),
-      store: resolve(__dirname, "src/store"),
-      utils: resolve(__dirname, "src/utils"),
-      "vue": "https://esm.run/vue@3.2.25",
-      "plyr": "https://esm.run/plyr@3.7.2",
-      "mitt": "https://esm.run/mitt@3.0.0",
-      "axios": "https://esm.run/axios@0.27.1",
-      "pinia": "https://esm.run/pinia@2.0.13",
-      "lottie-web": "https://esm.run/lottie-web@5.9.3",
-      "@vueuse/core": "https://esm.run/@vueuse/core@8.3.1",
+  ];
+
+  // 判断是否为生产环境
+  // if (mode == "production") {
+  //   plugins.push(...[
+  //     // viteCompression(),
+  //     // legacy({
+  //     //   targets: ['defaults', 'not IE 11']
+  //     // })
+
+  //   ])
+  // }
+
+  return defineConfig({
+    plugins,
+    resolve: {
+      alias: {
+        "@": resolve(__dirname, "src/"),
+        api: resolve(__dirname, "src/api"),
+        store: resolve(__dirname, "src/store"),
+        utils: resolve(__dirname, "src/utils"),
+      },
     },
-  },
-  optimizeDeps: {
-    exclude: ['vue', 'axios', 'lottie-web', 'plyr', '@vueuse/core', 'pinia', 'mitt']
-  },
-  server: {
-    open: true
-  }
-});
+    build: {
+      rollupOptions: {
+        external: ['vue', 'vue-router', 'element-plus', 'vue-demi', 'pinia', 'lottie-web', 'plyr', 'axios'],
+        plugins: [
+          commonjs(),
+          externalGlobals({
+            vue: 'Vue',
+            'plyr': 'Plyr',
+            'axios': 'axios',
+            'pinia': "Pinia",
+            'vue-demi': 'VueDemi',
+            'lottie-web': 'lottie',
+            'vue-router': 'VueRouter',
+            'element-plus': 'ElementPlus'
+          }),
+        ]
+      }
+    },
+    server: {
+      open: true
+    }
+  })
+}

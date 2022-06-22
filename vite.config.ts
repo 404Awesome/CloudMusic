@@ -4,45 +4,42 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import legacy from "@vitejs/plugin-legacy";
 import presetUno from "@unocss/preset-uno";
+import commonjs from "rollup-plugin-commonjs";
 import presetIcons from "@unocss/preset-icons";
+import { visualizer } from "rollup-plugin-visualizer";
 import viteCompression from "vite-plugin-compression";
-import vueSetupExtend from "vite-plugin-vue-setup-extend";
 import presetAttributify from "@unocss/preset-attributify";
-import commonjs from 'rollup-plugin-commonjs';
-import externalGlobals from 'rollup-plugin-external-globals';
+import externalGlobals from "rollup-plugin-external-globals";
+
 
 export default ({ mode }) => {
-  const plugins = [
-    vue(),
-    Unocss({
-      mode: "vue-scoped",
-      presets: [
-        presetUno(),
-        presetAttributify({}),
-        presetIcons({
-          extraProperties: {
-            "display": "inline-block",
-            "vertical-align": "middle"
-          },
-        })
-      ]
+  // 生产环境插件配置
+  let prodPlugins = mode === "production" ? [
+    viteCompression(),
+    legacy({
+      targets: ['defaults', 'not IE 11']
     }),
-    vueSetupExtend(),
-  ];
-
-  // 判断是否为生产环境
-  // if (mode == "production") {
-  //   plugins.push(...[
-  //     // viteCompression(),
-  //     // legacy({
-  //     //   targets: ['defaults', 'not IE 11']
-  //     // })
-
-  //   ])
-  // }
+    visualizer()
+  ] : [];
 
   return defineConfig({
-    plugins,
+    plugins: [
+      vue(),
+      Unocss({
+        mode: "vue-scoped",
+        presets: [
+          presetUno(),
+          presetAttributify({}),
+          presetIcons({
+            extraProperties: {
+              "display": "inline-block",
+              "vertical-align": "middle"
+            },
+          })
+        ]
+      }),
+      ...prodPlugins
+    ],
     resolve: {
       alias: {
         "@": resolve(__dirname, "src/"),
@@ -52,6 +49,7 @@ export default ({ mode }) => {
       },
     },
     build: {
+      target: 'es2015',
       rollupOptions: {
         external: ['vue', 'vue-router', 'element-plus', 'vue-demi', 'pinia', 'lottie-web', 'plyr', 'axios'],
         plugins: [
@@ -66,11 +64,20 @@ export default ({ mode }) => {
             'vue-router': 'VueRouter',
             'element-plus': 'ElementPlus'
           }),
-        ]
+        ],
+        output: {
+          chunkFileNames: 'assets/js/[name]-[hash].js',
+          entryFileNames: 'assets/js/[name]-[hash].js',
+          assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
+        }
       }
+    },
+    esbuild: {
+      pure: ['console.log'],
+      minify: true
     },
     server: {
       open: true
     }
-  })
+  });
 }

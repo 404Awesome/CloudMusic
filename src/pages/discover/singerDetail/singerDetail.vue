@@ -1,6 +1,6 @@
 <!-- 歌手详情 -->
 <template>
-  <div class="wrapper" py-4 :key="($route.query.id as string)">
+  <div class="wrapper" py-4 :key="`${$route.query.id}`">
     <!-- 个人详情 -->
     <Detail mb-4 />
 
@@ -12,8 +12,11 @@
     </el-tabs>
   </div>
 </template>
-
-<script setup lang="ts" name="singerDetail">
+  
+<script lang="ts">
+export default { name: "singerDetail" }
+</script>
+<script setup lang="ts">
 import Detail from "./coms/detail.vue";
 import Album from "./coms/album.vue";
 import MVList from "./coms/mvList.vue";

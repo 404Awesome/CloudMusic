@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script setup lang="ts" name="mvDetails">
+<script setup lang="ts">
 import PlyrVideo from "@/components/content/plyrVideo/plyrVideo.vue";
 import Relevant from "./coms/relevant.vue";
 import Detail from "./coms/detail.vue";

@@ -1,6 +1,6 @@
 <!-- 歌单详情 -->
 <template>
-  <div class="wrapper">
+  <div class="wrapper" :key="`${$route.params.id}`">
     <!-- 歌单描述 -->
     <Detail>
       <template #fold="{ id, title, height, share }">
@@ -34,7 +34,10 @@
   </div>
 </template>
 
-<script setup lang="ts" name="playListDetail">
+<script lang="ts">
+export default { name: "songListDetail" } 
+</script>
+<script setup lang="ts">
 import Detail from "./coms/detail.vue";
 import SongList from "./coms/songList.vue";
 import Comment from "./coms/comment.vue";

@@ -12,7 +12,7 @@
     </section>
     <section class="view" ref="scrollEl" @scroll="scroll">
       <router-view v-slot="{ Component }">
-        <keep-alive :exclude="excludeList">
+        <keep-alive :exclude="['singerDetail', 'songListDetail']">
           <component :is="Component" />
         </keep-alive>
       </router-view>
@@ -31,7 +31,6 @@ import { useRoute } from "vue-router";
 const store = useMainStore();
 const route = useRoute();
 let { isFolding, isDark } = toRefs(store);
-let excludeList: string[] = ['singerDetail', 'mvDetails', 'playListDetail', 'allMV'];
 
 // 滚动元素
 let scrollEl = ref<HTMLElement | null>(null);

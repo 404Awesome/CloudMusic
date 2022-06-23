@@ -1,20 +1,22 @@
 <!-- 歌手详情 MV列表 -->
 <template>
-  <ul gap-5 lg:gap-7 grid-cols-2 md:grid-cols-3 lg-grid-cols-4 class="singerMV">
-    <li v-for="mv in mvList" :key="mv.id" @click="$router.replace(`/mvDetail/${mv.id}`)">
-      <div class="cover" rounded overflow-hidden>
+  <ul grid4Cols p-y-15px>
+    <li v-for="mv in mvList" :key="mv.id" @click="$router.replace(`/mvDetail/${mv.id}`)" class="group" cursor-pointer>
+      <div relative rounded overflow-hidden>
         <!-- 封面 -->
-        <el-image h-30 transition duration-300 ease-in-out z-0 flex :src="mv.imgurl" fit="cover" lazy />
+        <el-image :src="mv.imgurl" fit="cover" lazy brightness-80 h-35 transition duration-300 ease-in-out z-0 flex
+          group-hover:scale-115 />
         <!-- 播放次数 -->
-        <p class="playCount">
-          <span class="icon i-eva:arrow-right-outline"></span>
+        <p absolute z-2 top-2px right-6px text="white 14px">
+          <span text-20px i-eva:arrow-right-outline></span>
           <span>{{ Handle.Count(mv.playCount) }}</span>
         </p>
         <!-- mv时长 -->
-        <p class="duration">{{ Handle.Duration(mv.duration) }}</p>
+        <p absolute right-6px bottom-2px z-2 text="white 14px">{{ Handle.Duration(mv.duration) }}</p>
       </div>
+
       <!-- 标题 -->
-      <p class="title">{{ mv.name }}</p>
+      <p truncate mt-5px text-15px group-hover:themeColor>{{ mv.name }}</p>
     </li>
   </ul>
 </template>
@@ -41,68 +43,3 @@ watch(() => props.activeComs, (newVal) => {
   if (newVal == "MV" && mvList.length == 0) loadData();
 })
 </script>
-
-<style lang="scss" scoped>
-.singerMV {
-  display: grid;
-  padding: 15px 0px;
-
-  li {
-    cursor: pointer;
-
-    &:hover {
-      .title {
-        color: var(--theme-color);
-      }
-
-      :deep(.el-image) {
-        transform: scale(1.15);
-      }
-    }
-
-    .cover {
-      position: relative;
-
-      &::after {
-        position: absolute;
-        top: 0px;
-        z-index: 1;
-        width: 100%;
-        height: 100%;
-        background-color: rgba($color: #000000, $alpha: 0.2);
-        content: "";
-      }
-
-      .playCount {
-        position: absolute;
-        top: 2px;
-        right: 6px;
-        z-index: 2;
-        color: #fff;
-        font-size: 14px;
-
-        .icon {
-          font-size: 20px;
-        }
-      }
-
-      .duration {
-        position: absolute;
-        right: 6px;
-        bottom: 2px;
-        z-index: 2;
-        color: #fff;
-        font-size: 14px;
-      }
-    }
-
-    .title {
-      overflow: hidden;
-      margin-top: 5px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: 15px;
-    }
-  }
-}
-</style>

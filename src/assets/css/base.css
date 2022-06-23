@@ -13,13 +13,6 @@
   --sideNavBarWidth: 230px;
 }
 
-/* 不被选中 */
-.no-select {
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
 /* 容器 */
 .wrapper {
   overflow: hidden;

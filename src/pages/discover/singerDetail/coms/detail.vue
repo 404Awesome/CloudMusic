@@ -1,26 +1,32 @@
 <!-- 歌手详情 详情 -->
 <template>
-  <div class="detail">
+  <div flex gap-20px>
     <!-- 歌手图片 -->
     <el-image flex-none transition-all duration-300 ease-linear h-35 w-35 lg:h-50 lg:w-50 rounded
       :src="singerDetail.cover" fit="cover" />
 
     <!-- 歌手信息 -->
-    <div class="info" pt-2>
+    <div flex overflow-hidden flex-1 flex-col flex-nowrap pt-2>
       <!-- 姓名 -->
-      <h1 class="name">{{ name }}</h1>
+      <h1 class="name" truncate>{{ name }}</h1>
       <!-- 别名 -->
-      <p class="alias" mt-1 v-if="alias">{{ typeof alias == 'string' ? alias : alias.join("; ") }}</p>
+      <p class="alias" text="14px black/50" truncate mt-1 v-if="alias">
+        {{ typeof alias == 'string' ? alias : alias.join("; ") }}
+      </p>
+
       <!-- 收藏 -->
-      <div v-if="store.auth" @click="collection" mt-3 lg:mt-5 class="collection" :class="{ collected: followed }">
-        <span class="icon i-heroicons-outline:folder-add"></span>
-        <span>{{ followed ? '已收藏' : '收藏' }}</span>
+      <div v-if="store.auth" @click="collection" :class="{ collected: followed }" mt-3 lg:mt-5 flexCenter w-80px
+        border="1px solid #eee" rounded-20px whitespace-nowrap cursor-pointer gap-3px select-none transition-all
+        hover="themeColor bg-#f5f7fa">
+        <span text-19px p-y-5px i-heroicons-outline:folder-add></span>
+        <span p-y-5px>{{ followed ? '已收藏' : '收藏' }}</span>
       </div>
+
       <!-- 数量 -->
-      <ul class="count" mt-3 lg:mt-5>
-        <li>单曲数: {{ singerDetail.musicSize }}</li>
-        <li>专辑数: {{ singerDetail.albumSize }}</li>
-        <li>MV数: {{ singerDetail.mvSize }}</li>
+      <ul flex text-15px gap-20px mt-3 lg:mt-5>
+        <li truncate>单曲数: {{ singerDetail.musicSize }}</li>
+        <li truncate>专辑数: {{ singerDetail.albumSize }}</li>
+        <li truncate>MV数: {{ singerDetail.mvSize }}</li>
       </ul>
     </div>
   </div>
@@ -55,70 +61,8 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.detail {
-  display: flex;
-  color: var(--font-color);
-
-  gap: 20px;
-
-  .info {
-    display: flex;
-    overflow: hidden;
-    flex: 1;
-    flex-flow: column nowrap;
-
-    .name,
-    .alias,
-    .count li {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .alias {
-      color: rgba($color: #000000, $alpha: .5);
-      font-size: 14px;
-    }
-
-    .collection {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 80px;
-      border: 1px solid #eee;
-      border-radius: 20px;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: width .2s ease-in-out;
-
-      user-select: none;
-      gap: 3px;
-
-      span {
-        padding: 5px 0px;
-
-        &.icon {
-          font-size: 19px;
-        }
-      }
-
-      &:hover {
-        background-color: #f5f7fa;
-        color: var(--theme-color);
-      }
-
-      &.collected {
-        width: 90px;
-        color: var(--theme-color);
-      }
-    }
-
-    .count {
-      display: flex;
-      font-size: 15px;
-
-      gap: 20px;
-    }
-  }
+.collected {
+  width: 90px;
+  color: var(--theme-color);
 }
 </style>

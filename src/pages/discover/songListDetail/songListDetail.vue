@@ -1,6 +1,6 @@
 <!-- 歌单详情 -->
 <template>
-  <div class="wrapper" :key="`${$route.params.id}`">
+  <div wrapBox :key="`${$route.params.id}`">
     <!-- 歌单描述 -->
     <Detail>
       <template #fold="{ id, title, height, share }">

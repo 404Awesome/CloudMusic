@@ -3,13 +3,13 @@
   <el-drawer direction="btt" custom-class="songDetailDrawer" modal-class="songDetailModal" :z-index="50"
     :append-to-body="true" v-model="store.isFolding" :with-header="false">
     <el-scrollbar>
-      <div class="songDetail wrapper">
+      <div class="songDetail" wrapBox>
         <!-- 信息 -->
         <section class="detail">
           <!-- 功能 -->
           <div hidden md:flex class="function">
             <!-- 封面 -->
-            <div class="cover" shadow-xl>
+            <div rounded flex overflow-hidden w="1/2" shadow-xl>
               <el-image :src="currentSong?.album.picUrl" fit="cover" />
             </div>
             <!-- 操作 -->
@@ -41,7 +41,7 @@
                 <!-- 专辑 -->
                 <section>
                   <span>专辑:&nbsp;</span>
-                  <span class="albumName">{{ currentSong?.album.name }}</span>
+                  <span truncate cursor-pointer themeColor>{{ currentSong?.album.name }}</span>
                 </section>
                 <!-- 艺术家 -->
                 <section>
@@ -138,19 +138,12 @@ defineExpose({ toggle });
   }
 }
 
-// 封面
-.cover {
-  display: flex;
-  overflow: hidden;
-  width: 50%;
-  border-radius: 5px;
-}
-
 // 操作
 .operate {
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 30px;
 
   li {
@@ -203,18 +196,7 @@ defineExpose({ toggle });
         flex: 1;
         white-space: nowrap;
       }
-
-      .albumName {
-        color: var(--theme-color);
-        cursor: pointer;
-
-        @include oneOmit;
-      }
     }
-  }
-
-  .main {
-    flex: 1;
   }
 }
 </style>

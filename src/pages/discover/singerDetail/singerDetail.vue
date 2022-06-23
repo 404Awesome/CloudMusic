@@ -1,6 +1,6 @@
 <!-- 歌手详情 -->
 <template>
-  <div class="wrapper" py-4 :key="`${$route.query.id}`">
+  <div wrapBox py-4 :key="`${$route.query.id}`">
     <!-- 个人详情 -->
     <Detail mb-4 />
 

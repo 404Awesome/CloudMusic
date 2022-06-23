@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>最新音乐</p>
   </div>
 </template>
 

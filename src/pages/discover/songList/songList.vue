@@ -2,7 +2,7 @@
 <template>
   <!-- 占位,防止v-loading遮住阴影 -->
   <div h-4></div>
-  <div element-loading-text="Loading..." v-loading="loading" pb-4 class="wrapper">
+  <div element-loading-text="Loading..." v-loading="loading" pb-4 wrapBox>
     <!-- 分类列表 -->
     <CategoryList :loading="loading" @selected="cateSelected" />
 

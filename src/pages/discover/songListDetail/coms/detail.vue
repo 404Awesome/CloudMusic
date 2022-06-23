@@ -1,22 +1,21 @@
 <!-- 歌单详情 -->
 <template>
   <div v-if="detail.name">
-    <div ref="detailEl" class="detail">
+    <div ref="detailEl" flex pt-15px pb-20px text-14px gap-20px>
       <!-- 封面 -->
-      <el-image transition-all duration-300 ease-linear flex-none h-35 w-35 lg:h-50 lg:w-50 rounded
-        :src="detail.coverImgUrl" fit="cover" />
+      <el-image transition-all flex-none h-35 w-35 lg:h-50 lg:w-50 rounded :src="detail.coverImgUrl" fit="cover" />
 
       <!-- 详情 -->
       <div flex-1 overflow-hidden>
-        <section lg:h-50 class="content">
+        <section lg:h-50 flex overflow-hidden flex-1 flex-col flex-nowrap justify-between>
           <!-- 标题 -->
-          <h1 text-xl class="title">{{ detail.name }}</h1>
+          <h1 text-19px truncate>{{ detail.name }}</h1>
 
           <!-- 创建者 -->
-          <div my-3 lg:my-0 class="creator">
-            <el-image w-8 rounded-full :src="detail.creator.avatarUrl" fit="cover" />
-            <p class="nickname">{{ detail.creator.nickname }}</p>
-            <p class="text createTime">{{ detail.createTime }}</p>
+          <div my-3 lg:my-0 flex items-center gap-10px>
+            <el-image :src="detail.creator.avatarUrl" fit="cover" w-8 rounded-full />
+            <p themeColor cursor-pointer truncate>{{ detail.creator.nickname }}</p>
+            <p truncate text="black/50">{{ detail.createTime }}</p>
           </div>
 
           <!-- 操作 -->
@@ -39,45 +38,45 @@
           </ul>
 
           <!-- 元信息 -->
-          <div class="metaInfo">
+          <div text-14px>
             <!-- 标签 -->
-            <p class="tags">
+            <p truncate>
               <span>标&emsp;签:&nbsp;</span>
               <span v-for="(item, index) in detail.tags" :key="item">
-                <span class="tag">{{ item }}</span>
+                <span themeColor cursor-pointer>{{ item }}</span>
                 <span v-if="index < detail.tags.length - 1">&nbsp;/&nbsp;</span>
               </span>
             </p>
 
             <!-- 次数 -->
-            <div class="count">
-              <p>
+            <div flex gap-10px>
+              <p truncate>
                 <span>歌曲数:&nbsp;</span>
-                <span class="text">{{ detail.trackCount }}</span>
+                <span text="black/50">{{ detail.trackCount }}</span>
               </p>
-              <p>
+              <p truncate>
                 <span>播放数:&nbsp;</span>
-                <span v-once class="text">{{ Handle.Count(detail.playCount) }}</span>
+                <span v-once text="black/50">{{ Handle.Count(detail.playCount) }}</span>
               </p>
             </div>
 
             <!-- 描述 -->
-            <div v-if="describe.content" class="describe">
+            <div v-if="describe.content" flex items-center justify-between gap-15px>
               <p>
                 <span>简&emsp;介:&nbsp;</span>
-                <span class="text">{{ describe.content || "" }}</span>
+                <span text="black/50">{{ describe.content || "" }}</span>
                 <span v-if="describe.more">
-                  <span class="text" v-show="!showMore">...</span>
+                  <span v-show="!showMore" text="black/50">...</span>
                 </span>
               </p>
-              <span v-if="describe.more" @click="showMore = !showMore" class="more i-eva:arrow-up-fill"
-                :class="{ active: showMore }"></span>
+              <span v-if="describe.more" @click="showMore = !showMore" :class="{ active: showMore }" i-eva:arrow-up-fill
+                hover:themeColor min-w-25px text-22px cursor-pointer transition-transform rotate-180></span>
             </div>
           </div>
         </section>
 
         <!-- 更多描述 -->
-        <section whitespace-pre-wrap leading-6 v-show="showMore" class="text">{{ describe.more || "" }}</section>
+        <section v-show="showMore" whitespace-pre-wrap leading-6 text="black/50">{{ describe.more || "" }}</section>
       </div>
     </div>
 
@@ -165,47 +164,6 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/mixins.scss";
-
-.detail {
-  display: flex;
-  padding: 15px 0px 30px;
-  font-size: 14px;
-
-  gap: 20px;
-
-  .content {
-    display: flex;
-    overflow: hidden;
-    flex: 1;
-    flex-flow: column nowrap;
-    justify-content: space-between;
-  }
-}
-
-// 标题
-.title {
-  @include oneOmit;
-}
-
-// 创建人
-.creator {
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  .nickname,
-  .createTime {
-    @include oneOmit;
-  }
-
-  .nickname {
-    color: var(--theme-color);
-    cursor: pointer;
-  }
-}
-
 // 操作
 .operate {
   display: flex;
@@ -261,52 +219,8 @@ onMounted(async () => {
   }
 }
 
-// 元信息
-.metaInfo {
-  font-size: 14px;
-
-  .tags,
-  .count>p {
-    @include oneOmit;
-  }
-
-  .tag {
-    color: var(--theme-color);
-    cursor: pointer;
-  }
-
-  .count {
-    display: flex;
-
-    gap: 10px;
-  }
-
-  .describe {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 15px;
-
-    .more {
-      font-size: 22px;
-      cursor: pointer;
-      transition: transform 0.3s ease-in-out;
-      transform: rotate(180deg);
-
-      &:hover {
-        color: var(--theme-color);
-      }
-
-      &.active {
-        transform: rotate(0deg);
-      }
-    }
-  }
-}
-
-// 文本
-.text {
-  color: rgba($color: #000000, $alpha: .5);
+// 更多激活时样式
+.active {
+  transform: rotate(0deg) !important;
 }
 </style>

@@ -9,7 +9,6 @@ import { onMounted } from "vue";
 import { useMainStore } from "store";
 const store = useMainStore();
 
-
 onMounted(() => {
   // 初始化主题
   document.documentElement.style.setProperty("--theme-color", store.themeColor);

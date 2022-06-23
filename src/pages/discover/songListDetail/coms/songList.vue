@@ -1,6 +1,6 @@
 <!-- 歌曲列表 -->
 <template>
-  <div class="songList no-select">
+  <div class="songList" no-select>
     <el-table @row-dblclick="Operate.playSong" :data="songList" stripe style="width: 100%">
       <el-table-column class-name="index" :width="50" align="center" type="index" :index="(index) => index + 1" />
       <el-table-column :width="50">

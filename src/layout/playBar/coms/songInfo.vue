@@ -11,11 +11,13 @@
     </div>
 
     <!-- 详情 -->
-    <div hidden md:inline-block class="detail">
+    <div hidden md:inline-block flex-1>
       <!-- 标题 -->
-      <p @click="openSongDetail" sm:max-w-32 xl:max-w-62 class="title">{{ currentSong?.song.name }}</p>
+      <p @click="openSongDetail" sm:max-w-32 xl:max-w-62 truncate text-14px cursor-pointer hover:themeColor>
+        {{ currentSong?.song.name }}
+      </p>
       <!-- 时间 -->
-      <p class="time">
+      <p text="black/40" text-12px whitespace-nowrap text-nowrap>
         <span>{{ handleTime(props.currentTime) }}</span>
         <span>&nbsp;/&nbsp;</span>
         <span>{{ handleTime(props.duration) }}</span>
@@ -103,28 +105,5 @@ let openSongDetail = () => {
       opacity: 1;
     }
   }
-
-  .detail {
-    flex: 1;
-  }
-}
-
-.title {
-  overflow: hidden;
-  color: var(--font-color);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 14px;
-  cursor: pointer;
-
-  &:hover {
-    color: var(--theme-color);
-  }
-}
-
-.time {
-  color: rgba($color: #000000, $alpha: .4);
-  white-space: nowrap;
-  font-size: 12px;
 }
 </style>

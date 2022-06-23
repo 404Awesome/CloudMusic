@@ -1,22 +1,25 @@
 <!-- 付费精品 -->
 <template>
-  <div class="wrapper" mb-7 mt-3>
+  <div wrapBox mb-7 mt-3>
     <!-- 导航栏 -->
     <NavBar title="付费精品" path="/" />
 
     <!-- 列表 -->
-    <ul gap-5 lg:gap-7 class="content">
-      <li v-for="item in paygiftList" :key="item.id">
+    <ul grid gap-5 lg:gap-7 pt-15px grid-cols-2>
+      <li v-for="item in paygiftList" :key="item.id" flex gap-15px>
         <!-- 封面 -->
-        <el-image rounded cursor="pointer" basis="1/4" :src="item.picUrl" fit="cover" />
+        <el-image rounded cursor-pointer w-25 :src="item.picUrl" fit="cover" />
         <!-- 简介 -->
-        <div class="info">
-          <p cursor="pointer" class="name">{{ item.name }}</p>
-          <p class="describe">
-            <span>{{ item.rcmdText }}</span>
-            <span>{{ item.lastProgramName }}</span>
+        <div flex overflow-hidden flex-1 flex-col flex-nowrap justify-around cursor-default>
+          <!-- 名字 -->
+          <p truncate cursor-pointer hover:themeColor>{{ item.name }}</p>
+          <!-- 描述 -->
+          <p flex-nowrap flex-col flex overflow-hidden text="13px #8395a7">
+            <span truncate>{{ item.rcmdText }}</span>
+            <span truncate>{{ item.lastProgramName }}</span>
           </p>
-          <p class="price">{{ Handle.Price(item.originalPrice) }}</p>
+          <!-- 价格 -->
+          <p text="#d63031">{{ Handle.Price(item.originalPrice) }}</p>
         </div>
       </li>
     </ul>
@@ -37,49 +40,3 @@ onMounted(async () => {
   if (code == 200) paygiftList.push(...list);
 });
 </script>
-
-<style lang="scss" scoped>
-@import "@/scss/mixins.scss";
-
-.content {
-  display: grid;
-  padding-top: 15px;
-
-  grid-template-columns: repeat(2, 1fr);
-
-  li {
-    display: flex;
-
-    gap: 15px;
-  }
-}
-
-.info {
-  display: flex;
-  overflow: hidden;
-  flex: 1;
-  flex-flow: column nowrap;
-  justify-content: space-around;
-  cursor: default;
-
-  .name:hover {
-    color: var(--theme-color);
-  }
-
-  .price {
-    color: #d63031;
-  }
-
-  .describe {
-    display: flex;
-    overflow: hidden;
-    flex-flow: column nowrap;
-    color: #8395a7;
-    font-size: 13px;
-
-    span {
-      @include oneOmit;
-    }
-  }
-}
-</style>

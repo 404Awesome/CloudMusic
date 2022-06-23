@@ -1,6 +1,6 @@
 <!-- 全部mv排行榜 -->
 <template>
-  <div class="wrapper ranking">
+  <div class="ranking" wrapBox>
     <MVRanking :limit="50">
       <template #default>
         <p class="title">

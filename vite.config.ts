@@ -3,13 +3,11 @@ import Unocss from "unocss/vite";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import legacy from "@vitejs/plugin-legacy";
-import presetUno from "@unocss/preset-uno";
 import commonjs from "rollup-plugin-commonjs";
-import presetIcons from "@unocss/preset-icons";
 import { visualizer } from "rollup-plugin-visualizer";
 import viteCompression from "vite-plugin-compression";
-import presetAttributify from "@unocss/preset-attributify";
 import externalGlobals from "rollup-plugin-external-globals";
+import { presetIcons, presetUno, presetAttributify } from "unocss";
 
 
 export default ({ mode }) => {
@@ -29,15 +27,30 @@ export default ({ mode }) => {
         mode: "vue-scoped",
         presets: [
           presetUno(),
-          presetAttributify({}),
+          presetAttributify(),
           presetIcons({
             extraProperties: {
               "display": "inline-block",
               "vertical-align": "middle"
-            },
-          })
-        ]
+            }
+          }),
+        ],
+        rules: [
+          ["themeBgColor", { "background-color": "var(--theme-color)" }],
+          ["themeColor", { "color": "var(--theme-color)" }],
+          ["fontColor", { "color": "var(--font-color)" }],
+          ["twoLineOmit", { "display": "-webkit-box", "overflow": "hidden", "-webkit-box-orient": "vertical", "text-overflow": "ellipsis", "-webkit-line-clamp": "2" }]
+        ],
+        shortcuts: {
+          "wrapBox": "overflow-hidden m-y-0 m-x-auto w-9.5/10 lg:w-8/10",
+          "grid3Cols": "grid gap-5 lg:gap-7 grid-cols-2 lg:grid-cols-3",
+          "grid4Cols": "grid gap-5 lg:gap-7 grid-cols-2 md:grid-cols-3 lg-grid-cols-4",
+          "grid6Cols": "grid gap-5 lg:gap-7 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6",
+          "tip": "themeColor text-17px pb-15px",
+          "flexCenter": "flex items-center justify-center"
+        },
       }),
+      // 提示信息
       ...prodPlugins
     ],
     resolve: {

@@ -1,6 +1,6 @@
 <!-- 路由导航 -->
 <template>
-  <div class="routerNav no-select" v-show="!store.isFolding">
+  <div class="routerNav" select-none v-show="!store.isFolding">
     <p v-if="$route.meta.tablist">
       <span v-for="item in ($route.meta.tablist as any)" :class="{ active: $route.fullPath == item.path }"
         @click="$router.push(item.path)">

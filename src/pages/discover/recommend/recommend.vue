@@ -5,7 +5,7 @@
     <Carousel :bannerList="bannerList" />
 
     <!-- 渲染列表 -->
-    <div class="wrapper" pt-7 v-for="item in renderList" :key="item.path">
+    <div wrapBox pt-7 v-for="item in renderList" :key="item.path">
       <!-- 导航栏 -->
       <NavBar :path="item.path" :title="item.title" />
       <!-- 动态组件 -->

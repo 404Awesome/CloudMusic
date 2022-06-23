@@ -1,10 +1,10 @@
 <template>
-  <div id="lottie">
+  <div flex overflow-hidden h-full>
     <!-- 登陆表单 -->
-    <section class="form"></section>
+    <section flex-1 class="form"></section>
     <!-- lottie 动画 -->
-    <section>
-      <Lottie :animationData="lottieAnima" />
+    <section flex-1>
+      <Lottie :animationData="lottieAnima!" />
     </section>
   </div>
 </template>
@@ -13,15 +13,3 @@
 import Lottie from "@/components/common/lottie/lottie.vue";
 import lottieAnima from "@/assets/lottieFile/login.json";
 </script>
-
-<style lang="scss" scoped>
-#lottie {
-  display: flex;
-  overflow: hidden;
-  height: 100%;
-
-  section {
-    flex: 1;
-  }
-}
-</style>

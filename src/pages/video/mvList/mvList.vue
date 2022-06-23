@@ -1,6 +1,6 @@
 <!-- MV -->
 <template>
-  <div class="wrapper" pt-4 pb-8>
+  <div wrapBox pt-4 pb-8>
     <NewMV />
     <HotMV />
     <Exclusive />

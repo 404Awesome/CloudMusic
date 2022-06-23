@@ -12,7 +12,7 @@
     </section>
   </header>
   <!-- 列表 -->
-  <div class="list no-select">
+  <div class="list" select-none>
     <el-table @row-dblclick="Operate.playSong" :data="songs" stripe :show-header="false">
       <el-table-column class-name="index" :width="35" align="center" type="index" :index="(index) => index + 1" />
       <el-table-column :width="50">

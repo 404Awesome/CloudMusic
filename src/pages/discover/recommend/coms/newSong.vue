@@ -1,18 +1,19 @@
 <!-- 个性推荐 最新音乐 -->
 <template>
-  <ul gap-5 lg:gap-x-7 grid-cols-2 lg:grid-cols-3 class="newSong">
-    <li v-for="({ song, id, picUrl }, index) in newSongList" :key="id">
+  <ul grid3Cols mt-15px>
+    <li v-for="({ song, id, picUrl }, index) in newSongList" :key="id" class="group" hover:bg="#f5f7fa" flex
+      overflow-hidden rounded-md>
       <!-- 封面 -->
-      <el-image @click="playSong(song.id)" cursor="pointer" w-18 h-18 rounded :src="picUrl" />
+      <el-image @click="playSong(song.id)" :src="picUrl" cursor-pointer h-20 w-20 rounded-md />
 
       <!-- 详情 -->
-      <div class="details">
+      <div flex overflow-hidden items-center flex-1>
         <!-- 排名 -->
-        <p class="order">{{ (index + 1).toString().padStart(2, "0") }}</p>
+        <p pl-10px text="black/50 16px">{{ (index + 1).toString().padStart(2, "0") }}</p>
         <!-- 信息 -->
-        <div class="info">
+        <div flex overflow-hidden flex-1 flex-col flex-nowrap justify-center p="0px 10px" h-full>
           <!-- 歌名 -->
-          <p class="songName">{{ song.name }}</p>
+          <p truncate text-15px group-hover:themeColor>{{ song.name }}</p>
           <!-- 艺术家 -->
           <Artists :artists="song.artists" />
         </div>
@@ -44,55 +45,3 @@ let playSong = async (id: number) => {
   if (code == 200) Operate.playSong(songs[0]);
 };
 </script>
-
-<style lang="scss" scoped>
-@import "@/scss/mixins.scss";
-
-.newSong {
-  display: grid;
-  margin-top: 15px;
-
-  li {
-    display: flex;
-    overflow: hidden;
-    border-radius: 5px;
-
-    &:hover {
-      background-color: #f5f7fa;
-
-      .info .songName {
-        color: var(--theme-color);
-      }
-    }
-
-    .details {
-      display: flex;
-      overflow: hidden;
-      align-items: center;
-      flex: 1;
-
-      .order {
-        padding-left: 10px;
-        color: rgba($color: #000000, $alpha: 0.5);
-        font-size: 16px;
-      }
-
-      .info {
-        display: flex;
-        overflow: hidden;
-        flex: 1;
-        flex-flow: column nowrap;
-        justify-content: center;
-        padding: 0px 10px;
-        height: 100%;
-
-        .songName {
-          font-size: 15px;
-
-          @include oneOmit;
-        }
-      }
-    }
-  }
-}
-</style>

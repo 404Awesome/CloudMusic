@@ -1,43 +1,41 @@
 <!-- 歌手详情 专辑 -->
 <template>
   <div>
-    <ul class="album" pb-4 v-infinite-scroll="loadAlbumData" :infinite-scroll-disabled="disabled">
+    <ul v-infinite-scroll="loadAlbumData" :infinite-scroll-disabled="disabled" flex flex-col flex-nowrap gap-40px pb-4>
       <!-- top50 -->
-      <li class="hotSongs" mt-4>
+      <li class="hotSongs" mt-4 flex gap-25px>
         <!-- 封面 -->
-        <section transition-all duration-200 ease-linear w-35 h-35 lg:w-40 lg:h-40 rounded shadow-lg class="cover">
-          <span>Top</span>
-          <span>50</span>
-        </section>
+        <el-image transition-all w-35 h-35 lg:w-40 lg:h-40 rounded shadow-lg src="/src/assets/img/top50.png" />
         <!-- 歌单列表 -->
-        <section flex-1>
+        <section flex-1 overflow-hidden>
           <!-- 歌单列表 -->
           <SongList name="热门50首" :songs="showAll ? topSongs : topSongs.slice(0, 10)" :id="id" />
           <!-- 是否显示全部 -->
-          <div v-if="!showAll" class="more" @click="showAll = !showAll">
+          <div v-if="!showAll" @click="showAll = !showAll" flex items-center justify-end h-40px text="black/60 14px"
+            cursor-pointer hover:fontColor>
             <span>查看全部50首</span>
-            <span class="icon i-eva:arrow-ios-forward-outline"></span>
+            <span text-18px i-eva:arrow-ios-forward-outline></span>
           </div>
         </section>
       </li>
 
       <!-- 专辑列表 -->
-      <li v-for="album in albumList" :key="album.id">
+      <li v-for="album in albumList" :key="album.id" flex gap-25px>
         <!-- 专辑封面  -->
-        <section>
-          <el-image transition-all duration-200 ease-linear w-35 h-35 lg:w-40 lg:h-40 rounded shadow-lg fit="cover" lazy
-            :src="album.picUrl" />
+        <section overflow-hidden>
+          <el-image transition-all w-35 h-35 lg:w-40 lg:h-40 rounded shadow-lg fit="cover" lazy :src="album.picUrl" />
           <p text-sm>{{ album.time }}</p>
         </section>
 
         <!-- 歌单列表 -->
-        <section flex-1>
+        <section flex-1 overflow-hidden>
           <!-- 歌单列表 -->
           <SongList :name="album.name" :songs="album.songs" :origin="album.origin" :id="album.id" />
           <!-- 是否显示全部 -->
-          <div class="more" v-if="album.more">
+          <div v-if="album.more" flex items-center justify-end h-40px text="black/60 14px" cursor-pointer
+            hover:fontColor>
             <span>查看全部</span>
-            <span class="icon i-eva:arrow-ios-forward-outline"></span>
+            <span text-18px i-eva:arrow-ios-forward-outline></span>
           </div>
         </section>
       </li>
@@ -45,7 +43,7 @@
 
     <!-- 提示 -->
     <el-divider>
-      <span class="tip">{{ disabled ? '已全部加载完成!' : 'Loading...' }}</span>
+      <span tip>{{ disabled ? '已全部加载完成!' : 'Loading...' }}</span>
     </el-divider>
   </div>
 </template>
@@ -58,7 +56,7 @@ import { useRoute } from "vue-router";
 import { ArtistAPI } from "api";
 import { Handle } from "utils";
 const route = useRoute();
-const id = parseInt(route.query.id as string);
+let id = parseInt(route.query.id as string);
 
 // 是否正在加载
 let loading = ref(false);
@@ -135,66 +133,3 @@ onMounted(async () => {
   }
 })
 </script>
-
-<style lang="scss" scoped>
-.hotSongs,
-.album li {
-  display: flex;
-
-  gap: 25px;
-
-  &>section {
-    overflow: hidden;
-  }
-}
-
-.hotSongs .cover {
-  display: flex;
-  align-items: center;
-  flex-flow: column nowrap;
-  justify-content: center;
-  background-image: linear-gradient(to bottom, #565760 0%, #715361 100%);
-
-  span {
-    color: #fff;
-    font-weight: 600;
-    font-size: 50px;
-
-    &:last-child {
-      transform: translateY(-10px);
-    }
-  }
-}
-
-.album {
-  display: flex;
-  flex-flow: column nowrap;
-
-  gap: 40px;
-}
-
-.more {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  height: 40px;
-  color: rgba($color: #000000, $alpha: .6);
-  font-size: 14px;
-  cursor: pointer;
-
-  &:hover {
-    color: var(--font-color);
-  }
-
-  .icon {
-    font-size: 18px;
-  }
-}
-
-// 提示信息
-.tip {
-  padding-bottom: 15px;
-  color: var(--font-color);
-  font-size: 17px;
-}
-</style>

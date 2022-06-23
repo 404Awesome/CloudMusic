@@ -2,11 +2,12 @@ import MV from "./modules/mv";
 import Song from "./modules/song";
 import Other from "./modules/other";
 import Video from "./modules/video";
+import Radio from "./modules/radio";
 import Artist from "./modules/artist";
 import Search from "./modules/search";
 import Account from "./modules/account";
 import SongList from "./modules/songList";
-import Radio from "./modules/radio";
+
 
 export const MVAPI = MV;              // MV相关API
 export const SongAPI = Song;          // 歌曲相关API

@@ -1,6 +1,8 @@
 <!-- 404 Not Found -->
 <template>
-  <Lottie mx-auto w="1/2" :animationData="lottieAnima" />
+  <div h-full overflow-hidden>
+    <Lottie mx-auto w="1/2" :animationData="lottieAnima" />
+  </div>
 </template>
 
 <script setup lang="ts">

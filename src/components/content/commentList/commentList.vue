@@ -2,29 +2,31 @@
 <template>
   <div>
     <!-- 标题 -->
-    <h4 class="title">最新评论 ({{ total }})</h4>
+    <h4 mb-10px text-18px>最新评论 ({{ total }})</h4>
 
     <!-- 评论列表 -->
     <ul element-loading-text="Loading..." v-loading="loading" min-h-30>
-      <li class="commentItem" v-for="(item, index) in commentList" :key="item.commentId">
+      <li class="group" flex gap-15px v-for="(item, index) in commentList" :key="item.commentId">
         <!-- 头像 -->
-        <el-image @click="$router.push(`/otherHomePage/${item.user.userId}`)" cursor="pointer" flex-none w-10 h-10
+        <el-image @click="$router.push(`/otherHomePage/${item.user.userId}`)" cursor-pointer flex-none w-10 h-10
           rounded-full :src="item.user.avatarUrl" fit="cover" lazy />
         <!-- 详细 -->
-        <div class="detail">
+        <div flex-1 text-15px>
           <!-- 评论人 -->
-          <section class="commentator">
-            <span @click="$router.push(`/otherHomePage/${item.user.userId}`)">{{ item.user.nickname }}: </span>
+          <section>
+            <span themeColor cursor-pointer @click="$router.push(`/otherHomePage/${item.user.userId}`)">
+              {{ item.user.nickname }}:
+            </span>
             <span>{{ item.content }}</span>
           </section>
 
           <!-- 被回复 -->
-          <section class="beReplied" v-if="item.beReplied.length">
-            <p class="delete" v-if="item.beReplied[0].status == -5">
+          <section v-if="item.beReplied.length">
+            <p v-if="item.beReplied[0].status == -5" py-7px px-10px text-14px mt-5px rounded bg="#f4f4f5" text-center>
               <span>该评论已删除</span>
             </p>
-            <p class="exist" v-else>
-              <span @click="$router.push(`/otherHomePage/${item.beReplied[0].user.userId}`)">
+            <p v-else py-7px px-10px text-14px mt-5px rounded bg="#f4f4f5">
+              <span themeColor cursor-pointer @click="$router.push(`/otherHomePage/${item.beReplied[0].user.userId}`)">
                 @{{ item.beReplied[0].user.nickname }}:
               </span>
               <span>{{ item.beReplied[0].content }}</span>
@@ -32,16 +34,16 @@
           </section>
 
           <!-- 功能-->
-          <section class="function">
-            <p class="time">{{ item.timeStr }}</p>
-            <div class="operate">
-              <span class="report">举报</span>
-              <span flex>
-                <span class="icon i-heroicons-outline:thumb-up"></span>
-                <span>{{ item.likedCount || " " }}</span>
+          <section flex justify-between mt-5px text-13px text="black/60">
+            <p>{{ item.timeStr }}</p>
+            <div flex items-center gap-10px>
+              <span cursor-pointer hover:themeColor opacity-0 group-hover:opacity-100>举报</span>
+              <span cursor-pointer hover:themeColor flex>
+                <span text-18px i-heroicons-outline:thumb-up></span>
+                <span text-13px>{{ item.likedCount || " " }}</span>
               </span>
-              <span class="icon i-heroicons-outline:folder-add"></span>
-              <span class="icon i-heroicons-outline:external-link"></span>
+              <span cursor-pointer text-18px hover:themeColor i-heroicons-outline:folder-add></span>
+              <span cursor-pointer text-18px hover:themeColor i-heroicons-outline:external-link></span>
             </div>
           </section>
 
@@ -107,80 +109,3 @@ let change = (current: any) => {
 // 初始化评论数据
 onMounted(() => loadData(0));
 </script>
-
-<style lang="scss" scoped>
-.title {
-  margin-bottom: 10px;
-  color: var(--font-color);
-  font-size: 18px;
-}
-
-.commentItem {
-  display: flex;
-
-  gap: 15px;
-
-  &:hover .detail .function .operate .report {
-    opacity: 1;
-  }
-}
-
-.commentItem .detail {
-  flex: 1;
-  color: var(--font-color);
-  font-size: 15px;
-
-  .commentator span:first-child {
-    color: var(--theme-color);
-    cursor: pointer;
-  }
-
-  .beReplied>p {
-    margin-top: 5px;
-    padding: 7px 10px;
-    border-radius: 5px;
-    background-color: #f4f4f5;
-    font-size: 14px;
-
-    &.delete {
-      text-align: center;
-    }
-
-    &.exist span:first-child {
-      color: var(--theme-color);
-      cursor: pointer;
-    }
-  }
-
-  .function {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 5px;
-    color: rgba($color: #000000, $alpha: .4);
-    font-size: 13px;
-
-    .operate {
-      display: flex;
-      align-items: center;
-
-      gap: 10px;
-
-      span {
-        cursor: pointer;
-
-        &.report {
-          opacity: 0;
-        }
-
-        &.icon {
-          font-size: 18px;
-        }
-
-        &:hover {
-          color: var(--theme-color);
-        }
-      }
-    }
-  }
-}
-</style>

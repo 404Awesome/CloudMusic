@@ -1,6 +1,6 @@
 <!-- 独家放送 -->
 <template>
-  <div class="wrapper">
+  <div wrapBox>
     <div pt-4 grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-6 v-infinite-scroll="loadData"
       :infinite-scroll-disabled="disabled">
       <BroadcastItem v-for="item in broadcastList" :key="item.id" :id="item.id" :picUrl="item.picUrl"

@@ -1,6 +1,6 @@
 <!-- 全部MV -->
 <template>
-  <div class="wrapper" pt-4 pb-8 v-if="currentType.type">
+  <div wrapBox pt-4 pb-8 v-if="currentType.type">
     <!-- 类型列表 -->
     <ul class="type">
       <li v-for="item in typeList" :key="item.title">

@@ -1,27 +1,27 @@
 <!-- mv列表item -->
 <template>
-  <div class="mvListItem" :class="{ flex: isFlex }">
-    <div class="cover" @click="$router.push(`/mvDetail/${id}`)">
+  <div class="group" text-15px cursor-pointer :class="{ flex: isFlex }">
+    <section class="cover" relative flex overflow-hidden @click="$router.push(`/mvDetail/${id}`)">
       <!-- 封面 -->
-      <el-image w-full h-30 fit="cover" lazy :src="cover" />
+      <el-image rounded-md brightness-80 w-full h-35 fit="cover" lazy :src="cover" />
       <!-- 播放次数 -->
-      <p class="playCount">
-        <span class="icon i-eva:arrow-right-outline"></span>
+      <p text-white absolute top-2px right-6px z-2>
+        <span text-22px i-eva:arrow-right-outline></span>
         <span>{{ Handle.Count(playCount) }}</span>
       </p>
       <!-- hover:播放图标 -->
       <p class="playIcon">
-        <span class="i-eva:arrow-right-fill"></span>
+        <span i-eva:arrow-right-fill></span>
       </p>
-    </div>
+    </section>
 
     <!-- 详情 -->
-    <div class="detail">
+    <section mt-5px overflow-hidden>
       <!-- 标题 -->
-      <p @click="$router.push(`/mvDetail/${id}`)" class="title">{{ name }}</p>
+      <p @click="$router.push(`/mvDetail/${id}`)" truncate group-hover:themeColor>{{ name }}</p>
       <!-- 艺术家 -->
       <Artists :artists="artists" />
-    </div>
+    </section>
   </div>
 </template>
 
@@ -61,91 +61,42 @@ let { id, cover, artists, name, playCount, isFlex } = toRaw(props);
 <style lang="scss" scoped>
 @import "@/scss/mixins.scss";
 
-.mvListItem {
-  cursor: pointer;
-
-  .cover {
-    position: relative;
+.cover {
+  .playIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
     display: flex;
-    overflow: hidden;
-    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba($color: #fff, $alpha: 0.5);
+    color: #d33a31;
+    font-size: 30px;
+    opacity: 0;
+    transition: opacity 0.3s linear;
+    transform: translate(-50%, -50%);
 
-    &::after {
-      position: absolute;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      background-color: rgba($color: #000000, $alpha: 0.2);
-      content: "";
-    }
-
-    .playCount {
-      position: absolute;
-      top: 2px;
-      right: 6px;
-      z-index: 2;
-      color: #fff;
-      font-size: 15px;
-
-      .icon {
-        font-size: 22px;
-      }
-    }
-
-    .playIcon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: rgba($color: #fff, $alpha: 0.5);
-      color: #d33a31;
-      font-size: 30px;
-      opacity: 0;
-      transition: opacity 0.3s linear;
-      transform: translate(-50%, -50%);
-
-      &:hover {
-        background-color: rgba($color: #fff, $alpha: 0.8);
-      }
-    }
-
-    &:hover .playIcon {
-      opacity: 1;
+    &:hover {
+      background-color: rgba($color: #fff, $alpha: 0.8);
     }
   }
 
-  .detail {
-    overflow: hidden;
-    margin-top: 5px;
-
-    .title {
-      font-size: 15px;
-
-      @include oneOmit;
-    }
+  &:hover .playIcon {
+    opacity: 1;
   }
+}
 
-  &:hover .detail .title {
-    color: var(--theme-color);
-  }
+.flex {
+  gap: 10px;
 
-  &.flex {
-    width: 100%;
+  &>section {
+    width: 50%;
 
-    gap: 10px;
-
-    .cover,
-    .detail {
-      width: 50%;
-    }
-
-    .detail .title {
+    &:last-child>p:first-child {
       white-space: normal;
 
       @include multilineOmit(2);

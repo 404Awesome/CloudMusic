@@ -1,6 +1,6 @@
 <!-- Video -->
 <template>
-  <div class="wrapper videoList">
+  <div class="videoList" wrapBox>
     <!-- 分类导航 -->
     <AllTypeSelect @selected="typeSelected" defaultType="全部视频" :hotTypeList="hotTypeList" />
   </div>

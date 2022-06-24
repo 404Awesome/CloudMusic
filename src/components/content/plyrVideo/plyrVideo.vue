@@ -8,9 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref, onMounted, onBeforeUnmount } from "vue";
-import { useMitt } from "utils";
+import { PropType, ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { useMainStore } from "store";
 import Plyr from "plyr";
+const store = useMainStore();
 const props = defineProps({
   source: {
     type: Array as PropType<{ r: number, url: string }[]>,
@@ -52,16 +53,23 @@ onMounted(() => {
     },
   });
 
-  // 视频播放 -> 暂停歌曲播放
-  videoPlyr.value.on("play", () => useMitt.emit("audioPause"));
+  // 视频播放,暂停音频播放
+  videoPlyr.value.on("play", () => store.playStatus = "video");
+  // 视频暂停,播放状态为pause
+  videoPlyr.value.on("pause", () => {
+    let timer = setTimeout(() => {
+      if (store.playStatus !== "audio") store.playStatus = "pause";
+      clearTimeout(timer);
+    }, 100);
+  });
 });
-
-// 销毁视频组件
-onBeforeUnmount(() => videoPlyr.value?.destroy());
-// 暂停视频播放
-useMitt.on("videoPause", () => {
-  if (videoPlyr.value?.playing) {
+// 音频播放,暂停视频播放
+watch(() => store.playStatus, (status) => {
+  if (status == "audio" && videoPlyr.value?.playing) {
     videoPlyr.value.pause();
   }
 })
+
+// 销毁视频组件
+onBeforeUnmount(() => videoPlyr.value?.destroy());
 </script>

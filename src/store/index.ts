@@ -26,23 +26,25 @@ export const useMainStore = defineStore("main", {
   state: () => {
     return {
       // 登陆状态
-      auth: useStorage<string>("auth", "", localStorage),
+      auth: useStorage<string>('auth', '', localStorage),
       // 暗夜模式
-      isDark: useStorage<boolean>("isDark", false, sessionStorage),
+      isDark: useStorage<boolean>('isDark', false, sessionStorage),
       // 页面滚动距离
-      scrollTop: 0,
+      scrollTop: useStorage<number>('scrollTop', 0, sessionStorage),
+      // 播放状态 
+      playStatus: useStorage<'audio' | 'video' | 'pause'>("playStatus", 'pause', sessionStorage),
       // 主题色
-      themeColor: useStorage<string>("theme", '#d95047'),
+      themeColor: useStorage<string>('theme', '#d95047', localStorage),
       // 是否折叠侧边栏
-      isFolding: useStorage<boolean>("isFolding", false, sessionStorage),
+      isFolding: useStorage<boolean>('isFolding', false, sessionStorage),
       // 音量大小
-      volume: useStorage<number>("volume", 50, localStorage),
+      volume: useStorage<number>('volume', 50, localStorage),
       // 播放列表
-      playList: useStorage<SongInfo[]>("playList", [], sessionStorage),
+      playList: useStorage<SongInfo[]>('playList', [], sessionStorage),
       // 当前歌单ID
-      songListID: useStorage<number>("songListID", 0, sessionStorage),
+      songListID: useStorage<number>('songListID', 0, sessionStorage),
       // 当前播放歌曲
-      currentSong: useStorage<SongInfo | null>("currentSong", null, sessionStorage, { serializer: StorageSerializers.object })
+      currentSong: useStorage<SongInfo | null>('currentSong', null, sessionStorage, { serializer: StorageSerializers.object })
     };
   },
   actions: {

@@ -50,7 +50,6 @@ export default ({ mode }) => {
           "flexCenter": "flex items-center justify-center"
         },
       }),
-      // 提示信息
       ...prodPlugins
     ],
     resolve: {

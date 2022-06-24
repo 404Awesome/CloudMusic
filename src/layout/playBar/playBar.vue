@@ -53,7 +53,6 @@
 import PlayList from "./coms/playList.vue";
 import SongInfo from "./coms/songInfo.vue";
 import Plyr from "plyr";
-import { useMitt } from "utils";
 import { useMainStore } from "store";
 import { ElMessage } from "element-plus";
 import { useDebounceFn } from "@vueuse/shared";
@@ -92,7 +91,7 @@ onMounted(() => {
   // 播放时触发
   audioPlyr.value.on("play", () => {
     // 音频播放,暂停视频播放
-    useMitt.emit("videoPause");
+    store.playStatus = "audio";
     // 延迟100毫秒获取结果
     let timer = setTimeout(() => {
       // 改变当前playing的状态
@@ -107,6 +106,8 @@ onMounted(() => {
   audioPlyr.value.on("pause", () => {
     // 延迟100毫秒获取结果
     let timer = setTimeout(() => {
+      // 视频暂停,播放状态为pause
+      if (store.playStatus !== "video") store.playStatus = "pause";
       // 改变当前playing的状态
       if (audioPlyr.value!.playing === false) playing.value = false;
       clearTimeout(timer);
@@ -118,12 +119,13 @@ onMounted(() => {
     changeSong(true);
   })
 })
-// 暂停音频播放
-useMitt.on("audioPause", () => {
-  if (audioPlyr.value?.playing) {
+// 视频播放,暂停音频播放
+watch(() => store.playStatus, (status) => {
+  if (status == "video" && audioPlyr.value?.playing) {
     audioPlyr.value.pause();
   }
 })
+
 
 // 控制播放
 let play = () => {

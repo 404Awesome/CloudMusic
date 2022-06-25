@@ -31,6 +31,3 @@ watch(() => props.activeComs, (newVal) => {
   if (newVal == "SimilarSinger" && similarSinger.length == 0) loadData();
 })
 </script>
-
-<style lang="scss" scoped>
-</style>

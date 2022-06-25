@@ -2,13 +2,13 @@
 <template>
   <el-popover placement="bottom" trigger="click">
     <template #reference>
-      <span class="icon i-heroicons-outline:color-swatch"></span>
+      <span class="icon" i-heroicons-outline:color-swatch></span>
     </template>
     <template #default>
-      <ul class="themeSelect" @click="themeSelect">
-        <li bg-color="#d95047"></li>
-        <li bg-color="#575fcf"></li>
-        <li bg-color="#fa8231"></li>
+      <ul flex justify-center gap-20px @click="themeSelect">
+        <li class="themeItem" bg="#d95047" bg-color="#d95047"></li>
+        <li class="themeItem" cursor-pointer bg="#575fcf" bg-color="#575fcf"></li>
+        <li class="themeItem" cursor-pointer bg="#fa8231" bg-color="#fa8231"></li>
       </ul>
     </template>
   </el-popover>
@@ -28,29 +28,11 @@ let themeSelect = (event: Event) => {
 </script>
 
 <style lang="scss" scoped>
-.themeSelect {
-  display: flex;
-  justify-content: center;
+.themeItem {
+  @apply w-20px h-20px rounded-full cursor-pointer;
+}
 
-  gap: 20px;
-
-  li {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    cursor: pointer;
-
-    &:nth-child(1) {
-      background-color: #d95047;
-    }
-
-    &:nth-child(2) {
-      background-color: #575fcf;
-    }
-
-    &:nth-child(3) {
-      background-color: #fa8231;
-    }
-  }
+.icon {
+  @apply flex-1 text-white/70 whitespace-nowrap text-19px cursor-pointer hover-text-white;
 }
 </style>

@@ -1,15 +1,15 @@
 <!-- 独家放送 -->
 <template>
   <div wrapBox>
-    <div pt-4 grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-6 v-infinite-scroll="loadData"
-      :infinite-scroll-disabled="disabled">
+    <!-- 独家放送列表 -->
+    <div v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled" pt-4 grid4Cols>
       <BroadcastItem v-for="item in broadcastList" :key="item.id" :id="item.id" :picUrl="item.picUrl"
         :copywriter="item.copywriter" />
     </div>
 
     <!-- 提示 -->
     <el-divider w-full>
-      <span class="tip">{{ disabled ? '无法加载更多!' : 'Loading...' }}</span>
+      <span tip>{{ disabled ? '无法加载更多!' : 'Loading...' }}</span>
     </el-divider>
   </div>
 </template>
@@ -45,12 +45,3 @@ let loadData = async () => {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-// 提示信息
-.tip {
-  padding-bottom: 15px;
-  color: var(--font-color);
-  font-size: 17px;
-}
-</style>

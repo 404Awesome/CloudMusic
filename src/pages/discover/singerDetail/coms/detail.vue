@@ -2,7 +2,7 @@
 <template>
   <div flex gap-20px>
     <!-- 歌手图片 -->
-    <el-image flex-none transition-all duration-300 ease-linear h-35 w-35 lg:h-50 lg:w-50 rounded
+    <el-image flex-none transition-all duration-300 ease-linear h-35 w-35 lg:h-50 lg:w-50 rounded-md
       :src="singerDetail.cover" fit="cover" />
 
     <!-- 歌手信息 -->

@@ -1,13 +1,13 @@
 <!-- 歌手详情 歌手信息 -->
 <template>
-  <div class="singerDesc">
+  <div>
     <!-- 简介 -->
-    <section>
+    <section mt-15px>
       <h3 class="title">{{ name }}简介</h3>
       <p class="content">{{ singerDesc.briefDesc }}</p>
     </section>
     <!-- 成就 -->
-    <section v-for="item in singerDesc.introduction" :key="item.ti">
+    <section v-for="item in singerDesc.introduction" :key="item.ti" mt-30px>
       <h3 class="title">{{ item.ti }}</h3>
       <p class="content">{{ item.txt }}</p>
     </section>
@@ -37,27 +37,11 @@ watch(() => props.activeComs, (newVal) => {
 </script>
 
 <style lang="scss" scoped>
-.singerDesc {
-  padding: 15px 0px;
-
-  section {
-    margin-bottom: 30px;
-
-    &:last-child {
-      margin-bottom: 0px;
-    }
-  }
-}
-
 .title {
-  margin-bottom: 15px;
-  font-size: 16px;
+  @apply text-17px mb-10px;
 }
 
 .content {
-  color: rgba($color: #000000, $alpha: .45);
-  white-space: pre-wrap;
-  font-size: 14px;
-  line-height: 1.7em;
+  @apply text-15px text-black/45 indent-8 leading-6 whitespace-pre-wrap;
 }
 </style>

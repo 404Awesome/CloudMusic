@@ -1,23 +1,31 @@
 <!-- 电台分类列表 -->
 <template>
-  <div class="category" v-if="cateList.length">
-    <div class="left">
-      <span @click="leftMove" class="i-heroicons-outline:chevron-left"></span>
+  <div v-if="cateList.length" flex mt-15px select-none>
+    <!-- 左移动按钮 -->
+    <div class="moveBtn">
+      <span @click="leftMove" relative text="#ced6e0 30px" cursor-pointer hover:themeColor
+        i-heroicons-outline:chevron-left></span>
     </div>
 
-    <el-scrollbar ref="scrollbar" flex-1 pb-4>
-      <ul class="list" ref="innerEl">
-        <li v-for="item in cateList" :key="item.id">
-          <div class="icon">
-            <div :style="{ backgroundImage: `url(${item.picMacUrl})` }"></div>
+    <el-scrollbar ref="scrollbar" :height="80" flex-1>
+      <ul ref="innerEl" flex gap-20px>
+        <li v-for="item in cateList" :key="item.id" class="group" w-55px shrink-0 grow-0 cursor-pointer>
+          <!-- 图标 -->
+          <div mx-auto w-50px h-50px p-10px rounded-full bg="#fdf6f5" group-hover:bg="#fdeded">
+            <div :style="{ backgroundImage: `url(${item.picMacUrl})` }" w-full h-full bg="center right cover no-repeat">
+            </div>
           </div>
-          <p class="title">{{ item.name }}</p>
+
+          <!-- 标题 -->
+          <p text="center 13px">{{ item.name }}</p>
         </li>
       </ul>
     </el-scrollbar>
 
-    <div class="right">
-      <span @click="rightMove" class="i-heroicons-outline:chevron-right"></span>
+    <!-- 右移动按钮 -->
+    <div class="moveBtn">
+      <span @click="rightMove" relative text="#ced6e0 30px" cursor-pointer hover:themeColor
+        i-heroicons-outline:chevron-right></span>
     </div>
   </div>
 </template>
@@ -66,72 +74,7 @@ let rightMove = () => {
 </script>
 
 <style lang="scss" scoped>
-.category {
-  display: flex;
-  margin-top: 15px;
-
-  user-select: none;
-
-  .left,
-  .right {
-    display: flex;
-    align-self: center;
-    justify-content: center;
-    padding-bottom: 16px;
-    width: 10%;
-
-    span {
-      position: relative;
-      color: #ced6e0;
-      font-size: 30px;
-      cursor: pointer;
-
-      &:hover {
-        color: var(--theme-color);
-      }
-    }
-  }
-}
-
-.list {
-  display: flex;
-  width: 100%;
-
-  gap: 20px;
-
-  li {
-    flex-basis: 55px;
-    flex-shrink: 0;
-    flex-wrap: 0;
-    cursor: pointer;
-
-    &:hover .icon {
-      background-color: #fdeded;
-    }
-
-    .icon {
-      margin: 0 auto;
-      padding: 10px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: #fdf6f5;
-
-      div {
-        width: 100%;
-        height: 100%;
-        background-position: center right;
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-    }
-
-    .title {
-      margin-top: 5px;
-      color: var(--font-color);
-      text-align: center;
-      font-size: 13px;
-    }
-  }
+.moveBtn {
+  @apply flex self-center justify-center pb-16px w-1/10;
 }
 </style>

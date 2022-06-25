@@ -1,9 +1,9 @@
 <!-- mv列表item -->
 <template>
-  <div class="group" text-15px cursor-pointer :class="{ flex: isFlex }">
-    <section class="cover" relative flex overflow-hidden @click="$router.push(`/mvDetail/${id}`)">
+  <div :class="{ flex: isFlex }" class="group" text-15px cursor-pointer min-h-35>
+    <section @click="$router.push(`/mvDetail/${id}`)" class="cover" relative flex overflow-hidden>
       <!-- 封面 -->
-      <el-image rounded-md brightness-80 w-full h-35 fit="cover" lazy :src="cover" />
+      <el-image fit="cover" lazy :src="cover" rounded-md brightness-80 w-full h-35 />
       <!-- 播放次数 -->
       <p text-white absolute top-2px right-6px z-2>
         <span text-22px i-eva:arrow-right-outline></span>
@@ -92,6 +92,7 @@ let { id, cover, artists, name, playCount, isFlex } = toRaw(props);
 
 .flex {
   gap: 10px;
+  flex: 1;
 
   &>section {
     width: 50%;

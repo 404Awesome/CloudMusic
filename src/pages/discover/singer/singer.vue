@@ -5,19 +5,18 @@
     <categoryList @selected="cateSelected" :loading="loading" />
 
     <!-- 歌手列表 -->
-    <ul v-if="artistsList.length" grid6Cols class="singerList" v-infinite-scroll="loadData"
-      :infinite-scroll-disabled="disabled">
-      <li v-for="item in artistsList" :key="item.id" @click="goSingerDetail(item)">
-        <el-avatar :size="120" shape="square" :src="item.picUrl" />
-        <p class="info">
-          <span class="name">{{ item.name }}</span>
-        </p>
+    <ul v-if="artistsList.length" v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled" grid6Cols mt-15px>
+      <li v-for="item in artistsList" :key="item.id" @click="goSingerDetail(item)" class="group" cursor-pointer>
+        <!-- 头像 -->
+        <el-image :src="item.picUrl" lazy fit="cover" h-140px rounded-md />
+        <!-- 名称 -->
+        <p mt-5px group-hover:themeColor text-15px>{{ item.name }}</p>
       </li>
     </ul>
 
     <!-- 分割线 -->
     <el-divider>
-      <span class="tip">{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
+      <span tip>{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
     </el-divider>
   </div>
 </template>
@@ -77,34 +76,3 @@ let goSingerDetail = (singer: any) => {
   });
 }
 </script>
-
-<style lang="scss" scoped>
-.singerList {
-  display: grid;
-  margin-top: 15px;
-
-  li {
-    cursor: pointer;
-
-    &:hover .info .name {
-      color: var(--theme-color);
-    }
-
-    .info {
-      margin-top: 5px;
-
-      .name {
-        color: var(--font-color);
-        font-size: 15px;
-      }
-    }
-  }
-}
-
-// 提示信息
-.tip {
-  padding-bottom: 15px;
-  color: var(--font-color);
-  font-size: 17px;
-}
-</style>

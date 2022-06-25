@@ -27,8 +27,6 @@ export const useMainStore = defineStore("main", {
     return {
       // 登陆状态
       auth: useStorage<string>('auth', '', localStorage),
-      // 暗夜模式
-      isDark: useStorage<boolean>('isDark', false, sessionStorage),
       // 页面滚动距离
       scrollTop: useStorage<number>('scrollTop', 0, sessionStorage),
       // 播放状态 

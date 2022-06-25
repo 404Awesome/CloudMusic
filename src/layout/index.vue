@@ -1,6 +1,6 @@
 <!-- 布局组件 -->
 <template>
-  <main id="layout" :class="{ folding: isFolding, dark: isDark }">
+  <main id="layout" :class="{ folding: store.isFolding }">
     <section class="status">
       <TopNavBar />
     </section>
@@ -12,7 +12,7 @@
     </section>
     <section class="view" ref="scrollEl" @scroll="scroll">
       <router-view v-slot="{ Component }">
-        <keep-alive :exclude="['singerDetail', 'songListDetail']">
+        <keep-alive :exclude="['singerDetail', 'songListDetail', 'AllMV']">
           <component :is="Component" />
         </keep-alive>
       </router-view>
@@ -30,7 +30,6 @@ import { useMainStore } from "store";
 import { useRoute } from "vue-router";
 const store = useMainStore();
 const route = useRoute();
-let { isFolding, isDark } = toRefs(store);
 
 // 滚动元素
 let scrollEl = ref<HTMLElement | null>(null);

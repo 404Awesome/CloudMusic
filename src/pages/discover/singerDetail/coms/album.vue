@@ -3,9 +3,9 @@
   <div>
     <ul v-infinite-scroll="loadAlbumData" :infinite-scroll-disabled="disabled" flex flex-col flex-nowrap gap-40px pb-4>
       <!-- top50 -->
-      <li class="hotSongs" mt-4 flex gap-25px>
+      <li mt-4 flex gap-25px>
         <!-- 封面 -->
-        <el-image transition-all w-35 h-35 lg:w-40 lg:h-40 rounded shadow-lg src="/src/assets/img/top50.png" />
+        <el-image src="/img/top50.png" transition-all w-35 h-35 lg:w-40 lg:h-40 rounded-md shadow-lg />
         <!-- 歌单列表 -->
         <section flex-1 overflow-hidden>
           <!-- 歌单列表 -->
@@ -23,7 +23,8 @@
       <li v-for="album in albumList" :key="album.id" flex gap-25px>
         <!-- 专辑封面  -->
         <section overflow-hidden>
-          <el-image transition-all w-35 h-35 lg:w-40 lg:h-40 rounded shadow-lg fit="cover" lazy :src="album.picUrl" />
+          <el-image transition-all w-35 h-35 lg:w-40 lg:h-40 rounded-md shadow-lg fit="cover" lazy
+            :src="album.picUrl" />
           <p text-sm>{{ album.time }}</p>
         </section>
 

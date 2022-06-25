@@ -1,32 +1,18 @@
 <!-- Video -->
 <template>
-  <div class="videoList" wrapBox>
-    <!-- 分类导航 -->
-    <AllTypeSelect @selected="typeSelected" defaultType="全部视频" :hotTypeList="hotTypeList" />
+  <div wrapBox pt-15px>
+    <CateList :loading="loading" :currentType="currentType" />
   </div>
 </template>
 
 <script setup lang="ts">
-import AllTypeSelect from "@/components/content/allTypeSelect/allTypeSelect.vue";
-import { onMounted } from "vue";
+import CateList from "./coms/cateList.vue";
+import { ref } from "vue";
 import { VideoAPI } from "api";
+// await VideoAPI.getCateList()
 
-// 热门分类列表
-let hotTypeList: string[] = ['现场', '翻唱', '舞蹈', '听BGM', 'MV', '生活', '游戏', 'ACG音乐', '最佳饭制'];
-
-// 类型的选择
-let typeSelected = (type: string) => {
-  console.log(type);
-}
-
-onMounted(async () => {
-  // let list = await VideoAPI.getCateList();
-  // console.log(list);
-})
+// 是否正在加载
+let loading = ref<boolean>(false);
+// 当前类型
+let currentType = ref<string>("全部视频");
 </script>
-
-<style lang="scss" scoped>
-.videoList {
-  padding-top: 15px;
-}
-</style>

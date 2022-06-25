@@ -4,7 +4,7 @@
     <!-- 导航栏 -->
     <nav flex mb-4>
       <NavBar flex-1 title="最新MV" path="/allMV/?area=内地&type=全部&order=最新" />
-      <TypeSelect :loading="loading" :typeList="areaList" @selected="selected" />
+      <CateSelect :loading="loading" :typeList="areaList" :currentType="currentType" @selected="selected" />
     </nav>
 
     <!-- 列表 -->
@@ -13,15 +13,17 @@
 </template>
 
 <script setup lang="ts">
-import NavBar from "@/components/common/navBar/navBar.vue";
-import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
+import CateSelect from "@/components/content/cateSelect/cateSelect.vue";
 import MVList from "@/components/content/mvList/mvList.vue";
+import NavBar from "@/components/common/navBar/navBar.vue";
 import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
 // 加载状态
 let loading = ref(false);
+// 当前选中类型
+let currentType = ref("内地");
 // 地区列表
 let areaList = reactive<string[]>(["内地", "港台", "欧美", "日本", "韩国"]);
 // 选择选项事件
@@ -34,6 +36,7 @@ let loadData = async (area: string, limit: number = 8) => {
     loading.value = true;
     let { code, data }: any = await MVAPI.getNewMV(area, limit);
     if (code == 200) {
+      currentType.value = area;
       list.splice(0, list.length, ...data);
     }
   } catch (err) {

@@ -7,23 +7,27 @@
       <section flex-1>
         <slot></slot>
       </section>
-      <TypeSelect :loading="loading" :typeList="areaList" @selected="selected" />
+
+      <!-- 类型选择组件 -->
+      <CateSelect :currentType="currentType" :typeList="areaList" :loading="loading" @selected="selected" />
     </nav>
 
     <!-- 列表 -->
-    <ul min-h-30 grid-cols-1 md:grid-cols-2 class="rankingList" element-loading-text="Loading..." v-loading="loading">
-      <li class="rankingItem" v-for="(mv, index) in raningList" :key="mv.id">
+    <ul v-loading="loading" element-loading-text="Loading..." grid2Cols min-h-30>
+      <li v-for="(mv, index) in raningList" :key="mv.id" flex overflow-hidden>
         <!-- 排名 -->
-        <p class="rank">{{ index + 1 }}</p>
+        <p flex items-center w-50px grow-0 shrink-0 justify-center text="#999 25px">{{ index + 1 }}</p>
+
+        <!-- MVItem -->
         <MVItem :id="mv.id" :cover="mv.cover" :name="mv.name" :artists="mv.artists" :playCount="mv.playCount"
-          :isFlex="true" flex-1 overflow-hidden />
+          :isFlex="true" />
       </li>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
+import CateSelect from "@/components/content/cateSelect/cateSelect.vue";
 import MVItem from "@/components/content/mvItem/mvItem.vue";
 import { ref, reactive, onMounted } from "vue";
 import { ElMessage } from "element-plus";
@@ -39,6 +43,8 @@ const props = defineProps({
 let loading = ref(false);
 // 地区列表
 let areaList = reactive<string[]>(["内地", "港台", "欧美", "日本", "韩国"]);
+// 当前类型
+let currentType = ref<string>("内地");
 // 选中类型
 let selected = (area: string) => loadData(area);
 
@@ -49,7 +55,10 @@ let loadData = async (area: string) => {
     loading.value = true;
     raningList.splice(0, raningList.length);
     let { code, data }: any = await MVAPI.getTopMV(area, 0, props.limit);
-    if (code == 200) raningList.splice(0, raningList.length, ...data);
+    if (code == 200) {
+      raningList.splice(0, raningList.length, ...data);
+      currentType.value = area;
+    };
   } catch (err: any) {
     ElMessage.error("加载MV排行榜失败!");
   } finally {
@@ -58,30 +67,3 @@ let loadData = async (area: string) => {
 };
 onMounted(() => loadData(areaList[0]));
 </script>
-
-<style lang="scss" scoped>
-.rankingList {
-  display: grid;
-
-  gap: 30px 20px;
-
-  li {
-    overflow: hidden;
-  }
-}
-
-.rankingItem {
-  display: flex;
-
-  .rank {
-    display: flex;
-    align-items: center;
-    flex-basis: 50px;
-    flex-grow: 0;
-    flex-shrink: 0;
-    justify-content: center;
-    color: #999999;
-    font-size: 25px;
-  }
-}
-</style>

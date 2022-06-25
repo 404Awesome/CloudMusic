@@ -1,7 +1,6 @@
 <!-- mv列表 -->
 <template>
-  <ul grid min-h-30 gap-5 lg:gap-7 grid-cols-2 md:grid-cols-3 lg-grid-cols-4 element-loading-text="Loading..."
-    v-loading="loading" class="mvList">
+  <ul v-loading="loading" element-loading-text="Loading..." grid4Cols min-h-35>
     <li overflow-hidden v-for="mv in list" :key="mv.id">
       <MVItem :id="mv.id" :cover="mv.cover || mv.picUrl" :name="mv.name" :artists="mv.artists"
         :playCount="mv.playCount" />

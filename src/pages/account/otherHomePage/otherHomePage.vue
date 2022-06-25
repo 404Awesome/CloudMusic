@@ -1,8 +1,6 @@
 <!-- 他人的个人主页 -->
 <template>
-  <div>
-    <h4>{{ route.params.uid }}</h4>
-  </div>
+  <div></div>
 </template>
 
 <script setup lang="ts">

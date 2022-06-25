@@ -1,8 +1,13 @@
 <!-- 导航栏 -->
 <template>
-  <nav class="navLine">
-    <h4 class="title" @click="$router.push(path)">{{ title }}</h4>
-    <span class="icon i-heroicons-outline:chevron-right"></span>
+  <nav flex items-center w-full>
+    <!-- 标题 -->
+    <h4 @click="$router.push(path)" class="peer" hover="themeColor" m-0 whitespace-nowrap text-17px cursor-pointer>
+      {{ title }}
+    </h4>
+    <!-- 图标 -->
+    <span peer-hover="themeColor translate-x-5px" text-20px transition-transform
+      i-heroicons-outline:chevron-right></span>
   </nav>
 </template>
 
@@ -21,34 +26,3 @@ const props = defineProps({
 });
 const { path, title } = toRaw(props);
 </script>
-
-<style lang="scss" scoped>
-.navLine {
-  display: flex;
-  align-items: center;
-  width: 100%;
-
-  .title {
-    margin: 0;
-    margin-right: 5px;
-    white-space: nowrap;
-    font-weight: 400;
-    font-size: 17px;
-    cursor: pointer;
-
-    &:hover {
-      color: var(--theme-color);
-
-      &+.icon {
-        color: var(--theme-color);
-        transform: translateX(5px);
-      }
-    }
-  }
-
-  .icon {
-    font-size: 20px;
-    transition: transform 0.2s ease-in-out;
-  }
-}
-</style>

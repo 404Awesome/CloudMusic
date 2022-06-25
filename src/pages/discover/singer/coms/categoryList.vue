@@ -1,12 +1,13 @@
 <!-- 类型列表 -->
 <template>
-  <div class="categoryList" v-loading="props.loading" element-loading-spinner="null">
-    <TypeSelect v-for="item in typeList" :key="item.title" @selected="item.selected" title="语种" :typeList="item.list" />
+  <div v-loading="props.loading" element-loading-spinner="null" flex flex-col flex-nowrap gap-10px>
+    <CateSelect v-for="{ title, list, selected, currentType } in typeList" :key="title" @selected="selected"
+      :title="title" :typeList="list" :currentType="currentType" />
   </div>
 </template>
 
 <script setup lang="ts">
-import TypeSelect from "@/components/content/typeSelect/typeSelect.vue";
+import CateSelect from "@/components/content/cateSelect/cateSelect.vue";
 import { reactive, toRaw, watch } from "vue";
 const emit = defineEmits(['selected']);
 const props = defineProps({
@@ -26,8 +27,10 @@ let currentVal = reactive({
 let typeList = reactive([
   {
     title: "语种",
+    currentType: "全部",
     list: ['全部', '华语', '欧美', '日本', ' 韩国', '其他'],
     selected(type: string) {
+      typeList[0].currentType = type;
       switch (type) {
         case '全部':
           currentVal.area = '-1';
@@ -52,8 +55,10 @@ let typeList = reactive([
   },
   {
     title: "分类",
+    currentType: "全部",
     list: ['全部', '男歌手', '女歌手', '乐队'],
     selected(type: string) {
+      typeList[1].currentType = type;
       switch (type) {
         case '全部':
           currentVal.type = '-1';
@@ -72,8 +77,10 @@ let typeList = reactive([
   },
   {
     title: "筛选",
-    list: ['热门', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '#'],
+    currentType: "热门",
+    list: ["热门", ...[...Array(26).keys()].map(i => String.fromCharCode(i + 65)), "#"],
     selected(type: string) {
+      typeList[2].currentType = type;
       switch (type) {
         case '热门':
           currentVal.initial = '-1';
@@ -93,12 +100,3 @@ watch(currentVal, (newVal) => emit('selected', toRaw(newVal)), {
   immediate: true
 })
 </script>
-
-<style scoped>
-.categoryList {
-  display: flex;
-  flex-flow: column nowrap;
-
-  gap: 10px;
-}
-</style>

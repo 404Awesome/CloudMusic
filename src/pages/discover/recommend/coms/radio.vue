@@ -31,8 +31,8 @@
 </template>
 
 <script setup lang="ts">
+import { reactive, onMounted, ref, onActivated } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
-import { reactive, onMounted, ref } from "vue";
 import { RadioAPI } from "api";
 import { ElMessage } from "element-plus";
 
@@ -66,4 +66,11 @@ onMounted(() => {
     }
   })
 });
+
+// 如果没有请求到数据,重新发起请求
+onActivated(() => {
+  if (!loading.value && !radioList.length) {
+    loadData();
+  }
+})
 </script>

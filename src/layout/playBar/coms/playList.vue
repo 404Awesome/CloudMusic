@@ -27,18 +27,20 @@
     <div class="scrollbar">
       <el-scrollbar always>
         <!-- 列表 -->
-        <ul class="list" v-if="playList.length">
+        <ul v-if="playList.length" class="list">
           <li @dblclick="playSong(item)" :class="{ active: item.song.id == currentSong?.song.id }"
-            v-for="item in store.playList" :key="item.song.id">
+            v-for="item in store.playList" :key="item.song.id" class="group" hover:bg="#f5f7fa">
+            <!-- 播放图标 -->
+            <span class="playIcon" hidden text-18px i-eva:arrow-right-fill></span>
             <!-- 歌名 -->
-            <p class="songName">{{ item.song.name }}</p>
+            <p flex-1 truncate mr-20px group-hover:themeColor>{{ item.song.name }}</p>
             <!-- 艺术家 -->
             <Artists flex-1 :artists="item.artist" />
           </li>
         </ul>
 
         <!-- 播放列表为空 -->
-        <div class="empty" v-else>
+        <div v-else flexCenter h-full>
           <el-empty description="播放列表为空!" :image-size="200" />
         </div>
       </el-scrollbar>
@@ -70,7 +72,7 @@ defineExpose({ toggle });
 </script>
 
 <style lang="scss" scoped>
-header.header {
+.header {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -111,55 +113,38 @@ header.header {
 }
 
 .scrollbar {
-  height: calc(100% - 80px - 1px);
+  height: calc(100% - 80px);
   background-color: #fff;
 
   .list li {
     display: flex;
     overflow: hidden;
-    padding: 5px 15px;
-    color: var(--font-color);
+    padding: 7px 15px;
+    color: var(--font-color) !important;
     white-space: nowrap;
     font-size: 14px;
     cursor: pointer;
 
     user-select: none;
-    gap: 20px;
-
-    .songName {
-      overflow: hidden;
-      flex-basis: 50%;
-      text-overflow: ellipsis;
-    }
-
-    &:hover {
-      background-color: #f5f7fa;
-
-      .songName {
-        color: var(--theme-color);
-      }
-    }
 
     &.active {
       background-color: #f5f7fa;
-      color: var(--theme-color);
-    }
-  }
+      color: var(--theme-color) !important;
+      padding-left: 10px;
 
-  .empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+      .playIcon {
+        display: inline-block;
+      }
+    }
   }
 }
 </style>
 <style lang="scss">
 .playListDrawer {
   box-sizing: border-box;
+  overflow: hidden;
   margin-top: var(--topNavBarHeight);
-  margin-bottom: var(--playBarHeight);
-  max-height: calc(100% - var(--topNavBarHeight) - var(--playBarHeight));
+  max-height: calc(101% - var(--topNavBarHeight) - var(--playBarHeight));
   background-color: transparent;
 
   .el-drawer__body {

@@ -1,7 +1,7 @@
 <!-- mv列表item -->
 <template>
   <div :class="{ flex: isFlex }" class="group" text-15px cursor-pointer min-h-35>
-    <section @click="$router.push(`/mvDetail/${id}`)" class="cover" relative flex overflow-hidden>
+    <section @click="goMVDetailPage" class="cover" relative flex overflow-hidden>
       <!-- 封面 -->
       <el-image fit="cover" lazy :src="cover" rounded-md brightness-80 w-full h-35 />
       <!-- 播放次数 -->
@@ -18,7 +18,7 @@
     <!-- 详情 -->
     <section mt-5px overflow-hidden>
       <!-- 标题 -->
-      <p @click="$router.push(`/mvDetail/${id}`)" truncate group-hover:themeColor>{{ name }}</p>
+      <p @click="goMVDetailPage" truncate group-hover:themeColor>{{ name }}</p>
       <!-- 艺术家 -->
       <Artists :artists="artists" />
     </section>
@@ -27,8 +27,10 @@
 
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
-import { toRaw } from "vue";
+import { PropType, toRaw } from "vue";
+import { useRouter } from "vue-router";
 import { Handle } from "utils";
+const router = useRouter();
 const props = defineProps({
   id: {
     type: Number,
@@ -54,8 +56,23 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  mode: {
+    type: String as PropType<"push" | "replace">,
+    default: "push"
+  }
 });
-let { id, cover, artists, name, playCount, isFlex } = toRaw(props);
+let { id, cover, artists, name, playCount, isFlex, mode } = toRaw(props);
+
+// 跳转MV详情页面
+let goMVDetailPage = () => {
+  if (mode == "push") {
+    router.push(`/mvDetail/${id}`);
+  } else if (mode == "replace") {
+    router.replace(`/mvDetail/${id}`);
+  } else {
+    router.push(`/`);
+  }
+}
 </script>
 
 <style lang="scss" scoped>

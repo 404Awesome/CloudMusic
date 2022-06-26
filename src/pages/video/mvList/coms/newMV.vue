@@ -1,15 +1,25 @@
 <!-- 最新MV -->
 <template>
-  <div>
-    <!-- 导航栏 -->
-    <nav flex mb-4>
-      <NavBar flex-1 title="最新MV" path="/allMV/?area=内地&type=全部&order=最新" />
-      <CateSelect :loading="loading" :typeList="areaList" :currentType="currentType" @selected="selected" />
-    </nav>
+  <!-- 导航栏 -->
+  <nav flex pb-4>
+    <NavBar flex-1 title="最新MV" path="/allMV/?area=内地&type=全部&order=最新" />
+    <CateSelect :loading="loading" :typeList="areaList" :currentType="currentType" @selected="selected" />
+  </nav>
 
-    <!-- 列表 -->
-    <MVList :list="list" :loading="loading" />
-  </div>
+  <el-skeleton :loading="loading" animated>
+    <template #template>
+      <ul grid4Cols mt-15px>
+        <li v-for="item in 8">
+          <el-skeleton-item variant="image" w-full h-35 rounded-md />
+          <el-skeleton-item block variant="text" w="7/10" my-7px />
+          <el-skeleton-item block variant="text" w="2/10" />
+        </li>
+      </ul>
+    </template>
+    <template #default>
+      <MVList :list="newMVList" />
+    </template>
+  </el-skeleton>
 </template>
 
 <script setup lang="ts">
@@ -21,23 +31,24 @@ import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
 // 加载状态
-let loading = ref(false);
+let loading = ref(true);
 // 当前选中类型
 let currentType = ref("内地");
 // 地区列表
 let areaList = reactive<string[]>(["内地", "港台", "欧美", "日本", "韩国"]);
 // 选择选项事件
 let selected = (area: string) => loadData(area);
+// 最新MV列表
+let newMVList = reactive<any>([]);
 
-// 加载最新mv的结果
-let list = reactive<any>([]);
+// 加载最新MV列表
 let loadData = async (area: string, limit: number = 8) => {
   try {
     loading.value = true;
     let { code, data }: any = await MVAPI.getNewMV(area, limit);
     if (code == 200) {
       currentType.value = area;
-      list.splice(0, list.length, ...data);
+      newMVList.splice(0, newMVList.length, ...data);
     }
   } catch (err) {
     ElMessage.error("加载最新MV失败!");
@@ -45,5 +56,5 @@ let loadData = async (area: string, limit: number = 8) => {
     loading.value = false;
   }
 };
-onMounted(() => loadData(areaList[0]));
+onMounted(() => loadData(currentType.value));
 </script>

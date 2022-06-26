@@ -9,9 +9,8 @@
           <!-- 功能 -->
           <div hidden md:flex class="function">
             <!-- 封面 -->
-            <div rounded flex overflow-hidden w="1/2" shadow-xl>
-              <el-image :src="currentSong?.album.picUrl" fit="cover" />
-            </div>
+            <el-image :src="currentSong?.album.picUrl" fit="cover" w="1/2" rounded-md overflow-hidden shadow-xl />
+
             <!-- 操作 -->
             <ul class="operate">
               <!-- eva:heart-fill -->

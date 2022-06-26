@@ -10,11 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, watch } from "vue";
+import { reactive } from "vue";
 import { useRoute } from "vue-router";
 import { useMainStore } from "store";
 import { ArtistAPI } from "api";
-const props = defineProps(['activeComs']);
 const store = useMainStore();
 const route = useRoute();
 let id = parseInt(route.query.id as string);
@@ -25,9 +24,4 @@ let similarSinger = reactive([]);
 let loadData = async () => {
   // let res = await ArtistAPI.getSimilar(id);
 }
-
-// 监听当前组件的激活状态
-watch(() => props.activeComs, (newVal) => {
-  if (newVal == "SimilarSinger" && similarSinger.length == 0) loadData();
-})
 </script>

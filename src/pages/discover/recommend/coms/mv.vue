@@ -2,7 +2,7 @@
 <template>
   <el-skeleton :loading="loading" animated>
     <template #template>
-      <ul grid4Cols mt-15px ref="skeletonEl">
+      <ul ref="skeletonEl" grid4Cols mt-15px>
         <li v-for="item in 4">
           <el-skeleton-item variant="image" w-full h-35 rounded-md />
           <el-skeleton-item block variant="text" w="7/10" my-7px />
@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 import MVList from "@/components/content/mvList/mvList.vue";
+import { reactive, onMounted, ref, onActivated } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
-import { reactive, onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
@@ -53,4 +53,11 @@ onMounted(() => {
     }
   })
 });
+
+// 如果没有请求到数据,重新发起请求
+onActivated(() => {
+  if (!loading.value && !mvList.length) {
+    loadData();
+  }
+})
 </script>

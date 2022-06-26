@@ -29,9 +29,6 @@ export default defineConfig({
         ["themeBgColor", { "background-color": "var(--theme-color)" }],
         ["themeColor", { "color": "var(--theme-color)" }],
         ["fontColor", { "color": "var(--font-color)" }],
-        ["sideNavBarWidth", { "width": "var(--sideNavBarWidth)" }],
-        ["playBarHeight", { "width": "var(--playBarHeight)" }],
-        ["topNavBarHeight", { "width": "var(--topNavBarHeight)" }],
         ["twoLineOmit", { "display": "-webkit-box", "overflow": "hidden", "-webkit-box-orient": "vertical", "text-overflow": "ellipsis", "-webkit-line-clamp": "2" }]
       ],
       shortcuts: {
@@ -79,10 +76,6 @@ export default defineConfig({
         assetFileNames: '[ext]/[name]-[hash].[ext]'
       }
     }
-  },
-  esbuild: {
-    pure: ['console.log'],
-    minify: true
   },
   server: {
     open: true

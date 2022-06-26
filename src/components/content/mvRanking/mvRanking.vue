@@ -1,35 +1,49 @@
 <!-- mv排行榜 -->
 <template>
-  <div>
-    <!-- 导航 -->
-    <nav flex mb-4>
-      <!-- 插槽 -->
-      <section flex-1>
-        <slot></slot>
-      </section>
+  <!-- 导航 -->
+  <nav flex pb-4>
+    <!-- 插槽 -->
+    <section flex-1>
+      <slot></slot>
+    </section>
 
-      <!-- 类型选择组件 -->
-      <CateSelect :currentType="currentType" :typeList="areaList" :loading="loading" @selected="selected" />
-    </nav>
+    <!-- 类型选择组件 -->
+    <CateSelect :currentType="currentType" :typeList="areaList" :loading="loading" @selected="selected" />
+  </nav>
 
-    <!-- 列表 -->
-    <ul v-loading="loading" element-loading-text="Loading..." grid2Cols min-h-30>
-      <li v-for="(mv, index) in raningList" :key="mv.id" flex overflow-hidden>
-        <!-- 排名 -->
-        <p flex items-center w-50px grow-0 shrink-0 justify-center text="#999 25px">{{ index + 1 }}</p>
+  <el-skeleton :loading="loading" animated>
+    <template #template>
+      <ul ref="skeletonEl" grid2Cols>
+        <li v-for="item in 6" flex gap-10px>
+          <el-skeleton-item variant="text" self-center h-30px w-30px />
+          <el-skeleton-item variant="image" flex-1 h-35 rounded-md />
+          <div flex-1 flex flex-col pt-5px>
+            <el-skeleton-item variant="text" w="7/10" my-7px />
+            <el-skeleton-item variant="text" w="4/10" />
+          </div>
+        </li>
+      </ul>
+    </template>
+    <template #default>
+      <ul grid2Cols>
+        <li v-for="(mv, index) in raningList" :key="mv.id" flex overflow-hidden>
+          <!-- 排名 -->
+          <p flex items-center w-50px grow-0 shrink-0 justify-center text="#999 25px">{{ index + 1 }}</p>
 
-        <!-- MVItem -->
-        <MVItem :id="mv.id" :cover="mv.cover" :name="mv.name" :artists="mv.artists" :playCount="mv.playCount"
-          :isFlex="true" />
-      </li>
-    </ul>
-  </div>
+          <!-- MVItem -->
+          <MVItem :id="mv.id" :cover="mv.cover" :name="mv.name" :artists="mv.artists" :playCount="mv.playCount"
+            :isFlex="true" />
+        </li>
+      </ul>
+    </template>
+  </el-skeleton>
 </template>
 
 <script setup lang="ts">
 import CateSelect from "@/components/content/cateSelect/cateSelect.vue";
 import MVItem from "@/components/content/mvItem/mvItem.vue";
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, onActivated } from "vue";
+import { useIntersectionObserver } from "@vueuse/core";
 import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 const props = defineProps({
@@ -39,8 +53,10 @@ const props = defineProps({
   }
 })
 
+// 骨架屏容器元素
+let skeletonEl = ref<HTMLElement | null>(null);
 // 加载状态
-let loading = ref(false);
+let loading = ref(true);
 // 地区列表
 let areaList = reactive<string[]>(["内地", "港台", "欧美", "日本", "韩国"]);
 // 当前类型
@@ -65,5 +81,21 @@ let loadData = async (area: string) => {
     loading.value = false;
   }
 };
-onMounted(() => loadData(areaList[0]));
+
+// 监听容器元素是否显示在页面上
+onMounted(() => {
+  const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
+    if (isIntersecting) {
+      loadData(currentType.value);
+      stop();
+    }
+  })
+});
+
+// 如果没有请求到数据,重新发起请求
+onActivated(() => {
+  if (!loading.value && !raningList.length) {
+    loadData(currentType.value);
+  }
+})
 </script>

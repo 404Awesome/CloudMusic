@@ -9,8 +9,20 @@
       </li>
     </ul>
 
-    <!-- mv列表 -->
-    <MVList :loading="loading" :list="mvList" />
+    <el-skeleton :loading="loading" animated>
+      <template #template>
+        <ul ref="skeletonEl" grid4Cols mt-15px>
+          <li v-for="item in 8">
+            <el-skeleton-item variant="image" w-full h-35 rounded-md />
+            <el-skeleton-item block variant="text" w="7/10" my-7px />
+            <el-skeleton-item block variant="text" w="2/10" />
+          </li>
+        </ul>
+      </template>
+      <template #default>
+        <MVList :list="mvList" />
+      </template>
+    </el-skeleton>
 
     <!-- 分页 -->
     <div v-show="mvList.length" flex justify-center mt-4>
@@ -32,6 +44,8 @@ import { MVAPI } from "api";
 const route = useRoute();
 let { area, type, order } = route.query;
 
+// 骨架屏容器元素
+let skeletonEl = ref<HTMLElement | null>(null);
 // 是否加载
 let loading = ref(false);
 // mv总条数
@@ -64,15 +78,6 @@ let typeList = reactive([{
   name: 'order',
 }]);
 
-// 监听类型列表并请求数据
-watch(currentType, () => {
-  nextTick(() => {
-    total.value = 0;
-    offset.value = 0;
-    loadData();
-  })
-}, { immediate: true });
-
 // 分页发生改变
 let change = (page: number) => {
   offset.value = page * limit;
@@ -96,4 +101,13 @@ let loadData = async () => {
     loading.value = false;
   }
 }
+
+// 监听类型列表并请求数据
+watch(currentType, () => {
+  nextTick(() => {
+    total.value = 0;
+    offset.value = 0;
+    loadData();
+  })
+}, { immediate: true });
 </script>

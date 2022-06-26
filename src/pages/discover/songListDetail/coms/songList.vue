@@ -44,7 +44,8 @@ let id = parseInt(route.params.id as string);
 
 // 歌曲列表
 let songList = reactive<any>([]);
-onMounted(async () => {
+// 加载歌曲列表
+let loadData = async () => {
   try {
     let bool: boolean = true;
     let offset: number = 0;
@@ -61,7 +62,9 @@ onMounted(async () => {
   } catch (err) {
     ElMessage.error("加载音乐列表失败!");
   }
-});
+}
+// 初始化数据
+onMounted(() => loadData());
 </script>
 
 <style lang="scss" scoped>

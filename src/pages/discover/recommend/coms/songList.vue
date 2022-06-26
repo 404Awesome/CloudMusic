@@ -40,17 +40,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref } from "vue";
+import { reactive, ref, onActivated } from "vue";
+import { ElMessage } from "element-plus";
 import { Handle, Operate } from "utils";
 import { SongListAPI } from "api";
-import { ElMessage } from "element-plus";
 
 // 加载状态
 let loading = ref<boolean>(false);
 // 推荐歌单列表
 let songList = reactive<any[]>([]);
 // 加载推荐歌单列表
-onMounted(async () => {
+let loadData = async () => {
   try {
     loading.value = true;
     let { code, result }: any = await SongListAPI.getPersonalized(12);
@@ -60,5 +60,12 @@ onMounted(async () => {
   } finally {
     loading.value = false;
   }
-});
+}
+
+// 如果没有请求到数据,重新发起请求
+onActivated(() => {
+  if (!loading.value && !songList.length) {
+    loadData();
+  }
+})
 </script>

@@ -1,0 +1,99 @@
+<!-- 详情折叠 -->
+<template>
+  <div :class="{ hidden: store.scrollTop <= height, disabled: disabled }" class="detailFold">
+    <div class="content" w-full h-full py-10px px-10px lg:py-10px lg:w="8/10">
+      <!-- 标题 -->
+      <h1 text-19px truncate>{{ name }}</h1>
+      <!-- 操作 -->
+      <ul flex gap-10px>
+        <li @click="Operate.playSongList(id)">
+          <span class="icon i-eva:arrow-right-fill"></span>
+        </li>
+        <li @click="Operate.collectSongList(id)">
+          <span class="icon i-heroicons-outline:folder-add"></span>
+        </li>
+        <li @click="share()">
+          <span class="icon i-heroicons-outline:external-link"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useMainStore } from "store";
+import { Operate } from "utils";
+import { toRefs } from "vue";
+const store = useMainStore();
+const props = defineProps({
+  name: {
+    type: String,
+    required: true
+  },
+  id: {
+    type: Number,
+    required: true
+  },
+  height: {
+    type: Number,
+    required: true
+  },
+  disabled: {
+    type: Boolean,
+    required: true
+  },
+  share: {
+    type: Function,
+    required: true
+  }
+});
+let { name, id, share, disabled } = toRefs(props);
+</script>
+
+<style lang="scss" scoped>
+.detailFold {
+  top: var(--topNavBarHeight);
+  left: var(--sideNavBarWidth);
+  transition: all .3s ease-in-out;
+  @apply fixed right-0 z-10 h-80px opacity-100 translate-y-0px;
+
+  .content {
+    border-bottom: 3px solid var(--theme-color);
+    border-radius: 0px 0px 3px 3px;
+    @apply flex flex-col flex-nowrap justify-between mx-auto bg-white;
+
+    li {
+      @apply flex items-center justify-center w-23px h-23px cursor-pinter;
+
+      &:first-child {
+        border-radius: 50%;
+        background: linear-gradient(to right, #fa5042, #d43b32);
+
+        .icon {
+          color: #fff !important;
+        }
+      }
+
+      .icon {
+        color: #7f8c8d;
+        font-size: 20px;
+        cursor: pointer;
+
+        &:hover {
+          color: var(--theme-color);
+        }
+      }
+    }
+  }
+
+  &.hidden {
+    opacity: 0;
+    transition: all .2s ease-out;
+    transform: translateY(-80px);
+  }
+
+  &.disabled {
+    display: none !important;
+  }
+}
+</style>

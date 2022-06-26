@@ -1,6 +1,6 @@
 <!-- 类型列表 -->
 <template>
-  <div v-loading="props.loading" element-loading-spinner="null" flex flex-col flex-nowrap gap-10px>
+  <div flex flex-col flex-nowrap gap-10px>
     <CateSelect v-for="{ title, list, selected, currentType } in typeList" :key="title" @selected="selected"
       :title="title" :typeList="list" :currentType="currentType" />
   </div>
@@ -30,26 +30,28 @@ let typeList = reactive([
     currentType: "全部",
     list: ['全部', '华语', '欧美', '日本', ' 韩国', '其他'],
     selected(type: string) {
-      typeList[0].currentType = type;
-      switch (type) {
-        case '全部':
-          currentVal.area = '-1';
-          break;
-        case "华语":
-          currentVal.area = '7';
-          break;
-        case "欧美":
-          currentVal.area = '96';
-          break;
-        case "日本":
-          currentVal.area = '8';
-          break;
-        case "韩国":
-          currentVal.area = '16';
-          break;
-        case "其他":
-          currentVal.area = '0';
-          break;
+      if (!props.loading) {
+        typeList[0].currentType = type;
+        switch (type) {
+          case '全部':
+            currentVal.area = '-1';
+            break;
+          case "华语":
+            currentVal.area = '7';
+            break;
+          case "欧美":
+            currentVal.area = '96';
+            break;
+          case "日本":
+            currentVal.area = '8';
+            break;
+          case "韩国":
+            currentVal.area = '16';
+            break;
+          case "其他":
+            currentVal.area = '0';
+            break;
+        }
       }
     }
   },
@@ -58,20 +60,22 @@ let typeList = reactive([
     currentType: "全部",
     list: ['全部', '男歌手', '女歌手', '乐队'],
     selected(type: string) {
-      typeList[1].currentType = type;
-      switch (type) {
-        case '全部':
-          currentVal.type = '-1';
-          break;
-        case "男歌手":
-          currentVal.type = '1';
-          break;
-        case "女歌手":
-          currentVal.type = '2';
-          break;
-        case "乐队":
-          currentVal.type = '3';
-          break;
+      if (!props.loading) {
+        typeList[1].currentType = type;
+        switch (type) {
+          case '全部':
+            currentVal.type = '-1';
+            break;
+          case "男歌手":
+            currentVal.type = '1';
+            break;
+          case "女歌手":
+            currentVal.type = '2';
+            break;
+          case "乐队":
+            currentVal.type = '3';
+            break;
+        }
       }
     }
   },
@@ -80,16 +84,18 @@ let typeList = reactive([
     currentType: "热门",
     list: ["热门", ...[...Array(26).keys()].map(i => String.fromCharCode(i + 65)), "#"],
     selected(type: string) {
-      typeList[2].currentType = type;
-      switch (type) {
-        case '热门':
-          currentVal.initial = '-1';
-          break;
-        case "#":
-          currentVal.initial = '0';
-          break;
-        default:
-          currentVal.initial = type;
+      if (!props.loading) {
+        typeList[2].currentType = type;
+        switch (type) {
+          case '热门':
+            currentVal.initial = '-1';
+            break;
+          case "#":
+            currentVal.initial = '0';
+            break;
+          default:
+            currentVal.initial = type;
+        }
       }
     }
   },

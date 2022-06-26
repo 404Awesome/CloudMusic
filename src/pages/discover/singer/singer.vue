@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import categoryList from "./coms/categoryList.vue";
-import { ref, reactive, toRaw, onMounted } from "vue";
+import { ref, reactive, toRaw } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { ArtistAPI } from "api";

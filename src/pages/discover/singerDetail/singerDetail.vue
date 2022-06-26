@@ -7,7 +7,7 @@
     <!-- 个人成就 -->
     <el-tabs v-model="activeComs" :lazy="true">
       <el-tab-pane v-for="item in tabPaneList" :key="item.name" :label="item.label" :name="item.name">
-        <component :activeComs="activeComs" :is="item.component" />
+        <component :is="item.component" />
       </el-tab-pane>
     </el-tabs>
   </div>

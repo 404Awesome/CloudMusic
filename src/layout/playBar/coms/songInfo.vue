@@ -56,9 +56,7 @@ let handleTime = (time: number) => {
 
 // 打开歌曲详情
 let songDetailEl = ref<InstanceType<typeof SongDetail>>();
-let openSongDetail = () => {
-  songDetailEl.value?.toggle();
-}
+let openSongDetail = () => songDetailEl.value?.toggle();
 </script>
 
 <style lang="scss" scoped>

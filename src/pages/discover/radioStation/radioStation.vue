@@ -10,13 +10,17 @@
   <PaidBoutique />
 
   <!-- 渲染列表 -->
-  <div v-for="item in renderList" :key="item.cateId">
-    <component :is="CateRadio" v-bind="item" />
+  <div v-for="{ title, path, id } in renderList" :key="id" wrapBox pb-7>
+    <!-- 导航栏 -->
+    <NavBar :title="title" :path="path" />
+    <!-- 电台组件 -->
+    <CateRadio :id="id" :title="title" />
   </div>
 </template>
 
 <script setup lang="ts">
 import Carousel, { BannerItem } from "@/components/common/carousel/carousel.vue";
+import NavBar from "@/components/common/navBar/navBar.vue";
 import CateList from "./coms/cateList.vue";
 import PaidBoutique from "./coms/paidBoutique.vue";
 import CateRadio from "./coms/cateRadio.vue";
@@ -27,19 +31,19 @@ import { RadioAPI } from "api";
 let renderList = reactive([{
   title: "创作翻唱",
   path: "/haha",
-  cateId: 2001,
+  id: 2001,
 }, {
   title: "音乐推荐",
   path: "/haha",
-  cateId: 2,
+  id: 2,
 }, {
   title: "情感",
   path: "/haha",
-  cateId: 3,
+  id: 3,
 }, {
   title: "脱口秀",
   path: "/haha",
-  cateId: 8,
+  id: 8,
 }]);
 
 // banner列表

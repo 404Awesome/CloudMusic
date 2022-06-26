@@ -19,8 +19,8 @@
 
 <script setup lang="ts">
 import BroadcastItem from "@/components/content/broadcastItem/broadcastItem.vue";
+import { reactive, onMounted, ref, onActivated } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
-import { reactive, onMounted, ref, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
@@ -50,4 +50,11 @@ onMounted(() => {
     }
   })
 });
+
+// 如果没有请求到数据,重新发起请求
+onActivated(() => {
+  if (!loading.value && !broadcastList.length) {
+    loadData();
+  }
+})
 </script>

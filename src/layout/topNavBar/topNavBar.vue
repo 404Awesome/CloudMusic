@@ -2,9 +2,7 @@
 <template>
   <div relative z-100 flex items-center h-full shadow-md themeBgColor select-none>
     <!-- 标题 -->
-    <h1 @click="goRouter('/')" text="white 20px center" cursor-pointer sideNavBarWidth select-none hidden md:block>
-      CloudMusic
-    </h1>
+    <h1 @click="goRouter('/')" class="title">CloudMusic</h1>
 
     <!-- 导航栏 -->
     <nav flex overflow-hidden flex-1 justify-between p-x-15px gap-15px>
@@ -54,6 +52,11 @@ let goRouter = (path: string) => {
 </script>
 
 <style lang="scss" scoped>
+.title {
+  width: var(--sideNavBarWidth);
+  @apply text-white text-20px text-center cursor-pointer select-none hidden md-block;
+}
+
 .icon {
   @apply flex-1 text-white/70 whitespace-nowrap text-19px cursor-pointer hover-text-white;
 }

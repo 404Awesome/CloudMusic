@@ -1,8 +1,6 @@
 <!-- 排行榜 -->
 <template>
-  <div>
-    <p>排行榜</p>
-  </div>
+  <div></div>
 </template>
 
 <script setup lang="ts"></script>

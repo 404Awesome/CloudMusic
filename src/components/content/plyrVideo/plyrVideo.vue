@@ -1,10 +1,8 @@
 <!-- Plyr视频组件 -->
 <template>
-  <div overflow-hidden rounded-md>
-    <video ref="playerEl" playsinline controls>
-      <source v-for="item in props.source" :key="item.r" :src="item.url" :size="item.r" type="video/mp4" />
-    </video>
-  </div>
+  <video ref="playerEl" playsinline controls>
+    <source v-for="item in props.source" :key="item.r" :src="item.url" :size="item.r" type="video/mp4" />
+  </video>
 </template>
 
 <script setup lang="ts">
@@ -73,3 +71,12 @@ watch(() => store.playStatus, (status) => {
 // 销毁视频组件
 onBeforeUnmount(() => videoPlyr.value?.destroy());
 </script>
+
+<style>
+.plyr--video {
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+</style>

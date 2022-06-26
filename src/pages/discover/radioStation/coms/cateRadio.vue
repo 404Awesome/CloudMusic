@@ -11,7 +11,7 @@
     </template>
     <template #default>
       <ul grid6Cols mt-15px>
-        <li v-for="item in radioList" :key="item.id" class="group" cursor-pointer>
+        <li v-for="item in radioList" :key="item.id" class="group" cursor-pointer min-h-35>
           <div border="1px solid #eee" relative flex overflow-hidden rounded-md>
             <el-image :src="item.picUrl" lazy />
             <p text="12px white" bg="black/20" w-full p-5px bottom-0 left-0 absolute truncate>

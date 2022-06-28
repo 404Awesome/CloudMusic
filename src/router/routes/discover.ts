@@ -6,7 +6,6 @@ import { RouteRecordRaw } from "vue-router";
  * PlayList: "歌单",
  * Ranking: "排行榜",
  * Singer: "歌手",
- * NewSong: "最新音乐",
  * RadioStation: "主播电台",
  * DailySongs: "每日歌曲推荐",
  * Broadcast: "独家放送",
@@ -17,7 +16,6 @@ let Recommend = () => import("@/pages/discover/recommend/recommend.vue");
 let SongList = () => import("@/pages/discover/songList/songList.vue");
 let Ranking = () => import("@/pages/discover/ranking/ranking.vue");
 let Singer = () => import("@/pages/discover/singer/singer.vue");
-let NewSong = () => import("@/pages/discover/newSong/newSong.vue");
 let RadioStation = () => import("@/pages/discover/radioStation/radioStation.vue");
 let DailySongs = () => import("@/pages/discover/dailySongs/dailySongs.vue")
 let Broadcast = () => import("@/pages/discover/broadcast/broadcast.vue");
@@ -39,10 +37,9 @@ const routes: RouteRecordRaw[] = [
       title: "发现音乐",
       tablist: [
         { title: "个性推荐", path: "/discover/recommend" },
-        { title: "歌单", path: "/discover/songList" },
         { title: "排行榜", path: "/discover/ranking" },
+        { title: "歌单", path: "/discover/songList" },
         { title: "歌手", path: "/discover/singer" },
-        { title: "最新音乐", path: "/discover/newSong" },
         { title: "主播电台", path: "/discover/radioStation" },
       ]
     },
@@ -58,9 +55,6 @@ const routes: RouteRecordRaw[] = [
     }, {
       path: "singer",
       component: Singer
-    }, {
-      path: "newSong",
-      component: NewSong
     }, {
       path: "radioStation",
       component: RadioStation

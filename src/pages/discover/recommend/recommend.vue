@@ -40,7 +40,6 @@ let renderList = reactive([
   },
   {
     title: "最新音乐",
-    path: "/discover/newSong",
     component: markRaw(NewSong),
   },
   {

@@ -1,6 +1,6 @@
 <!-- 详情折叠 -->
 <template>
-  <div :class="{ hidden: store.scrollTop <= height, disabled: disabled }" class="detailFold">
+  <div :class="{ visible: store.scrollTop >= height, disabled: disabled }" class="detailFold">
     <div class="content" w-full h-full py-10px px-10px lg:py-10px lg:w="8/10">
       <!-- 标题 -->
       <h1 text-19px truncate>{{ name }}</h1>
@@ -54,8 +54,8 @@ let { name, id, share, disabled } = toRefs(props);
 .detailFold {
   top: var(--topNavBarHeight);
   left: var(--sideNavBarWidth);
-  transition: all .3s ease-in-out;
-  @apply fixed right-0 z-10 h-80px opacity-100 translate-y-0px;
+  transition: all .1s ease-out;
+  @apply fixed right-0 z-10 h-80px opacity-0 translate-y--80px;
 
   .content {
     border-bottom: 3px solid var(--theme-color);
@@ -80,10 +80,10 @@ let { name, id, share, disabled } = toRefs(props);
     }
   }
 
-  &.hidden {
-    opacity: 0;
-    transition: all .2s ease-out;
-    transform: translateY(-80px);
+  &.visible {
+    opacity: 1;
+    transition: all .3s ease-in-out;
+    transform: translateY(0px);
   }
 
   &.disabled {

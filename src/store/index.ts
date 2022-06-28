@@ -1,7 +1,5 @@
-import { useStorage, StorageSerializers, logicAnd } from "@vueuse/core";
+import { useStorage, StorageSerializers } from "@vueuse/core";
 import { defineStore } from "pinia";
-import { SongAPI } from "api";
-import { ElMessage } from "element-plus";
 
 // 歌曲信息
 export interface SongInfo {
@@ -52,20 +50,11 @@ export const useMainStore = defineStore("main", {
       // 检查歌单中是否已经存在该歌曲
       return !(this.playList.findIndex(item => item.song.id == id) === -1);
     },
-    async playSong(songInfo: SongInfo) {
-      try {
-        let id = songInfo.song.id;
-        // 检查音乐是否可用
-        let result: any = await SongAPI.checkMusic(id);
-        if (result.success && this.currentSong?.song.id !== id) {
-          this.currentSong = songInfo;
-          if (!this.IsExists(id)) this.playList.push(songInfo);
-        }
-      } catch (err: any) {
-        let { message, success } = err?.response?.data;
-        if (!success) {
-          return ElMessage.warning(message);
-        }
+    playSong(songInfo: SongInfo) {
+      let id = songInfo.song.id;
+      if (this.currentSong?.song.id !== id) {
+        this.currentSong = songInfo;
+        if (!this.IsExists(id)) this.playList.push(songInfo);
       }
     },
     getCurrentSongIndex() {

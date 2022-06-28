@@ -75,13 +75,7 @@ let { name, id, share, disabled } = toRefs(props);
       }
 
       .icon {
-        color: #7f8c8d;
-        font-size: 20px;
-        cursor: pointer;
-
-        &:hover {
-          color: var(--theme-color);
-        }
+        @apply text-#7f8c8d text-20px cursor-pinter hover-themeColor;
       }
     }
   }

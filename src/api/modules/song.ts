@@ -9,4 +9,8 @@ export default {
   getDetail(ids: number) {
     return GET("/song/detail", { ids });
   },
+  // 音乐是否可用
+  checkMusic(id: number) {
+    return GET("/check/music", { id });
+  },
 }

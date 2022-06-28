@@ -1,6 +1,6 @@
 <!-- 歌曲列表 -->
 <template>
-  <div class="songList" no-select>
+  <div class="songList" select-none>
     <el-table @row-dblclick="Operate.playSong" :data="songList" stripe style="width: 100%">
       <el-table-column class-name="index" :width="50" align="center" type="index" :index="(index) => index + 1" />
       <el-table-column :width="50">
@@ -13,7 +13,13 @@
           </p>
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="音乐标题" />
+      <el-table-column label="音乐标题">
+        <template v-slot="{ row }">
+          <p :class="{ active: store.currentSong?.song.name == row.name }">
+            {{ row.name }}
+          </p>
+        </template>
+      </el-table-column>
       <el-table-column label="歌手">
         <template v-slot="{ row }">
           <Artists :artists="row.ar" />
@@ -39,6 +45,8 @@ import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
 import { SongListAPI } from "api";
 import { Operate } from "utils";
+import { useMainStore } from "store";
+const store = useMainStore();
 const route = useRoute();
 let id = parseInt(route.params.id as string);
 
@@ -111,5 +119,10 @@ onMounted(() => loadData());
       }
     }
   }
+}
+
+// 正在播放的歌曲
+.active {
+  color: var(--theme-color);
 }
 </style>

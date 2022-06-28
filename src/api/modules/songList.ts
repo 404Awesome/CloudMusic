@@ -33,4 +33,8 @@ export default {
   getTrackAll(id: number, offset: number = 0, limit: number = 100) {
     return GET("/playlist/track/all", { id, limit, offset });
   },
+  // 所有榜单内容摘要
+  getTopDetail() {
+    return GET("/toplist/detail");
+  },
 }

@@ -12,7 +12,7 @@
     </template>
     <template #default>
       <ul grid6Cols mt-15px min-h-300px>
-        <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetal/${item.id}`)" class="group"
+        <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" class="group"
           cursor-pointer>
           <div relative flex overflow-hidden rounded-md>
             <!-- 封面 -->

@@ -34,9 +34,12 @@
             <h1 text-19px truncate>{{ detail.name }}</h1>
 
             <!-- 创建者 -->
-            <div my-3 lg:my-0 flex items-center gap-10px>
+            <div @click="$router.push(`/otherHomePage/${detail.id}`)" my-3 lg:my-0 flex items-center gap-10px>
+              <!-- 头像 -->
               <el-image :src="detail.creator.avatarUrl" fit="cover" w-8 h-8 rounded-full />
+              <!-- 名字 -->
               <p themeColor cursor-pointer truncate>{{ detail.creator.nickname }}</p>
+              <!-- 创建时间 -->
               <p truncate text="black/50">{{ detail.createTime }}</p>
             </div>
 

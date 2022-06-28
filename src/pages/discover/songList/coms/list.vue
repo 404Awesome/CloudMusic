@@ -1,16 +1,16 @@
 <!-- 歌单列表 -->
 <template>
   <ul grid6Cols py-20px>
-    <li @click="$router.push(`/songListDetal/${item.id}`)" v-for="item in props.songList" :key="item.id" class="group"
+    <li @click="$router.push(`/songListDetail/${item.id}`)" v-for="item in props.songList" :key="item.id" class="group"
       cursor-pointer overflow-hidden>
       <div class="group" relative flex overflow-hidden rounded-md text="white 13px">
         <!-- 封面 -->
         <el-image fit-="cover" lazy :src="item.coverImgUrl" brightness-85 />
 
-        <!-- 次数 -->
+        <!-- 播放数 -->
         <p absolute top-3px right-5px z-2 flex items-center>
-          <span text-22px i-eva:arrow-right-outline></span>
-          <span text-15px>{{ Handle.Count(item.playCount) }}</span>
+          <span text-20px i-eva:arrow-right-outline></span>
+          <span text-14px>{{ Handle.Count(item.playCount) }}</span>
         </p>
 
         <!-- 创建者名字-->
@@ -60,7 +60,7 @@ const props = defineProps({
   transition: opacity 0.3s linear;
 
   &:hover {
-    background-color: rgba($color: #fff, $alpha: 0.8);
+    background-color: rgba($color: #fff, $alpha: 0.9);
   }
 }
 </style>

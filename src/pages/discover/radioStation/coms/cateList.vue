@@ -14,18 +14,18 @@
         </div>
 
         <!-- 类型列表 -->
-        <el-scrollbar ref="scrollbar" :height="80" flex-1>
-          <ul ref="innerEl" flex gap-20px>
-            <li v-for="item in cateList" :key="item.id" class="group" w-55px shrink-0 grow-0 cursor-pointer>
+        <el-scrollbar ref="scrollbarEl" :height="80" :native="true" :wrap-style="{ overflow: 'hidden' }" flex-1>
+          <ul ref="containerEl" flex gap-20px>
+            <li v-for="{ id, picMacUrl, name } in cateList" :key="id" @click="goRadioPage(id, name)" class="group"
+              w-55px shrink-0 grow-0 cursor-pointer>
               <!-- 图标 -->
               <div mx-auto w-50px h-50px p-10px rounded-full bg="#fdf6f5" group-hover:bg="#fdeded">
-                <div :style="{ backgroundImage: `url(${item.picMacUrl})` }" w-full h-full
-                  bg="center right cover no-repeat">
+                <div :style="{ backgroundImage: `url(${picMacUrl})` }" w-full h-full bg="center right cover no-repeat">
                 </div>
               </div>
 
               <!-- 标题 -->
-              <p text="center 13px" mt-5px>{{ item.name }}</p>
+              <p text="center 13px" mt-5px>{{ name }}</p>
             </li>
           </ul>
         </el-scrollbar>
@@ -41,13 +41,20 @@
 
 <script setup lang="ts">
 import { reactive, onMounted, ref } from "vue";
-import { RadioAPI } from "api";
 import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+import { useMainStore } from "store";
+import { RadioAPI } from "api";
+const router = useRouter();
+const store = useMainStore();
 
+// 移动状态
+let isMove = ref(false);
 // 加载状态
 let loading = ref(true);
 // 分类列表
 let cateList = reactive<any>([]);
+
 // 加载电台分类
 onMounted(async () => {
   try {
@@ -60,32 +67,63 @@ onMounted(async () => {
   }
 });
 
+// 跳转电台分类页面
+let goRadioPage = (id: number, name: string) => {
+  if (store.auth) {
+    router.push({
+      path: "/radioCateDetail",
+      query: { id, name }
+    })
+  } else {
+    ElMessage.warning("需要登陆后查看!");
+  }
+}
 
-let scrollbar = ref<any>();
-let innerEl = ref<HTMLElement>();
+// el-scrollbar元素
+let scrollbarEl = ref<any>(null);
+// 列表容器元素
+let containerEl = ref<HTMLElement | null>(null);
 // 向左移动
 let leftMove = () => {
-  let left = scrollbar.value.wrap$.scrollLeft;
-  if (left <= 0) return;
+  if (isMove.value) return;
+  isMove.value = true;
+  let left = scrollbarEl.value.wrap$.scrollLeft;
+  let containerWidth = containerEl.value!.clientWidth;
+  if (left <= 0) {
+    isMove.value = false;
+    return;
+  };
   let callback = () => {
-    if (left <= 0) return;
-    left -= 20;
-    scrollbar.value.setScrollLeft(left);
+    if (containerWidth <= 0) {
+      isMove.value = false;
+      return;
+    }
+    left -= 10;
+    containerWidth -= 10
+    scrollbarEl.value.setScrollLeft(left);
     requestAnimationFrame(callback);
   };
   requestAnimationFrame(callback);
 };
 // 向右移动
 let rightMove = () => {
-  let left = scrollbar.value.wrap$.scrollLeft;
-  let scrollWidth = innerEl.value!.scrollWidth;
-  if (left + innerEl.value?.clientWidth >= scrollWidth) return;
+  if (isMove.value) return;
+  isMove.value = true;
+  let left = scrollbarEl.value.wrap$.scrollLeft;
+  let scrollWidth = containerEl.value!.scrollWidth;
+  let containerWidth = containerEl.value!.clientWidth;
+  if (left + containerWidth >= scrollWidth) {
+    isMove.value = false;
+    return;
+  };
   let callback = () => {
-    if (left >= scrollWidth) {
+    if (containerWidth <= 0) {
+      isMove.value = false;
       return;
     }
-    left += 20;
-    scrollbar.value.setScrollLeft(left);
+    left += 10;
+    containerWidth -= 10;
+    scrollbarEl.value.setScrollLeft(left);
     requestAnimationFrame(callback);
   };
   requestAnimationFrame(callback);

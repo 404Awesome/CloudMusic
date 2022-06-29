@@ -1,18 +1,18 @@
 <!-- 付费精品 -->
 <template>
   <div wrapBox pb-7 pt-3>
-    <NavBar title="付费精品" path="/" />
+    <NavBar title="付费精品" path="/paidBoutique" />
 
     <el-skeleton :loading="loading" animated>
       <template #template>
         <ul grid2Cols pt-15px>
           <li v-for="item in 4" flex gap-15px>
-            <el-skeleton-item variant="image" w-25 h-25 rounded-md />
+            <el-skeleton-item variant="image" w-30 h-30 rounded-md />
             <div flex-1 flex flex-col justify-around>
               <el-skeleton-item block variant="text" h-20px w="4/10" />
               <div>
-                <el-skeleton-item block variant="text" w="6/10" />
-                <el-skeleton-item block variant="text" w="3/10" mt-4px />
+                <el-skeleton-item block variant="text" w="8/10" />
+                <el-skeleton-item block variant="text" w="5/10" mt-4px />
               </div>
               <el-skeleton-item block variant="text" h-15px w="2/10" />
             </div>
@@ -23,7 +23,8 @@
         <ul grid2Cols pt-15px>
           <li v-for="item in paygiftList" :key="item.id" flex gap-15px>
             <!-- 封面 -->
-            <el-image :src="item.picUrl" fit="cover" rounded-md cursor-pointer w-25 />
+            <el-image :src="item.picUrl" fit="cover" rounded-md cursor-pointer w-30 />
+
             <!-- 简介 -->
             <div flex overflow-hidden flex-1 flex-col flex-nowrap justify-around cursor-default>
               <!-- 名字 -->
@@ -46,9 +47,9 @@
 <script setup lang="ts">
 import NavBar from "@/components/common/navBar/navBar.vue";
 import { reactive, onMounted, ref } from "vue";
+import { ElMessage } from "element-plus";
 import { RadioAPI } from "api";
 import { Handle } from "utils";
-import { ElMessage } from "element-plus";
 
 // 加载状态
 let loading = ref(true);

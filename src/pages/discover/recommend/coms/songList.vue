@@ -16,7 +16,7 @@
           cursor-pointer>
           <div relative flex overflow-hidden rounded-md>
             <!-- 封面 -->
-            <el-image brightness-80 :src="item.picUrl" fit="cover" />
+            <el-image brightness-85 :src="item.picUrl" fit="cover" />
 
             <!-- 播放次数 -->
             <p absolute top-2px right-6px z-2 text="white 15px">

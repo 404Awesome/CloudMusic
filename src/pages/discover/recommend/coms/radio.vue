@@ -17,7 +17,12 @@
         <li v-for="{ id, picUrl, name, copywriter } in radioList" :key="id" class="group" flex overflow-hidden
           rounded-md bg="#f5f7fa" cursor-pinter>
           <!-- 电台封面 -->
-          <el-image h-20 w-20 grow-0 shrink-0 :src="picUrl" fit="cover" lazy />
+          <div @click="goRadioDetail(id)" relative flex>
+            <el-image :src="picUrl" fit="cover" lazy h-20 w-20 grow-0 shrink-0 cursor-pointer />
+            <span group-hover:opacity-100 cursor-pointer absolute bottom-0px right-0px text-white text-27px opacity-0
+              i-eva:arrow-right-fill></span>
+          </div>
+
 
           <!-- 电台信息 -->
           <div flex overflow-hidden flex-1 flex-col flex-nowrap justify-evenly p-10px>
@@ -33,8 +38,12 @@
 <script setup lang="ts">
 import { reactive, onMounted, ref, onActivated } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
-import { RadioAPI } from "api";
 import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+import { useMainStore } from "store";
+import { RadioAPI } from "api";
+const store = useMainStore();
+const router = useRouter();
 
 // 骨架屏容器元素
 let skeletonEl = ref<HTMLElement | null>(null);
@@ -54,6 +63,15 @@ let loadData = async () => {
     ElMessage.error("加载主播电台失败!");
   } finally {
     loading.value = false;
+  }
+}
+
+// 跳转电台详情页面
+let goRadioDetail = (id: number) => {
+  if (store.auth) {
+    router.push(`/radioDetail/${id}`);
+  } else {
+    ElMessage.warning("需要登陆后查看!");
   }
 }
 

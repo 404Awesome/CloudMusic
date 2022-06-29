@@ -1,11 +1,8 @@
 <template>
   <div flex overflow-hidden h-full>
-    <!-- 登陆表单 -->
     <section flex-1 class="form"></section>
-    <!-- lottie 动画 -->
-    <section flex-1>
-      <Lottie :animationData="lottieAnima!" />
-    </section>
+
+    <Lottie :animationData="lottieAnima!" flex-1 hidden md:block />
   </div>
 </template>
 

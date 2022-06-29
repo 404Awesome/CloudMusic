@@ -54,7 +54,6 @@ let { name, id, share, disabled } = toRefs(props);
 .detailFold {
   top: var(--topNavBarHeight);
   left: var(--sideNavBarWidth);
-  transition: all .1s ease-out;
   @apply fixed right-0 z-10 h-80px opacity-0 translate-y--80px;
 
   .content {
@@ -83,6 +82,7 @@ let { name, id, share, disabled } = toRefs(props);
   &.visible {
     opacity: 1;
     transition: all .3s ease-in-out;
+
     transform: translateY(0px);
   }
 

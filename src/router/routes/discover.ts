@@ -6,7 +6,10 @@ import { RouteRecordRaw } from "vue-router";
  * PlayList: "歌单",
  * Ranking: "排行榜",
  * Singer: "歌手",
+ * PaidBoutique: "付费精品",
  * RadioStation: "主播电台",
+ * RadioDetail: "电台详情",
+ * RadioCateDetail: "电台分类详情",
  * DailySongs: "每日歌曲推荐",
  * Broadcast: "独家放送",
  * PlayListDetail: "歌单详情",
@@ -16,7 +19,10 @@ let Recommend = () => import("@/pages/discover/recommend/recommend.vue");
 let SongList = () => import("@/pages/discover/songList/songList.vue");
 let Ranking = () => import("@/pages/discover/ranking/ranking.vue");
 let Singer = () => import("@/pages/discover/singer/singer.vue");
+let PaidBoutique = () => import("@/pages/discover/paidBoutique/paidBoutique.vue");
 let RadioStation = () => import("@/pages/discover/radioStation/radioStation.vue");
+let RadioDetail = () => import("@/pages/discover/radioDetail/radioDetail.vue");
+let RadioCateDetail = () => import("@/pages/discover/radioCateDetail/radioCateDetail.vue");
 let DailySongs = () => import("@/pages/discover/dailySongs/dailySongs.vue")
 let Broadcast = () => import("@/pages/discover/broadcast/broadcast.vue");
 let SongListDetail = () => import("@/pages/discover/songListDetail/songListDetail.vue");
@@ -83,7 +89,25 @@ const routes: RouteRecordRaw[] = [
     path: "/singerDetail",
     meta: { title: "歌手详情" },
     component: SingerDetail
-  }
+  },
+  // 付费精品
+  {
+    path: "/paidBoutique",
+    meta: { title: "付费精品" },
+    component: PaidBoutique
+  },
+  // 电台详情
+  {
+    path: "/radioDetail/:id",
+    meta: { title: "电台详情", auth: true },
+    component: RadioDetail
+  },
+  // 电台分类详情
+  {
+    path: "/radioCateDetail",
+    meta: { title: "电台分类详情", auth: true },
+    component: RadioCateDetail
+  },
 ];
 
-export default routes;  
+export default routes;

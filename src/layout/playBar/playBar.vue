@@ -101,7 +101,7 @@ onMounted(() => {
       songCurrentTime.value = audioPlyr.value!.currentTime;
       clearTimeout(timer);
     }, 300);
-  })
+  });
   // 暂停时触发
   audioPlyr.value.on("pause", () => {
     // 延迟100毫秒获取结果
@@ -112,19 +112,19 @@ onMounted(() => {
       if (audioPlyr.value!.playing === false) playing.value = false;
       clearTimeout(timer);
     }, 100);
-  })
+  });
   // 播放完毕时触发
   audioPlyr.value.on("ended", () => {
     // 播放下一首
     changeSong(true);
-  })
-})
+  });
+});
 // 视频播放,暂停音频播放
 watch(() => store.playStatus, (status) => {
   if (status == "video" && audioPlyr.value?.playing) {
     audioPlyr.value.pause();
   }
-})
+});
 
 
 // 控制播放

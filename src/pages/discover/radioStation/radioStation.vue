@@ -30,19 +30,19 @@ import { RadioAPI } from "api";
 // 渲染列表
 let renderList = reactive([{
   title: "创作翻唱",
-  path: "/haha",
+  path: "/radioCateDetail?id=2001&name=创作翻唱",
   id: 2001,
 }, {
   title: "音乐推荐",
-  path: "/haha",
+  path: "/radioCateDetail?id=2&name=音乐推荐",
   id: 2,
 }, {
   title: "情感",
-  path: "/haha",
+  path: "/radioCateDetail?id=3&name=情感",
   id: 3,
 }, {
   title: "脱口秀",
-  path: "/haha",
+  path: "/radioCateDetail?id=8&name=脱口秀",
   id: 8,
 }]);
 

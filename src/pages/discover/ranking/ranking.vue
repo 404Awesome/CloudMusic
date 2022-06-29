@@ -24,7 +24,7 @@
             <el-image :src="item.coverImgUrl" fit="cover" rounded-md brightness-90 />
 
             <!-- 播放按钮 -->
-            <div class="playIcon" group-hover:opacity-100>
+            <div @click.stop="Operate.playSongList(item.id)" class="playIcon" group-hover:opacity-100>
               <span i-eva:arrow-right-fill></span>
             </div>
           </div>
@@ -43,9 +43,9 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { SongListAPI } from "api";
-import { Handle } from "utils";
+import { Handle, Operate } from "utils";
 import { useRouter } from "vue-router";
+import { SongListAPI } from "api";
 const router = useRouter();
 
 // 加载状态

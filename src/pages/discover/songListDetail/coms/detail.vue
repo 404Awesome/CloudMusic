@@ -36,9 +36,9 @@
             <!-- 创建者 -->
             <div @click="$router.push(`/otherHomePage/${detail.id}`)" my-3 lg:my-0 flex items-center gap-10px>
               <!-- 头像 -->
-              <el-image :src="detail.creator.avatarUrl" fit="cover" w-8 h-8 rounded-full />
+              <el-image :src="detail.avatarUrl" fit="cover" w-8 h-8 rounded-full />
               <!-- 名字 -->
-              <p themeColor cursor-pointer truncate>{{ detail.creator.nickname }}</p>
+              <p themeColor cursor-pointer truncate>{{ detail.nickname }}</p>
               <!-- 创建时间 -->
               <p truncate text="black/50">{{ detail.createTime }}</p>
             </div>
@@ -62,11 +62,11 @@
             <!-- 元信息 -->
             <div text-14px>
               <!-- 标签 -->
-              <p truncate>
+              <p v-if="detail.tags.length" truncate>
                 <span>标&emsp;签:&nbsp;</span>
                 <span v-for="(item, index) in detail.tags" :key="item">
                   <span themeColor cursor-pointer>{{ item }}</span>
-                  <span v-if="index < detail.tags.length - 1">&nbsp;/&nbsp;</span>
+                  <span v-if="index < (detail.tags.length - 1)">&nbsp;/&nbsp;</span>
                 </span>
               </p>
 
@@ -165,13 +165,16 @@ let loadData = async () => {
       let { playCount, trackCount, shareCount, createTime, description, creator, name, coverImgUrl, subscribedCount, tags, id } = playlist;
       // 处理描述
       handleDescribe(description);
+      // 合并对象
       Object.assign(detail, {
         // ID
         id,
         // 封面
         coverImgUrl,
-        // 创建者信息
-        creator,
+        // 创建者头像
+        avatarUrl: creator.avatarUrl,
+        // 创建者头像
+        nickname: creator.nickname,
         // 标题
         name,
         // 创建时间
@@ -186,7 +189,7 @@ let loadData = async () => {
         trackCount,
         // 播放次数
         playCount,
-      })
+      });
     }
   } catch (err: any) {
     ElMessage.error("加载歌单详情失败!");

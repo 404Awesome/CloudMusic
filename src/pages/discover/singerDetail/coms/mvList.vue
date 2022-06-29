@@ -15,7 +15,7 @@
           cursor-pointer>
           <div relative rounded overflow-hidden>
             <!-- 封面 -->
-            <el-image :src="mv.imgurl" fit="cover" lazy brightness-80 h-35 transition duration-300 ease-in-out z-0 flex
+            <el-image :src="mv.imgurl" fit="cover" lazy brightness-85 h-35 transition duration-300 ease-in-out z-0 flex
               group-hover:scale-115 />
             <!-- 播放次数 -->
             <p absolute z-2 top-2px right-6px text="white 14px">

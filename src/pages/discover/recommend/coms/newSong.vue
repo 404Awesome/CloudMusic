@@ -17,7 +17,11 @@
         <li v-for="({ song, id, picUrl }, index) in newSongList" :key="id" class="group" hover:bg="#f5f7fa" flex
           overflow-hidden rounded-md>
           <!-- 封面 -->
-          <el-image @click="playSong(song.id)" :src="picUrl" cursor-pointer h-20 w-20 rounded-md />
+          <div @click="playSong(song.id)" relative>
+            <el-image :src="picUrl" group-hover:brightness-85 cursor-pointer h-20 w-20 rounded-md />
+            <span group-hover:opacity-100 cursor-pointer absolute bottom-3px right-0px text-white text-27px opacity-0
+              i-eva:arrow-right-fill></span>
+          </div>
 
           <!-- 详情 -->
           <div flex overflow-hidden items-center flex-1>

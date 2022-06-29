@@ -16,8 +16,8 @@
         <!-- 类型列表 -->
         <el-scrollbar ref="scrollbarEl" :height="80" :native="true" :wrap-style="{ overflow: 'hidden' }" flex-1>
           <ul ref="containerEl" flex gap-20px>
-            <li v-for="{ id, picMacUrl, name } in cateList" :key="id" @click="goRadioPage(id)" class="group" w-55px
-              shrink-0 grow-0 cursor-pointer>
+            <li v-for="{ id, picMacUrl, name } in cateList" :key="id" @click="goRadioPage(id, name)" class="group"
+              w-55px shrink-0 grow-0 cursor-pointer>
               <!-- 图标 -->
               <div mx-auto w-50px h-50px p-10px rounded-full bg="#fdf6f5" group-hover:bg="#fdeded">
                 <div :style="{ backgroundImage: `url(${picMacUrl})` }" w-full h-full bg="center right cover no-repeat">
@@ -42,7 +42,12 @@
 <script setup lang="ts">
 import { reactive, onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+import { useMainStore } from "store";
 import { RadioAPI } from "api";
+const router = useRouter();
+const store = useMainStore();
+
 
 // 移动状态
 let isMove = ref(false);
@@ -64,7 +69,16 @@ onMounted(async () => {
 });
 
 // 跳转电台分类页面
-let goRadioPage = (id: number) => { }
+let goRadioPage = (id: number, name: string) => {
+  if (store.auth) {
+    router.push({
+      path: "/radioCateDetail",
+      query: { id, name }
+    })
+  } else {
+    ElMessage.warning("需要登陆后查看!");
+  }
+}
 
 // el-scrollbar元素
 let scrollbarEl = ref<any>(null);

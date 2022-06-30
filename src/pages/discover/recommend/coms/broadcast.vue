@@ -19,8 +19,8 @@
 
 <script setup lang="ts">
 import BroadcastItem from "@/components/content/broadcastItem/broadcastItem.vue";
-import { reactive, onMounted, ref, onActivated } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
+import { reactive, onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
@@ -45,16 +45,12 @@ let loadData = async () => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      loadData();
-      stop();
+      if (broadcastList.length) {
+        stop();
+      } else {
+        loadData();
+      }
     }
   })
 });
-
-// 如果没有请求到数据,重新发起请求
-onActivated(() => {
-  if (!loading.value && !broadcastList.length) {
-    loadData();
-  }
-})
 </script>

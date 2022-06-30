@@ -1,6 +1,6 @@
 <!-- Lottie动画 -->
 <template>
-  <div ref="lottieEl" h-full></div>
+  <div ref="lottieEl"></div>
 </template>
 
 <script setup lang="ts">

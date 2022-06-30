@@ -34,7 +34,7 @@
             <h1 text-19px truncate>{{ detail.name }}</h1>
 
             <!-- 创建者 -->
-            <div @click="$router.push(`/otherHomePage/${detail.id}`)" my-3 lg:my-0 flex items-center gap-10px>
+            <div @click="goPersonalPage" my-3 lg:my-0 flex items-center gap-10px>
               <!-- 头像 -->
               <el-image :src="detail.avatarUrl" fit="cover" w-8 h-8 rounded-full />
               <!-- 名字 -->
@@ -112,12 +112,15 @@
 
 <script setup lang="ts">
 import DetailFold from "./detailFold.vue";
+import { useRoute, useRouter } from "vue-router";
 import { onMounted, reactive, ref } from "vue";
-import { Handle, Operate } from "utils";
-import { useRoute } from "vue-router";
-import { SongListAPI } from "api";
 import { ElMessage } from "element-plus";
+import { Handle, Operate } from "utils";
+import { useMainStore } from "store";
+import { SongListAPI } from "api";
 const route = useRoute();
+const router = useRouter();
+const store = useMainStore();
 const props = defineProps({ activeComs: String });
 let id = parseInt(route.params.id as string);
 
@@ -145,6 +148,15 @@ let handleDescribe = (desc: string) => {
   } else {
     // 没有更多
     describe.content = desc;
+  }
+}
+
+// 跳转个人页面
+let goPersonalPage = () => {
+  if (store.auth) {
+    router.push(`/otherHomePage/${detail.id}`);
+  } else {
+    ElMessage.warning("请登录后查看!");
   }
 }
 

@@ -21,12 +21,12 @@ import Detail from "./coms/detail.vue";
 import SongList from "./coms/songList.vue";
 import Comment from "./coms/comment.vue";
 import Collector from "./coms/collector.vue";
-import { ref, reactive, markRaw } from "vue";
+import { ref, markRaw } from "vue";
 
 // 当前激活的组件
 let activeComs = ref("SongList");
 // tab列表
-let tabPaneList = reactive([
+let tabPaneList = [
   {
     label: "歌曲列表",
     name: "SongList",
@@ -42,5 +42,5 @@ let tabPaneList = reactive([
     name: "Collector",
     component: markRaw(Collector)
   }
-]);
+];
 </script>

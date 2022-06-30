@@ -36,8 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, ref, onActivated } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
+import { reactive, onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { useMainStore } from "store";
@@ -79,16 +79,12 @@ let goRadioDetail = (id: number) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      loadData();
-      stop();
+      if (radioList.length) {
+        stop();
+      } else {
+        loadData();
+      }
     }
   })
 });
-
-// 如果没有请求到数据,重新发起请求
-onActivated(() => {
-  if (!loading.value && !radioList.length) {
-    loadData();
-  }
-})
 </script>

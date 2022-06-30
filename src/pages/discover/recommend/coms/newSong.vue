@@ -43,8 +43,8 @@
 
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
-import { reactive, onMounted, ref, onActivated } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
+import { reactive, onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { Operate } from "utils";
 import { SongAPI } from "api";
@@ -80,16 +80,12 @@ let playSong = async (id: number) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      loadData();
-      stop();
+      if (newSongList.length) {
+        stop();
+      } else {
+        loadData();
+      }
     }
   })
 });
-
-// 如果没有请求到数据,重新发起请求
-onActivated(() => {
-  if (!loading.value && !newSongList.length) {
-    loadData();
-  }
-})
 </script>

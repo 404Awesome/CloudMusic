@@ -1,6 +1,6 @@
 <!-- 艺术家 -->
 <template>
-  <p class="artists">
+  <p class="artists" truncate>
     <span @click="goArtistPage(artist)" v-for="artist in artists" :key="artist.id">
       {{ artist.name }}
     </span>
@@ -31,32 +31,26 @@ let goArtistPage = (artist: any) => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/mixins.scss";
+.artists span {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: v-bind(fontSize);
+  cursor: pointer;
 
-.artists {
-  @include oneOmit;
-
-  span {
-    color: rgba(0, 0, 0, 0.6);
+  &::after {
+    display: inline-block;
+    padding: 0px 5px;
+    color: rgba(0, 0, 0, 0.4);
+    content: "/";
     font-size: v-bind(fontSize);
-    cursor: pointer;
+    cursor: default;
+  }
 
-    &::after {
-      display: inline-block;
-      padding: 0px 5px;
-      color: rgba(0, 0, 0, 0.4);
-      content: "/";
-      font-size: v-bind(fontSize);
-      cursor: default;
-    }
+  &:last-child::after {
+    display: none;
+  }
 
-    &:last-child::after {
-      display: none;
-    }
-
-    &:hover {
-      color: var(--theme-color);
-    }
+  &:hover {
+    color: var(--theme-color);
   }
 }
 </style>

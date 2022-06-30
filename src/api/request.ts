@@ -1,4 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { ElNotification } from "element-plus";
+import { useRouter } from "vue-router";
+import { useMainStore } from "store";
 
 // 请求实例
 let Request = (config: AxiosRequestConfig) => {
@@ -13,7 +16,24 @@ let Request = (config: AxiosRequestConfig) => {
   instance.interceptors.request.use((resConfig) => resConfig);
 
   // 响应拦截器
-  instance.interceptors.response.use((reqData) => reqData.data);
+  instance.interceptors.response.use((reqData) => reqData.data, error => {
+    // token失效
+    if (error.response.status === 401) {
+      // 清除权限
+      const store = useMainStore();
+      store.auth = '';
+      // 提示用户重新登录
+      ElNotification({
+        title: '警告',
+        message: '登陆失效, 请重新登录!',
+        type: 'warning',
+      });
+      // 跳转登陆页
+      const router = useRouter();
+      router.push("/account/login")
+    }
+    return Promise.reject(error);
+  });
 
   // 返回实例
   return instance(config);

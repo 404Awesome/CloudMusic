@@ -42,8 +42,8 @@
 <script setup lang="ts">
 import CateSelect from "@/components/content/cateSelect/cateSelect.vue";
 import MVItem from "@/components/content/mvItem/mvItem.vue";
-import { ref, reactive, onMounted, onActivated } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
+import { ref, reactive, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 const props = defineProps({
@@ -86,16 +86,12 @@ let loadData = async (area: string) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      loadData(currentType.value);
-      stop();
+      if (raningList.length) {
+        stop();
+      } else {
+        loadData(currentType.value);
+      }
     }
   })
 });
-
-// 如果没有请求到数据,重新发起请求
-onActivated(() => {
-  if (!loading.value && !raningList.length) {
-    loadData(currentType.value);
-  }
-})
 </script>

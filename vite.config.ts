@@ -28,6 +28,7 @@ export default defineConfig({
       rules: [
         ["themeBgColor", { "background-color": "var(--theme-color)" }],
         ["themeColor", { "color": "var(--theme-color)" }],
+        ["themeBorder", { "border-color": "var(--theme-color)" }],
         ["fontColor", { "color": "var(--font-color)" }],
         ["twoLineOmit", { "display": "-webkit-box", "overflow": "hidden", "-webkit-box-orient": "vertical", "text-overflow": "ellipsis", "-webkit-line-clamp": "2" }]
       ],

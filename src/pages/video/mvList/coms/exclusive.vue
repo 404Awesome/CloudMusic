@@ -23,8 +23,8 @@
 <script setup lang="ts">
 import NavBar from "@/components/common/navBar/navBar.vue";
 import MVList from "@/components/content/mvList/mvList.vue";
-import { onMounted, reactive, ref, onActivated } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
+import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
@@ -51,16 +51,12 @@ let loadData = async () => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      loadData();
-      stop();
+      if (exclusiveList.length) {
+        stop();
+      } else {
+        loadData();
+      }
     }
   })
 });
-
-// 如果没有请求到数据,重新发起请求
-onActivated(() => {
-  if (!loading.value && !exclusiveList.length) {
-    loadData();
-  }
-})
 </script>

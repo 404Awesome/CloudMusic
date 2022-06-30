@@ -12,7 +12,7 @@
     </section>
     <section class="view" ref="scrollEl" @scroll="scroll">
       <router-view v-slot="{ Component }">
-        <keep-alive :exclude="['singerDetail', 'songListDetail', 'AllMV']">
+        <keep-alive :exclude="['Login', 'Register', 'singerDetail', 'songListDetail', 'AllMV']">
           <component :is="Component" />
         </keep-alive>
       </router-view>

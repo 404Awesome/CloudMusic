@@ -1,8 +1,8 @@
-<!-- 注册表单 -->
+<!-- 注册 -->
 <template>
   <div flex h-full overflow-hidden>
     <el-scrollbar flex-1 flex justify-center>
-      <div class="form" pt-125px pb-25px w-270px>
+      <div class="form" pt-25px md:pt-125px pb-25px w-270px>
         <!-- 表单 -->
         <el-form ref="formEl" :model="formData" :disabled="disabledForm" label-width="65px" :rules="rules">
           <el-form-item label="昵称" prop="nickname">
@@ -25,8 +25,8 @@
           </el-form-item>
           <el-form-item>
             <div w-full flex justify-center gap-10px>
-              <button @click.prevent="submit" :disabled="disabledForm" class="btn" flex-1 bg-blue-500>注册</button>
-              <button @click.prevent="formEl.resetFields()" :disabled="disabledForm" class="btn" flex-1
+              <button @click.prevent="submit" :disabled="disabledForm" class="btn" bg-blue-500>注册</button>
+              <button @click.prevent="formEl.resetFields()" :disabled="disabledForm" class="btn"
                 bg-amber-500>重置</button>
             </div>
           </el-form-item>
@@ -43,7 +43,7 @@
         </div>
 
         <!-- 提示 -->
-        <el-alert title="密码8-20位! 至少包含字母/数字/字符两种组合!" type="warning" :closable="false" />
+        <el-alert title="密码8-20位! 至少包含字母/数字/字符两种组合!" type="info" :closable="false" />
       </div>
     </el-scrollbar>
 
@@ -51,11 +51,15 @@
   </div>
 </template>
 
+<script lang="ts">
+export default { name: "Register" }
+</script>
 <script setup lang="ts">
 import Lottie from "@/components/common/lottie/lottie.vue";
 import lottieAnima from "@/assets/lottieFile/register.json";
 import { ElNotification, ElMessage, FormRules } from "element-plus";
 import { reactive, ref } from "vue";
+import { Validation } from "utils";
 import { AccountAPI } from "api";
 
 // 同意条款
@@ -73,9 +77,8 @@ let formData = reactive({
   password: "",
   captcha: ""
 });
-
 // 表单校验规则
-const rules = reactive<FormRules>({
+let rules = reactive<FormRules>({
   nickname: [
     { required: true, message: '请填写昵称!', trigger: 'blur' },
     { min: 2, max: 10, message: '昵称2-10个字符!', trigger: 'blur' },
@@ -94,18 +97,6 @@ const rules = reactive<FormRules>({
   ]
 });
 
-// 验证手机号
-let validatePhone = () => {
-  let reg = /^(?:(?:\+|00)86)?1[3-9]\d{9}$/;
-  return reg.test(formData.phone);
-}
-
-// 验证密码
-let validatePwd = () => {
-  let reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![-=+_.,]+$)[\da-zA-Z-=+_.,]{8,20}$/;
-  return reg.test(formData.password);
-}
-
 // 验证码文本
 let captchaText = ref<string | number>("发送");
 // 禁用发送按钮
@@ -114,7 +105,7 @@ let disabledSend = ref(false);
 let sendCaptcha = () => {
   formEl.value.validateField('phone', async (isValid: boolean) => {
     if (isValid) {
-      if (validatePhone()) {
+      if (Validation.phone(formData.phone)) {
         // 禁用发送
         disabledSend.value = true;
         //  开启倒计时
@@ -152,11 +143,11 @@ let submit = () => {
   formEl.value.validate(async (isValid: boolean) => {
     if (isValid) {
       // 验证手机号
-      if (!validatePhone()) {
+      if (!Validation.phone(formData.phone)) {
         return ElMessage.warning("手机号不符合格式!");
       }
       // 验证密码
-      if (!validatePwd()) {
+      if (!Validation.password(formData.password)) {
         return ElMessage.warning("密码需包含[字母/数字/字符]两种组合!");
       }
       // 禁用表单
@@ -183,7 +174,7 @@ let submit = () => {
 
 <style lang="scss" scoped>
 .btn {
-  @apply border-none whitespace-nowrap text-white text-15px h-32px px-20px rounded cursor-pointer opacity-85 disabled-cursor-not-allowed disabled-opacity-70 not-disabled-hover-opacity-100;
+  @apply border-none whitespace-nowrap text-white text-15px flex-1 h-32px px-20px rounded cursor-pointer opacity-85 disabled-cursor-not-allowed disabled-opacity-70 not-disabled-hover-opacity-100;
 }
 
 .terms {

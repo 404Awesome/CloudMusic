@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 import MVList from "@/components/content/mvList/mvList.vue";
-import { reactive, onMounted, ref, onActivated } from "vue";
 import { useIntersectionObserver } from "@vueuse/core";
+import { reactive, onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { MVAPI } from "api";
 
@@ -48,16 +48,12 @@ let loadData = async () => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      loadData();
-      stop();
+      if (mvList.length) {
+        stop();
+      } else {
+        loadData();
+      }
     }
   })
 });
-
-// 如果没有请求到数据,重新发起请求
-onActivated(() => {
-  if (!loading.value && !mvList.length) {
-    loadData();
-  }
-})
 </script>

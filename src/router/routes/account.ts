@@ -59,7 +59,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/otherHomePage/:uid",
     component: OtherHomePage,
-    meta: { title: "个人主页" },
+    meta: { title: "个人主页", auth: true },
   },
 ];
 

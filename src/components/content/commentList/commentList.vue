@@ -30,14 +30,14 @@
         <ul>
           <li v-for="(item, index) in commentList" :key="item.commentId" class="group" flex gap-15px>
             <!-- 头像 -->
-            <el-image @click="$router.push(`/otherHomePage/${item.user.userId}`)" :src="item.user.avatarUrl" fit="cover"
-              lazy cursor-pointer flex-none w-10 h-10 rounded-full />
+            <el-image @click.stop="goPersonalPage(item.user.userId)" :src="item.user.avatarUrl" fit="cover" lazy
+              cursor-pointer flex-none w-10 h-10 rounded-full />
 
             <!-- 详细 -->
             <div flex-1 text-15px>
               <!-- 评论人 -->
               <section>
-                <span themeColor cursor-pointer @click="$router.push(`/otherHomePage/${item.user.userId}`)">
+                <span themeColor cursor-pointer @click.stop="goPersonalPage(item.user.userId)">
                   {{ item.user.nickname }}:
                 </span>
                 <span>{{ item.content }}</span>
@@ -50,8 +50,7 @@
                   <span>该评论已删除</span>
                 </p>
                 <p v-else py-7px px-10px text-14px mt-5px rounded bg="#f4f4f5">
-                  <span themeColor cursor-pointer
-                    @click="$router.push(`/otherHomePage/${item.beReplied[0].user.userId}`)">
+                  <span themeColor cursor-pointer @click.stop="goPersonalPage(item.beReplied[0].user.userId)">
                     @{{ item.beReplied[0].user.nickname }}:
                   </span>
                   <span>{{ item.beReplied[0].content }}</span>
@@ -91,6 +90,10 @@
 import { useIntersectionObserver } from "@vueuse/core";
 import { toRaw, ref, reactive, onMounted } from "vue";
 import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+import { useMainStore } from "store";
+const router = useRouter();
+const store = useMainStore();
 const props = defineProps({
   id: {
     type: Number,
@@ -127,6 +130,15 @@ let loadData = async (offset: number = 0) => {
     ElMessage.error("加载评论失败!");
   } finally {
     loading.value = false;
+  }
+}
+
+// 跳转个人页面
+let goPersonalPage = (id: number) => {
+  if (store.auth) {
+    router.push(`/otherHomePage/${id}`);
+  } else {
+    ElMessage.warning("请登录后查看!");
   }
 }
 

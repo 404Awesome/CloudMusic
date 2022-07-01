@@ -1,6 +1,8 @@
-<!-- 我的个人主页 -->
+<!-- 编辑个人信息 -->
 <template>
-  <div></div>
+  <div wrapBox>
+
+  </div>
 </template>
 
 <script setup lang="ts">

@@ -2,6 +2,10 @@ import { POST, GET } from "../request";
 import md5 from "md5";
 
 export default {
+  // 获取账户详情
+  getUserAccount() {
+    return POST("/user/account");
+  },
   // 获取用户详情
   getUserDetail(uid: number) {
     return POST("/user/detail", { uid });

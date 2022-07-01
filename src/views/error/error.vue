@@ -1,7 +1,7 @@
 <!-- 404 Not Found -->
 <template>
-  <div h-full overflow-hidden>
-    <Lottie mx-auto w="1/2" :animationData="lottieAnima" />
+  <div h-full overflow-hidden flex justify-center items-center>
+    <Lottie w="1/2" :animationData="lottieAnima" />
   </div>
 </template>
 

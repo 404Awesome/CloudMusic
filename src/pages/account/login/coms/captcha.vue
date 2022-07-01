@@ -113,7 +113,7 @@ let submit = () => {
           message: '登陆成功!',
           type: 'success',
         });
-        router.push("/myHomePage");
+        router.push("/personalInfo");
       } else {
         // 登陆失败
         ElNotification({

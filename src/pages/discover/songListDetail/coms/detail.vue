@@ -154,7 +154,7 @@ let handleDescribe = (desc: string) => {
 // 跳转个人页面
 let goPersonalPage = () => {
   if (store.auth) {
-    router.push(`/otherHomePage/${detail.id}`);
+    router.push(`/othersInfo/${detail.id}`);
   } else {
     ElMessage.warning("请登录后查看!");
   }

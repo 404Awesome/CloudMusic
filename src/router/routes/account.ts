@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
+import { useMainStore } from "store";
 
 /*
  * Account: "账户",
@@ -6,22 +7,32 @@ import { RouteRecordRaw } from "vue-router";
  * Register: "注册",
  * Following: "关注",
  * Notice: "通知",
- * MyHomePage: "我的个人主页",
- * OtherHomePage: "他人的个人主页",
+ * MyHomePage: "我的主页",
+ * OtherHomePage: "他人主页",
+ * EditPersonalInfo: "编辑个人信息",
  */
 let Account = () => import("@/views/account/account.vue");
 let Login = () => import("@/pages/account/login/login.vue");
 let Register = () => import("@/pages/account/register/register.vue");
 let Following = () => import("@/pages/account/following/following.vue");
 let Notice = () => import("@/pages/account/notice/notice.vue");
-let MyHomePage = () => import("@/pages/account/myHomePage/myHomePage.vue");
-let OtherHomePage = () => import("@/pages/account/otherHomePage/otherHomePage.vue");
+let PersonalInfo = () => import("@/pages/account/personalInfo/personalInfo.vue");
+let OthersInfo = () => import("@/pages/account/othersInfo/othersInfo.vue");
+let EditPersonalInfo = () => import("@/pages/account/editPersonalInfo/editPersonalInfo.vue");
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/account",
     component: Account,
     redirect: "/account/login",
+    beforeEnter() {
+      const store = useMainStore();
+      if (store.auth) {
+        return "/personalInfo"
+      } else {
+        return true;
+      }
+    },
     meta: {
       title: "账户",
       tablist: [
@@ -51,15 +62,21 @@ const routes: RouteRecordRaw[] = [
   },
   // 我的主页
   {
-    path: "/myHomePage",
-    component: MyHomePage,
+    path: "/personalInfo",
+    component: PersonalInfo,
     meta: { title: "我的主页", auth: true },
   },
   // 个人主页
   {
-    path: "/otherHomePage/:uid",
-    component: OtherHomePage,
+    path: "/othersInfo/:uid",
+    component: OthersInfo,
     meta: { title: "个人主页", auth: true },
+  },
+  // 编辑个人信息
+  {
+    path: "/editPersonalInfo",
+    component: EditPersonalInfo,
+    meta: { title: "编辑个人信息", auth: true },
   },
 ];
 

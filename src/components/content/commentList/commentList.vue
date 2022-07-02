@@ -27,7 +27,7 @@
         </ul>
       </template>
       <template #default>
-        <ul>
+        <ul v-show="commentList.length">
           <li v-for="(item, index) in commentList" :key="item.commentId" class="group" flex gap-15px>
             <!-- 头像 -->
             <el-image @click.stop="goPersonalPage(item.user.userId)" :src="item.user.avatarUrl" fit="cover" lazy
@@ -76,6 +76,10 @@
             </div>
           </li>
         </ul>
+
+        <div v-show="!commentList.length">
+          <el-empty description="暂时没有评论!" />
+        </div>
       </template>
     </el-skeleton>
 

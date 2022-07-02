@@ -19,9 +19,9 @@
             <el-image brightness-85 :src="item.picUrl" fit="cover" />
 
             <!-- 播放次数 -->
-            <p absolute top-2px right-6px z-2 text="white 15px">
-              <span text-22px i-eva:arrow-right-outline></span>
-              <span>{{ Handle.Count(item.playCount) }}</span>
+            <p absolute top-2px right-6px z-2 flex items-center text-white>
+              <span text-21px i-eva:arrow-right-outline></span>
+              <span text-15px>{{ Handle.Count(item.playCount) }}</span>
             </p>
 
             <!-- 播放图标 -->

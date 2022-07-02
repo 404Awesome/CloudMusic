@@ -115,6 +115,7 @@ defineExpose({ toggle });
 .scrollbar {
   height: calc(100% - 80px);
   background-color: #fff;
+  padding-bottom: 5px;
 
   .list li {
     display: flex;

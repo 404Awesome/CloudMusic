@@ -3,7 +3,7 @@
   <div rounded overflow-hidden h-80>
     <!-- 背景图片 -->
     <div relative>
-      <el-image :src="info.backgroundUrl" fit="cover" h-35 w-full :draggable="false" />
+      <el-image :src="info.backgroundUrl" fit="cover" :draggable="false" h-35 w-full brightness-95 />
       <!-- 编辑个人信息 -->
       <div absolute right-0px bottom-5px @click="goEditInfo">
         <el-tooltip ref="tooltipEl" content="编辑个人信息" placement="top" effect="light" :hide-after="0">
@@ -21,6 +21,7 @@
       <div text-15px>
         <p flex items-center gap-5px min-h-20px>
           <span text-18px themeColor>{{ info.nickname }}</span>
+          <span bg-orange-400 py-2px px-5px text-white text-13px rounded>{{ info.level }}</span>
           <span v-if="info.gender" :style="{ color: info.gender == 1 ? '#3a9dd0' : '#e3357b' }" text-20px
             i-eva:smiling-face-fill></span>
         </p>
@@ -30,16 +31,16 @@
 
       <!-- 计数 -->
       <ul flex gap-10px mt-10px h-12>
-        <li class="count">
+        <li @click="goCountPage('/dynamic')" class="count">
           <span text-17px text-blue-500 truncate>{{ count.dynamic }}</span>
           <span text-14px text-gray-500 truncate>动态</span>
         </li>
-        <li class="count">
-          <span text-17px text-teal-500 truncate>{{ count.follow }}</span>
+        <li @click="goCountPage('/follows')" class="count">
+          <span text-17px text-teal-500 truncate>{{ count.follows }}</span>
           <span text-14px text-gray-500 truncate>关注</span>
         </li>
-        <li class="count">
-          <span text-17px text-violet-500 truncate>{{ count.fans }}</span>
+        <li @click="goCountPage('/followeds')" class="count">
+          <span text-17px text-violet-500 truncate>{{ count.followeds }}</span>
           <span text-14px text-gray-500 truncate>粉丝</span>
         </li>
       </ul>
@@ -55,6 +56,7 @@ import { AccountAPI } from "api";
 import ProvinceCode from "@/assets/areaCode/province.json";
 import CityCode from "@/assets/areaCode/city.json";
 const router = useRouter();
+const emit = defineEmits(['getUid']);
 
 // tooltip元素
 let tooltipEl = ref<any>(null);
@@ -65,9 +67,9 @@ let count = reactive({
   // 动态
   dynamic: 0,
   // 关注
-  follow: 0,
+  follows: 0,
   // 粉丝
-  fans: 0
+  followeds: 0
 });
 
 // 跳转编辑个人信息页面
@@ -77,18 +79,49 @@ let goEditInfo = () => {
 }
 
 // 获取 动态/关注/粉丝 数量
-let getCount = async () => { }
+let getCount = async (uid: number) => {
+  try {
+    // 获取动态
+    let dynamic: any = await AccountAPI.getUserEvent(uid);
+    if (dynamic.code == 200) count.dynamic = dynamic.size;
+    // 获取关注
+    let follows: any = await AccountAPI.getUserFollows(uid);
+    if (follows.code == 200) count.follows = follows.follow.length;
+    // 获取粉丝
+    let followeds: any = await AccountAPI.getUserFolloweds(uid);
+    if (followeds.code == 200) count.followeds = followeds.size;
+  } catch (err: any) {
+    ElMessage.error("加载动态/关注/粉丝数失败!");
+  }
+}
+
+// 跳转 动态/关注/粉丝 页面
+let goCountPage = (path: string) => {
+  if (info.userId) {
+    router.push(`${path}/${info.userId}`);
+  }
+}
 
 // 加载个人信息
 onMounted(async () => {
   try {
+    // 获取个人信息
     let { code, profile }: any = await AccountAPI.getUserAccount();
+
+    // 获取个人等级
+    let { data: { level } } = await AccountAPI.getUserLevel();
     if (code == 200) {
+      // 发送uid
+      emit("getUid", profile.userId)
+      // 获取数量
+      getCount(profile.userId);
       let { avatarUrl, backgroundUrl, city, nickname, signature, province, gender } = profile;
       // 处理城市
       let provinceName = ProvinceCode.filter((item: any) => item.code == `${province}`.slice(0, 2))[0].name;
       let cityName = CityCode.filter((item: any) => item.code == `${city}`.slice(0, 4))[0].name;
       Object.assign(info, {
+        // 等级
+        level,
         // 头像
         avatarUrl,
         // 背景图片

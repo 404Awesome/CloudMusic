@@ -10,6 +10,9 @@ import { useMainStore } from "store";
  * MyHomePage: "我的主页",
  * OtherHomePage: "他人主页",
  * EditPersonalInfo: "编辑个人信息",
+ * Dynamic: "个人动态",
+ * Follows: "个人关注",
+ * Followeds: "个人粉丝",
  */
 let Account = () => import("@/views/account/account.vue");
 let Login = () => import("@/pages/account/login/login.vue");
@@ -19,6 +22,9 @@ let Notice = () => import("@/pages/account/notice/notice.vue");
 let PersonalInfo = () => import("@/pages/account/personalInfo/personalInfo.vue");
 let OthersInfo = () => import("@/pages/account/othersInfo/othersInfo.vue");
 let EditPersonalInfo = () => import("@/pages/account/editPersonalInfo/editPersonalInfo.vue");
+let Dynamic = () => import("@/pages/account/dynamic/dynamic.vue");
+let Follows = () => import("@/pages/account/follows/follows.vue");
+let Followeds = () => import("@/pages/account/followeds/followeds.vue");
 
 const routes: RouteRecordRaw[] = [
   {
@@ -77,6 +83,24 @@ const routes: RouteRecordRaw[] = [
     path: "/editPersonalInfo",
     component: EditPersonalInfo,
     meta: { title: "编辑个人信息", auth: true },
+  },
+  // 个人动态
+  {
+    path: "/dynamic/:uid",
+    component: Dynamic,
+    meta: { title: "个人动态", auth: true },
+  },
+  // 个人关注
+  {
+    path: "/follows/:uid",
+    component: Follows,
+    meta: { title: "个人关注", auth: true },
+  },
+  // 个人粉丝
+  {
+    path: "/followeds/:uid",
+    component: Followeds,
+    meta: { title: "个人粉丝", auth: true },
   },
 ];
 

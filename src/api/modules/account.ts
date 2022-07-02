@@ -50,4 +50,28 @@ export default {
   loginQrCheck(key: string) {
     return GET("/login/qr/check", { key });
   },
+  // 获取用户等级信息
+  getUserLevel() {
+    return GET("/user/level");
+  },
+  // 获取用户动态
+  getUserEvent(uid: number) {
+    return GET("/user/event", { uid });
+  },
+  // 获取用户关注列表
+  getUserFollows(uid: number) {
+    return GET("/user/follows", { uid });
+  },
+  // 获取用户粉丝列表
+  getUserFolloweds(uid: number) {
+    return GET("/user/followeds", { uid });
+  },
+  // 获取用户信息 , 歌单，收藏，mv, dj 数量
+  getUserSubcount() {
+    return GET("/user/subcount");
+  },
+  // 获取用户歌单
+  getUserPlaylist(uid: number, offset: number = 0, limit: number = 30) {
+    return GET("/user/playlist", { uid, offset, limit });
+  },
 }

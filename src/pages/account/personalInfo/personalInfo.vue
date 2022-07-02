@@ -1,18 +1,21 @@
 <!-- 我的主页 -->
 <template>
   <div wrapBox pt-15px pb-20px>
-    <div grid grid-cols-1 md:grid-cols-2 md:gap-15px>
+    <div grid grid-cols-1 gap-y-20px md:grid-cols-2 md:gap-x-15px lg:gap-x-30px>
       <!-- 详情 -->
-      <Detail />
+      <Detail @getUid="(userId: number) => uid = userId" />
 
-      <div></div>
+      <!-- 用户歌单 -->
+      <SongList :uid="uid" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import Detail from "./coms/detail.vue";
-</script>
+import SongList from "./coms/songList.vue";
+import { ref } from "vue";
 
-<style lang="scss" scoped>
-</style>
+// 用户ID
+let uid = ref(0);
+</script>

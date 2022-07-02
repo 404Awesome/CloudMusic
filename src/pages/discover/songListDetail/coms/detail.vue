@@ -176,7 +176,7 @@ let loadData = async () => {
     if (code == 200) {
       let { playCount, trackCount, shareCount, createTime, description, creator, name, coverImgUrl, subscribedCount, tags, id } = playlist;
       // 处理描述
-      handleDescribe(description);
+      if (description) handleDescribe(description);
       // 合并对象
       Object.assign(detail, {
         // ID

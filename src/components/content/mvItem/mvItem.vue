@@ -4,11 +4,13 @@
     <section @click="goMVDetailPage" class="cover" relative flex overflow-hidden>
       <!-- 封面 -->
       <el-image fit="cover" lazy :src="cover" rounded-md brightness-85 w-full h-35 />
+
       <!-- 播放次数 -->
-      <p text-white absolute top-2px right-6px z-2>
-        <span text-22px i-eva:arrow-right-outline></span>
+      <p text-white absolute top-2px right-6px z-2 flex items-center>
+        <span text-21px i-eva:arrow-right-outline></span>
         <span>{{ Handle.Count(playCount) }}</span>
       </p>
+
       <!-- hover:播放图标 -->
       <p class="playIcon">
         <span i-eva:arrow-right-fill></span>

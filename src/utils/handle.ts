@@ -31,8 +31,13 @@ export default {
   },
   // 处理歌曲信息
   SongInfo(songInfo: any): SongInfo {
-    let { ar, al, id, name, tns = [] } = songInfo;
-    return { artist: ar, album: al, song: { id, name, tns } };
+    if (songInfo?.ar?.length) {
+      let { ar, al, id, name, tns = [] } = songInfo;
+      return { artists: ar, album: al, song: { id, name, tns } };
+    } else {
+      let { artists, album, id, name, tns = [] } = songInfo;
+      return { artists, album, song: { id, name, tns } };
+    }
   },
   // 处理歌单列表中歌曲信息
   SongList(songList: any): SongInfo[] {

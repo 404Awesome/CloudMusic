@@ -18,14 +18,20 @@
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useDebounceFn } from '@vueuse/shared';
-const emit = defineEmits(["getComment"]);
+const emit = defineEmits(['getComment']);
+const props = defineProps({
+  id: {
+    type: Number,
+    required: true
+  }
+})
 
 // 评论内容
 let content = ref<string>("");
 // 发送评论
 let sendComment = useDebounceFn(() => {
   if (!content.value.length) return ElMessage.warning('请输入评论内容!');
-  emit("getComment", content.value);
+  emit('getComment', props.id, content.value);
 }, 500);
 </script>
 

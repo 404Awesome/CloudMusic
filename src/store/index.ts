@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 
 // 歌曲信息
 export interface SongInfo {
-  artist: {
+  artists: {
     id: number,
     name: string,
     tns: string[],

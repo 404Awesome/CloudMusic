@@ -1,7 +1,7 @@
 <!-- mv评论 -->
 <template>
   <!-- 发送评论 -->
-  <SendComment @getComment="getComment" />
+  <SendComment :id="id" @getComment="getComment" />
 
   <!-- 评论列表 -->
   <CommentList :id="props.id" :RequestData="MVAPI.getComment" />
@@ -19,7 +19,7 @@ const props = defineProps({
 });
 
 // 获取评论
-let getComment = (comment: string) => {
-  console.log(comment);
+let getComment = (id: number, content: string) => {
+  console.log(id, content);
 }
 </script>

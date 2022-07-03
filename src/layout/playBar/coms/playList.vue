@@ -35,7 +35,7 @@
             <!-- 歌名 -->
             <p flex-1 truncate mr-20px group-hover:themeColor>{{ item.song.name }}</p>
             <!-- 艺术家 -->
-            <Artists flex-1 :artists="item.artist" />
+            <Artists flex-1 :artists="item.artists" />
           </li>
         </ul>
 

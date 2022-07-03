@@ -30,8 +30,6 @@ onMounted(() => {
   --playBarHeight: 52px;
   /* 侧边导航栏宽度 */
   --sideNavBarWidth: 230px;
-
-  --plyr-control-radius: 6px;
 }
 
 body {

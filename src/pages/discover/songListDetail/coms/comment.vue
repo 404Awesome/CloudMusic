@@ -2,7 +2,7 @@
 <template>
   <div py-4>
     <!-- 发送评论 -->
-    <SendComment @getComment="getComment" />
+    <SendComment :id="id" @getComment="getComment" />
 
     <!-- 评论列表 -->
     <CommentList :id="id" :RequestData="SongListAPI.getComment" />
@@ -18,7 +18,7 @@ const route = useRoute();
 let id = parseInt(route.params.id as string);
 
 // 获取评论
-let getComment = (comment: string) => {
-  console.log(comment);
+let getComment = (id: number, content: string) => {
+  console.log(id, content);
 }
 </script>

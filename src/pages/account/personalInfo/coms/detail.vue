@@ -97,8 +97,8 @@ let getCount = async (uid: number) => {
 
 // 跳转 动态/关注/粉丝 页面
 let goCountPage = (path: string) => {
-  if (info.userId) {
-    router.push(`${path}/${info.userId}`);
+  if (info.uid) {
+    router.push(`${path}/${info.uid}`);
   }
 }
 
@@ -115,11 +115,13 @@ onMounted(async () => {
       emit("getUid", profile.userId)
       // 获取数量
       getCount(profile.userId);
-      let { avatarUrl, backgroundUrl, city, nickname, signature, province, gender } = profile;
+      let { userId: uid, avatarUrl, backgroundUrl, city, nickname, signature, province, gender } = profile;
       // 处理城市
       let provinceName = ProvinceCode.filter((item: any) => item.code == `${province}`.slice(0, 2))[0].name;
       let cityName = CityCode.filter((item: any) => item.code == `${city}`.slice(0, 4))[0].name;
       Object.assign(info, {
+        // 用户id
+        uid,
         // 等级
         level,
         // 头像

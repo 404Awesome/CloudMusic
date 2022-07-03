@@ -1,9 +1,12 @@
 <!-- Video详情 -->
 <template>
-  <div>视频详情</div>
+  <div></div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRoute } from "vue-router";
+const route = useRoute();
+</script>
 
 <style lang="scss" scoped>
 </style>

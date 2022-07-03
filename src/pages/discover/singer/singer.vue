@@ -14,7 +14,7 @@
       </li>
     </ul>
 
-    <!-- 分割线 -->
+    <!-- 提示 -->
     <el-divider>
       <span tip>{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
     </el-divider>

@@ -3,8 +3,9 @@
   <el-popover ref="popoverEl" :hide-after="0" popper-class="allType" placement="bottom-start" trigger="click">
     <template #reference>
       <!-- 按钮 -->
-      <button :disabled="loading || !typeList.length" cursor-pointer px-15px items-center flex border="1px solid #eee"
-        rounded-full whitespace-nowrap select-none bg-white h-30px fontColor hover:bg="#eee" focus:outline-none>
+      <button :disabled="loading || !typeList.length" disabled:cursor-not-allowed cursor-pointer px-15px items-center
+        flex border="1px solid #eee" rounded-full whitespace-nowrap select-none bg-white h-30px fontColor
+        hover:bg="#eee" focus:outline-none>
         <span text-14px>{{ currentType }}</span>
         <span
           :class="loading || !typeList.length ? 'i-eva:loader-outline' : 'i-heroicons-outline:chevron-right'"></span>
@@ -26,13 +27,13 @@
       <el-scrollbar :always="true" :height="350">
         <main v-for="{ name, list } in typeList" :key="name" flex mb-20px p-10px select-none last:mb-0px>
           <!-- 类型名称 -->
-          <p themeColor text-15px>{{ name }}</p>
+          <p v-if="name" themeColor text-15px>{{ name }}</p>
 
           <!-- 类型列表 -->
           <ul flex-1 grid grid-cols-4 gap-y-8px gap-x-5px rounded-md>
-            <li v-for="{ name } in list" :key="name" flex justify-center overflow-hidden>
-              <span @click="typeSelect(name)" :class="{ active: currentType == name }" class="item">
-                {{ name }}
+            <li v-for="typeName in list" :key="typeName" flex justify-center overflow-hidden>
+              <span @click="typeSelect(typeName)" :class="{ active: currentType == typeName }" class="item">
+                {{ typeName }}
               </span>
             </li>
           </ul>
@@ -56,9 +57,9 @@ const props = defineProps({
     required: true
   },
   typeList: {
-    type: Array as PropType<{ name: string, list: any }[]>,
+    type: Array as PropType<{ name: string, list: string[] }[]>,
     required: true
-  }
+  },
 });
 let { currentType, loading, typeList } = toRefs(props);
 let defaultType = toRaw(currentType.value);

@@ -48,7 +48,7 @@ const routes: RouteRecordRaw[] = [
   },
   // 视频详情
   {
-    path: "/videoDetail",
+    path: "/videoDetail/:vid",
     component: VideoDetail,
     meta: { title: "视频详情", auth: true }
   },

@@ -30,14 +30,14 @@
 </template>
 
 <script setup lang="ts">
-import CateList from "./coms/cateList.vue";
-import List from "./coms/list.vue";
-import { ElMessage } from "element-plus";
 import { onMounted, reactive, ref } from "vue";
+import CateList from "./coms/cateList.vue";
+import { ElMessage } from "element-plus";
+import List from "./coms/list.vue";
 import { SongListAPI } from "api";
 
 // 是否正在加载
-let loading = ref<boolean>(false);
+let loading = ref<boolean>(true);
 // 当前类型
 let currentType = ref<string>("全部歌单");
 // 列表总条数

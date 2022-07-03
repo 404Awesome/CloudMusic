@@ -30,7 +30,7 @@ const props = defineProps({
 let { loading, currentType } = toRefs(props);
 
 // 热门分类列表
-let hotCateList = reactive<any>([]);
+let hotCateList = reactive<string[]>([]);
 // 全部分类列表
 let allCateList = reactive<any>([]);
 
@@ -50,7 +50,7 @@ onMounted(async () => {
   if (cateList.code == 200) {
     let { categories, sub } = cateList;
     let allList = Object.values(categories).map((cate: any, index: number) => {
-      let list = sub.filter((subItem: any) => subItem.category == index);
+      let list = sub.filter((subItem: any) => subItem.category == index).map((item: any) => item.name);
       return { list, name: cate }
     });
     allCateList.push(...allList);

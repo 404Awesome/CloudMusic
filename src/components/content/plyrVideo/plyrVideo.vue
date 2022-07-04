@@ -15,6 +15,7 @@ const props = defineProps({
     type: Array as PropType<{ r: number, url: string }[]>,
     required: true,
   },
+  poster: String
 });
 
 // plyr实例
@@ -50,6 +51,11 @@ onMounted(() => {
       },
     },
   });
+
+  // 设置海报
+  if (props.poster) {
+    videoPlyr.value.poster = props.poster;
+  }
 
   // 视频播放,暂停音频播放
   videoPlyr.value.on("play", () => store.playStatus = "video");

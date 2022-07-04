@@ -1,38 +1,43 @@
 <!-- MV相关 -->
 <template>
-  <div :key="(route.params.id as string)" class="mvDetails">
+  <div :key="($route.params.id as string)" class="mvDetails">
+    <!-- MV信息 -->
     <div overflow-hidden col-span-full lg:col-span-1>
       <el-skeleton :loading="loading" animated>
         <template #template>
-          <el-skeleton-item w-full h-200px lg:h-300px xl:h-400px rounded-md pt-4 />
-          <div flex gap-10px my-7px>
-            <el-skeleton-item block variant="text" w-40px />
-            <el-skeleton-item block variant="text" w-60px />
-          </div>
-          <el-skeleton-item block variant="text" h-20px w-200px />
-          <div flex gap-10px my-7px>
+          <!-- 视频 -->
+          <el-skeleton-item w-full h-200px lg:h-300px xl:h-428px rounded-md pt-4 />
+          <!-- 艺术家 -->
+          <el-skeleton-item block variant="text" w-60px mt-4 mb-10px />
+          <!-- 标题 -->
+          <el-skeleton-item block variant="text" h-20px w-230px />
+          <!-- 元信息 -->
+          <div flex gap-10px py-10px>
             <el-skeleton-item block variant="text" w-90px />
-            <el-skeleton-item block variant="text" w-50px />
+            <el-skeleton-item block variant="text" w-70px />
           </div>
+          <!-- 操作 -->
           <div flex justify-between items-center pb-8>
             <div flex gap-10px>
-              <el-skeleton-item block variant="text" w-123px h-30px />
-              <el-skeleton-item block variant="text" w-123px h-30px />
-              <el-skeleton-item block variant="text" w-123px h-30px />
+              <el-skeleton-item block variant="text" rounded-full w-123px h-30px />
+              <el-skeleton-item block variant="text" rounded-full w-123px h-30px />
+              <el-skeleton-item block variant="text" rounded-full w-123px h-30px />
             </div>
+            <!-- 举报 -->
             <el-skeleton-item block variant="text" w-50px />
           </div>
         </template>
         <template #default>
           <!-- MV视频 -->
-          <PlyrVideo :source="mvSource" />
+          <PlyrVideo :source="mvSource" :poster="mvDetail.cover" />
+
           <!-- 详情 -->
           <Detail v-bind="mvDetail" />
         </template>
       </el-skeleton>
 
       <!-- 评论 -->
-      <Comment :id="parseInt(route.params.id as string)" />
+      <Comment :id="(route.params.id as string)" />
     </div>
 
     <!-- 相关推荐 -->
@@ -42,6 +47,9 @@
   </div>
 </template>
 
+<script lang="ts">
+export default { name: "MVDetail" }
+</script>
 <script setup lang="ts">
 import PlyrVideo from "@/components/content/plyrVideo/plyrVideo.vue";
 import Relevant from "./coms/relevant.vue";
@@ -71,9 +79,9 @@ let mvDetail = reactive<any>({});
 let loadMVDetail = async (id: number) => {
   try {
     loading.value = true;
-    let [{ data: { brs, artists, publishTime, playCount, desc, name, subCount } }, { likedCount, shareCount }]: any = await Promise.all([MVAPI.getDetail(id), MVAPI.getDetailInfo(id)]);
+    let [{ data: { brs, artists, publishTime, playCount, desc, name, subCount, cover } }, { likedCount, shareCount }]: any = await Promise.all([MVAPI.getDetail(id), MVAPI.getDetailInfo(id)]);
     await getResolution(brs, id);
-    Object.assign(mvDetail, { artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount });
+    Object.assign(mvDetail, { artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount, cover });
   } catch (err: any) {
     ElMessage.error("加载mv详情失败!");
   } finally {

@@ -12,7 +12,7 @@
     </section>
     <section class="view" ref="scrollEl" @scroll="scroll">
       <router-view v-slot="{ Component }">
-        <keep-alive :exclude="['Login', 'Register', 'singerDetail', 'songListDetail', 'AllMV']">
+        <keep-alive :exclude="excludeList">
           <component :is="Component" />
         </keep-alive>
       </router-view>
@@ -24,12 +24,15 @@
 import TopNavBar from "./topNavBar/topNavBar.vue";      // 顶部导航栏
 import SideNavBar from "./sideNavBar/sideNavBar.vue";   // 侧边导航栏
 import PlayBar from "./playBar/playBar.vue";            // 播放栏
-import { toRefs, ref, watch } from "vue";
 import { useThrottleFn } from "@vueuse/shared";
-import { useMainStore } from "store";
 import { useRoute } from "vue-router";
+import { useMainStore } from "store";
+import { ref, watch } from "vue";
 const store = useMainStore();
 const route = useRoute();
+
+// keepAlive排除列表
+let excludeList = ['Login', 'Register', 'singerDetail', 'songListDetail', 'AllMV', 'MVDetail', 'VideoDetail'];
 
 // 滚动元素
 let scrollEl = ref<HTMLElement | null>(null);

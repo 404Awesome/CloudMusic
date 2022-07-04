@@ -1,4 +1,4 @@
-<!-- 相关mv -->
+<!-- 相关视频 -->
 <template>
   <h4 text-lg mb-2>相关推荐</h4>
 
@@ -17,32 +17,38 @@
     </template>
     <template #default>
       <div mb-4 v-for="item in relevantList" :key="item.id">
-        <MVItem v-bind="item" :isFlex="true" mode="replace" />
+        <VideoItem v-bind="item" mode="replace" :isFlex="true" />
       </div>
     </template>
   </el-skeleton>
 </template>
 
 <script setup lang="ts">
-import MVItem from "@/components/content/mvItem/mvItem.vue";
+import VideoItem from "@/components/content/videoItem/videoItem.vue";
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
-import { MVAPI } from "api";
+import { VideoAPI } from "api";
 const route = useRoute();
 
 // 加载状态
 let loading = ref(true);
-// 相关mv列表
+// 相关video列表
 let relevantList = reactive<any[]>([]);
-// 加载相关mv
+// 加载相关video
 let loadData = async () => {
   try {
-    let id = parseInt(route.params.id as string);
-    let { code, mvs }: any = await MVAPI.getRelevant(id);
-    if (code == 200) relevantList.push(...mvs);
+    let { code, data }: any = await VideoAPI.getRelated(route.params.vid as string);
+    if (code == 200) {
+      let list = data.map((item: any) => {
+        let { vid, coverUrl, title, durationms, playTime, creator } = item;
+        let { userId, userName } = creator[0];
+        return { uid: userId, nickname: userName, vid, coverUrl, title, durationms, playTime }
+      });
+      relevantList.push(...list);
+    }
   } catch (err: any) {
-    ElMessage.error("加载相关mv失败!");
+    ElMessage.error("加载相关video失败!");
   } finally {
     loading.value = false;
   }

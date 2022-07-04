@@ -21,7 +21,7 @@ import { useDebounceFn } from '@vueuse/shared';
 const emit = defineEmits(['getComment']);
 const props = defineProps({
   id: {
-    type: Number,
+    type: [Number, String],
     required: true
   }
 })

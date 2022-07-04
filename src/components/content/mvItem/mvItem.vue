@@ -20,7 +20,7 @@
     <!-- 详情 -->
     <section mt-5px overflow-hidden>
       <!-- 标题 -->
-      <p @click="goMVDetailPage" truncate group-hover:themeColor>{{ name }}</p>
+      <p @click="goMVDetailPage" class="title" truncate group-hover:themeColor>{{ name }}</p>
       <!-- 艺术家 -->
       <Artists :artists="artists" />
     </section>
@@ -78,8 +78,6 @@ let goMVDetailPage = () => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/mixins.scss";
-
 .cover {
   .playIcon {
     position: absolute;
@@ -109,17 +107,22 @@ let goMVDetailPage = () => {
   }
 }
 
+// 横向布局
 .flex {
   gap: 10px;
-  flex: 1;
 
   &>section {
-    width: 50%;
+    flex: 1;
 
-    &:last-child>p:first-child {
+    .title {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      margin-bottom: 5px;
+      text-overflow: ellipsis;
       white-space: normal;
 
-      @include multilineOmit(2);
+      -webkit-line-clamp: 2;
     }
   }
 }

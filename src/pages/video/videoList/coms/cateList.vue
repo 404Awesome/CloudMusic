@@ -48,19 +48,24 @@ let selected = (type: string) => {
   }
 };
 
+// 处理列表
+let handleList = (list: any[]) => {
+  return list.filter((item: any) => item.name !== 'MV').map((item: any) => item.name);
+}
+
 // 加载全部分类
 onMounted(async () => {
   let [hotList, groupList]: any = await Promise.all([VideoAPI.getCateList(), VideoAPI.getGroupList()]);
 
   // 处理热门分类
   if (hotList.code == 200) {
-    let list = hotList.data.map((item: any) => item.name);
+    let list = handleList(hotList.data);
     hotCateList.push(...list);
   }
 
   // 处理全部分类
   if (groupList.code == 200) {
-    let list = groupList.data.map((item: any) => item.name);
+    let list = handleList(groupList.data);
     allCateList.push({ list });
     originList.push(...groupList.data);
   }

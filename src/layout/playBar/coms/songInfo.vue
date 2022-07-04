@@ -25,7 +25,7 @@
     </div>
 
     <!-- 歌曲详情 -->
-    <SongDetail v-if="currentSong" ref="songDetailEl" />
+    <SongDetail v-if="currentSong" :key="currentSong.song.id" ref="songDetailEl" />
   </div>
 </template>
 

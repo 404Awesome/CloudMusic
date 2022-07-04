@@ -5,35 +5,36 @@
     <Artists fontSize="15px" :artists="artists!" />
 
     <!-- mv信息 -->
-    <div class="mvInfo">
+    <div pt-10px>
       <!-- 标题 -->
-      <h4 class="title">
-        <span>{{ name }}</span>
-        <span v-if="desc" @click="showDesc = !showDesc" :class="{ active: showDesc }"
-          class="icon i-eva:arrow-up-fill"></span>
+      <h4 text-20px flex items-center gap-5px>
+        <span max-w="7/10" truncate>{{ name }}</span>
+        <span v-if="desc" @click="showDesc = !showDesc" class="descIcon" :class="{ active: showDesc }"
+          i-eva:arrow-up-fill></span>
       </h4>
 
       <!-- 元信息 -->
-      <p class="metaInfo">
+      <p flex py-10px text="black/50 14px" gap-15px>
         <span>发布: {{ publishTime }}</span>
         <span>播放: {{ Handle.Count(playCount!) }}</span>
       </p>
 
       <!-- 简介 -->
-      <p class="describe" v-show="showDesc">{{ desc }}</p>
+      <p v-show="showDesc" p-10px mb-10px rounded-md bg="#f4f4f5" text-14px>{{ desc }}</p>
 
       <!-- 操作 -->
-      <div class="operate">
+      <div flex items-center justify-between text-14px gap-10px select-none>
         <!-- 赞 / 收藏 / 分享 -->
-        <ul class="control">
-          <li v-for="item in control" :key="item.title">
-            <span class="icon" :class="item.icon"></span>
-            <span>{{ item.title }}</span>
+        <ul flex flex-wrap overflow-hidden flex-1 gap-10px>
+          <li v-for="item in control" :key="item.title" flex items-center py-6px px-13px rounded-full cursor-pointer
+            hover="text-white themeBgColor" border="1px solid #eee">
+            <span :class="item.icon" mr-5px text-17px></span>
+            <span truncate>{{ item.title }}</span>
           </li>
         </ul>
 
         <!-- 举报 -->
-        <p class="report">举报</p>
+        <p truncate cursor-pointer hover:themeColor>举报</p>
       </div>
     </div>
   </div>
@@ -41,7 +42,7 @@
 
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
-import { toRaw, reactive, ref } from "vue";
+import { toRaw, ref } from "vue";
 import { Handle } from "utils";
 const props = defineProps({
   desc: String,
@@ -56,14 +57,14 @@ const props = defineProps({
 let { artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount } = toRaw(props);
 
 // 赞 / 收藏 / 分享
-let control = reactive([{
+let control = ([{
   title: `赞 (${likedCount})`,
   icon: "i-heroicons-outline:thumb-up",
 }, {
   title: `收藏 (${subCount})`,
   icon: "i-heroicons-outline:folder-add",
 }, {
-  title: `转发 (${shareCount})`,
+  title: `分享 (${shareCount})`,
   icon: "i-heroicons-outline:external-link",
 }]);
 
@@ -72,98 +73,20 @@ let showDesc = ref(false);
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/mixins.scss";
+// 描述图标
+.descIcon {
+  min-width: 25px;
+  font-size: 25px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  transform: rotate(180deg);
 
-.mvInfo {
-  margin-top: 10px;
-
-  .title {
-    margin: 0;
-    color: var(--font-color);
-    font-weight: 400;
-    font-size: 20px;
-
-    .icon {
-      font-size: 25px;
-      cursor: pointer;
-      transition: transform 0.3s ease-in-out;
-      transform: rotate(180deg);
-
-      &.active {
-        transform: rotate(0deg);
-      }
-
-      &:hover {
-        color: var(--theme-color);
-      }
-    }
+  &.active {
+    transform: rotate(0deg);
   }
 
-  .metaInfo {
-    display: flex;
-    margin: 10px 0px;
-    color: rgba($color: #000000, $alpha: 0.5);
-    font-size: 14px;
-
-    gap: 15px;
-  }
-
-  .describe {
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f4f4f5;
-    color: var(--font-color);
-    font-size: 14px;
-  }
-
-  .operate {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
-    font-size: 14px;
-
-    gap: 10px;
-    user-select: none;
-
-    .control li,
-    .report {
-      @include oneOmit;
-    }
-
-    .control {
-      display: flex;
-      overflow: hidden;
-      flex: 1;
-
-      gap: 10px;
-
-      li {
-        padding: 5px 10px;
-        border: 1px solid #eee;
-        border-radius: 5px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #f5f7fa;
-          color: var(--theme-color);
-        }
-
-        .icon {
-          margin-right: 5px;
-          font-size: 17px;
-        }
-      }
-    }
-
-    .report {
-      cursor: pointer;
-
-      &:hover {
-        color: var(--theme-color);
-
-      }
-    }
+  &:hover {
+    color: var(--theme-color);
   }
 }
 </style>

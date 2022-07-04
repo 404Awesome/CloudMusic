@@ -19,7 +19,7 @@ const props = defineProps({
   fontSize: {
     type: String,
     default: "13px",
-  }
+  },
 });
 let { artists, fontSize } = toRaw(props);
 

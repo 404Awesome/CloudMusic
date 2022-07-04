@@ -1,8 +1,8 @@
 import { GET } from "../request";
 
 export default {
-  // 获取相似视频
-  getRelated(id: number) {
+  // 获取相关视频
+  getRelated(id: string) {
     return GET("/related/allvideo", { id });
   },
   // 获取视频标签/分类下的视频
@@ -20,5 +20,17 @@ export default {
   // 获取全部视频列表
   getTimelineAll(offset: number = 0) {
     return GET("/video/timeline/all", { offset });
+  },
+  // 视频详情
+  getDetail(id: string) {
+    return GET("/video/detail", { id });
+  },
+  // 获取视频播放地址
+  getUrl(id: string) {
+    return GET("/video/url", { id });
+  },
+  // 获取视频评论
+  getComment(id: string) {
+    return GET("/comment/video", { id });
   },
 }

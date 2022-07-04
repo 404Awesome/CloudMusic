@@ -62,7 +62,7 @@
                 <p>{{ item.timeStr }}</p>
                 <div flex items-center gap-10px>
                   <span cursor-pointer hover:themeColor opacity-0 group-hover:opacity-100>举报</span>
-                  <span cursor-pointer hover:themeColor flex>
+                  <span cursor-pointer hover:themeColor flex items-center>
                     <span text-18px i-heroicons-outline:thumb-up></span>
                     <span text-13px>{{ item.likedCount || " " }}</span>
                   </span>
@@ -100,7 +100,7 @@ const router = useRouter();
 const store = useMainStore();
 const props = defineProps({
   id: {
-    type: Number,
+    type: [Number, String],
     required: true
   },
   limit: {

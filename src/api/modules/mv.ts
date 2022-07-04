@@ -22,7 +22,7 @@ export default {
     // area 不填则为全部
     return GET("/mv/first", { area, limit });
   },
-  // 获取mv点赞/转发/评论数数据
+  // 获取mv点赞/分享/评论数数据
   getDetailInfo(mvid: number) {
     return GET("/mv/detail/info", { mvid });
   },

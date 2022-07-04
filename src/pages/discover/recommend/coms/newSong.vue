@@ -3,11 +3,12 @@
   <el-skeleton :loading="loading" animated>
     <template #template>
       <ul grid3Cols mt-15px ref="skeletonEl">
-        <li v-for="item in 6" flex gap-20px>
+        <li v-for="item in 6" flex items-center>
           <el-skeleton-item variant="image" h-20 w-20 rounded-md />
-          <div flex-1 flex flex-col justify-center>
+          <el-skeleton-item variant="text" h-20px w-20px mx-10px rounded-md />
+          <div h-full flex-1 flex flex-col justify-around>
             <el-skeleton-item variant="text" w="7/10" />
-            <el-skeleton-item variant="text" w="2/10" mt-10px />
+            <el-skeleton-item variant="text" w="3/10" />
           </div>
         </li>
       </ul>
@@ -28,9 +29,9 @@
             <!-- 排名 -->
             <p pl-10px text="black/50 16px">{{ (index + 1).toString().padStart(2, "0") }}</p>
             <!-- 信息 -->
-            <div flex overflow-hidden flex-1 flex-col flex-nowrap justify-center p="0px 10px" h-full>
+            <div flex overflow-hidden flex-1 flex-col flex-nowrap justify-around p="0px 10px" h-full>
               <!-- 歌名 -->
-              <p truncate text-15px group-hover:themeColor>{{ song.name }}</p>
+              <p @click="playSong(song.id)" truncate text-15px cursor-pointer group-hover:themeColor>{{ song.name }}</p>
               <!-- 艺术家 -->
               <Artists :artists="song.artists" />
             </div>

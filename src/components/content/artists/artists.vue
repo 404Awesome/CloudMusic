@@ -10,6 +10,7 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import { PropType, toRaw } from "vue";
+const emit = defineEmits(['jump']);
 const router = useRouter();
 const props = defineProps({
   artists: {
@@ -25,6 +26,8 @@ let { artists, fontSize } = toRaw(props);
 
 // 跳转艺术家页面
 let goArtistPage = (artist: any) => {
+  // 发生跳转事件
+  emit('jump');
   let { id, name } = artist;
   router.push({ path: `/singerDetail`, query: { id, name } });
 };

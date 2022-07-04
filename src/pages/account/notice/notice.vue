@@ -1,7 +1,6 @@
+<!-- 通知 -->
 <template>
-  <div>
-    <p>通知</p>
-  </div>
+  <div></div>
 </template>
 
 <script setup lang="ts"></script>

@@ -113,9 +113,9 @@ defineExpose({ toggle });
 }
 
 .scrollbar {
+  padding-bottom: 5px;
   height: calc(100% - 80px);
   background-color: #fff;
-  padding-bottom: 5px;
 
   .list li {
     display: flex;
@@ -129,9 +129,9 @@ defineExpose({ toggle });
     user-select: none;
 
     &.active {
+      padding-left: 10px;
       background-color: #f5f7fa;
       color: var(--theme-color) !important;
-      padding-left: 10px;
 
       .playIcon {
         display: inline-block;
@@ -142,15 +142,15 @@ defineExpose({ toggle });
 </style>
 <style lang="scss">
 .playListDrawer {
-  box-sizing: border-box;
   overflow: hidden;
+  box-sizing: border-box;
   margin-top: var(--topNavBarHeight);
   max-height: calc(101% - var(--topNavBarHeight) - var(--playBarHeight));
   background-color: transparent;
 
   .el-drawer__body {
-    padding: 0px;
     overflow: hidden;
+    padding: 0px;
 
     .el-scrollbar__view {
       height: 100%;

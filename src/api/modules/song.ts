@@ -17,4 +17,8 @@ export default {
   getComment(id: number, offset: number = 0, limit: number = 20) {
     return GET("/comment/music", { id, offset, limit });
   },
+  // 获取相似音乐
+  getSimi(id: number) {
+    return GET("/simi/song", { id });
+  },
 }

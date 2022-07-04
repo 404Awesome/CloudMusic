@@ -43,7 +43,7 @@
               </p>
               <p flex-1 flex items-center truncate overflow-hidden>
                 <span>歌手:&nbsp;</span>
-                <Artists fontSize="14px" :artists="currentSong!.artists" />
+                <Artists @jump="() => store.isFolding = false" :artists="currentSong!.artists" fontSize="14px" />
               </p>
             </div>
 
@@ -63,7 +63,11 @@
           </div>
 
           <div w-300px hidden sm:inline-block>
-            <h2 text-18px>包含这首歌的歌单</h2>
+            <!-- 标题 -->
+            <h2 text-18px mb-10px>相似歌曲</h2>
+
+            <!-- 相似歌曲列表 -->
+            <SimiSongList :id="currentSong!.song.id" />
           </div>
         </section>
       </div>
@@ -75,6 +79,7 @@
 import SendComment from "@/components/content/sendComment/sendComment.vue";
 import CommentList from "@/components/content/commentList/commentList.vue";
 import Artists from "@/components/content/artists/artists.vue";
+import SimiSongList from "./simiSongList.vue";
 import { useMainStore } from "store";
 import { SongAPI } from "api";
 import { toRef } from "vue";

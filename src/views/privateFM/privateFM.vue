@@ -2,31 +2,51 @@
 <template>
   <el-skeleton :loading="loading" animated>
     <template #template>
-      <ul wrapBox pt-15px pb-20px>
-        <li v-for="item in 3" pb-24px flex gap-15px>
-          <!-- <el-skeleton-item variant="image" w-10 h-10 rounded-full />
-          <div flex-1 pb-24px border-b="2px solid #eee">
-            <div>
-              <el-skeleton-item variant="text" w="8/100" mr-10px />
-              <el-skeleton-item variant="text" w="35/100" />
+      <div wrapBox>
+        <div class="songInfo" flex gap-20px py-15px>
+          <section flex flex-1 flex-col gap-30px justify-center items-center>
+            <!-- 封面 -->
+            <el-skeleton-item variant="image" w-230px h-230px rounded-md />
+            <!-- 操作按钮 -->
+            <ul flex gap-30px>
+              <li v-for="item in 4">
+                <el-skeleton-item w-42px h-42px rounded-full />
+              </li>
+            </ul>
+          </section>
+          <section hidden md:inline-block flex-1>
+            <!-- 标题 -->
+            <el-skeleton-item variant="text" h-25px w="4/10" />
+            <!-- 艺人 -->
+            <div flex gap-100px mt-7px>
+              <el-skeleton-item variant="text" w="2/10" />
+              <el-skeleton-item variant="text" w="3/10" />
             </div>
-            <div>
-              <el-skeleton-item variant="text" w="13/100" mr-10px />
-              <el-skeleton-item variant="text" w="45/100" />
+            <!-- 歌词 -->
+            <div mt-50px flex flex-col gap-20px>
+              <el-skeleton-item variant="text" w="6/10" />
+              <el-skeleton-item variant="text" w="2/10" />
+              <el-skeleton-item variant="text" w="5/10" />
+              <el-skeleton-item variant="text" w="8/10" />
+              <el-skeleton-item variant="text" w="4/10" />
+              <el-skeleton-item variant="text" w="3/10" />
+              <el-skeleton-item variant="text" w="6/10" />
+              <el-skeleton-item variant="text" w="7/10" />
+              <el-skeleton-item variant="text" w="3/10" />
+              <el-skeleton-item variant="text" w="5/10" />
             </div>
-            <div flex justify-between mt-3px>
-              <el-skeleton-item variant="text" w="6/100" />
-              <el-skeleton-item variant="text" w="13/100" />
-            </div>
-          </div> -->
-        </li>
-      </ul>
+          </section>
+        </div>
+
+        <!-- 评论 -->
+        <el-skeleton-item variant="text" h-20px w-100px />
+      </div>
     </template>
     <template #default>
       <div wrapBox pb-20px>
         <!-- 歌曲信息 -->
         <div class="songInfo" flex gap-20px py-15px>
-          <section hidden md:flex flex-col justify-center items-center gap-30px flex-1>
+          <section flex flex-col justify-center items-center gap-30px flex-1>
             <!-- 封面 -->
             <el-image :src="personalFM.album.picUrl" fit="cover" :draggable="false" w="1/2" shadow-xl rounded-md />
 
@@ -51,7 +71,7 @@
             </ul>
           </section>
 
-          <section flex-1 flex flex-col overflow-hidden>
+          <section hidden md:flex flex-1 flex-col overflow-hidden>
             <!-- 标题 -->
             <h1 text-20px truncate>{{ personalFM.name }}</h1>
 

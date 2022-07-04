@@ -25,7 +25,7 @@
     </div>
 
     <!-- 歌曲详情 -->
-    <SongDetail v-if="currentSong" :key="currentSong.song.id" ref="songDetailEl" />
+    <SongDetail v-if="currentSong" :key="currentSong.song.id" />
   </div>
 </template>
 
@@ -33,7 +33,7 @@
 import SongDetail from "./songDetail.vue";
 import { useRoute } from "vue-router";
 import { useMainStore } from "store";
-import { toRef, ref } from "vue";
+import { toRef } from "vue";
 const store = useMainStore();
 const route = useRoute();
 let currentSong = toRef(store, "currentSong");
@@ -57,10 +57,9 @@ let handleTime = (time: number) => {
 }
 
 // 打开歌曲详情
-let songDetailEl = ref<InstanceType<typeof SongDetail>>();
 let openSongDetail = () => {
   if (route.path !== "/privateFM") {
-    songDetailEl.value?.toggle();
+    store.isFolding = !store.isFolding;
   }
 };
 </script>

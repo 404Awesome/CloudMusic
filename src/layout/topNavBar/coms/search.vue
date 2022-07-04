@@ -12,8 +12,7 @@
         <div flex gap-5px>
           <input v-model.trim.lazy="searchText" type="text" placeholder="搜索" px-10px py-5px w-130px outline-none
             border-none rounded-md bg="#eee" text-14px box-border />
-          <button @click="search" flex-1 border-none rounded-md themeBgColor text-white whitespace-nowrap
-            cursor-pointer>搜索</button>
+          <button @click="search" class="searchBtn">搜索</button>
         </div>
 
         <!-- 热搜榜 -->
@@ -22,8 +21,8 @@
             <h4>热搜榜</h4>
           </el-divider>
           <el-scrollbar height="200px" :always="true">
-            <p @click="searchHot(item)" v-for="(item, index) in searchHotList" :key="item.searchWord" class="group" flex
-              overflow-hidden mb-5px pr-6px text-14px cursor-pointer>
+            <p @click="searchHot(item.searchWord)" v-for="(item, index) in searchHotList" :key="item.searchWord"
+              class="group listItem">
               <span truncate w-25px text-center :style="{ 'color': index < 3 ? 'var(--theme-color)' : '' }">
                 {{ index + 1 }}
               </span>
@@ -38,17 +37,34 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import { ref, reactive } from "vue";
 import { SearchAPI } from "api";
+import { ElMessage } from "element-plus";
+const router = useRouter();
 
 // 热搜列表
-let searchHotList = reactive<any>([]);
+interface SearchHotList {
+  searchWord: string,
+  score: number
+}
+let searchHotList = reactive<SearchHotList[]>([]);
 // 显示Popover时触发事件
 let showPopover = async () => {
-  if (!searchHotList.length) {
-    // 加载搜索热搜
-    let { code, data }: any = await SearchAPI.getSearchHot();
-    if (code == 200) searchHotList.push(...data);
+  try {
+    // 当热搜列表为空时,加载热搜列表
+    if (!searchHotList.length) {
+      let { code, data }: any = await SearchAPI.getSearchHot();
+      if (code == 200) {
+        let list = data.map((item: any) => {
+          let { searchWord, score } = item;
+          return { searchWord, score };
+        })
+        searchHotList.push(...list);
+      };
+    }
+  } catch (err: any) {
+    ElMessage.error("加载搜索热搜失败!");
   }
 }
 
@@ -56,18 +72,28 @@ let showPopover = async () => {
 let searchText = ref("");
 let search = () => {
   if (searchText.value.length) {
-    console.log(searchText.value);
+    router.push(`/search/${searchText.value}`);
   }
 }
 
-// 搜索热搜
-let searchHot = (songInfo: any) => {
-  console.log(songInfo);
+// 搜索热搜点击事件
+let searchHot = (searchWord: string) => {
+  router.push(`/search/${searchWord}`);
 }
 </script>
 
 <style lang="scss" scoped>
 .icon {
   @apply flex-1 text-white/70 whitespace-nowrap text-19px cursor-pointer hover-text-white;
+}
+
+// 搜索按钮
+.searchBtn {
+  @apply flex-1 border-none rounded-md themeBgColor text-white whitespace-nowrap cursor-pointer;
+}
+
+// 热搜列表项
+.listItem {
+  @apply flex overflow-hidden mb-5px pr-6px text-14px cursor-pointer;
 }
 </style>

@@ -129,6 +129,13 @@ onMounted(() => {
   audioPlyr.value.on("timeupdate", () => {
     store.playProgress = parseFloat((audioPlyr.value!.currentTime).toFixed(3));
   });
+  // 监听键盘按键事件
+  document.body.addEventListener("keydown", (event: KeyboardEvent) => {
+    // 阻止默认事件
+    event.preventDefault();
+    // 空格按键 -> 播放或暂停歌曲
+    if (event.code === "Space" && audioPlyr.value!.source) play();
+  });
 });
 // 视频播放,暂停音频播放
 watch(() => store.playStatus, (status) => {

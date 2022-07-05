@@ -5,20 +5,20 @@
     <div @click="openSongDetail" class="cover">
       <el-image :src="currentSong?.album.picUrl" fit="cover" />
       <div class="icon">
-        <span class="i-heroicons-outline:chevron-up"></span>
-        <span class="i-heroicons-outline:chevron-down"></span>
+        <span i-heroicons-outline:chevron-up></span>
+        <span i-heroicons-outline:chevron-down></span>
       </div>
     </div>
 
     <!-- 详情 -->
     <div hidden md:inline-block flex-1>
       <!-- 标题 -->
-      <p @click="openSongDetail" sm:max-w-32 xl:max-w-62 truncate text-14px cursor-pointer hover:themeColor>
+      <p @click="openSongDetail" sm:max-w-32 xl:max-w-62 truncate select-none text-14px cursor-pointer hover:themeColor>
         {{ currentSong?.song.name }}
       </p>
       <!-- 时间 -->
       <p text="black/40" text-12px whitespace-nowrap text-nowrap>
-        <span>{{ handleTime(props.currentTime) }}</span>
+        <span>{{ handleTime(store.playProgress) }}</span>
         <span>&nbsp;/&nbsp;</span>
         <span>{{ handleTime(props.duration) }}</span>
       </p>

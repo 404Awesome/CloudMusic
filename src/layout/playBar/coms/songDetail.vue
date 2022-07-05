@@ -48,7 +48,9 @@
             </div>
 
             <!-- 歌词 -->
-            <div flex-1></div>
+            <div flex-1 overflow-hidden>
+              <Lyric :id="currentSong!.song.id" />
+            </div>
           </div>
         </section>
 
@@ -79,6 +81,7 @@
 import SendComment from "@/components/content/sendComment/sendComment.vue";
 import CommentList from "@/components/content/commentList/commentList.vue";
 import Artists from "@/components/content/artists/artists.vue";
+import Lyric from "@/components/content/lyric/lyric.vue";
 import SimiSongList from "./simiSongList.vue";
 import { useMainStore } from "store";
 import { SongAPI } from "api";

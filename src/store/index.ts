@@ -41,6 +41,8 @@ export const useMainStore = defineStore("main", {
       playList: useStorage<SongInfo[]>('playList', [], sessionStorage),
       // 当前歌单ID
       songListID: useStorage<number>('songListID', 0, sessionStorage),
+      // 当前播放进度
+      playProgress: useStorage<number>("playProgress", 0, sessionStorage),
       // 当前播放歌曲
       currentSong: useStorage<SongInfo | null>('currentSong', null, sessionStorage, { serializer: StorageSerializers.object })
     };
@@ -53,6 +55,8 @@ export const useMainStore = defineStore("main", {
     playSong(songInfo: SongInfo) {
       let id = songInfo.song.id;
       if (this.currentSong?.song.id !== id) {
+        // 限制播放列表只能存30首歌
+        if (this.playList.length >= 30) this.playList.shift();
         this.currentSong = songInfo;
         if (!this.IsExists(id)) this.playList.push(songInfo);
       }

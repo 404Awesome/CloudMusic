@@ -1,5 +1,10 @@
 import { SongInfo } from "store";
 
+
+export interface Lyric {
+  lyric: string,
+  time: number
+}
 export default {
   // 处理次数 如播放次数等
   Count(count: number): string {
@@ -42,5 +47,22 @@ export default {
   // 处理歌单列表中歌曲信息
   SongList(songList: any): SongInfo[] {
     return songList.map((item: any) => this.SongInfo(item));
+  },
+  // 处理歌词
+  Lyric(lyricInfo: string): Lyric[] {
+    // 分割成歌词列表
+    let lyricList = lyricInfo.split(/\n/g);
+    return <Lyric[]>lyricList.map((item: string) => {
+      // 歌词
+      let lyric = item.match(/(?<=]).+$/g);
+      if (lyric) {
+        // 取时间
+        let timeList = item.match(/(?<=\[)(.+)(?=\])/g)![0].split(":");
+        // 处理时间
+        let time = ((parseInt(timeList[0]) * 60) + parseFloat(timeList[1]));
+        return { lyric: lyric[0].trim(), time }
+      }
+      return null;
+    }).filter((item: any) => item);
   }
 }

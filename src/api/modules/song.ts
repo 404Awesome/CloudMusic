@@ -21,4 +21,8 @@ export default {
   getSimi(id: number) {
     return GET("/simi/song", { id });
   },
+  // 获取歌词
+  getLyric(id: number) {
+    return GET("/lyric", { id });
+  },
 }

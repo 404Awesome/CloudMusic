@@ -50,9 +50,12 @@
 
 <script setup lang="ts">
 import Artists from "@/components/content/artists/artists.vue";
-import { toRefs, ref } from "vue";
+import { ElMessage } from "element-plus";
+import { useRoute } from "vue-router";
 import { useMainStore } from "store";
+import { toRefs, ref } from "vue";
 const store = useMainStore();
+const route = useRoute();
 let { playList, currentSong } = toRefs(store);
 
 // 是否显示
@@ -63,6 +66,10 @@ let toggle = () => {
 
 // 播放音乐
 let playSong = (song: any) => {
+  if (route.path == "/privateFM") {
+    return ElMessage.warning("当前为私人FM!");
+  }
+
   if (song.song.id !== currentSong.value?.song.id) {
     store.playSong(song);
   }

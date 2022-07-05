@@ -22,19 +22,6 @@
               <el-skeleton-item variant="text" w="2/10" />
               <el-skeleton-item variant="text" w="3/10" />
             </div>
-            <!-- 歌词 -->
-            <div mt-50px flex flex-col gap-20px>
-              <el-skeleton-item variant="text" w="6/10" />
-              <el-skeleton-item variant="text" w="2/10" />
-              <el-skeleton-item variant="text" w="5/10" />
-              <el-skeleton-item variant="text" w="8/10" />
-              <el-skeleton-item variant="text" w="4/10" />
-              <el-skeleton-item variant="text" w="3/10" />
-              <el-skeleton-item variant="text" w="6/10" />
-              <el-skeleton-item variant="text" w="7/10" />
-              <el-skeleton-item variant="text" w="3/10" />
-              <el-skeleton-item variant="text" w="5/10" />
-            </div>
           </section>
         </div>
 
@@ -88,7 +75,9 @@
             </div>
 
             <!-- 歌词 -->
-            <div flex-1></div>
+            <div flex-1 overflow-hidden>
+              <Lyric :id="personalFM.id" />
+            </div>
           </section>
         </div>
 
@@ -103,6 +92,7 @@
 </template>
 
 <script setup lang="ts">
+import Lyric from "@/components/content/lyric/lyric.vue";
 import Artists from "@/components/content/artists/artists.vue";
 import SendComment from "@/components/content/sendComment/sendComment.vue";
 import CommentList from "@/components/content/commentList/commentList.vue";

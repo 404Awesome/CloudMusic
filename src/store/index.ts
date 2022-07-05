@@ -28,7 +28,7 @@ export const useMainStore = defineStore("main", {
       // 登陆状态
       auth: useStorage<string>('auth', '', localStorage),
       // 页面滚动距离
-      scrollTop: useStorage<number>('scrollTop', 0, sessionStorage),
+      scrollTop: useStorage<number>('scrollTop', 0),
       // 播放状态 
       playStatus: useStorage<'audio' | 'video' | 'pause'>("playStatus", 'pause', sessionStorage),
       // 主题色

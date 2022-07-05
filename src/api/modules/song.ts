@@ -25,4 +25,8 @@ export default {
   getLyric(id: number) {
     return GET("/lyric", { id });
   },
+  // 获取客户端歌曲下载url
+  getDownloadUrl(id: number) {
+    return GET("/song/download/url", { id });
+  },
 }

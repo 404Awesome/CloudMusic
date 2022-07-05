@@ -58,11 +58,10 @@ import PlayList from "./coms/playList.vue";
 import SongInfo from "./coms/songInfo.vue";
 import Plyr from "plyr";
 import { ref, watch, onMounted, computed } from "vue";
-import { useDebounceFn, useThrottleFn } from "@vueuse/shared";
+import { useDebounceFn } from "@vueuse/shared";
 import { ElMessage } from "element-plus";
-import { useMainStore } from "store";
 import { useRoute } from "vue-router";
-import { Handle } from "@/utils";
+import { useMainStore } from "store";
 const store = useMainStore();
 const route = useRoute();
 
@@ -131,10 +130,13 @@ onMounted(() => {
   });
   // 监听键盘按键事件
   document.body.addEventListener("keydown", (event: KeyboardEvent) => {
-    // 阻止默认事件
-    event.preventDefault();
     // 空格按键 -> 播放或暂停歌曲
-    if (event.code === "Space" && audioPlyr.value!.source) play();
+    if (event.code === "Space" && audioPlyr.value!.source) {
+      // 阻止默认事件
+      event.preventDefault();
+      // 播放
+      play()
+    };
   });
 });
 // 视频播放,暂停音频播放

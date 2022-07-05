@@ -5,11 +5,10 @@
       <el-table-column class-name="index" :width="50" align="center" type="index" :index="(index) => index + 1" />
       <el-table-column :width="50">
         <template v-slot="{ row }">
-          <!-- eva:heart-fill -->
-          <!-- eva:heart-outline -->
           <p flex justify-between>
-            <span @click.stop="Operate.likeSong(row.id)" class="icon i-eva:heart-outline"></span>
-            <span @click.stop="Operate.downloadSong(row.id)" class="icon i-eva:cloud-download-outline"></span>
+            <span @click.stop="Operate.likeSong(row.id)" class="icon" i-eva:heart-outline hover:i-eva-heart-fill
+              important-hover:text-red-500></span>
+            <span @click.stop="Operate.downloadSong(row.id, row.name)" class="icon i-eva:cloud-download-outline"></span>
           </p>
         </template>
       </el-table-column>
@@ -43,9 +42,9 @@ import Artists from "@/components/content/artists/artists.vue";
 import { onMounted, reactive } from "vue";
 import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
+import { useMainStore } from "store";
 import { SongListAPI } from "api";
 import { Operate } from "utils";
-import { useMainStore } from "store";
 const store = useMainStore();
 const route = useRoute();
 let id = parseInt(route.params.id as string);

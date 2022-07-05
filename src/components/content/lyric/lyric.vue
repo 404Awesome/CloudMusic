@@ -119,7 +119,7 @@ onMounted(() => {
 
 // 歌词
 .lyric {
-  @apply text-15px truncate transition-all duration-250 ease-linear;
+  @apply text-15px truncate transition-all duration-250 ease-linear select-none;
 
   &.active {
     @apply themeColor text-18px;

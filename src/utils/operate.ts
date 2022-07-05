@@ -1,7 +1,8 @@
 import { useDebounceFn } from "@vueuse/core";
+import { SongListAPI, SongAPI } from "api";
 import { ElMessage } from "element-plus";
 import { useMainStore } from "store";
-import { SongListAPI } from "api";
+import { saveAs } from "file-saver";
 import { Handle } from "utils";
 
 // 防抖函数延迟时间
@@ -33,8 +34,18 @@ export default {
     store.playSong(songInfo);
   },
   // 下载歌曲
-  downloadSong: useDebounceFn((id: number) => {
-    console.log(id);
+  downloadSong: useDebounceFn(async (id: number, name: string) => {
+    try {
+      let { code, data: { url, type } }: any = await SongAPI.getDownloadUrl(id);
+      if (code == 200 && url) {
+        // 下载歌曲
+        saveAs(url, `${name}.${type}`);
+      } else {
+        ElMessage.warning("该歌曲暂时无法下载!");
+      }
+    } catch (err: any) {
+      ElMessage.error("下载歌曲失败!");
+    }
   }, delay),
   // 喜欢歌曲 / 取消 
   likeSong: useDebounceFn((id: number) => {

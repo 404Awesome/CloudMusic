@@ -17,11 +17,11 @@
       <el-table-column class-name="index" :width="35" align="center" type="index" :index="(index) => index + 1" />
       <el-table-column :width="50">
         <template v-slot="{ row }">
-          <!-- eva:heart-fill -->
-          <!-- eva:heart-outline -->
           <p flex justify-between>
-            <span @click.stop="Operate.likeSong(row.id)" class="icon i-eva:heart-outline"></span>
-            <span @click.stop="Operate.downloadSong(row.id)" class="icon i-eva:cloud-download-outline"></span>
+            <span @click.stop="Operate.likeSong(row.id)" class="icon" i-eva:heart-outline hover-i-eva:heart-fill
+              hover-text-red-500></span>
+            <span @click.stop="Operate.downloadSong(row.id, row.name)" class="icon" i-eva:cloud-download-outline
+              hover:themeColor></span>
           </p>
         </template>
       </el-table-column>
@@ -91,19 +91,9 @@ let { origin, id, name } = toRaw(props);
 }
 
 .list {
-
   .icon {
-    display: flex;
     font-size: 17px;
     cursor: pointer;
-
-    &:hover {
-      color: var(--theme-color);
-    }
-
-    &.liked {
-      color: #f74e40;
-    }
   }
 
   :deep(.el-table) {

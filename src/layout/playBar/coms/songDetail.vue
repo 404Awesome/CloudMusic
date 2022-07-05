@@ -21,7 +21,7 @@
                 <span i-eva:folder-add-outline group-hover-i-eva:folder-add-fill></span>
               </li>
               <!-- 下载 -->
-              <li class="group">
+              <li class="group" @click="Operate.downloadSong(currentSong?.song.id, currentSong?.song.name)">
                 <span i-eva:cloud-download-outline group-hover-i-eva:cloud-download-fill></span>
               </li>
               <!-- 分享 -->
@@ -84,6 +84,7 @@ import Artists from "@/components/content/artists/artists.vue";
 import Lyric from "@/components/content/lyric/lyric.vue";
 import SimiSongList from "./simiSongList.vue";
 import { useMainStore } from "store";
+import { Operate } from "utils";
 import { SongAPI } from "api";
 import { toRef } from "vue";
 const store = useMainStore();

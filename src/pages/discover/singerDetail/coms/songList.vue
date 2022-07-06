@@ -4,13 +4,15 @@
   <header class="head">
     <!-- 标题 -->
     <h4 class="title">{{ name }}</h4>
+
     <!-- 操作 -->
-    <section class="operate">
+    <div class="operate">
       <span @click="Operate.addPlayList(origin || songs, id)" class="icon i-heroicons-outline:play"></span>
       <span v-if="id" class="splitLine">|</span>
       <span v-if="id" @click="Operate.collectAlbum(id)" class="icon i-heroicons-outline:folder-add"></span>
-    </section>
+    </div>
   </header>
+
   <!-- 列表 -->
   <div class="list" select-none>
     <el-table @row-dblclick="Operate.playSong" :data="songs" stripe :show-header="false">
@@ -77,10 +79,6 @@ let { origin, id, name } = toRaw(props);
       color: rgba($color: #000000, $alpha: .5);
       font-size: 22px;
       cursor: pointer;
-
-      &:hover {
-        color: var(--theme-color);
-      }
     }
 
     .splitLine {

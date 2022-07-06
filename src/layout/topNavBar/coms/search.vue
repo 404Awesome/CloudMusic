@@ -1,7 +1,7 @@
 <!-- 搜索 -->
 <template>
-  <el-popover @hide="searchText = ''" :hide-after="0" @show="showPopover" width="200px" placement="bottom-start"
-    trigger="click">
+  <el-popover ref="popoverEl" @hide="searchText = ''" :hide-after="0" @show="showPopover" width="200px"
+    placement="bottom-start" trigger="click">
     <template #reference>
       <span class="icon i-heroicons-outline:search"></span>
     </template>
@@ -10,8 +10,8 @@
       <div class="search" fontColor>
         <!-- 表单 -->
         <div flex gap-5px>
-          <input v-model.trim.lazy="searchText" type="text" placeholder="搜索" px-10px py-5px w-130px outline-none
-            border-none rounded-md bg="#eee" text-14px box-border />
+          <input v-model.trim.lazy="searchText" @keyup.enter="search" type="text" placeholder="搜索" px-10px py-5px
+            w-130px outline-none border-none rounded-md bg="#eee" text-14px box-border />
           <button @click="search" class="searchBtn">搜索</button>
         </div>
 
@@ -37,12 +37,14 @@
 </template>
 
 <script setup lang="ts">
+import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { ref, reactive } from "vue";
-import { SearchAPI } from "api";
-import { ElMessage } from "element-plus";
+import { OtherAPI } from "api";
 const router = useRouter();
 
+//  ElPopover元素
+let popoverEl = ref<any>(null);
 // 热搜列表
 interface SearchHotList {
   searchWord: string,
@@ -54,7 +56,7 @@ let showPopover = async () => {
   try {
     // 当热搜列表为空时,加载热搜列表
     if (!searchHotList.length) {
-      let { code, data }: any = await SearchAPI.getSearchHot();
+      let { code, data }: any = await OtherAPI.getSearchHot();
       if (code == 200) {
         let list = data.map((item: any) => {
           let { searchWord, score } = item;
@@ -73,12 +75,14 @@ let searchText = ref("");
 let search = () => {
   if (searchText.value.length) {
     router.push(`/search/${searchText.value}`);
+    popoverEl.value?.hide();
   }
 }
 
 // 搜索热搜点击事件
 let searchHot = (searchWord: string) => {
   router.push(`/search/${searchWord}`);
+  popoverEl.value?.hide();
 }
 </script>
 

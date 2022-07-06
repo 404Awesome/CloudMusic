@@ -36,7 +36,7 @@ export const useMainStore = defineStore("main", {
       // 是否折叠侧边栏
       isFolding: useStorage<boolean>('isFolding', false, sessionStorage),
       // 音量大小
-      volume: useStorage<number>('volume', 50, localStorage),
+      volume: useStorage<number>('volume', 70, localStorage),
       // 播放列表
       playList: useStorage<SongInfo[]>('playList', [], sessionStorage),
       // 当前歌单ID

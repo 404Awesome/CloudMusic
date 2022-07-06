@@ -32,7 +32,7 @@ const store = useMainStore();
 const route = useRoute();
 
 // keepAlive排除列表
-let excludeList = ['Login', 'Register', 'singerDetail', 'songListDetail', 'AllMV', 'MVDetail', 'VideoDetail'];
+let excludeList = ['Login', 'Register', 'singerDetail', 'songListDetail', 'AllMV', 'MVDetail', 'VideoDetail', 'Search'];
 
 // 滚动元素
 let scrollEl = ref<HTMLElement | null>(null);
@@ -42,7 +42,7 @@ let scroll = useThrottleFn((event: UIEvent) => {
     let target = event.target as HTMLElement;
     store.scrollTop = target.scrollTop;
   }
-}, 100);
+}, 200);
 // 监听路由,将页面滚动到顶部
 watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 </script>

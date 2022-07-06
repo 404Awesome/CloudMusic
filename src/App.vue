@@ -12,10 +12,6 @@ const store = useMainStore();
 onMounted(() => {
   // 初始化主题
   document.documentElement.style.setProperty("--theme-color", store.themeColor);
-  // 页面刷新前初始化数据
-  window.addEventListener("beforeunload", () => {
-    store.scrollTop = 0;
-  })
 });
 </script>
 

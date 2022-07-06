@@ -18,8 +18,8 @@ export default { name: "songListDetail" }
 </script>
 <script setup lang="ts">
 import Detail from "./coms/detail.vue";
-import SongList from "./coms/songList.vue";
 import Comment from "./coms/comment.vue";
+import SongList from "./coms/songList.vue";
 import Collector from "./coms/collector.vue";
 import { ref, markRaw } from "vue";
 

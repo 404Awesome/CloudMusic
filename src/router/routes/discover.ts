@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
+import { useMainStore } from "store";
 
 /*
  * Discover: "发现音乐",
@@ -76,7 +77,12 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/songListDetail/:id",
     meta: { title: "歌单详情", scroll: true },
-    component: SongListDetail
+    component: SongListDetail,
+    beforeEnter() {
+      const store = useMainStore();
+      store.scrollTop = 0;
+      return true;
+    }
   },
   // 独家放送
   {

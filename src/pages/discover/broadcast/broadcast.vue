@@ -8,7 +8,7 @@
     </div>
 
     <!-- 提示 -->
-    <el-divider w-full>
+    <el-divider>
       <span tip>{{ disabled ? '无法加载更多!' : 'Loading...' }}</span>
     </el-divider>
   </div>

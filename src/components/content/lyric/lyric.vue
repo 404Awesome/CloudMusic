@@ -68,8 +68,14 @@ let loadLyric = async () => {
     loading.value = true;
     let { code, lrc: { lyric } }: any = await SongAPI.getLyric(props.id);
     if (code == 200) {
+      // 处理歌词
       let list = Handle.Lyric(lyric);
+      // 向歌词列表添加歌词
       lyricList.push(...list);
+      // 判断歌词小于4句,停止监听进度
+      if (list.length <= 4) {
+        stopWatcher();
+      }
     }
   } catch (err: any) {
     ElMessage.error("加载歌词失败!");
@@ -79,7 +85,8 @@ let loadLyric = async () => {
 }
 
 // 滚动歌词
-watch(progress, useThrottleFn(() => {
+let stopWatcher = watch(progress, useThrottleFn(() => {
+  console.log(123);
   if (lyricList.length && scrollbarEl.value) {
     // scrollbarEl的高度
     let wrapHeight = scrollbarEl.value.$el.offsetHeight;

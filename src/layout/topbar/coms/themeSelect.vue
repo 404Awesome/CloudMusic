@@ -1,6 +1,6 @@
 <!-- 主题选择 -->
 <template>
-  <el-popover placement="bottom" trigger="click">
+  <el-popover placement="bottom" trigger="click" :hide-after="0">
     <template #reference>
       <span class="icon" i-carbon:color-palette></span>
     </template>

@@ -1,15 +1,18 @@
 <!-- 布局组件 -->
 <template>
   <main id="layout" :class="{ folding: store.isFolding }">
-    <section class="status">
-      <TopNavBar />
+    <section class="topbar">
+      <Topbar />
     </section>
-    <section class="navbar">
-      <SideNavBar />
+
+    <section class="sidebar">
+      <Sidebar />
     </section>
+
     <section class="playbar">
       <PlayBar />
     </section>
+
     <section class="view" ref="scrollEl" @scroll="scroll">
       <router-view v-slot="{ Component }">
         <keep-alive :exclude="excludeList">
@@ -21,10 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import TopNavBar from "./topNavBar/topNavBar.vue";      // 顶部导航栏
-import SideNavBar from "./sideNavBar/sideNavBar.vue";   // 侧边导航栏
-import PlayBar from "./playBar/playBar.vue";            // 播放栏
-import { useThrottleFn } from "@vueuse/shared";
+import Topbar from "./topbar/topbar.vue";       // 顶部导航栏
+import Sidebar from "./sidebar/sidebar.vue";    // 侧边导航栏
+import PlayBar from "./playBar/playBar.vue";    // 播放栏
+import { useThrottleFn } from "@vueuse/core";
 import { useRoute } from "vue-router";
 import { useMainStore } from "store";
 import { ref, watch } from "vue";
@@ -56,14 +59,14 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 
   grid-template: var(--topNavBarHeight) auto var(--playBarHeight) / var(--sideNavBarWidth) auto;
 
-  // 状态栏
-  .status {
+  // 顶部栏
+  .topbar {
     grid-row: 1/2;
     grid-column: 1/3;
   }
 
-  // 导航栏
-  .navbar {
+  // 侧边栏
+  .sidebar {
     grid-row: 2/4;
     grid-column: 1/2;
   }
@@ -98,6 +101,7 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
   }
 }
 
+// 折叠侧边栏
 #layout.folding {
   .navbar {
     display: none;

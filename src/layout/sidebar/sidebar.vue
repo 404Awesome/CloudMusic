@@ -1,15 +1,15 @@
 <!-- 侧边导航栏 -->
 <template>
-  <main select-none p-10px h-full bg-gray-300>
+  <main class="sidebar">
     <!-- 登陆 / 注册 / 账号信息 -->
     <header>
       <!-- 已登陆 -->
       <section v-if="store.auth" @click="$router.push('/personalInfo')" class="profile">
         <!-- 头像 -->
-        <el-avatar :src="profileInfo.avatarUrl" :size="45" grow-0 shrink-0 />
+        <el-avatar :src="profileInfo.avatarUrl" :size="45" flex-none />
 
         <!-- 信息 -->
-        <div flex flex-col flex-nowrap justify-around text-13px w-full overflow-hidden>
+        <div class="info">
           <!-- 昵称 -->
           <p truncate themeColor text-15px>{{ profileInfo.nickname }}</p>
           <!-- 签名 -->
@@ -24,14 +24,27 @@
       </section>
     </header>
 
-    <!-- 列表 -->
-    <ul class="navList">
-      <li @click="$router.push(item.path)" :class="{ active: $route.matched[0]?.path == item.path }"
-        v-for="item in navList" :key="item.title">
-        <span :class="item.icon"></span>
-        <p>{{ item.title }}</p>
-      </li>
-    </ul>
+    <!-- 导航列表 / 版权声明 -->
+    <div flex flex-col flex-1 justify-between>
+      <!-- 列表 -->
+      <ul class="navList">
+        <li @click="$router.push(item.path)" :class="{ active: $route.matched[0]?.path == item.path }"
+          v-for="item in navList" :key="item.title">
+          <span :class="item.icon"></span>
+          <p>{{ item.title }}</p>
+        </li>
+      </ul>
+
+      <!-- 版权声明 -->
+      <div class="copyright">
+        <p class="title">
+          <span text-20px i-carbon:information-filled></span>
+          <a href="https://github.com/404Awesome/CloudMusic" target="_blank" class="content">本项目为开源项目!</a>
+        </p>
+        <p>本项目仅用于学习用途!</p>
+        <p>资源版权都属于网易云音乐!</p>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -101,17 +114,44 @@ watch(() => store.auth, async (newVal) => {
 </script>
 
 <style lang="scss" scoped>
+// 侧边栏容器
+.sidebar {
+  @apply flex flex-col select-none p-10px h-full bg-gray-300 overflow-hidden;
+}
+
+// 版权声明
+.copyright {
+  @apply bg-white/80 p-10px rounded-md text-14px text-gray-500;
+
+  // 标题
+  .title {
+    @apply themeColor mb-5px flex items-center gap-3px;
+
+    // 内容
+    .content {
+      @apply text-16px themeColor decoration-none hover-decoration-underline;
+    }
+  }
+}
+
+// 个人信息
 .profile {
   display: flex;
   padding: 10px;
   border-radius: 5px;
   background-color: rgba($color: #ffffff, $alpha: 0);
   cursor: pointer;
+  transition: background-color .2s ease-in-out;
 
   gap: 10px;
 
   &:hover {
-    background-color: rgba($color: #ffffff, $alpha: .7);
+    background-color: rgba($color: #ffffff, $alpha: 1);
+  }
+
+  // 个人信息
+  .info {
+    @apply flex flex-col flex-nowrap justify-around text-13px w-full overflow-hidden;
   }
 }
 

@@ -11,11 +11,11 @@
     <!-- 操作 -->
     <el-table-column :width="65">
       <template v-slot="{ row }">
-        <p flex justify-between text-18px>
-          <span @click.stop="Operate.likeSong(row.song.id)" i-eva:heart-outline hover:i-eva-heart-fill
+        <p flex justify-between text-17px>
+          <span @click.stop="Operate.likeSong(row.song.id)" i-carbon:favorite hover:i-carbon-favorite-filled
             hover:text-red-500 cursor-pointer></span>
-          <span @click.stop="Operate.downloadSong(row.song.id, row.song.name)" i-eva:cloud-download-outline
-            hover:themeColor cursor-pointer></span>
+          <span @click.stop="Operate.downloadSong(row.song.id, row.song.name)" i-carbon:cloud-download hover:themeColor
+            cursor-pointer></span>
         </p>
       </template>
     </el-table-column>

@@ -7,8 +7,7 @@
         flex border="1px solid #eee" rounded-full whitespace-nowrap select-none bg-white h-30px fontColor
         hover:bg="#eee" focus:outline-none>
         <span text-14px>{{ currentType }}</span>
-        <span
-          :class="loading || !typeList.length ? 'i-eva:loader-outline' : 'i-heroicons-outline:chevron-right'"></span>
+        <span :class="loading || !typeList.length ? 'i-eva:loader-outline' : 'i-carbon:chevron-right'"></span>
       </button>
     </template>
 
@@ -88,7 +87,7 @@ let typeSelect = (type: string) => {
 </style>
 <style lang="scss">
 .allType {
-  width: 480px !important;
   padding: 0px !important;
+  width: 480px !important;
 }
 </style>

@@ -18,7 +18,7 @@
       <div v-if="store.auth" @click="collection" :class="{ collected: followed }" mt-3 lg:mt-5 flexCenter w-80px
         border="1px solid #eee" rounded-20px whitespace-nowrap cursor-pointer gap-3px select-none transition-all
         hover="themeColor bg-#f5f7fa">
-        <span text-19px p-y-5px i-heroicons-outline:folder-add></span>
+        <span text-19px p-y-5px i-carbon:folder-add></span>
         <span p-y-5px>{{ followed ? '已收藏' : '收藏' }}</span>
       </div>
 

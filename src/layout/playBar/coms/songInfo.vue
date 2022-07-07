@@ -5,8 +5,8 @@
     <div @click="openSongDetail" class="cover">
       <el-image :src="currentSong?.album.picUrl" fit="cover" />
       <div class="icon">
-        <span i-heroicons-outline:chevron-up></span>
-        <span i-heroicons-outline:chevron-down></span>
+        <span i-carbon:chevron-up></span>
+        <span i-carbon:chevron-down></span>
       </div>
     </div>
 

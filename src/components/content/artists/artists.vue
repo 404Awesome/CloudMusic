@@ -1,7 +1,7 @@
 <!-- 艺术家 -->
 <template>
   <p class="artists" truncate>
-    <span @click="goArtistPage(artist)" v-for="artist in artists" :key="artist.id">
+    <span @click.stop="goArtistPage(artist)" v-for="artist in artists" :key="artist.id">
       {{ artist.name }}
     </span>
   </p>

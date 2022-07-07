@@ -62,12 +62,12 @@
                 <p>{{ item.timeStr }}</p>
                 <div flex items-center gap-10px>
                   <span cursor-pointer hover:themeColor opacity-0 group-hover:opacity-100>举报</span>
-                  <span cursor-pointer hover:themeColor flex items-center>
-                    <span text-18px i-heroicons-outline:thumb-up></span>
+                  <span cursor-pointer hover:text-red-500 flex gap-3px items-center>
+                    <span text-18px i-carbon:thumbs-up hover:i-carbon-thumbs-up-filled></span>
                     <span text-13px>{{ item.likedCount || " " }}</span>
                   </span>
-                  <span cursor-pointer text-18px hover:themeColor i-heroicons-outline:folder-add></span>
-                  <span cursor-pointer text-18px hover:themeColor i-heroicons-outline:external-link></span>
+                  <span cursor-pointer text-18px hover:themeColor i-carbon:folder-add></span>
+                  <span cursor-pointer text-18px hover:themeColor i-carbon:link></span>
                 </div>
               </section>
 

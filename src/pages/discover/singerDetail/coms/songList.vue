@@ -7,9 +7,9 @@
 
     <!-- 操作 -->
     <div class="operate">
-      <span @click="Operate.addPlayList(origin || songs, id)" class="icon i-heroicons-outline:play"></span>
+      <span @click="Operate.addPlayList(origin || songs, id)" class="icon" i-eva:play-circle-outline></span>
       <span v-if="id" class="splitLine">|</span>
-      <span v-if="id" @click="Operate.collectAlbum(id)" class="icon i-heroicons-outline:folder-add"></span>
+      <span v-if="id" @click="Operate.collectAlbum(id)" class="icon" i-carbon:folder-add></span>
     </div>
   </header>
 
@@ -20,9 +20,9 @@
       <el-table-column :width="50">
         <template v-slot="{ row }">
           <p flex justify-between>
-            <span @click.stop="Operate.likeSong(row.id)" class="icon" i-eva:heart-outline hover-i-eva:heart-fill
+            <span @click.stop="Operate.likeSong(row.id)" class="icon" i-carbon:favorite hover-i-carbon:favorite-filled
               hover-text-red-500></span>
-            <span @click.stop="Operate.downloadSong(row.id, row.name)" class="icon" i-eva:cloud-download-outline
+            <span @click.stop="Operate.downloadSong(row.id, row.name)" class="icon" i-carbon:cloud-download
               hover:themeColor></span>
           </p>
         </template>
@@ -79,6 +79,10 @@ let { origin, id, name } = toRaw(props);
       color: rgba($color: #000000, $alpha: .5);
       font-size: 22px;
       cursor: pointer;
+
+      &:hover {
+        color: var(--theme-color);
+      }
     }
 
     .splitLine {

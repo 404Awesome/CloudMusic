@@ -16,23 +16,23 @@
       <!-- 控制按钮 -->
       <section class="control">
         <!-- 喜欢 -->
-        <span i-eva:heart-outline hover:i-eva-heart-fill important:hover-text-red-500></span>
+        <span i-carbon:favorite hover:i-carbon-favorite-filled hover-text-red-500></span>
         <!-- 上一首 -->
-        <span @click="changeSong(false)" class="change i-eva:skip-back-fill"></span>
+        <span @click="changeSong(false)" class="change" i-eva:skip-back-fill></span>
         <!-- 播放 -->
         <p @click="play" class="play">
           <span :class="playIcon" class="change"></span>
         </p>
         <!-- 下一首 -->
-        <span @click="changeSong(true)" class="change i-eva:skip-forward-fill"></span>
+        <span @click="changeSong(true)" class="change" i-eva:skip-forward-fill></span>
         <!-- 分享 -->
-        <span i-eva:external-link-outline></span>
+        <span i-carbon:link hover-text-blue-500></span>
       </section>
 
       <!-- 操作 -->
       <section flex-1 class="operate">
         <!-- 打开播放列表 -->
-        <span @click="openPlayList" i-eva:inbox-outline></span>
+        <span @click="openPlayList" i-carbon:list-boxes></span>
         <!-- 音量 -->
         <el-popover :hide-after="0" placement="top" trigger="hover">
           <template #reference>
@@ -183,9 +183,9 @@ let volumeChange = (currentVolume: number) => {
 // 设置静音
 let setMute = () => {
   if (volume.value == 0) {
-    volume.value = 50;
-    store.volume = 50;
-    audioPlyr.value!.volume = 0.5;
+    volume.value = 70;
+    store.volume = 70;
+    audioPlyr.value!.volume = 0.7;
   } else {
     volume.value = 0;
     store.volume = 0;
@@ -218,15 +218,15 @@ watch(() => store.currentSong, (newSong) => {
   }
 });
 // 播放图标
-let playIcon = computed(() => playing.value ? "i-eva:close-outline" : "i-eva:arrow-right-fill");
+let playIcon = computed(() => playing.value ? "i-carbon:pause-filled" : "i-eva:arrow-right-fill");
 // 声音图标
 let volumeIcon = computed(() => {
   if (volume.value == 0) {
-    return "i-eva:volume-off-outline";
+    return "i-carbon:volume-mute";
   } else if (volume.value < 50) {
-    return "i-eva:volume-down-outline";
+    return "i-carbon:volume-down";
   } else {
-    return "i-eva:volume-up-outline";
+    return "i-carbon:volume-up";
   }
 })
 </script>
@@ -287,13 +287,8 @@ let volumeIcon = computed(() => {
 
   span {
     flex-shrink: 0;
-    color: var(--font-color);
     font-size: 20px;
     cursor: pointer;
-
-    &:hover {
-      color: var(--theme-color);
-    }
 
     &.change {
       color: var(--theme-color);

@@ -13,7 +13,9 @@ import { useMainStore } from "store";
  * RadioCateDetail: "电台分类详情",
  * DailySongs: "每日歌曲推荐",
  * Broadcast: "独家放送",
- * PlayListDetail: "歌单详情",
+ * SongListDetail: "歌单详情",
+ * SingerDetail: "歌手详情",
+ * AlbumDetail: "专辑详情",
  */
 let Discover = () => import("@/views/discover/discover.vue");
 let Recommend = () => import("@/pages/discover/recommend/recommend.vue");
@@ -28,6 +30,7 @@ let DailySongs = () => import("@/pages/discover/dailySongs/dailySongs.vue")
 let Broadcast = () => import("@/pages/discover/broadcast/broadcast.vue");
 let SongListDetail = () => import("@/pages/discover/songListDetail/songListDetail.vue");
 let SingerDetail = () => import("@/pages/discover/singerDetail/singerDetail.vue");
+let AlbumDetail = () => import("@/pages/discover/albumDetail/albumDetail.vue");
 
 
 // 默认为发现音乐
@@ -114,6 +117,12 @@ const routes: RouteRecordRaw[] = [
     path: "/radioCateDetail",
     meta: { title: "电台分类详情", auth: true },
     component: RadioCateDetail
+  },
+  // 专辑详情
+  {
+    path: "/albumDetail/:id",
+    meta: { title: "专辑详情" },
+    component: AlbumDetail
   },
 ];
 

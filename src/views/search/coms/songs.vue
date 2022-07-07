@@ -4,7 +4,7 @@
   <SongList v-loading="loading" :songList="songList" />
 
   <!-- 分页 -->
-  <div v-show="!loading" flex justify-center my-15px>
+  <div v-show="!loading" flex justify-center my-30px>
     <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :total="total" />
   </div>
 </template>

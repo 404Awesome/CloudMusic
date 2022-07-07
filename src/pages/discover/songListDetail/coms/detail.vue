@@ -46,15 +46,15 @@
             <!-- 操作 -->
             <ul class="operate">
               <li @click="Operate.playSongList(id)">
-                <span class="icon i-heroicons-outline:play"></span>
+                <span class="icon" i-eva:play-circle-outline></span>
                 <span>播放全部</span>
               </li>
               <li @click="Operate.collectSongList(id)">
-                <span class="icon i-heroicons-outline:folder-add"></span>
+                <span class="icon" i-carbon:folder-add></span>
                 <span v-once>收藏({{ Handle.Count(detail.subscribedCount) }})</span>
               </li>
               <li @click="share()">
-                <span class="icon i-heroicons-outline:external-link"></span>
+                <span class="icon i-carbon:link"></span>
                 <span v-once>分享({{ Handle.Count(detail.shareCount) }})</span>
               </li>
             </ul>

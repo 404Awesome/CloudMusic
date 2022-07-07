@@ -3,7 +3,7 @@
   <el-skeleton :loading="loading" animated>
     <template #template>
       <ul ref="skeletonEl" class="list" pb-15px>
-        <li v-for="item in 6" flex items-center p-10px even:bg-gray-50 rounded-md>
+        <li v-for="item in 6" flex items-center p-10px bg-gray-50 rounded-md>
           <div flex flex-1 items-center gap-10px>
             <el-skeleton-item variant="image" h-17 w-17 min-w-17 rounded-md />
             <el-skeleton-item variant="text" w="1/3" />
@@ -31,16 +31,14 @@
             </p>
           </div>
 
-          <p ml-10px p-5px bg-red-500 rounded-full flex>
-            <span text-white i-eva:smiling-face-fill></span>
-          </p>
+          <p themeColor text-25px i-carbon:user-avatar-filled></p>
         </li>
       </ul>
     </template>
   </el-skeleton>
 
   <!-- 分页 -->
-  <div v-show="!loading" flex justify-center my-15px>
+  <div v-show="!loading" flex justify-center my-30px>
     <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :total="total" />
   </div>
 </template>
@@ -133,7 +131,7 @@ onMounted(() => {
   @apply grid3Cols pt-15px;
 
   .listItem {
-    @apply important-hover-bg-gray-200 cursor-pointer p-10px even-bg-gray-100 rounded-md flex items-center justify-between;
+    @apply hover-bg-gray-200 cursor-pointer p-10px bg-gray-100 rounded-md flex items-center justify-between;
   }
 }
 </style>

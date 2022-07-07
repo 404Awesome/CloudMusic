@@ -23,28 +23,18 @@
       <p v-show="showDesc" p-10px mb-10px rounded-md bg="#f4f4f5" text-14px>{{ desc }}</p>
 
       <!-- 操作 -->
-      <div flex items-center justify-between text-14px gap-10px select-none>
-        <!-- 赞 / 收藏 / 分享 -->
-        <ul flex flex-wrap overflow-hidden flex-1 gap-10px>
-          <li v-for="item in control" :key="item.title" flex items-center py-6px px-13px rounded-full cursor-pointer
-            hover="text-white themeBgColor" border="1px solid #eee">
-            <span :class="item.icon" mr-5px text-17px></span>
-            <span truncate>{{ item.title }}</span>
-          </li>
-        </ul>
-
-        <!-- 举报 -->
-        <p truncate cursor-pointer hover:themeColor>举报</p>
-      </div>
+      <Operate mode="mv" :id="id!" :subCount="subCount!" :likedCount="likedCount!" :shareCount="shareCount!" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import Operate from "@/components/content/operate/operate.vue";
 import Artists from "@/components/content/artists/artists.vue";
 import { toRaw, ref } from "vue";
 import { Handle } from "utils";
 const props = defineProps({
+  id: Number,
   desc: String,
   name: String,
   artists: Array,
@@ -54,19 +44,7 @@ const props = defineProps({
   shareCount: Number,
   publishTime: String
 });
-let { artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount } = toRaw(props);
-
-// 赞 / 收藏 / 分享
-let control = ([{
-  title: `赞 (${likedCount})`,
-  icon: "i-heroicons-outline:thumb-up",
-}, {
-  title: `收藏 (${subCount})`,
-  icon: "i-heroicons-outline:folder-add",
-}, {
-  title: `分享 (${shareCount})`,
-  icon: "i-heroicons-outline:external-link",
-}]);
+let { id, artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount } = toRaw(props);
 
 // 是否显示简介
 let showDesc = ref(false);

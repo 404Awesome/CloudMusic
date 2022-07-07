@@ -9,7 +9,7 @@
       </section>
       <section flex items-center>
         <p class="followedBtn" :class="{ followed: creator.followed }">
-          <span text-18px :class="creator.followed ? 'i-eva:checkmark-outline' : 'i-eva:plus-outline'"></span>
+          <span text-18px :class="creator.followed ? 'i-carbon:checkmark' : 'i-carbon:add'"></span>
           <span>{{ creator.followed ? '已关注' : '关注' }}</span>
         </p>
       </section>
@@ -34,55 +34,32 @@
       <p v-show="showDesc" p-10px mb-10px rounded-md bg="#f4f4f5" text-14px>{{ description }}</p>
 
       <!-- 操作 -->
-      <div flex items-center justify-between text-14px gap-10px select-none>
-        <!-- 赞 / 收藏 / 分享 -->
-        <ul flex flex-wrap overflow-hidden flex-1 gap-10px>
-          <li v-for="item in control" :key="item.title" flex items-center py-6px px-13px rounded-full cursor-pointer
-            hover="text-white themeBgColor" border="1px solid #eee">
-            <span :class="item.icon" mr-5px text-17px></span>
-            <span truncate>{{ item.title }}</span>
-          </li>
-        </ul>
-
-        <!-- 举报 -->
-        <p truncate cursor-pointer hover:themeColor>举报</p>
-      </div>
+      <Operate mode="video" :id="vid!" :subCount="subCount!" :shareCount="shareCount!" :likedCount="likedCount!" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import Operate from "@/components/content/operate/operate.vue";
 import { PropType, ref, toRaw } from 'vue';
 import { useRouter } from "vue-router";
 import { Handle } from "utils";
 const router = useRouter();
 const props = defineProps({
-  title: String,
   vid: String,
-  subscribeCount: Number,
+  title: String,
+  subCount: Number,
   shareCount: Number,
-  praisedCount: Number,
+  likedCount: Number,
   description: String,
   publishTime: Number,
   playTime: Number,
   creator: Object as PropType<any>
 });
-let { title, vid, publishTime, playTime, subscribeCount, shareCount, praisedCount, description, creator } = toRaw(props);
+let { vid, title, publishTime, playTime, subCount, shareCount, likedCount, description, creator } = toRaw(props);
 
 // 是否显示简介
 let showDesc = ref(false);
-
-// 赞 / 收藏 / 分享
-let control = ([{
-  title: `赞 (${praisedCount})`,
-  icon: "i-heroicons-outline:thumb-up",
-}, {
-  title: `收藏 (${subscribeCount})`,
-  icon: "i-heroicons-outline:folder-add",
-}, {
-  title: `分享 (${shareCount})`,
-  icon: "i-heroicons-outline:external-link",
-}]);
 
 // 跳转个人主页
 let goOtherInfo = () => {

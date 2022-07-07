@@ -27,7 +27,7 @@
             <!-- 播放图标 -->
             <p absolute right-5px bottom-5px z-2 text="white/70 28px" opacity-0 transition-opacity hover:text-white
               group-hover:opacity-100>
-              <span @click.stop="Operate.playSongList(item.id)" i-heroicons-outline:play></span>
+              <span @click.stop="Operate.playSongList(item.id)" i-eva:play-circle-outline></span>
             </p>
           </div>
 

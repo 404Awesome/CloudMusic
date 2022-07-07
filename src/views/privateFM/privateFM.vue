@@ -41,19 +41,19 @@
             <ul class="operate">
               <!-- 喜欢 -->
               <li class="group">
-                <span i-eva:heart-outline group-hover-i-eva:heart-fill group-hover-text-red-500></span>
+                <span i-carbon:favorite group-hover-i-carbon:favorite-filled group-hover-text-red-500></span>
               </li>
               <!-- 收藏 -->
-              <li class="group">
-                <span i-eva:folder-add-outline group-hover-i-eva:folder-add-fill></span>
+              <li>
+                <span i-carbon:folder-add></span>
               </li>
               <!-- 下一首 -->
-              <li class="group" @click="loadData">
-                <span important:text-25px i-eva:skip-forward-outline group-hover-i-eva:skip-forward-fill></span>
+              <li @click="loadData">
+                <span important:text-20px i-carbon:skip-forward></span>
               </li>
               <!-- 分享 -->
-              <li class="group">
-                <span i-eva:undo-outline group-hover-i-eva:undo-fill></span>
+              <li>
+                <span i-carbon:link></span>
               </li>
             </ul>
           </section>
@@ -143,7 +143,7 @@ onMounted(() => loadData());
   @apply flex items-center justify-center gap-30px;
 
   li {
-    @apply p-10px rounded-full cursor-pointer bg-gray-100;
+    @apply p-10px rounded-full cursor-pointer bg-gray-100 hover-themeColor;
 
     span {
       @apply text-22px;

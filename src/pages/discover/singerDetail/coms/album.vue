@@ -15,7 +15,7 @@
           <div v-if="!showAll" @click="showAll = !showAll" flex items-center justify-end h-40px text="black/60 14px"
             cursor-pointer hover:fontColor>
             <span>查看全部50首</span>
-            <span text-18px i-eva:arrow-ios-forward-outline></span>
+            <span text-18px i-carbon:chevron-right></span>
           </div>
         </section>
       </li>
@@ -37,7 +37,7 @@
           <div v-if="album.more" flex items-center justify-end h-40px text="black/60 14px" cursor-pointer
             hover:fontColor>
             <span>查看全部</span>
-            <span text-18px i-eva:arrow-ios-forward-outline></span>
+            <span text-18px i-carbon:chevron-right></span>
           </div>
         </section>
       </li>

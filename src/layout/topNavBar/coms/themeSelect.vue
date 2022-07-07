@@ -2,7 +2,7 @@
 <template>
   <el-popover placement="bottom" trigger="click">
     <template #reference>
-      <span class="icon" i-heroicons-outline:color-swatch></span>
+      <span class="icon" i-carbon:color-palette></span>
     </template>
     <template #default>
       <ul flex justify-center gap-20px @click="themeSelect">

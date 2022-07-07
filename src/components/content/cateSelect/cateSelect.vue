@@ -5,12 +5,9 @@
     <span v-if="title" py-3px>{{ title }}:</span>
 
     <!-- 类型列表 -->
-    <ul flex gap-5px items-center flex-1 flex-wrap>
-      <li v-for="item in typeList" :key="item" pr-5px border-r="1px solid #eee" last="pr-0 border-r-0">
-        <p @click="typeSelect(item)" :class="{ active: currentType === item }" py-3px px-8px text-center
-          whitespace-nowrap cursor-pointer hover:themeColor>
-          {{ item }}
-        </p>
+    <ul class="cateList">
+      <li v-for="item in typeList" :key="item" class="listItem">
+        <p @click="typeSelect(item)" :class="{ active: currentType === item }" class="content">{{ item }}</p>
       </li>
     </ul>
   </div>
@@ -46,9 +43,21 @@ let typeSelect = (type: string) => {
 </script>
 
 <style lang="scss" scoped>
+// 类型列表
+.cateList {
+  @apply flex gap-5px items-center flex-1 flex-wrap;
+
+  .listItem {
+    @apply pr-5px border-r-1px border-r-#eee last-pr-0 last-border-r-0;
+
+    .content {
+      @apply py-3px px-8px text-center whitespace-nowrap cursor-pointer hover-themeColor;
+    }
+  }
+}
+
+// 激活时样式
 .active {
-  border-radius: 20px;
-  background-color: #eee;
-  color: var(--theme-color);
+  @apply rounded-20px bg-#eee themeColor;
 }
 </style>

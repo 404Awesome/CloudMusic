@@ -14,19 +14,19 @@
             <ul class="operate">
               <!-- 喜欢 -->
               <li class="group">
-                <span i-eva:heart-outline group-hover-i-eva:heart-fill group-hover-text-red-500></span>
+                <span i-carbon:favorite group-hover-i-carbon:favorite-filled group-hover-text-red-500></span>
               </li>
               <!-- 收藏 -->
-              <li class="group">
-                <span i-eva:folder-add-outline group-hover-i-eva:folder-add-fill></span>
+              <li>
+                <span i-carbon:folder-add></span>
               </li>
               <!-- 下载 -->
-              <li class="group" @click="Operate.downloadSong(currentSong?.song.id, currentSong?.song.name)">
-                <span i-eva:cloud-download-outline group-hover-i-eva:cloud-download-fill></span>
+              <li @click="Operate.downloadSong(currentSong!.song.id, currentSong!.song.name)">
+                <span i-carbon:cloud-download></span>
               </li>
               <!-- 分享 -->
-              <li class="group">
-                <span i-eva:undo-outline group-hover-i-eva:undo-fill></span>
+              <li>
+                <span i-carbon:link></span>
               </li>
             </ul>
           </div>
@@ -111,7 +111,7 @@ defineExpose({ toggle });
   @apply flex items-center justify-center gap-30px;
 
   li {
-    @apply p-10px rounded-full cursor-pointer bg-gray-100;
+    @apply p-10px rounded-full cursor-pointer bg-gray-100 hover-themeColor;
 
     span {
       @apply text-22px;

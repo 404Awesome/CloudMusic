@@ -7,13 +7,13 @@
       <!-- 操作 -->
       <ul flex gap-10px>
         <li @click="Operate.playSongList(id)">
-          <span class="icon i-eva:arrow-right-fill"></span>
+          <span class="icon" i-eva:arrow-right-fill></span>
         </li>
         <li @click="Operate.collectSongList(id)">
-          <span class="icon i-heroicons-outline:folder-add"></span>
+          <span class="icon" i-carbon:folder-add></span>
         </li>
         <li @click="share()">
-          <span class="icon i-heroicons-outline:external-link"></span>
+          <span class="icon" i-carbon:link></span>
         </li>
       </ul>
     </div>
@@ -82,7 +82,6 @@ let { name, id, share, disabled } = toRefs(props);
   &.visible {
     opacity: 1;
     transition: all .3s ease-in-out;
-
     transform: translateY(0px);
   }
 

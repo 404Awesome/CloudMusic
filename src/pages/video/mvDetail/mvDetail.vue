@@ -81,7 +81,7 @@ let loadMVDetail = async (id: number) => {
     loading.value = true;
     let [{ data: { brs, artists, publishTime, playCount, desc, name, subCount, cover } }, { likedCount, shareCount }]: any = await Promise.all([MVAPI.getDetail(id), MVAPI.getDetailInfo(id)]);
     await getResolution(brs, id);
-    Object.assign(mvDetail, { artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount, cover });
+    Object.assign(mvDetail, { id, artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount, cover });
   } catch (err: any) {
     ElMessage.error("加载mv详情失败!");
   } finally {

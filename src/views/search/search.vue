@@ -4,7 +4,7 @@
     <!-- 头部 -->
     <header mt-15px mb-10px>
       <h1 text-2xl>关键词: {{ $route.params.keyword }}</h1>
-      <p text-gray-500 mt-5px min-h-20px>{{ count[activeName] }}</p>
+      <p text-gray-500 mt-5px min-h-20px>{{ count[activeName] || 'Loading...' }}</p>
     </header>
 
     <!-- 标签页 -->
@@ -31,15 +31,15 @@ import SongList from "./coms/songList.vue";
 import { markRaw, reactive, ref } from "vue";
 
 // 类型数量展示内容
-let count = reactive<any>({
-  Songs: "等待加载!",
-  Album: "等待加载!",
-  Video: "等待加载!",
-  Lyric: "等待加载!",
-  Radio: "等待加载!",
-  Users: "等待加载!",
-  Singer: "等待加载!",
-  SongList: "等待加载!",
+let count = reactive<{ [props: string]: string }>({
+  Songs: "",
+  Album: "",
+  Video: "",
+  Lyric: "",
+  Radio: "",
+  Users: "",
+  Singer: "",
+  SongList: "",
 });
 
 // 当前激活的标签页

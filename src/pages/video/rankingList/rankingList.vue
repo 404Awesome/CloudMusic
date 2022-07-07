@@ -7,7 +7,7 @@
           <span>最近更新: 今天</span>
           <el-popover :hide-after="0" placement="bottom-start" :width="200" trigger="hover">
             <template #reference>
-              <span ml-5px text-17px cursor-pointer hover:themeColor i-heroicons-outline:information-circle></span>
+              <span ml-5px text-17px cursor-pointer hover:themeColor i-carbon:information></span>
             </template>
             <template #default>
               <p>选取云音乐中三个月内发布的热度最高的50支MV,每天更新。热度由MV播放、收藏、分享数量综合计算</p>

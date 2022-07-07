@@ -19,7 +19,7 @@
 
       <!-- 未登陆 -->
       <section v-else @click="$router.push('/account/login')" class="listItem" py-15px rounded>
-        <span i-heroicons-outline:login></span>
+        <span i-carbon:login></span>
         <p>未登陆</p>
       </section>
     </header>
@@ -54,12 +54,12 @@ let navList = reactive<ListItem[]>([]);
 // 无需登陆列表
 let noLogin: ListItem[] = [
   {
-    icon: "i-heroicons-outline:music-note",
+    icon: "i-carbon:music",
     title: "发现音乐",
     path: "/discover",
   },
   {
-    icon: "i-heroicons-outline:play",
+    icon: "i-carbon:media-library",
     title: "视频",
     path: "/video",
   },
@@ -67,12 +67,12 @@ let noLogin: ListItem[] = [
 // 需要登陆列表
 let needLogin: ListItem[] = [
   {
-    icon: "i-heroicons-outline:users",
+    icon: "i-carbon:user-multiple",
     title: "关注",
     path: "/following",
   },
   {
-    icon: "i-heroicons-outline:status-online",
+    icon: "i-carbon:radar",
     title: "私人FM",
     path: "/privateFM",
   }

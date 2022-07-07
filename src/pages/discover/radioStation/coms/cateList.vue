@@ -10,7 +10,7 @@
       <template #default>
         <!-- 左移动按钮 -->
         <div class="moveBtn">
-          <span @click="leftMove" class="moveIcon" i-heroicons-outline:chevron-left></span>
+          <span @click="leftMove" class="moveIcon" i-carbon:chevron-left></span>
         </div>
 
         <!-- 类型列表 -->
@@ -32,7 +32,7 @@
 
         <!-- 右移动按钮 -->
         <div class="moveBtn">
-          <span @click="rightMove" class="moveIcon" i-heroicons-outline:chevron-right></span>
+          <span @click="rightMove" class="moveIcon" i-carbon:chevron-right></span>
         </div>
       </template>
     </el-skeleton>

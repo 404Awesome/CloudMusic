@@ -8,12 +8,12 @@
       <div class="content">
         <p text-gray-400>总{{ store.playList.length }}首</p>
         <div class="operate">
-          <p>
-            <span class="icon i-eva:folder-add-outline"></span>
+          <p flex items-center>
+            <span class="icon" i-carbon:folder-add></span>
             <span>收藏全部</span>
           </p>
-          <p @click="store.emptyPlayList">
-            <span class="icon i-eva:trash-2-outline"></span>
+          <p @click="store.emptyPlayList" flex items-center>
+            <span class="icon" i-carbon:trash-can></span>
             <span>清空列表</span>
           </p>
         </div>

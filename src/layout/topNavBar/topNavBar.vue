@@ -20,13 +20,13 @@
         <ThemeSelect />
 
         <!-- 通知 -->
-        <span @click="goRouter('/notice')" class="icon" i-heroicons-outline:bell></span>
+        <span @click="goRouter('/notice')" class="icon" i-carbon:notification></span>
 
         <!-- 暗夜模式 -->
-        <span @click="toggleDark()" class="icon i-heroicons-outline:sun dark:i-heroicons-outline:moon"></span>
+        <span @click="toggleDark()" class="icon" i-carbon:sun dark:i-carbon-moon></span>
 
         <!-- 设置 -->
-        <span @click="goRouter('/setting')" class="icon" i-heroicons-outline:cog></span>
+        <span @click="goRouter('/setting')" class="icon" i-carbon:settings></span>
       </section>
     </nav>
   </div>

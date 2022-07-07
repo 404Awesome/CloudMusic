@@ -7,7 +7,7 @@
       <!-- 编辑个人信息 -->
       <div absolute right-0px bottom-5px @click="goEditInfo">
         <el-tooltip ref="tooltipEl" content="编辑个人信息" placement="top" effect="light" :hide-after="0">
-          <span cursor-pointer text-22px text-white i-eva:edit-2-outline></span>
+          <span cursor-pointer text-22px mr-5px mb-1px text-white i-carbon:edit></span>
         </el-tooltip>
       </div>
     </div>
@@ -22,8 +22,9 @@
         <p flex items-center gap-5px min-h-20px>
           <span text-18px themeColor>{{ info.nickname }}</span>
           <span bg-orange-400 py-2px px-5px text-white text-13px rounded>{{ info.level }}</span>
-          <span v-if="info.gender" :style="{ color: info.gender == 1 ? '#3a9dd0' : '#e3357b' }" text-20px
-            i-eva:smiling-face-fill></span>
+          <span v-if="info.gender" text-17px
+            :class="info.gender == 1 ? 'i-carbon:gender-male' : 'i-carbon:gender-female'"
+            :style="{ color: info.gender == 1 ? '#3b82f6' : '#e3357b' }"></span>
         </p>
         <p truncate py-5px>个人介绍: {{ info.signature }}</p>
         <p truncate>所在地区: {{ info.city }}</p>

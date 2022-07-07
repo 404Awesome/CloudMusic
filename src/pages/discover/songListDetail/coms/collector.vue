@@ -29,8 +29,13 @@
                 group-hover:themeColor>
                 {{ item.nickname }}
               </p>
-              <span v-if="item.gender" :style="{ color: item.gender == 1 ? '#3a9dd0' : '#e3357b' }" text-18px shrink-0
-                i-eva:smiling-face-fill></span>
+              <!-- 性别 -->
+              <p v-if="item.gender" rounded-full p-3px
+                :style="{ backgroundColor: item.gender == 1 ? '#dbeafe' : '#ffe4e6' }">
+                <span text-15px shrink-0 flex
+                  :class="item.gender == 1 ? 'i-carbon:gender-male' : 'i-carbon:gender-female'"
+                  :style="{ color: item.gender == 1 ? '#3b82f6' : '#f43f5e' }"></span>
+              </p>
             </div>
             <!-- 签名 -->
             <p v-if="item.signature" text="black/45 13px" truncate>{{ item.signature }}</p>

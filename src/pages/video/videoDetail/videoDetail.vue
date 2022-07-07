@@ -93,11 +93,11 @@ let loadVideoDetail = async (vid: string) => {
         // 发布时间
         publishTime,
         // 视频收藏数量
-        subscribeCount,
+        subCount: subscribeCount,
         // 视频分享数量
         shareCount,
         // 视频点赞数量
-        praisedCount,
+        likedCount: praisedCount,
         // 视频描述
         description,
         // 视频创建人

@@ -11,7 +11,7 @@
     </template>
     <template #default>
       <ul grid4Cols p-y-15px>
-        <li v-for="mv in mvList" :key="mv.id" @click="$router.replace(`/mvDetail/${mv.id}`)" class="group"
+        <li v-for="mv in MVList" :key="mv.id" @click="$router.replace(`/mvDetail/${mv.id}`)" class="group"
           cursor-pointer>
           <div relative rounded overflow-hidden>
             <!-- 封面 -->
@@ -30,6 +30,9 @@
           <p truncate mt-5px text-15px group-hover:themeColor>{{ mv.name }}</p>
         </li>
       </ul>
+
+      <!-- 空状态 -->
+      <el-empty v-show="!MVList.length" description="暂无MV!" />
     </template>
   </el-skeleton>
 </template>
@@ -49,13 +52,13 @@ let skeletonEl = ref<HTMLElement | null>(null);
 // 加载状态
 let loading = ref(true);
 // MV列表
-let mvList = reactive<any>([]);
+let MVList = reactive<any>([]);
 // 加载数据
 let loadData = async () => {
   try {
     loading.value = true;
     let { hasMore, code, mvs }: any = await ArtistAPI.getMV(id);
-    if (code == 200) mvList.push(...mvs);
+    if (code == 200) MVList.push(...mvs);
   } catch (err: any) {
     ElMessage.error("加载MV列表失败!");
   } finally {

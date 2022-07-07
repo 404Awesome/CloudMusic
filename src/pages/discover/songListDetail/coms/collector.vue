@@ -16,7 +16,7 @@
       </ul>
     </template>
     <template #default>
-      <ul v-show="collectorList.length" grid3Cols py-4>
+      <ul grid3Cols py-4>
         <li v-for="item in collectorList" :key="item.userId" flex overflow-hidden gap-10px>
           <!-- 头像 -->
           <el-avatar @click="$router.push(`/othersInfo/${item.userId}`)" :src="item.avatarUrl" cursor="pointer"
@@ -38,9 +38,7 @@
         </li>
       </ul>
 
-      <div v-show="!collectorList.length">
-        <el-empty description="暂时没有收藏者!" />
-      </div>
+      <el-empty v-show="!collectorList.length" description="暂时没有收藏者!" />
     </template>
   </el-skeleton>
 

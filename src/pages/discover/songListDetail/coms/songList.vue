@@ -1,13 +1,11 @@
 <!-- 歌曲列表 -->
 <template>
-  <div class="songList" select-none>
-    <!-- 列表 -->
-    <SongList v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled" :songList="songList" />
+  <!-- 列表 -->
+  <SongList v-loading="loading" :songList="songList" />
 
-    <!-- 提示 -->
-    <el-divider>
-      <span tip>{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
-    </el-divider>
+  <!-- 分页 -->
+  <div v-show="!loading" flex justify-center my-15px>
+    <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :total="total" />
   </div>
 </template>
 
@@ -22,20 +20,30 @@ import { Handle } from "utils";
 const route = useRoute();
 let id = parseInt(route.params.id as string);
 
+// 获取歌曲数量限制
+let limit = 50;
+// 数据总条数
+let total = ref<number>(0);
 // 禁止无限滚动
 let disabled = ref<boolean>(false);
 // 加载状态
 let loading = ref<boolean>(false);
-// 获取歌曲数量限制
-let limit = 50;
 // 歌曲列表
 let songList = reactive<SongInfo[]>([]);
+
+// 分页发生改变
+let change = (page: number) => {
+  songList.splice(0, songList.length);
+  let offset = (page - 1) * limit;
+  loadData(offset);
+}
+
 // 加载歌曲列表
-let loadData = async () => {
+let loadData = async (offset: number = 0) => {
   if (loading.value) return;
   loading.value = true;
   try {
-    let { code, songs }: any = await SongListAPI.getTrackAll(id, songList.length, limit);
+    let { code, songs }: any = await SongListAPI.getTrackAll(id, offset, limit);
     if (code == 200) {
       let list = Handle.SongList(songs);
       songList.push(...list);
@@ -51,5 +59,11 @@ let loadData = async () => {
   }
 }
 // 初始化歌曲列表
-onMounted(() => loadData());
+onMounted(async () => {
+  let { code, playlist: { trackCount } }: any = await SongListAPI.getDetail(id);
+  if (code == 200) {
+    total.value = trackCount;
+    loadData();
+  }
+});
 </script>

@@ -1,7 +1,8 @@
 <!-- 歌手详情 专辑 -->
 <template>
   <div>
-    <ul v-infinite-scroll="loadAlbumData" :infinite-scroll-disabled="disabled" flex flex-col flex-nowrap gap-40px pb-4>
+    <ul v-infinite-scroll="loadAlbumData" :infinite-scroll-disabled="disabled" flex flex-col flex-nowrap gap-40px pb-4
+      overflow-hidden>
       <!-- top50 -->
       <li mt-4 flex gap-25px>
         <!-- 封面 -->

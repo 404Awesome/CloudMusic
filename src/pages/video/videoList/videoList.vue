@@ -5,7 +5,7 @@
     <CateList :loading="loading" :currentType="currentType" @selected="selected" />
 
     <!-- 视频列表 -->
-    <ul v-if="videoList.length" v-infinite-scroll="loadData" grid4Cols pt-20px>
+    <ul v-if="videoList.length" v-infinite-scroll="loadData" grid4Cols pt-20px overflow-hidden>
       <li v-for="item in videoList" :key="item.vid">
         <VideoItem v-bind="item" />
       </li>

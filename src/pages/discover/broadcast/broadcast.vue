@@ -2,7 +2,7 @@
 <template>
   <div wrapBox>
     <!-- 独家放送列表 -->
-    <div v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled" pt-4 grid4Cols>
+    <div v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled" pt-4 grid4Cols overflow-hidden>
       <BroadcastItem v-for="item in broadcastList" :key="item.id" :id="item.id" :picUrl="item.picUrl"
         :copywriter="item.copywriter" />
     </div>

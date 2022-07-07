@@ -22,6 +22,9 @@
           <p group-hover:themeColor truncate text-15px>{{ item.name }}</p>
         </li>
       </ul>
+
+      <!-- 空状态 -->
+      <el-empty v-show="!similarSinger.length" description="暂无相似歌手!" />
     </template>
   </el-skeleton>
 </template>
@@ -30,9 +33,9 @@
 import { useIntersectionObserver } from "@vueuse/core";
 import { onMounted, reactive, ref, toRaw } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
 import { useMainStore } from "store";
 import { ArtistAPI } from "api";
-import { ElMessage } from "element-plus";
 const store = useMainStore();
 const router = useRouter();
 const route = useRoute();

@@ -75,6 +75,7 @@ aside {
 /* 修改elementui v-loading */
 .el-loading-mask {
   z-index: 50 !important;
+  margin-top: 1px;
 
   svg circle {
     stroke: var(--theme-color) !important;

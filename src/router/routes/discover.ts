@@ -92,6 +92,7 @@ const routes: RouteRecordRaw[] = [
   },
   // 歌手详情
   {
+    // query: { id, name, alias? }
     path: "/singerDetail",
     meta: { title: "歌手详情" },
     component: SingerDetail

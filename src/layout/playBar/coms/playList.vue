@@ -27,7 +27,7 @@
     <div class="scrollbar">
       <el-scrollbar always>
         <!-- 列表 -->
-        <ul v-if="playList.length" class="list">
+        <ul class="list">
           <li @dblclick="playSong(item)" :class="{ active: item.song.id == currentSong?.song.id }"
             v-for="item in store.playList" :key="item.song.id" class="group" hover:bg="#f5f7fa">
             <!-- 播放图标 -->
@@ -40,7 +40,7 @@
         </ul>
 
         <!-- 播放列表为空 -->
-        <div v-else flexCenter h-full>
+        <div v-show="!playList.length" flexCenter h-full>
           <el-empty description="播放列表为空!" :image-size="200" />
         </div>
       </el-scrollbar>

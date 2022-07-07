@@ -19,7 +19,7 @@
     <template #default>
       <el-scrollbar ref="scrollbarEl" wrap-class="lyricScroll">
         <!-- 歌词列表 -->
-        <div v-show="lyricList.length" ref="lyricEl" class="lyricList">
+        <div ref="lyricEl" class="lyricList">
           <p v-for="({ time, lyric }, index) in lyricList" :key="time"
             :class="{ active: progress >= time && progress <= lyricList[index + 1]?.time }" class="lyric">
             {{ lyric }}
@@ -27,9 +27,7 @@
         </div>
 
         <!-- 提示 -->
-        <div v-show="!lyricList.length">
-          <el-empty description="暂无歌词!" />
-        </div>
+        <el-empty v-show="!lyricList.length" description="暂无歌词!" />
       </el-scrollbar>
     </template>
   </el-skeleton>

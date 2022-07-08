@@ -1,15 +1,12 @@
 <!-- mv列表item -->
 <template>
-  <div :class="{ flex: isFlex }" class="group mvItem">
+  <div :class="{ flex: isFlex }" class="mvItem">
     <section @click="goMVDetailPage" class="cover">
       <!-- 封面 -->
       <el-image fit="cover" lazy :src="cover" class="img" />
 
       <!-- 播放次数 -->
-      <p class="count">
-        <span text-21px i-eva:arrow-right-outline></span>
-        <span>{{ Handle.Count(playCount) }}</span>
-      </p>
+      <PlayCount :playCount="playCount" />
 
       <!-- hover:播放图标 -->
       <p class="playIcon">
@@ -20,9 +17,7 @@
     <!-- 详情 -->
     <section class="detail">
       <!-- 标题 -->
-      <p @click="goMVDetailPage" class="title" truncate group-hover:themeColor group-hover-dark-text-orange-400>
-        {{ name }}
-      </p>
+      <p @click="goMVDetailPage" class="title">{{ name }}</p>
 
       <!-- 艺术家 -->
       <Artists :artists="artists" />
@@ -31,10 +26,10 @@
 </template>
 
 <script setup lang="ts">
+import PlayCount from "@/components/content/playCount/playCount.vue";
 import Artists from "@/components/content/artists/artists.vue";
 import { PropType, toRaw } from "vue";
 import { useRouter } from "vue-router";
-import { Handle } from "utils";
 const router = useRouter();
 const props = defineProps({
   id: {
@@ -90,14 +85,14 @@ let goMVDetailPage = () => {
     .img {
       @apply rounded-md brightness-85 w-full h-35;
     }
-
-    .count {
-      @apply text-white absolute top-2px right-6px z-2 flex items-center;
-    }
   }
 
   .detail {
     @apply mt-5px overflow-hidden;
+
+    .title {
+      @apply truncate hover-themeColor hover-dark-text-orange-400;
+    }
   }
 }
 

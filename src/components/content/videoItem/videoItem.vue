@@ -1,15 +1,15 @@
 <!-- 视频Item -->
 <template>
-  <div :class="{ flex: isFlex }" class="group" cursor-default>
-    <div @click="goVideoDetailPage" class="cover" relative cursor-pointer>
+  <div :class="{ flex: isFlex }" cursor-default>
+    <div @click="goVideoDetailPage" class="cover">
       <!-- 封面 -->
-      <el-image :src="coverUrl" fit="cover" h-35 rounded-md brightness-70 />
+      <el-image :src="coverUrl" fit="cover" class="img" />
 
       <!-- 播放次数 -->
-      <p absolute text-white text-15px right-5px top-5px>{{ Handle.Count(playTime!) }}</p>
+      <PlayCount :playCount="playTime!" />
 
       <!-- 时长 -->
-      <p absolute text-white text-15px right-5px bottom-7px>{{ Handle.Duration(durationms!) }}</p>
+      <VideoDuration :durationms="durationms!" />
 
       <!-- hover:播放图标 -->
       <p class="playIcon">
@@ -17,25 +17,24 @@
       </p>
     </div>
 
-    <div class="info" overflow-hidden>
+    <div class="info">
       <!-- 标题 -->
-      <p @click.stop="goVideoDetailPage" class="title" truncate mb-3px mt-5px text-15px group-hover:themeColor>
-        {{ title }}
-      </p>
+      <p @click.stop="goVideoDetailPage" class="title">{{ title }}</p>
 
       <!-- 创建人名称 -->
-      <p text-13px text-gray-400 truncate w="2/3">
+      <p class="creator">
         <span>by&nbsp;</span>
-        <span @click.stop="goOthersInfo" cursor-pointer hover:themeColor>{{ nickname }}</span>
+        <span @click.stop="goOthersInfo" class="nickname">{{ nickname }}</span>
       </p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import { Handle } from "utils";
+import VideoDuration from "@/components/content/videoDuration/videoDuration.vue"
+import PlayCount from "@/components/content/playCount/playCount.vue";
 import { PropType, toRaw, toRef } from 'vue';
+import { useRouter } from "vue-router";
 const router = useRouter();
 const props = defineProps({
   mode: {
@@ -76,21 +75,39 @@ let goOthersInfo = () => {
 </script>
 
 <style lang="scss" scoped>
+.cover {
+  @apply relative cursor-pointer;
+
+  .img {
+    @apply h-35 rounded-md brightness-70;
+  }
+}
+
+.info {
+  .title {
+    @apply truncate mb-3px mt-5px text-15px hover-themeColor cursor-pointer hover-dark-text-orange-400;
+  }
+
+  .creator {
+    @apply text-13px text-gray-400 truncate w-2/3 dark-text-gray-500;
+
+    .nickname {
+      @apply text-13px text-gray-400 truncate w-2/3 hover-themeColor cursor-pointer dark-text-gray-500 hover-dark-text-orange-400;
+    }
+  }
+}
+
 // 横向布局
 .flex {
-  display: flex;
-
-  gap: 10px;
+  @apply flex gap-10px;
 
   .cover,
   .info {
-    flex: 1;
+    @apply flex-1 overflow-hidden;
   }
 
   .title {
-    margin-bottom: 10px;
-    white-space: normal;
-    @apply twoLineOmit;
+    @apply twoLineOmit mb-10px whitespace-normal;
   }
 }
 </style>

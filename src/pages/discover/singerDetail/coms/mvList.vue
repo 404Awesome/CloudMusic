@@ -10,24 +10,21 @@
       </ul>
     </template>
     <template #default>
-      <ul grid4Cols p-y-15px>
-        <li v-for="mv in MVList" :key="mv.id" @click="$router.replace(`/mvDetail/${mv.id}`)" class="group"
-          cursor-pointer>
-          <div relative rounded overflow-hidden>
+      <ul class="mvList">
+        <li v-for="mv in MVList" :key="mv.id" @click="$router.replace(`/mvDetail/${mv.id}`)" cursor-pointer>
+          <div class="cover">
             <!-- 封面 -->
-            <el-image :src="mv.imgurl" fit="cover" lazy brightness-85 h-35 transition duration-300 ease-in-out z-0 flex
-              group-hover:scale-115 />
+            <el-image :src="mv.imgurl" fit="cover" lazy class="img" />
+
             <!-- 播放次数 -->
-            <p absolute z-2 top-2px right-6px text="white 14px">
-              <span text-20px i-eva:arrow-right-outline></span>
-              <span>{{ Handle.Count(mv.playCount) }}</span>
-            </p>
+            <PlayCount :playCount="mv.playCount" />
+
             <!-- mv时长 -->
-            <p absolute right-6px bottom-2px z-2 text="white 14px">{{ Handle.Duration(mv.duration) }}</p>
+            <VideoDuration :durationms="mv.duration" />
           </div>
 
           <!-- 标题 -->
-          <p truncate mt-5px text-15px group-hover:themeColor>{{ mv.name }}</p>
+          <p class="name">{{ mv.name }}</p>
         </li>
       </ul>
 
@@ -38,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import VideoDuration from "@/components/content/videoDuration/videoDuration.vue";
+import PlayCount from "@/components/content/playCount/playCount.vue";
 import { useIntersectionObserver } from "@vueuse/core";
 import { reactive, ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
@@ -76,3 +75,21 @@ onMounted(() => {
   })
 });
 </script>
+
+<style lang="scss" scoped>
+.mvList {
+  @apply grid4Cols p-y-15px;
+
+  .cover {
+    @apply relative rounded overflow-hidden;
+
+    .img {
+      @apply brightness-85 h-35 transition duration-300 ease-in-out z-0 flex hover-scale-115;
+    }
+  }
+
+  .name {
+    @apply truncate mt-5px text-15px hover-themeColor;
+  }
+}
+</style>

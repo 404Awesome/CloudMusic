@@ -11,28 +11,23 @@
       </ul>
     </template>
     <template #default>
-      <ul grid6Cols mt-15px min-h-300px>
-        <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" class="group"
-          cursor-pointer>
-          <div relative flex overflow-hidden rounded-md>
+      <ul class="songList">
+        <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" cursor-pointer>
+          <div class="cover">
             <!-- 封面 -->
-            <el-image brightness-85 :src="item.picUrl" fit="cover" />
+            <el-image :src="item.picUrl" fit="cover" brightness-85 />
 
             <!-- 播放次数 -->
-            <p absolute top-2px right-6px z-2 flex items-center text-white>
-              <span text-21px i-eva:arrow-right-outline></span>
-              <span text-15px>{{ Handle.Count(item.playCount) }}</span>
-            </p>
+            <PlayCount :playCount="item.playCount" />
 
             <!-- 播放图标 -->
-            <p absolute right-5px bottom-5px z-2 text="white/70 28px" opacity-0 transition-opacity hover:text-white
-              group-hover:opacity-100>
+            <p class="icon">
               <span @click.stop="Operate.playSongList(item.id)" i-eva:play-circle-outline></span>
             </p>
           </div>
 
           <!-- 名字 -->
-          <p mt-5px text-14px twoLineOmit group-hover:themeColor group-hover-dark-text-orange-400>{{ item.name }}</p>
+          <p class="name">{{ item.name }}</p>
         </li>
       </ul>
     </template>
@@ -40,21 +35,36 @@
 </template>
 
 <script setup lang="ts">
+import PlayCount from "@/components/content/playCount/playCount.vue";
 import { reactive, ref, onActivated } from "vue";
 import { ElMessage } from "element-plus";
-import { Handle, Operate } from "utils";
 import { SongListAPI } from "api";
+import { Operate } from "utils";
 
 // 加载状态
 let loading = ref<boolean>(false);
 // 推荐歌单列表
-let songList = reactive<any[]>([]);
+interface SongInfo {
+  picUrl: string,
+  id: number,
+  name: string,
+  playCount: number
+}
+let songList = reactive<SongInfo[]>([]);
+
 // 加载推荐歌单列表
 let loadData = async () => {
   try {
     loading.value = true;
     let { code, result }: any = await SongListAPI.getPersonalized(12);
-    if (code == 200) songList.push(...result);
+    if (code == 200) {
+      // 处理歌单
+      let list = result.map((item: any) => {
+        let { picUrl, id, name, playCount } = item;
+        return { picUrl, id, name, playCount }
+      })
+      songList.push(...list);
+    };
   } catch (err: any) {
     ElMessage.error("加载推荐列表失败!");
   } finally {
@@ -69,3 +79,25 @@ onActivated(() => {
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.songList {
+  @apply grid6Cols mt-15px min-h-300px;
+}
+
+.cover {
+  @apply relative flex overflow-hidden rounded-md;
+
+  &:hover .icon {
+    @apply opacity-100;
+  }
+
+  .icon {
+    @apply absolute right-5px bottom-5px z-2 text-white/70 text-28px opacity-0 transition-opacity hover-text-white;
+  }
+}
+
+.name {
+  @apply mt-5px text-14px twoLineOmit hover-themeColor hover-dark-text-orange-400;
+}
+</style>

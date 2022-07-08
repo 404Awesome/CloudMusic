@@ -16,10 +16,7 @@
           cursor-pointer>
           <div relative>
             <!-- 播放数 -->
-            <p absolute top-3px right-5px z-2 flex items-center text-white>
-              <span text-20px i-eva:arrow-right-outline></span>
-              <span text-14px>{{ Handle.Count(item.playCount) }}</span>
-            </p>
+            <PlayCount :playCount="item.playCount" />
 
             <!-- 封面 -->
             <el-image :src="item.coverImgUrl" fit="cover" rounded-md brightness-90 />
@@ -42,6 +39,7 @@
 </template>
 
 <script setup lang="ts">
+import PlayCount from "@/components/content/playCount/playCount.vue";
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { Handle, Operate } from "utils";

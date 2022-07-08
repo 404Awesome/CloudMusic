@@ -7,7 +7,7 @@
     </template>
 
     <template #default>
-      <div class="search" fontColor>
+      <div fontColor p-10px>
         <!-- 表单 -->
         <div flex gap-5px>
           <input v-model.trim.lazy="searchText" @keyup.enter="search" type="text" placeholder="搜索" class="input" />
@@ -86,10 +86,6 @@ let searchHot = (searchWord: string) => {
 </script>
 
 <style lang="scss" scoped>
-.icon {
-  @apply flex-1 text-white/70 whitespace-nowrap text-19px cursor-pointer hover-text-white;
-}
-
 // 输入框
 .input {
   @apply px-10px py-5px w-130px outline-none border-none rounded-md bg-#eee text-14px box-border;

@@ -79,11 +79,11 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 
   // 路由视图
   .view {
-    overflow-x: hidden;
     overflow-y: overlay;
 
     grid-row: 2/3;
     grid-column: 2/3;
+    @apply dark-bg-gray-400 overflow-x-hidden rows-2/3;
 
     &:hover::-webkit-scrollbar {
       width: 5px;
@@ -95,8 +95,7 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 
     /* 滚动条滑块 */
     &::-webkit-scrollbar-thumb {
-      border-radius: 3px;
-      background-color: rgba(0, 0, 0, .15);
+      @apply rounded bg-black/15 dark-bg-gray-200;
     }
   }
 }

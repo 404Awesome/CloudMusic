@@ -3,21 +3,16 @@
   <div class="songInfo">
     <!-- 封面 -->
     <div @click="openSongDetail" class="cover">
-      <el-image :src="currentSong?.album.picUrl" fit="cover" />
-      <div class="icon">
-        <span i-carbon:chevron-up></span>
-        <span i-carbon:chevron-down></span>
-      </div>
+      <el-image :src="currentSong?.album.picUrl" fit="cover" class="img" />
+      <p class="icon" i-carbon:chevron-sort></p>
     </div>
 
     <!-- 详情 -->
-    <div hidden md:inline-block flex-1>
+    <div class="detail">
       <!-- 标题 -->
-      <p @click="openSongDetail" sm:max-w-32 xl:max-w-62 truncate select-none text-14px cursor-pointer hover:themeColor>
-        {{ currentSong?.song.name }}
-      </p>
+      <p @click="openSongDetail" class="title">{{ currentSong?.song.name }}</p>
       <!-- 时间 -->
-      <p text="black/40" text-12px whitespace-nowrap text-nowrap>
+      <p class="time">
         <span>{{ handleTime(store.playProgress) }}</span>
         <span>&nbsp;/&nbsp;</span>
         <span>{{ handleTime(props.duration) }}</span>
@@ -66,46 +61,38 @@ let openSongDetail = () => {
 
 <style lang="scss" scoped>
 .songInfo {
-  display: flex;
-  overflow: hidden;
-  align-items: center;
-  padding-left: 6px;
-  height: 100%;
-
-  gap: 6px;
+  @apply flex overflow-hidden items-center pl-6px h-full gap-6px;
 
   .cover {
-    position: relative;
-    overflow: hidden;
     min-width: calc(var(--playBarHeight) - 12px);
     width: calc(var(--playBarHeight) - 12px);
     height: calc(var(--playBarHeight) - 12px);
-    border: 1px solid #eee;
-    border-radius: 5px;
-    cursor: pointer;
+    @apply relative overflow-hidden rounded-md cursor-pointer;
 
     .icon {
-      position: absolute;
-      top: 0px;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      flex-flow: column nowrap;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      background-color: rgba($color: #000, $alpha: .3);
-      opacity: 0;
-      transition: opacity .2s ease-in;
-
-      span {
-        color: #fff;
-        font-size: 20px;
-      }
+      @apply absolute top-3px left-3px p-5px text-white text-25px z-10 opacity-0;
     }
 
-    &:hover .icon {
-      opacity: 1;
+    &:hover {
+      .img {
+        @apply brightness-80;
+      }
+
+      .icon {
+        @apply opacity-100;
+      }
+    }
+  }
+
+  .detail {
+    @apply hidden md-flex flex-1 h-40px flex-col justify-around;
+
+    .title {
+      @apply sm-max-w-32 xl-max-w-62 truncate select-none text-14px cursor-pointer hover-themeColor dark-text-gray-300 hover-dark-text-orange-400;
+    }
+
+    .time {
+      @apply text-black/40 text-12px whitespace-nowrap cursor-default dark-text-gray-400;
     }
   }
 }

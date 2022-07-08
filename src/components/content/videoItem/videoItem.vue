@@ -76,35 +76,6 @@ let goOthersInfo = () => {
 </script>
 
 <style lang="scss" scoped>
-.cover {
-  .playIcon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgba($color: #fff, $alpha: 0.5);
-    color: #d33a31;
-    font-size: 30px;
-    opacity: 0;
-    transition: opacity 0.3s linear;
-    transform: translate(-50%, -50%);
-
-    &:hover {
-      background-color: rgba($color: #fff, $alpha: 0.8);
-    }
-  }
-
-  &:hover .playIcon {
-    opacity: 1;
-  }
-}
-
 // 横向布局
 .flex {
   display: flex;
@@ -117,14 +88,9 @@ let goOthersInfo = () => {
   }
 
   .title {
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-box-orient: vertical;
     margin-bottom: 10px;
-    text-overflow: ellipsis;
     white-space: normal;
-
-    -webkit-line-clamp: 2;
+    @apply twoLineOmit;
   }
 }
 </style>

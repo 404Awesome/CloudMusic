@@ -4,10 +4,9 @@
     <h3 truncate>创建的歌单</h3>
 
     <ul grid grid-cols-3 gap-10px mt-10px>
-      <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" class="group"
-        cursor-pointer>
+      <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" cursor-pointer>
         <!-- 封面 -->
-        <div relative>
+        <div class="cover" relative>
           <el-image :src="item.coverImgUrl" fit="cover" :draggable="false" rounded-md group-hover:brightness-90 />
           <!-- 播放数 -->
           <p absolute top-2px right-6px z-2 flex items-center text-white>
@@ -16,7 +15,7 @@
           </p>
 
           <!-- hover:播放图标 -->
-          <p @click.stop="Operate.playSongList(item.id)" class="playIcon" group-hover:opacity-100>
+          <p @click.stop="Operate.playSongList(item.id)" class="playIcon">
             <span i-eva:arrow-right-fill></span>
           </p>
         </div>
@@ -66,25 +65,9 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.playIcon {
-  position: absolute;
-  z-index: 10;
-  bottom: 12px;
-  right: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: rgba($color: #fff, $alpha: 0.5);
-  color: #d33a31;
-  font-size: 30px;
-  opacity: 0;
-  transition: opacity 0.3s linear;
-
-  &:hover {
-    background-color: rgba($color: #fff, $alpha: 0.8);
-  }
+.cover .playIcon {
+  top: calc(100% - 50px);
+  left: calc(100% - 50px);
+  transform: none !important;
 }
 </style>

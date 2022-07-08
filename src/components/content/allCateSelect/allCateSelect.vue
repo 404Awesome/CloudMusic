@@ -87,7 +87,6 @@ let typeSelect = (type: string) => {
 </style>
 <style lang="scss">
 .allType {
-  padding: 0px !important;
   width: 480px !important;
 }
 </style>

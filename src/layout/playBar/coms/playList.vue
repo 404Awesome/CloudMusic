@@ -6,7 +6,7 @@
     <header class="header">
       <h1 text-xl>当前播放</h1>
       <div class="content">
-        <p text-gray-400>总{{ store.playList.length }}首</p>
+        <p text-gray-400 text-14px dark-text-gray-500>总{{ store.playList.length }}首</p>
         <div class="operate">
           <p flex items-center>
             <span class="icon" i-carbon:folder-add></span>
@@ -20,20 +20,17 @@
       </div>
     </header>
 
-    <!-- 分割线 -->
-    <el-divider m-0 />
-
     <!-- 列表 -->
     <div class="scrollbar">
       <el-scrollbar always>
         <!-- 列表 -->
         <ul class="list">
           <li @dblclick="playSong(item)" :class="{ active: item.song.id == currentSong?.song.id }"
-            v-for="item in store.playList" :key="item.song.id" class="group" hover:bg="#f5f7fa">
+            v-for="item in store.playList" :key="item.song.id" class="group">
             <!-- 播放图标 -->
             <span class="playIcon" hidden text-18px i-eva:arrow-right-fill></span>
             <!-- 歌名 -->
-            <p flex-1 truncate mr-20px group-hover:themeColor>{{ item.song.name }}</p>
+            <p class="name" group-hover-themeColor group-hover-dark-text-orange-400>{{ item.song.name }}</p>
             <!-- 艺术家 -->
             <Artists flex-1 :artists="item.artists" />
           </li>
@@ -80,39 +77,23 @@ defineExpose({ toggle });
 
 <style lang="scss" scoped>
 .header {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-between;
-  box-sizing: border-box;
-  padding: 10px 15px;
-  background-color: #fff;
+  @apply flex flex-col flex-nowrap justify-between py-10px px-15px bg-white shadow-md relative z-10 dark-bg-gray-300;
 
   .content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #fff;
+    @apply flex items-center justify-between;
 
     .operate {
-      display: flex;
-      color: var(--font-color);
-
-      gap: 10px;
+      @apply flex gap-10px;
 
       p {
-        padding: 3px 6px;
-        border: 1px solid #eee;
-        border-radius: 5px;
-        cursor: pointer;
+        @apply py-5px px-10px text-14px border-1px border-#eee rounded-md cursor-pointer dark-bg-gray-200 dark-border-gray-200;
 
         &:hover {
-          background-color: #f5f7fa;
-          color: var(--theme-color);
+          @apply bg-#f5f7fa themeColor hover-dark-text-orange-400;
         }
 
         .icon {
-          margin-right: 3px;
-          font-size: 16px;
+          @apply mr-3px text-16px;
         }
       }
     }
@@ -120,25 +101,23 @@ defineExpose({ toggle });
 }
 
 .scrollbar {
-  padding-bottom: 5px;
   height: calc(100% - 80px);
-  background-color: #fff;
+  @apply bg-white pb-5px dark-bg-gray-300;
 
   .list li {
-    display: flex;
-    overflow: hidden;
-    padding: 7px 15px;
-    color: var(--font-color) !important;
-    white-space: nowrap;
-    font-size: 14px;
-    cursor: pointer;
+    @apply flex overflow-hidden py-7px px-15px important-fontColor whitespace-normal text-14px cursor-pointer select-none hover-bg-#f5f7fa hover-dark-bg-gray-200;
 
-    user-select: none;
+    .name {
+      @apply flex-1 truncate mr-20px;
+    }
 
     &.active {
-      padding-left: 10px;
-      background-color: #f5f7fa;
-      color: var(--theme-color) !important;
+      @apply pl-10px bg-#f5f7fa dark-bg-gray-200;
+
+      .name,
+      .playIcon {
+        @apply themeColor dark-text-orange-400;
+      }
 
       .playIcon {
         display: inline-block;

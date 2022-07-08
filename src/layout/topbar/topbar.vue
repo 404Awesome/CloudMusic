@@ -1,6 +1,6 @@
 <!-- 顶部导航栏 -->
 <template>
-  <div relative z-100 flex items-center h-full shadow-md themeBgColor select-none>
+  <div class="topbar">
     <!-- 标题 -->
     <h1 @click="goRouter('/')" class="title">CloudMusic</h1>
 
@@ -52,12 +52,19 @@ let goRouter = (path: string) => {
 </script>
 
 <style lang="scss" scoped>
-.title {
-  width: var(--sideNavBarWidth);
-  @apply text-white text-20px text-center cursor-pointer select-none hidden md-block;
+// 顶部导航栏
+.topbar {
+  @apply relative z-100 flex items-center h-full shadow-md themeBgColor select-none dark-bg-gray-700;
 }
 
-.icon {
-  @apply flex-1 text-white/70 whitespace-nowrap text-19px cursor-pointer hover-text-white;
+// 标题
+.title {
+  width: var(--sideNavBarWidth);
+  @apply text-white text-20px text-center cursor-pointer select-none hidden md-block dark-text-gray-300;
+}
+
+// 图标
+:deep(.icon) {
+  @apply flex-1 text-white/70 whitespace-nowrap text-19px cursor-pointer hover-text-white hover-dark-text-orange-400;
 }
 </style>

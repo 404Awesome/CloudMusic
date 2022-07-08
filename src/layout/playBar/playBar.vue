@@ -16,7 +16,7 @@
       <!-- 控制按钮 -->
       <section class="control">
         <!-- 喜欢 -->
-        <span i-carbon:favorite hover:i-carbon-favorite-filled hover-text-red-500></span>
+        <span i-carbon:favorite hover:i-carbon-favorite-filled hover-text-red-500 hover:dark-text-orange-400></span>
         <!-- 上一首 -->
         <span @click="changeSong(false)" class="change" i-eva:skip-back-fill></span>
         <!-- 播放 -->
@@ -232,17 +232,21 @@ let volumeIcon = computed(() => {
 </script>
 
 <style scoped lang="scss">
+.dark {
+  .playbar .audio :deep(.plyr--audio):hover {
+    --plyr-range-thumb-background: #fb923c !important;
+  }
+
+  .volumeSlider :deep(.el-slider) {
+    --el-slider-main-bg-color: #fb923c !important;
+  }
+}
+
 .playbar {
-  position: relative;
-  z-index: 300;
-  height: 100%;
-  background-color: #fff;
+  @apply relative z-300 h-full bg-white dark-bg-gray-600;
 
   .audio {
-    position: absolute;
-    top: -10px;
-    z-index: 200;
-    width: 100%;
+    @apply absolute top--10px z-200 w-full;
 
     :deep(.plyr--audio) {
       --plyr-control-spacing: 0px;
@@ -259,67 +263,44 @@ let volumeIcon = computed(() => {
   }
 
   .controlLine {
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-
-    gap: 15px;
+    @apply flex justify-between h-full gap-15px;
   }
 }
 
 // 控制
 .control {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 15px;
+  @apply flex items-center justify-center gap-15px;
 
   .play {
-    padding: 3px;
-    border-radius: 50%;
-    background-color: var(--theme-color);
+    @apply themeBgColor p-3px rounded-full dark-bg-gray-500;
 
     span.change {
-      color: #fff;
+      @apply text-white dark-text-gray-300;
     }
   }
 
   span {
-    flex-shrink: 0;
-    font-size: 20px;
-    cursor: pointer;
+    @apply shrink-0 text-20px cursor-pointer dark-text-gray-300 hover-dark-text-orange-400;
 
     &.change {
-      color: var(--theme-color);
-      font-size: 30px;
+      @apply text-30px themeColor dark-text-gray-300 hover-dark-text-orange-400;
     }
   }
 }
 
 // 操作
 .operate {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 15px;
-
-  gap: 15px;
+  @apply flex items-center justify-end pr-15px gap-15px;
 
   span {
-    flex-shrink: 0;
-    color: var(--font-color);
-    font-size: 20px;
-    cursor: pointer;
-
-    &:hover {
-      color: var(--theme-color);
-    }
+    @apply shrink-0 text-20px cursor-pointer hover-themeColor dark-text-gray-300 hover-dark-text-orange-400;
   }
 }
 
 // 音量滑块
 .volumeSlider {
+  padding: 7px 15px;
+
   :deep(.el-slider) {
     height: 20px;
 

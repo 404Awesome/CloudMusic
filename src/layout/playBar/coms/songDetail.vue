@@ -5,7 +5,7 @@
     <el-scrollbar>
       <div wrapBox>
         <!-- 信息 -->
-        <section class="songInfo" flex gap-40px py-15px>
+        <section class="songInfo">
           <div flex-1 flex-col justify-center items-center gap-30px hidden sm:flex>
             <!-- 封面 -->
             <el-image :src="currentSong?.album.picUrl" fit="cover" w="2/5" rounded-md overflow-hidden shadow-xl />
@@ -104,6 +104,7 @@ defineExpose({ toggle });
 // 歌曲信息容器高度
 .songInfo {
   height: calc(100vh - var(--topNavBarHeight) - var(--playBarHeight) - 30px);
+  @apply flex gap-40px py-15px;
 }
 
 /* 操作 */
@@ -127,7 +128,7 @@ defineExpose({ toggle });
 .songDetailDrawer {
   margin-bottom: var(--playBarHeight);
   height: calc(100vh - var(--playBarHeight) - var(--topNavBarHeight)) !important;
-  background-image: #e9e9e9;
+  @apply dark-bg-gray-300;
 
   .el-drawer__body {
     padding: 0px;

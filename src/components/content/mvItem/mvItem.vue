@@ -1,12 +1,12 @@
 <!-- mv列表item -->
 <template>
-  <div :class="{ flex: isFlex }" class="group" text-15px cursor-pointer min-h-35>
-    <section @click="goMVDetailPage" class="cover" relative flex overflow-hidden>
+  <div :class="{ flex: isFlex }" class="group mvItem">
+    <section @click="goMVDetailPage" class="cover">
       <!-- 封面 -->
-      <el-image fit="cover" lazy :src="cover" rounded-md brightness-85 w-full h-35 />
+      <el-image fit="cover" lazy :src="cover" class="img" />
 
       <!-- 播放次数 -->
-      <p text-white absolute top-2px right-6px z-2 flex items-center>
+      <p class="count">
         <span text-21px i-eva:arrow-right-outline></span>
         <span>{{ Handle.Count(playCount) }}</span>
       </p>
@@ -18,9 +18,12 @@
     </section>
 
     <!-- 详情 -->
-    <section mt-5px overflow-hidden>
+    <section class="detail">
       <!-- 标题 -->
-      <p @click="goMVDetailPage" class="title" truncate group-hover:themeColor>{{ name }}</p>
+      <p @click="goMVDetailPage" class="title" truncate group-hover:themeColor group-hover-dark-text-orange-400>
+        {{ name }}
+      </p>
+
       <!-- 艺术家 -->
       <Artists :artists="artists" />
     </section>
@@ -78,32 +81,23 @@ let goMVDetailPage = () => {
 </script>
 
 <style lang="scss" scoped>
-.cover {
-  .playIcon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgba($color: #fff, $alpha: 0.5);
-    color: #d33a31;
-    font-size: 30px;
-    opacity: 0;
-    transition: opacity 0.3s linear;
-    transform: translate(-50%, -50%);
+.mvItem {
+  @apply w-full text-15px cursor-pointer;
 
-    &:hover {
-      background-color: rgba($color: #fff, $alpha: 0.8);
+  .cover {
+    @apply relative flex overflow-hidden;
+
+    .img {
+      @apply rounded-md brightness-85 w-full h-35;
+    }
+
+    .count {
+      @apply text-white absolute top-2px right-6px z-2 flex items-center;
     }
   }
 
-  &:hover .playIcon {
-    opacity: 1;
+  .detail {
+    @apply mt-5px overflow-hidden;
   }
 }
 
@@ -111,19 +105,16 @@ let goMVDetailPage = () => {
 .flex {
   gap: 10px;
 
-  &>section {
+  .cover,
+  .detail {
     flex: 1;
+  }
 
-    .title {
-      display: -webkit-box;
-      overflow: hidden;
-      -webkit-box-orient: vertical;
-      margin-bottom: 5px;
-      text-overflow: ellipsis;
-      white-space: normal;
+  .title {
+    margin-bottom: 5px;
+    white-space: normal;
 
-      -webkit-line-clamp: 2;
-    }
+    @apply twoLineOmit;
   }
 }
 </style>

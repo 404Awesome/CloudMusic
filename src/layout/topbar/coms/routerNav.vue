@@ -20,22 +20,14 @@ const store = useMainStore();
 
 <style lang="scss" scoped>
 .routerNav p {
-  display: flex;
-  color: rgba($color: #fff, $alpha: 0.7);
-  white-space: nowrap;
-
-  gap: 15px;
+  @apply flex text-white/70 whitespace-nowrap gap-15px;
 
   span {
-    font-size: 15px;
-    cursor: pointer;
+    @apply text-15px cursor-pointer;
 
-    &.active {
-      color: #fff;
-    }
-
+    &.active,
     &:hover {
-      color: #fff;
+      @apply text-white dark-text-orange-400;
     }
   }
 }

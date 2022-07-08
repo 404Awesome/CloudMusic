@@ -3,23 +3,23 @@
   <ul grid6Cols py-20px>
     <li @click="$router.push(`/songListDetail/${item.id}`)" v-for="item in props.songList" :key="item.id" class="group"
       cursor-pointer overflow-hidden>
-      <div class="group" relative flex overflow-hidden rounded-md text="white 13px">
+      <div class="cover">
         <!-- 封面 -->
         <el-image fit-="cover" lazy :src="item.coverImgUrl" brightness-85 />
 
         <!-- 播放数 -->
-        <p absolute top-3px right-5px z-2 flex items-center>
+        <p class="count">
           <span text-20px i-eva:arrow-right-outline></span>
           <span text-14px>{{ Handle.Count(item.playCount) }}</span>
         </p>
 
         <!-- 创建者名字-->
-        <p absolute bottom-5px left-5px z-2 overflow-hidden truncate w="6/10">
+        <p class="nickname">
           <span>{{ item.creator.nickname }}</span>
         </p>
 
         <!-- 播放按钮 -->
-        <div @click.stop="Operate.playSongList(item.id)" class="playIcon" group-hover:opacity-100>
+        <div @click.stop="Operate.playSongList(item.id)" class="playIcon">
           <span i-eva:arrow-right-fill></span>
         </div>
       </div>
@@ -42,25 +42,21 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.playIcon {
-  position: absolute;
-  right: 7px;
-  bottom: 7px;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: rgba($color: #fff, $alpha: 0.5);
-  color: #d33a31;
-  font-size: 30px;
-  opacity: 0;
-  transition: opacity 0.3s linear;
+.cover {
+  @apply relative flex overflow-hidden rounded-md text-white text-13px;
 
-  &:hover {
-    background-color: rgba($color: #fff, $alpha: 0.9);
+  .playIcon {
+    top: calc(100% - 50px);
+    left: calc(100% - 50px);
+    transform: none !important;
+  }
+
+  .count {
+    @apply absolute top-3px right-5px z-2 flex items-center;
+  }
+
+  .nickname {
+    @apply absolute bottom-5px left-5px z-2 overflow-hidden truncate w-3/5;
   }
 }
 </style>

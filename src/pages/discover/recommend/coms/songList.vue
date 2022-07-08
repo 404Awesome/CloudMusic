@@ -32,7 +32,7 @@
           </div>
 
           <!-- 名字 -->
-          <p mt-5px text-14px twoLineOmit group-hover:themeColor>{{ item.name }}</p>
+          <p mt-5px text-14px twoLineOmit group-hover:themeColor group-hover-dark-text-orange-400>{{ item.name }}</p>
         </li>
       </ul>
     </template>

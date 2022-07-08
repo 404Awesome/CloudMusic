@@ -127,7 +127,7 @@ onMounted(() => {
   @apply text-15px truncate transition-all duration-250 ease-linear select-none;
 
   &.active {
-    @apply themeColor text-18px;
+    @apply themeColor text-18px dark-text-orange-400;
   }
 }
 </style>

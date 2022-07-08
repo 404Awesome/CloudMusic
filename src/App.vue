@@ -32,6 +32,11 @@ onMounted(() => {
   --sideNavBarWidth: 230px;
 }
 
+// 暗黑模式下的变量
+.dark:root {
+  --plyr-color-main: #fb923c;
+}
+
 body {
   color: var(--font-color);
   font-family: "Noto Sans SC", serif;
@@ -69,9 +74,51 @@ footer,
 aside {
   box-sizing: border-box;
 }
+
+// 播放图标
+.cover {
+  .playIcon {
+    transition: opacity 0.3s linear;
+    transform: translate(-50%, -50%);
+    @apply absolute top-1/2 left-1/2 w-40px h-40px rounded-full color-#d33a31 text-30px;
+    @apply flex items-center justify-center opacity-0 bg-white/50;
+
+    &:hover {
+      @apply bg-white/80;
+    }
+  }
+
+  &:hover .playIcon {
+    opacity: 1;
+  }
+}
 </style>
 <!-- element-plus -->
 <style lang="scss">
+// dark模式下
+.dark {
+
+  /* 修改elementui v-loading */
+  .el-loading-mask {
+    --theme-color: #fb923c;
+  }
+
+  /* 修改elementui el-pagination */
+  .el-pagination {
+    --theme-color: #fb923c;
+  }
+
+  /* 修改elementui tabs */
+  .el-tabs {
+    --theme-color: #fb923c;
+  }
+
+  /* 修改elementui skeleton  */
+  .el-skeleton {
+    @apply brightness-90;
+  }
+}
+
 /* 修改elementui v-loading */
 .el-loading-mask {
   z-index: 50 !important;
@@ -86,7 +133,7 @@ aside {
   }
 }
 
-/* 修改修改elementui el-pagination */
+/* 修改elementui el-pagination */
 .el-pagination {
   .is-active {
     background-color: var(--theme-color) !important;
@@ -98,7 +145,7 @@ aside {
   }
 }
 
-/* 修改修改elementui tabs */
+/* 修改elementui tabs */
 .el-tabs {
   .el-tabs__header {
     margin: 0px;
@@ -116,6 +163,15 @@ aside {
     .el-tabs__active-bar {
       background-color: var(--theme-color);
     }
+  }
+}
+
+/* 修改elementui popper */
+.el-popper {
+  @apply important-p-0 dark-bg-gray-300 dark-border-none;
+
+  .el-popper__arrow::before {
+    @apply dark-bg-gray-300 dark-border-none;
   }
 }
 </style>

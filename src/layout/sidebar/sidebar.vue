@@ -11,9 +11,9 @@
         <!-- 信息 -->
         <div class="info">
           <!-- 昵称 -->
-          <p truncate themeColor text-15px>{{ profileInfo.nickname }}</p>
+          <p truncate themeColor text-15px dark:text-orange-400>{{ profileInfo.nickname }}</p>
           <!-- 签名 -->
-          <p truncate>{{ profileInfo.signature }}</p>
+          <p truncate dark:text-gray-200>{{ profileInfo.signature }}</p>
         </div>
       </section>
 
@@ -38,7 +38,7 @@
       <!-- 版权声明 -->
       <div class="copyright">
         <p class="title">
-          <span text-20px i-carbon:information-filled></span>
+          <span class="icon" i-carbon:information-filled></span>
           <a href="https://github.com/404Awesome/CloudMusic" target="_blank" class="content">本项目为开源项目!</a>
         </p>
         <p>本项目仅用于学习用途!</p>
@@ -116,37 +116,35 @@ watch(() => store.auth, async (newVal) => {
 <style lang="scss" scoped>
 // 侧边栏容器
 .sidebar {
-  @apply flex flex-col select-none p-10px h-full bg-gray-300 overflow-hidden;
+  @apply flex flex-col select-none p-10px h-full overflow-hidden bg-gray-300 dark-bg-gray-500;
 }
 
 // 版权声明
 .copyright {
-  @apply bg-white/80 p-10px rounded-md text-14px text-gray-500;
+  @apply bg-white/80 p-10px rounded-md text-14px text-gray-500 dark-bg-gray-600 dark-text-gray-400;
 
   // 标题
   .title {
-    @apply themeColor mb-5px flex items-center gap-3px;
+    @apply mb-5px flex items-center gap-3px;
+
+    // 图标
+    .icon {
+      @apply text-20px themeColor dark-text-orange-400;
+    }
 
     // 内容
     .content {
-      @apply text-16px themeColor decoration-none hover-decoration-underline;
+      @apply text-16px themeColor decoration-none hover-decoration-underline dark-text-orange-400;
     }
   }
 }
 
 // 个人信息
 .profile {
-  display: flex;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: rgba($color: #ffffff, $alpha: 0);
-  cursor: pointer;
-  transition: background-color .2s ease-in-out;
-
-  gap: 10px;
+  @apply transition duration-200 ease-in-out flex gap-10px p-10px rounded-md bg-white/0 cursor-pointer;
 
   &:hover {
-    background-color: rgba($color: #ffffff, $alpha: 1);
+    @apply bg-white dark-bg-gray-400;
   }
 
   // 个人信息
@@ -156,38 +154,23 @@ watch(() => store.auth, async (newVal) => {
 }
 
 .navList {
-  overflow: hidden;
-  margin-top: 10px;
-  border-radius: 5px;
+  @apply overflow-hidden mt-10px rounded-md;
 
   .active {
-    background: var(--theme-color);
-    color: #fff;
+    @apply text-white themeBgColor dark-bg-gray-600 dark-text-gray-200;
   }
 }
 
 .navList li,
 .listItem {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  background-color: #fff;
-  cursor: pointer;
-
-  gap: 5px;
+  @apply flex items-center p-10px bg-white cursor-pointer gap-5px dark-bg-gray-300;
 
   p {
-    white-space: nowrap;
-    font-size: 14px;
+    @apply whitespace-nowrap text-14px;
   }
 
   &:hover {
-    background-color: var(--theme-color);
-
-    p,
-    span {
-      color: #fff;
-    }
+    @apply themeBgColor text-white dark-bg-gray-600 dark-text-gray-200;
   }
 }
 </style>

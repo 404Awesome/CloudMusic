@@ -26,9 +26,9 @@
     </template>
     <template #default>
       <ul grid2Cols>
-        <li v-for="(mv, index) in raningList" :key="mv.id" flex overflow-hidden>
+        <li v-for="(mv, index) in raningList" :key="mv.id" class="listItem">
           <!-- 排名 -->
-          <p flex items-center w-50px grow-0 shrink-0 justify-center text="#999 25px">{{ index + 1 }}</p>
+          <p class="index">{{ index + 1 }}</p>
 
           <!-- MVItem -->
           <MVItem :id="mv.id" :cover="mv.cover" :name="mv.name" :artists="mv.artists" :playCount="mv.playCount"
@@ -95,3 +95,13 @@ onMounted(() => {
   })
 });
 </script>
+
+<style lang="scss" scoped>
+.listItem {
+  @apply flex overflow-hidden;
+
+  .index {
+    @apply flex items-center w-50px grow-0 shrink-0 justify-center text-#999 text-25px dark-text-gray-200;
+  }
+}
+</style>

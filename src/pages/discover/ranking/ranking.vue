@@ -12,7 +12,8 @@
     </template>
     <template #default>
       <ul wrapBox grid6Cols py-20px>
-        <li v-for="item in rankingList" :key="item.id" @click="goSongListDetail(item.id)" class="group" cursor-pointer>
+        <li v-for="item in rankingList" :key="item.id" @click="goSongListDetail(item.id)" class="group cover"
+          cursor-pointer>
           <div relative>
             <!-- 播放数 -->
             <p absolute top-3px right-5px z-2 flex items-center text-white>
@@ -24,7 +25,7 @@
             <el-image :src="item.coverImgUrl" fit="cover" rounded-md brightness-90 />
 
             <!-- 播放按钮 -->
-            <div @click.stop="Operate.playSongList(item.id)" class="playIcon" group-hover:opacity-100>
+            <div @click.stop="Operate.playSongList(item.id)" class="playIcon">
               <span i-eva:arrow-right-fill></span>
             </div>
           </div>
@@ -79,28 +80,3 @@ let loadData = async () => {
 // 初始化榜单列表
 onMounted(() => loadData());
 </script>
-
-<style lang="scss" scoped>
-.playIcon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: rgba($color: #fff, $alpha: 0.5);
-  color: #d33a31;
-  font-size: 32px;
-  opacity: 0;
-  transition: opacity 0.3s linear;
-
-  &:hover {
-    background-color: rgba($color: #fff, $alpha: 0.9);
-  }
-}
-</style>

@@ -10,7 +10,7 @@
               <span ml-5px text-17px cursor-pointer hover:themeColor i-carbon:information></span>
             </template>
             <template #default>
-              <p>选取云音乐中三个月内发布的热度最高的50支MV,每天更新。热度由MV播放、收藏、分享数量综合计算</p>
+              <p p-10px>选取云音乐中三个月内发布的热度最高的50支MV,每天更新。热度由MV播放、收藏、分享数量综合计算</p>
             </template>
           </el-popover>
         </p>

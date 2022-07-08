@@ -53,7 +53,7 @@ let goArtistPage = (artist: any) => {
   }
 
   &:hover {
-    color: var(--theme-color);
+    @apply themeColor dark-text-orange-400;
   }
 }
 </style>

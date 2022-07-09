@@ -32,14 +32,14 @@
           </div>
 
           <!-- 用户图标 -->
-          <p themeColor text-25px i-carbon:user-avatar-filled></p>
+          <p text-red-500 text-25px i-carbon:user-avatar-filled></p>
         </li>
       </ul>
     </template>
   </el-skeleton>
 
   <!-- 分页 -->
-  <div v-show="!loading" flex justify-center my-15px>
+  <div v-show="!loading && !(total < limit)" flex justify-center mb-15px>
     <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :total="total" />
   </div>
 </template>
@@ -129,7 +129,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .list {
-  @apply grid3Cols pt-15px;
+  @apply grid3Cols py-15px;
 
   li {
     @apply hover-bg-gray-200 cursor-pointer p-10px bg-gray-100 rounded-md flex items-center justify-between;

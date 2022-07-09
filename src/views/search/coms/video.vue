@@ -17,7 +17,7 @@
       </ul>
     </template>
     <template #default>
-      <ul grid4Cols pt-15px>
+      <ul grid4Cols py-15px>
         <li v-for="item in videoList" :key="item.vid" class="group">
           <!-- 封面 -->
           <div @click="goDetailPage(item.vid, item.type)" class="cover">
@@ -59,7 +59,7 @@
   </el-skeleton>
 
   <!-- 分页 -->
-  <div v-show="!loading" flex justify-center my-15px>
+  <div v-show="!loading && !(total < limit)" flex justify-center mb-15px>
     <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :total="total" />
   </div>
 </template>

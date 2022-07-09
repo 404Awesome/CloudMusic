@@ -20,7 +20,7 @@
   </el-skeleton>
 
   <!-- 分页 -->
-  <div v-show="!loading" flex justify-center my-15px>
+  <div v-show="!loading && !(total < limit)" flex justify-center mb-15px>
     <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :total="total" />
   </div>
 </template>
@@ -100,7 +100,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .list {
-  @apply grid3Cols pt-15px;
+  @apply grid3Cols py-15px;
 
   .listItem {
     @apply flex items-center gap-10px p-10px bg-gray-100 hover-bg-gray-200 rounded-md cursor-pointer;

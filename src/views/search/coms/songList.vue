@@ -13,7 +13,7 @@
       </ul>
     </template>
     <template #default>
-      <ul class="songList">
+      <ul class="list">
         <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" class="group">
           <!-- 封面 -->
           <el-image :src="item.coverImgUrl" fit="cover" class="img" />
@@ -38,7 +38,7 @@
   </el-skeleton>
 
   <!-- 分页 -->
-  <div v-show="!loading" flex justify-center my-15px>
+  <div v-show="!loading && !(total < limit)" flex justify-center mb-15px>
     <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :total="total" />
   </div>
 </template>
@@ -117,8 +117,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.songList {
-  @apply grid3Cols pt-15px;
+.list {
+  @apply grid3Cols py-15px;
 
   li {
     @apply flex items-center gap-10px p-10px rounded-md bg-gray-100 hover-bg-gray-200 cursor-pointer;

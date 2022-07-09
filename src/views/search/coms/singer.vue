@@ -2,8 +2,8 @@
 <template>
   <el-skeleton :loading="loading" animated>
     <template #template>
-      <ul ref="skeletonEl" class="list">
-        <li v-for="item in 6" flex items-center p-10px bg-gray-50 rounded-md>
+      <ul ref="skeletonEl" grid3Cols pt-15px>
+        <li v-for="item in 3" flex items-center p-10px rounded-md>
           <div flex flex-1 items-center gap-10px>
             <el-skeleton-item variant="image" h-17 w-17 min-w-17 rounded-md />
             <el-skeleton-item variant="text" w="1/3" />
@@ -15,7 +15,7 @@
     </template>
     <template #default>
       <ul class="list">
-        <li v-for="item in singerList" :key="item.id" @click="goSingerDetail(item)" class="group listItem">
+        <li v-for="item in singerList" :key="item.id" @click="goSingerDetail(item)" class="group">
           <div flex flex-1 items-center gap-10px text-14px overflow-hidden>
             <!-- 封面 -->
             <el-image :src="item.picUrl" fit="cover" h-17 w-17 min-w-17 rounded-md />
@@ -31,6 +31,7 @@
             </p>
           </div>
 
+          <!-- 用户图标 -->
           <p themeColor text-25px i-carbon:user-avatar-filled></p>
         </li>
       </ul>
@@ -130,7 +131,7 @@ onMounted(() => {
 .list {
   @apply grid3Cols pt-15px;
 
-  .listItem {
+  li {
     @apply hover-bg-gray-200 cursor-pointer p-10px bg-gray-100 rounded-md flex items-center justify-between;
   }
 }

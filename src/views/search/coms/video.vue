@@ -3,7 +3,7 @@
   <el-skeleton :loading="loading" animated>
     <template #template>
       <ul ref="skeletonEl" grid4Cols pt-15px>
-        <li v-for="item in 8">
+        <li v-for="item in 4">
           <!-- 封面 -->
           <el-skeleton-item variant="image" h-35 w-full rounded-md />
           <!-- 标题 -->
@@ -18,7 +18,7 @@
     </template>
     <template #default>
       <ul grid4Cols pt-15px>
-        <li v-for="item in videoList" :key="item.vid">
+        <li v-for="item in videoList" :key="item.vid" class="group">
           <!-- 封面 -->
           <div @click="goDetailPage(item.vid, item.type)" class="cover">
             <el-image :src="item.coverUrl" fit="cover" class="img" />
@@ -40,7 +40,9 @@
             <!-- 标题 -->
             <p class="title">
               <span class="tag">{{ item.type == 0 ? "MV" : "Video" }}</span>
-              <span @click="goDetailPage(item.vid, item.type)" class="content">{{ item.title }}</span>
+              <span @click="goDetailPage(item.vid, item.type)" class="content" group-hover:themeColor>
+                {{ item.title }}
+              </span>
             </p>
 
             <!-- 创建人 -->
@@ -196,11 +198,11 @@ onMounted(() => {
     @apply truncate flex gap-3px items-center overflow-hidden;
 
     .tag {
-      @apply themeBgColor rounded text-white text-12px py-2px px-5px inline-block;
+      @apply bg-red-500 rounded text-white text-12px py-3px px-5px inline-block;
     }
 
     .content {
-      @apply truncate text-14px cursor-pointer hover-themeColor;
+      @apply truncate text-14px cursor-pointer;
     }
   }
 

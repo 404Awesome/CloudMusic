@@ -23,7 +23,6 @@ export default { name: "Search" }
 import Songs from "./coms/songs.vue";
 import Album from "./coms/album.vue";
 import Video from "./coms/video.vue";
-import Lyric from "./coms/lyric.vue";
 import Radio from "./coms/radio.vue";
 import Users from "./coms/users.vue";
 import Singer from "./coms/singer.vue";
@@ -35,7 +34,6 @@ let count = reactive<{ [props: string]: string }>({
   Songs: "",
   Album: "",
   Video: "",
-  Lyric: "",
   Radio: "",
   Users: "",
   Singer: "",
@@ -70,11 +68,6 @@ let components = [
     name: "SongList",
     label: "歌单",
     coms: markRaw(SongList)
-  },
-  {
-    name: "Lyric",
-    label: "歌词",
-    coms: markRaw(Lyric)
   },
   {
     name: "Radio",

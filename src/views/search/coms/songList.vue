@@ -2,8 +2,8 @@
 <template>
   <el-skeleton :loading="loading" animated>
     <template #template>
-      <ul ref="skeletonEl" class="songList">
-        <li v-for="item in 6" flex gap-10px p-10px bg-gray-50 rounded-md>
+      <ul ref="skeletonEl" grid3Cols pt-15px>
+        <li v-for="item in 3" flex gap-10px p-10px rounded-md>
           <el-skeleton-item variant="image" h-17 w-17 min-w-17 rounded-md />
           <div h-full flex flex-col justify-around flex-1>
             <el-skeleton-item variant="text" w="2/3" />
@@ -14,14 +14,13 @@
     </template>
     <template #default>
       <ul class="songList">
-        <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)"
-          class="listItem">
+        <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" class="group">
           <!-- 封面 -->
           <el-image :src="item.coverImgUrl" fit="cover" class="img" />
           <!-- 详情 -->
           <div class="detail">
             <!-- 标题 -->
-            <p class="title">{{ item.name }}</p>
+            <p class="title" group-hover:themeColor>{{ item.name }}</p>
             <!-- 信息 -->
             <div class="info">
               <p whitespace-nowrap>{{ item.trackCount }}首</p>
@@ -121,7 +120,7 @@ onMounted(() => {
 .songList {
   @apply grid3Cols pt-15px;
 
-  .listItem {
+  li {
     @apply flex items-center gap-10px p-10px rounded-md bg-gray-100 hover-bg-gray-200 cursor-pointer;
   }
 }
@@ -138,7 +137,7 @@ onMounted(() => {
   }
 
   .info {
-    @apply flex gap-20px overflow-hidden text-14px text-gray-400;
+    @apply flex gap-15px overflow-hidden text-14px text-gray-400;
 
     p:last-child {
       @apply truncate;

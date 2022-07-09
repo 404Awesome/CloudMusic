@@ -12,7 +12,7 @@ export default {
   },
   // 搜索
   getCloudSearch(keywords: string, type: number = 1, offset: number = 0, limit: number = 50) {
-    // type: 1[单曲], 10[专辑], 100[歌手], 1000[歌单], 1002[用户], 1006[歌词], 1009[电台], 1014[视频], 
+    // type: 1[单曲], 10[专辑], 100[歌手], 1000[歌单], 1002[用户], 1009[电台], 1014[视频], 
     return GET("/cloudsearch", { keywords, type, offset, limit });
   },
 }

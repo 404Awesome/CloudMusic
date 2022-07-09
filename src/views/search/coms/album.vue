@@ -2,8 +2,8 @@
 <template>
   <el-skeleton :loading="loading" animated>
     <template #template>
-      <ul ref="skeletonEl" class="list" pb-15px>
-        <li v-for="item in 6" flex gap-10px items-center p-10px bg-gray-50 rounded-md>
+      <ul ref="skeletonEl" class="list">
+        <li v-for="item in 3" flex gap-10px items-center p-10px rounded-md>
           <el-skeleton-item variant="image" h-17 w-17 min-w-17 rounded-md />
           <el-skeleton-item variant="text" w="1/3" />
         </li>
@@ -13,7 +13,7 @@
       <ul class="list">
         <li v-for="item in albumList" :key="item.id" @click="$router.push(`/albumDetail/${item.id}`)" class="listItem">
           <el-image :src="item.picUrl" fit="cover" h-17 w-17 min-w-17 rounded-md />
-          <Artists :artists="item.artists" />
+          <Artists :artists="item.artists" fontSize="14px" />
         </li>
       </ul>
     </template>

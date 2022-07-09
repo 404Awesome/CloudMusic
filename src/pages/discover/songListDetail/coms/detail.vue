@@ -215,13 +215,13 @@ onMounted(() => loadData());
 
 <style lang="scss" scoped>
 .operate {
-  @apply mb-3 lg-my-0 flex content-center flex-row flex-wrap gap-y-7px gap-x-10px;
+  @apply mb-3 lg-my-0 flex content-center flex-row flex-wrap gap-y-7px gap-x-15px;
 
   li {
-    @apply flexCenter select-none rounded-full w-130px text-center cursor-pointer border-1px border-#eee gap-5px whitespace-nowrap;
+    @apply flexCenter select-none rounded-full w-115px text-center cursor-pointer border-1px border-#eee gap-5px whitespace-nowrap;
 
     span {
-      padding: 5px 0px;
+      @apply py-5px text-13px;
 
       &.icon {
         font-size: 19px;
@@ -234,7 +234,7 @@ onMounted(() => loadData());
     }
 
     &:first-child {
-      width: 110px;
+      width: 95px;
       border: none;
       background: linear-gradient(to right, #fa5042, #d43b32);
       color: rgba($color: #fff, $alpha: .8);

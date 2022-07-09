@@ -29,4 +29,8 @@ export default {
   getDownloadUrl(id: number) {
     return GET("/song/download/url", { id });
   },
+  // 获取每日推荐歌曲
+  getRecommend() {
+    return GET("/recommend/songs");
+  },
 }

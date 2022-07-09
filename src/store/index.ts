@@ -55,8 +55,8 @@ export const useMainStore = defineStore("main", {
     playSong(songInfo: SongInfo) {
       let id = songInfo.song.id;
       if (this.currentSong?.song.id !== id) {
-        // 限制播放列表只能存30首歌
-        if (this.playList.length >= 30) this.playList.shift();
+        // 限制播放列表只能存50首歌
+        if (this.playList.length >= 50) this.playList.shift();
         this.currentSong = songInfo;
         if (!this.IsExists(id)) this.playList.push(songInfo);
       }

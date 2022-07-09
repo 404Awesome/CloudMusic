@@ -12,6 +12,26 @@
     </template>
     <template #default>
       <ul class="songList">
+        <!-- 每日推荐 -->
+        <li v-if="store.auth" @click="$router.push('/dailySongs')" cursor-pointer>
+          <div class="dailySongs cover">
+            <el-image src="/img/dailySongs.png" fit="cover" />
+
+            <!-- 提示文本 -->
+            <p class="tipText">根据你的音乐口味生成每日更新</p>
+
+            <!-- 当天日期 -->
+            <p class="date">{{ new Date().getDate() }}</p>
+
+            <p class="playIcon">
+              <span @click.stop="playDailySongs" i-eva:arrow-right-fill></span>
+            </p>
+          </div>
+
+          <p class="name">每日歌曲推荐</p>
+        </li>
+
+        <!-- 歌单列表 -->
         <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" cursor-pointer>
           <div class="cover">
             <!-- 封面 -->
@@ -21,8 +41,8 @@
             <PlayCount :playCount="item.playCount" />
 
             <!-- 播放图标 -->
-            <p class="icon">
-              <span @click.stop="Operate.playSongList(item.id)" i-eva:play-circle-outline></span>
+            <p class="playIcon">
+              <span @click.stop="Operate.playSongList(item.id)" i-eva:arrow-right-fill></span>
             </p>
           </div>
 
@@ -37,10 +57,14 @@
 <script setup lang="ts">
 import PlayCount from "@/components/content/playCount/playCount.vue";
 import { reactive, ref, onActivated } from "vue";
+import { SongAPI, SongListAPI } from "api";
 import { ElMessage } from "element-plus";
-import { SongListAPI } from "api";
-import { Operate } from "utils";
+import { Handle, Operate } from "utils";
+import { useMainStore } from "store";
+const store = useMainStore();
 
+// 限制获取数量
+let limit = 12;
 // 加载状态
 let loading = ref<boolean>(false);
 // 推荐歌单列表
@@ -52,11 +76,29 @@ interface SongInfo {
 }
 let songList = reactive<SongInfo[]>([]);
 
+// 播放每日推荐音乐
+let playDailySongs = async () => {
+  try {
+    if (store.songListID == 50) return ElMessage.warning('请不要重复播放相同歌单!');
+    let { code, data: { dailySongs } }: any = await SongAPI.getRecommend();
+    if (code == 200) {
+      // 处理歌曲列表
+      let list = Handle.SongList(dailySongs);
+      store.addPlayList(list);
+      // 设置歌单ID
+      store.songListID = 50;
+    }
+  } catch (err: any) {
+    ElMessage.error("加载每日推荐歌单失败!");
+  }
+}
+
 // 加载推荐歌单列表
 let loadData = async () => {
   try {
     loading.value = true;
-    let { code, result }: any = await SongListAPI.getPersonalized(12);
+    if (store.auth) limit = 11;
+    let { code, result }: any = await SongListAPI.getPersonalized(limit);
     if (code == 200) {
       // 处理歌单
       let list = result.map((item: any) => {
@@ -66,7 +108,7 @@ let loadData = async () => {
       songList.push(...list);
     };
   } catch (err: any) {
-    ElMessage.error("加载推荐列表失败!");
+    ElMessage.error("加载推荐歌单列表失败!");
   } finally {
     loading.value = false;
   }
@@ -85,15 +127,29 @@ onActivated(() => {
   @apply grid6Cols mt-15px min-h-300px;
 }
 
+.dailySongs {
+  &:hover .tipText {
+    opacity: 1;
+  }
+
+  .tipText {
+    @apply transition duration-300 ease-in-out absolute top-0px left-0px right-0px p-10px text-13px font-bold text-white bg-black/40 opacity-0;
+  }
+
+  .date {
+    transform: translate(-50%, -10px);
+    @apply text-white text-33px absolute top-50% left-50%;
+  }
+}
+
 .cover {
   @apply relative flex overflow-hidden rounded-md;
 
-  &:hover .icon {
-    @apply opacity-100;
-  }
-
-  .icon {
-    @apply absolute right-5px bottom-5px z-2 text-white/70 text-28px opacity-0 transition-opacity hover-text-white;
+  .playIcon {
+    top: calc(100% - 45px);
+    left: calc(100% - 45px);
+    transform: none !important;
+    @apply h-35px w-35px;
   }
 }
 

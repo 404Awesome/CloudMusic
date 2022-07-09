@@ -44,9 +44,10 @@ const props = defineProps({
   @apply relative flex overflow-hidden rounded-md text-white text-13px;
 
   .playIcon {
-    top: calc(100% - 50px);
-    left: calc(100% - 50px);
+    top: calc(100% - 45px);
+    left: calc(100% - 45px);
     transform: none !important;
+    @apply h-35px w-35px;
   }
 
   .nickname {

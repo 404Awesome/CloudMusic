@@ -2,7 +2,7 @@
 <template>
   <el-skeleton :loading="loading" animated>
     <template #template>
-      <ul ref="skeletonEl" class="list" pb-15px>
+      <ul ref="skeletonEl" class="list">
         <li v-for="item in 6" flex items-center p-10px bg-gray-50 rounded-md>
           <div flex flex-1 items-center gap-10px>
             <el-skeleton-item variant="image" h-17 w-17 min-w-17 rounded-md />

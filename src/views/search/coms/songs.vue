@@ -1,7 +1,7 @@
 <!-- 单曲 -->
 <template>
   <!-- 歌曲列表 -->
-  <SongList v-loading="loading" :songList="songList" />
+  <SongList v-loading="loading" :songList="songsList" />
 
   <!-- 分页 -->
   <div v-show="!loading" flex justify-center my-15px>
@@ -24,25 +24,22 @@ const emit = defineEmits(["getCount"]);
 let limit = 30;
 // 数据总条数
 let total = ref<number>(0);
-// 禁止无限滚动
-let disabled = ref<boolean>(false);
 // 加载状态
-let loading = ref<boolean>(false);
+let loading = ref<boolean>(true);
 // 歌曲列表
-let songList = reactive<SongInfo[]>([]);
+let songsList = reactive<SongInfo[]>([]);
 
 // 分页发生改变
 let change = (page: number) => {
-  songList.splice(0, songList.length);
+  songsList.splice(0, songsList.length);
   let offset = (page - 1) * limit;
   loadData(offset);
 }
 
 // 加载歌曲列表
 let loadData = async (offset: number = 0) => {
-  if (loading.value) return;
-  loading.value = true;
   try {
+    loading.value = true;
     let { code, result: { songCount, songs } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 1, offset, limit);
     if (code == 200) {
       if (!total.value) {
@@ -50,12 +47,7 @@ let loadData = async (offset: number = 0) => {
         total.value = songCount;
       }
       let list = Handle.SongList(songs);
-      songList.push(...list);
-    }
-
-    // 禁用无限加载
-    if (songs.length < limit) {
-      disabled.value = true;
+      songsList.push(...list);
     }
   } catch (err: any) {
     ElMessage.error("加载音乐列表失败!");

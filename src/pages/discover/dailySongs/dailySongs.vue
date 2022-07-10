@@ -4,7 +4,7 @@
     <!-- 头部简介 -->
     <header class="header">
       <div class="icon">
-        <el-image src="/img/dailySongsIcon.png" fit="cover" />
+        <el-image src="/img/dailySongsIcon.png" fit="cover" :draggable="false" />
         <p class="date">{{ new Date().getDate() }}</p>
       </div>
 

@@ -10,12 +10,15 @@
       </ul>
     </template>
     <template #default>
-      <ul class="list">
+      <ul v-show="albumList.length" class="list">
         <li v-for="item in albumList" :key="item.id" @click="$router.push(`/albumDetail/${item.id}`)">
           <el-image :src="item.picUrl" fit="cover" h-17 w-17 min-w-17 rounded-md />
           <Artists :artists="item.artists" fontSize="14px" />
         </li>
       </ul>
+
+      <!-- 空状态 -->
+      <el-empty v-show="!albumList.length" description="暂无专辑!" />
     </template>
   </el-skeleton>
 
@@ -63,7 +66,7 @@ let change = (page: number) => {
 let loadData = async (offset: number = 0) => {
   try {
     loading.value = true;
-    let { code, result: { albums, albumCount } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 10, offset, limit);
+    let { code, result: { albums = [], albumCount = 0 } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 10, offset, limit);
     if (code == 200) {
       // 处理数据总条数
       if (!total.value) {
@@ -71,11 +74,13 @@ let loadData = async (offset: number = 0) => {
         total.value = albumCount;
       }
       // 处理专辑列表
-      let list = albums.map((item: any) => {
-        let { id, picUrl, artists } = item;
-        return { id, picUrl, artists };
-      });
-      albumList.push(...list);
+      if (albums.length) {
+        let list = albums.map((item: any) => {
+          let { id, picUrl, artists } = item;
+          return { id, picUrl, artists };
+        });
+        albumList.push(...list);
+      }
     }
   } catch (err: any) {
     ElMessage.error("加载专辑列表失败!");
@@ -88,11 +93,8 @@ let loadData = async (offset: number = 0) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (albumList.length) {
-        stop();
-      } else {
-        loadData();
-      }
+      loadData();
+      stop();
     }
   })
 });

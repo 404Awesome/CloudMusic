@@ -80,11 +80,8 @@ let goSingerDetail = (singer: any) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (similarSinger.length) {
-        stop();
-      } else {
-        loadData();
-      }
+      loadData();
+      stop();
     }
   })
 });

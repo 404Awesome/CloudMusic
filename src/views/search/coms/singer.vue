@@ -14,7 +14,7 @@
       </ul>
     </template>
     <template #default>
-      <ul class="list">
+      <ul v-show="singerList.length" class="list">
         <li v-for="item in singerList" :key="item.id" @click="goSingerDetail(item)" class="group">
           <div flex flex-1 items-center gap-10px text-14px overflow-hidden>
             <!-- 封面 -->
@@ -35,6 +35,9 @@
           <p text-red-500 text-25px i-carbon:user-avatar-filled></p>
         </li>
       </ul>
+
+      <!-- 空状态 -->
+      <el-empty v-show="!singerList.length" description="暂无歌手!" />
     </template>
   </el-skeleton>
 
@@ -92,7 +95,7 @@ let goSingerDetail = (singer: SingerInfo) => {
 let loadData = async (offset: number = 0) => {
   try {
     loading.value = true;
-    let { code, result: { artistCount, artists } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 100, offset, limit);
+    let { code, result: { artistCount = 0, artists = [] } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 100, offset, limit);
     if (code == 200) {
       // 处理数据总条数
       if (!total.value) {
@@ -100,11 +103,13 @@ let loadData = async (offset: number = 0) => {
         total.value = artistCount;
       }
       // 处理歌手列表
-      let list = artists.map((item: any) => {
-        let { id, alias, picUrl, name } = item;
-        return { id, alias, picUrl, name };
-      });
-      singerList.push(...list);
+      if (artists.length) {
+        let list = artists.map((item: any) => {
+          let { id, alias, picUrl, name } = item;
+          return { id, alias, picUrl, name };
+        });
+        singerList.push(...list);
+      }
     }
   } catch (err: any) {
     ElMessage.error("加载歌手列表失败!");
@@ -117,11 +122,8 @@ let loadData = async (offset: number = 0) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (singerList.length) {
-        stop();
-      } else {
-        loadData();
-      }
+      loadData();
+      stop();
     }
   })
 });

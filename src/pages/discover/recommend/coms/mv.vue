@@ -48,11 +48,8 @@ let loadData = async () => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (mvList.length) {
-        stop();
-      } else {
-        loadData();
-      }
+      loadData();
+      stop();
     }
   })
 });

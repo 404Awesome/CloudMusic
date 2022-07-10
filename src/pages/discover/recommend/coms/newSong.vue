@@ -81,11 +81,8 @@ let playSong = async (id: number) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (newSongList.length) {
-        stop();
-      } else {
-        loadData();
-      }
+      loadData();
+      stop();
     }
   })
 });

@@ -13,7 +13,7 @@
       </ul>
     </template>
     <template #default>
-      <ul class="list">
+      <ul v-show="songList.length" class="list">
         <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" class="group">
           <!-- 封面 -->
           <el-image :src="item.coverImgUrl" fit="cover" class="img" />
@@ -34,6 +34,9 @@
           </div>
         </li>
       </ul>
+
+      <!-- 空状态 -->
+      <el-empty v-show="!songList.length" description="暂无歌单!" />
     </template>
   </el-skeleton>
 
@@ -82,18 +85,20 @@ let change = (page: number) => {
 let loadData = async (offset: number = 0) => {
   try {
     loading.value = true;
-    let { code, result: { playlistCount, playlists } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 1000, offset, limit);
+    let { code, result: { playlistCount = 0, playlists = [] } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 1000, offset, limit);
     if (code == 200) {
       if (!total.value) {
         emit("getCount", `找到 ${playlistCount} 个歌单`);
         total.value = playlistCount;
       }
       // 处理歌单
-      let list = playlists.map((item: any) => {
-        let { coverImgUrl, name, id, trackCount, creator: { userId, nickname } } = item;
-        return { coverImgUrl, name, id, trackCount, userId, nickname }
-      })
-      songList.push(...list);
+      if (playlists.length) {
+        let list = playlists.map((item: any) => {
+          let { coverImgUrl, name, id, trackCount, creator: { userId, nickname } } = item;
+          return { coverImgUrl, name, id, trackCount, userId, nickname }
+        })
+        songList.push(...list);
+      }
     }
   } catch (err: any) {
     ElMessage.error("加载音乐列表失败!");
@@ -106,11 +111,8 @@ let loadData = async (offset: number = 0) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (songList.length) {
-        stop();
-      } else {
-        loadData();
-      }
+      loadData();
+      stop();
     }
   })
 });

@@ -13,7 +13,7 @@
       </ul>
     </template>
     <template #default>
-      <ul class="list">
+      <ul v-show="radioList.length" class="list">
         <li v-for="item in radioList" :key="item.userId" @click="$router.push(`/radioDetail/${item.id}`)" class="group">
           <el-image :src="item.picUrl" fit="cover" h-17 w-17 min-w-17 rounded-md />
           <div class="detail">
@@ -25,6 +25,9 @@
           </div>
         </li>
       </ul>
+
+      <!-- 空状态 -->
+      <el-empty v-show="!radioList.length" description="暂无电台!" />
     </template>
   </el-skeleton>
 
@@ -73,7 +76,7 @@ let change = (page: number) => {
 let loadData = async (offset: number = 0) => {
   try {
     loading.value = true;
-    let { code, result: { djRadiosCount, djRadios } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 1009, offset, limit);
+    let { code, result: { djRadiosCount = 0, djRadios = [] } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 1009, offset, limit);
     if (code == 200) {
       // 处理数据总条数
       if (!total.value) {
@@ -81,14 +84,16 @@ let loadData = async (offset: number = 0) => {
         total.value = djRadiosCount;
       }
       // 处理电台列表
-      let list: RadioInfo[] = djRadios.map((item: any): RadioInfo => {
-        let { id, picUrl, name, dj: { nickname, userId } } = item;
-        return { id, picUrl, name, nickname, userId };
-      });
-      radioList.push(...list);
+      if (djRadios.length) {
+        let list: RadioInfo[] = djRadios.map((item: any): RadioInfo => {
+          let { id, picUrl, name, dj: { nickname, userId } } = item;
+          return { id, picUrl, name, nickname, userId };
+        });
+        radioList.push(...list);
+      }
     }
   } catch (err: any) {
-    ElMessage.error("加载歌手列表失败!");
+    ElMessage.error("加载电台列表失败!");
   } finally {
     loading.value = false;
   }
@@ -98,11 +103,8 @@ let loadData = async (offset: number = 0) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (radioList.length) {
-        stop();
-      } else {
-        loadData();
-      }
+      loadData();
+      stop();
     }
   })
 });

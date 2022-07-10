@@ -17,7 +17,7 @@
       </ul>
     </template>
     <template #default>
-      <ul grid4Cols py-15px>
+      <ul v-show="videoList.length" grid4Cols py-15px>
         <li v-for="item in videoList" :key="item.vid" class="group">
           <!-- 封面 -->
           <div @click="goDetailPage(item.vid, item.type)" class="cover">
@@ -55,6 +55,9 @@
           </div>
         </li>
       </ul>
+
+      <!-- 空状态 -->
+      <el-empty v-show="!videoList.length" description="暂无视频!" />
     </template>
   </el-skeleton>
 
@@ -138,7 +141,7 @@ let goUserPage = (userId: number, type: number, name: string) => {
 let loadData = async (offset: number = 0) => {
   try {
     loading.value = true;
-    let { code, result: { videoCount, videos } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 1014, offset, limit);
+    let { code, result: { videoCount = 0, videos = [] } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 1014, offset, limit);
     if (code == 200) {
       // 处理数据总条数
       if (!total.value) {
@@ -146,20 +149,22 @@ let loadData = async (offset: number = 0) => {
         total.value = videoCount;
       }
       // 处理视频列表
-      let list = videos.map((item: any) => {
-        let { type, vid, coverUrl, durationms, playTime, title, creator } = item;
-        return {
-          type,
-          vid,
-          playTime,
-          coverUrl,
-          durationms,
-          title,
-          userId: creator[0].userId,
-          userName: creator[0].userName
-        };
-      });
-      videoList.push(...list);
+      if (videos.length) {
+        let list = videos.map((item: any) => {
+          let { type, vid, coverUrl, durationms, playTime, title, creator } = item;
+          return {
+            type,
+            vid,
+            playTime,
+            coverUrl,
+            durationms,
+            title,
+            userId: creator[0].userId,
+            userName: creator[0].userName
+          };
+        });
+        videoList.push(...list);
+      }
     }
   } catch (err: any) {
     ElMessage.error("加载歌手列表失败!");
@@ -172,11 +177,8 @@ let loadData = async (offset: number = 0) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (videoList.length) {
-        stop();
-      } else {
-        loadData();
-      }
+      loadData();
+      stop();
     }
   })
 });

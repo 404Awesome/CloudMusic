@@ -86,11 +86,8 @@ let loadData = async (area: string) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (raningList.length) {
-        stop();
-      } else {
-        loadData(currentType.value);
-      }
+      loadData(currentType.value);
+      stop();
     }
   })
 });

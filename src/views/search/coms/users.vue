@@ -13,7 +13,7 @@
       </ul>
     </template>
     <template #default>
-      <ul class="list">
+      <ul v-show="userList.length" class="list">
         <li v-for="item in userList" :key="item.id" @click="$router.push(`/othersInfo/${item.id}`)">
           <el-image :src="item.avatarUrl" fit="cover" class="avatar" />
 
@@ -33,6 +33,9 @@
           </div>
         </li>
       </ul>
+
+      <!-- 空状态 -->
+      <el-empty v-show="!userList.length" description="暂无用户!" />
     </template>
   </el-skeleton>
 
@@ -82,7 +85,7 @@ let change = (page: number) => {
 let loadData = async (offset: number = 0) => {
   try {
     loading.value = true;
-    let { code, result: { userprofiles, userprofileCount } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 1002, offset, limit);
+    let { code, result: { userprofiles = [], userprofileCount = 0 } }: any = await OtherAPI.getCloudSearch(route.params.keyword as string, 1002, offset, limit);
     if (code == 200) {
       // 处理数据总条数
       if (!total.value) {
@@ -90,11 +93,13 @@ let loadData = async (offset: number = 0) => {
         total.value = userprofileCount;
       }
       // 处理用户列表
-      let list: UserInfo[] = userprofiles.map((item: any): UserInfo => {
-        let { userId, nickname, gender, avatarUrl, signature } = item;
-        return { id: userId, nickname, gender, avatarUrl, signature };
-      });
-      userList.push(...list);
+      if (userprofiles.length) {
+        let list: UserInfo[] = userprofiles.map((item: any): UserInfo => {
+          let { userId, nickname, gender, avatarUrl, signature } = item;
+          return { id: userId, nickname, gender, avatarUrl, signature };
+        });
+        userList.push(...list);
+      }
     }
   } catch (err: any) {
     ElMessage.error("加载专辑列表失败!");
@@ -107,11 +112,8 @@ let loadData = async (offset: number = 0) => {
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      if (userList.length) {
-        stop();
-      } else {
-        loadData();
-      }
+      loadData();
+      stop();
     }
   })
 });

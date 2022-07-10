@@ -59,8 +59,8 @@ export default {
     return GET("/user/event", { uid });
   },
   // 获取用户关注列表
-  getUserFollows(uid: number) {
-    return GET("/user/follows", { uid });
+  getUserFollows(uid: number, offset: number = 0, limit: number = 30) {
+    return GET("/user/follows", { uid, offset, limit });
   },
   // 获取用户粉丝列表
   getUserFolloweds(uid: number) {

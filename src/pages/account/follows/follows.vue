@@ -1,4 +1,4 @@
-<!-- 关注 -->
+<!-- 关注的人 -->
 <template>
   <el-skeleton :loading="loading" animated>
     <template #template>
@@ -87,7 +87,7 @@ let loadData = async () => {
 
 <style lang="scss" scoped>
 .list {
-  @apply wrapBox grid3Cols pt15px important-gap-0px;
+  @apply wrapBox grid3Cols pt-15px important-gap-0px;
 
   li {
     @apply py-15px px-20px flex gap-10px items-center hover-bg-gray-100;

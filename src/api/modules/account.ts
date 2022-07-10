@@ -63,8 +63,8 @@ export default {
     return GET("/user/follows", { uid, offset, limit });
   },
   // 获取用户粉丝列表
-  getUserFolloweds(uid: number) {
-    return GET("/user/followeds", { uid });
+  getUserFolloweds(uid: number, offset: number = 0, limit: number = 30) {
+    return GET("/user/followeds", { uid, offset, limit });
   },
   // 获取用户信息 , 歌单，收藏，mv, dj 数量
   getUserSubcount() {

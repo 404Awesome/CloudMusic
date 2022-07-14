@@ -13,8 +13,7 @@
     </div>
 
     <!-- 头像 -->
-    <el-image :src="info.avatarUrl" :draggable="false" w-70px h-70px rounded-full relative z-10 border="5px solid #fff"
-      translate-y--35px translate-x-10px />
+    <el-image :src="info.avatarUrl" :draggable="false" class="avatar" translate-y--35px translate-x-10px />
 
     <!-- 简介 -->
     <div h-full translate-y--70px bg-gray-200 p-10px pt-40px>
@@ -31,18 +30,18 @@
       </div>
 
       <!-- 计数 -->
-      <ul flex gap-10px mt-10px h-12>
-        <li @click="goCountPage('/dynamic')" class="count">
-          <span text-17px text-blue-500 truncate>{{ count.dynamic }}</span>
-          <span text-14px text-gray-500 truncate>动态</span>
+      <ul class="count">
+        <li @click="goCountPage('/userDynamic')">
+          <span text-blue-500>{{ count.dynamic }}</span>
+          <span>动态</span>
         </li>
-        <li @click="goCountPage('/follows')" class="count">
-          <span text-17px text-teal-500 truncate>{{ count.follows }}</span>
-          <span text-14px text-gray-500 truncate>关注</span>
+        <li @click="goCountPage('/userFollows')">
+          <span text-teal-500>{{ count.follows }}</span>
+          <span>关注</span>
         </li>
-        <li @click="goCountPage('/followeds')" class="count">
-          <span text-17px text-violet-500 truncate>{{ count.followeds }}</span>
-          <span text-14px text-gray-500 truncate>粉丝</span>
+        <li @click="goCountPage('/userFolloweds')">
+          <span text-violet-500>{{ count.followeds }}</span>
+          <span>粉丝</span>
         </li>
       </ul>
     </div>
@@ -50,12 +49,12 @@
 </template>
 
 <script setup lang="ts">
+import ProvinceCode from "@/assets/areaCode/province.json";
+import CityCode from "@/assets/areaCode/city.json";
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { AccountAPI } from "api";
-import ProvinceCode from "@/assets/areaCode/province.json";
-import CityCode from "@/assets/areaCode/city.json";
 const router = useRouter();
 const emit = defineEmits(['getUid']);
 
@@ -146,7 +145,26 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+.avatar {
+  @apply w-70px h-70px rounded-full relative z-10 border-5px border-#fff;
+}
+
 .count {
-  @apply bg-white rounded h-full py-5px px-10px flex flex-col justify-between items-center cursor-pointer;
+  @apply flex gap-10px mt-10px h-12;
+
+  li {
+    @apply bg-white rounded h-full py-5px px-10px flex flex-col justify-between items-center cursor-pointer;
+
+
+    span {
+      &:first-child {
+        @apply text-17px truncate;
+      }
+
+      &:last-child {
+        @apply text-14px text-gray-500 truncate;
+      }
+    }
+  }
 }
 </style>

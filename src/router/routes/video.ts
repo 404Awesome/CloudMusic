@@ -1,14 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 let Video = () => import("@/views/video/video.vue");
 
-/*
- * VideoList: "视频列表",
- * VideoDetail: "视频详情",
- * MVList: "mv列表",
- * MVDetail: "mv详情",
- * AllMV: "全部mv",
- * RankingList: "MV排行榜",
- */
 let VideoList = () => import("@/pages/video/videoList/videoList.vue");
 let MVList = () => import("@/pages/video/mvList/mvList.vue");
 let MVDetail = () => import("@/pages/video/mvDetail/mvDetail.vue");

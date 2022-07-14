@@ -133,7 +133,7 @@ let goUserPage = (userId: number, type: number, name: string) => {
     });
   } else {
     // 跳转个人页面
-    router.push(`/othersInfo/${userId}`);
+    router.push(`/personalPage/${userId}`);
   }
 }
 

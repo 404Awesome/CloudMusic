@@ -4,8 +4,8 @@
     <!-- 创建人 -->
     <div flex justify-between>
       <section flex gap-10px items-center>
-        <el-avatar @click="goOtherInfo" :src="creator.avatarUrl" :size="45" fit="cover" cursor-pointer />
-        <p @click="goOtherInfo" truncate text-15px cursor-pointer hover:themeColor>{{ creator.nickname }}</p>
+        <el-avatar @click="goPersonalPage" :src="creator.avatarUrl" :size="45" fit="cover" cursor-pointer />
+        <p @click="goPersonalPage" truncate text-15px cursor-pointer hover:themeColor>{{ creator.nickname }}</p>
       </section>
       <section flex items-center>
         <p class="followedBtn" :class="{ followed: creator.followed }">
@@ -62,9 +62,9 @@ let { vid, title, publishTime, playTime, subCount, shareCount, likedCount, descr
 let showDesc = ref(false);
 
 // 跳转个人主页
-let goOtherInfo = () => {
+let goPersonalPage = () => {
   if (creator.userId) {
-    router.push(`/othersInfo/${creator.userId}`);
+    router.push(`/personalPage/${creator.userId}`);
   }
 }
 </script>

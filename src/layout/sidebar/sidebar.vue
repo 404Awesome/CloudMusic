@@ -4,7 +4,7 @@
     <!-- 登陆 / 注册 / 账号信息 -->
     <header>
       <!-- 已登陆 -->
-      <section v-if="store.auth" @click="$router.push('/personalInfo')" class="profile">
+      <section v-if="store.auth" @click="$router.push('/myHonePage')" class="profile">
         <!-- 头像 -->
         <el-avatar :src="profileInfo.avatarUrl" :size="45" flex-none />
 

@@ -74,4 +74,8 @@ export default {
   getUserPlaylist(uid: number, offset: number = 0, limit: number = 30) {
     return GET("/user/playlist", { uid, offset, limit });
   },
+  // 获取动态消息
+  getEvent(lasttime: number, pagesize: number = 20) {
+    return GET("/event", { pagesize, lasttime });
+  },
 }

@@ -17,10 +17,11 @@
       <ul v-show="followedList.length" class="list">
         <li v-for="item in followedList" :key="item.id">
           <!-- 头像 -->
-          <el-image @click="$router.push(`/othersInfo/${item.id}`)" :src="item.avatarUrl" fit="cover" class="avatar" />
+          <el-image @click="$router.push(`/personalPage/${item.id}`)" :src="item.avatarUrl" fit="cover"
+            class="avatar" />
           <div class="detail">
             <!-- 名称 -->
-            <p class="nickname" @click="$router.push(`/othersInfo/${item.id}`)">{{ item.nickname }}</p>
+            <p class="nickname" @click="$router.push(`/personalPage/${item.id}`)">{{ item.nickname }}</p>
             <div>
               <!-- 个性签名 -->
               <p v-if="item.signature" class="signature">{{ item.signature }}</p>

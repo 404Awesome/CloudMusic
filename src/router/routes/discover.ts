@@ -1,22 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 import { useMainStore } from "store";
 
-/*
- * Discover: "发现音乐",
- * Recommend: "个性推荐",
- * PlayList: "歌单",
- * Ranking: "排行榜",
- * Singer: "歌手",
- * PaidBoutique: "付费精品",
- * RadioStation: "主播电台",
- * RadioDetail: "电台详情",
- * RadioCateDetail: "电台分类详情",
- * DailySongs: "每日歌曲推荐",
- * Broadcast: "独家放送",
- * SongListDetail: "歌单详情",
- * SingerDetail: "歌手详情",
- * AlbumDetail: "专辑详情",
- */
 let Discover = () => import("@/views/discover/discover.vue");
 let Recommend = () => import("@/pages/discover/recommend/recommend.vue");
 let SongList = () => import("@/pages/discover/songList/songList.vue");

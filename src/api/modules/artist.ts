@@ -31,7 +31,7 @@ export default {
   getTopSong(id: number) {
     return GET("/artist/top/song", { id });
   },
-  // 获取专辑信息
+  // 获取专辑内容
   getAlbumInfo(id: number) {
     return GET("/album", { id });
   },

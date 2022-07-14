@@ -26,7 +26,7 @@
               <p whitespace-nowrap>{{ item.trackCount }}首</p>
               <p>
                 <span>by: </span>
-                <span @click.stop="$router.push(`/othersInfo/${item.userId}`)" class="nickname">
+                <span @click.stop="$router.push(`/personalPage/${item.userId}`)" class="nickname">
                   {{ item.nickname }}
                 </span>
               </p>

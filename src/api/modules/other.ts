@@ -15,4 +15,8 @@ export default {
     // type: 1[单曲], 10[专辑], 100[歌手], 1000[歌单], 1002[用户], 1009[电台], 1014[视频], 
     return GET("/cloudsearch", { keywords, type, offset, limit });
   },
+  // 热门话题
+  getHotTopic(offset: number = 0, limit: number = 20) {
+    return GET("/hot/topic", { offset, limit });
+  },
 }

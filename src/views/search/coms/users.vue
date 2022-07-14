@@ -14,7 +14,7 @@
     </template>
     <template #default>
       <ul v-show="userList.length" class="list">
-        <li v-for="item in userList" :key="item.id" @click="$router.push(`/othersInfo/${item.id}`)">
+        <li v-for="item in userList" :key="item.id" @click="$router.push(`/personalPage/${item.id}`)">
           <el-image :src="item.avatarUrl" fit="cover" class="avatar" />
 
           <div class="detail">

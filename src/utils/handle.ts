@@ -1,3 +1,4 @@
+import { timestamp } from "@vueuse/core";
 import { SongInfo } from "store";
 
 
@@ -28,11 +29,19 @@ export default {
     return `￥${(price / 100).toFixed(1)}`;
   },
   // 处理时间戳
-  TimeStamp(timeStamp: number) {
-    let timeArr = new Date(timeStamp).toLocaleDateString('cn').split("/");
-    timeArr[1] = timeArr[1].padStart(2, "0");
-    timeArr[2] = timeArr[2].padStart(2, "0");
-    return timeArr.join("-");
+  TimeStamp(timeStamp: number, detailed: boolean = false) {
+    let result: any = new Date(timeStamp).toLocaleDateString('cn').split("/");
+    result = result.map((item: string) => item.padStart(2, "0")).join("-");
+
+    // 判断是否需要详细日期
+    if (detailed) {
+      let time = new Date(timeStamp);
+      let hour = time.getHours().toString();
+      let minutes = time.getMinutes().toString();
+      return `${result} ${hour.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+    } else {
+      return result;
+    }
   },
   // 处理歌曲信息
   SongInfo(songInfo: any): SongInfo {

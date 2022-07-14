@@ -85,7 +85,7 @@ let pollingQrCode = async () => {
     if (code === 803) {
       clearInterval(qrCode.timer);
       store.auth = md5(cookie);
-      router.push("/personalInfo");
+      router.push("/myHonePage");
       return ElNotification({
         title: '成功',
         message: '登录成功!',

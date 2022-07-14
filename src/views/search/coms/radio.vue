@@ -20,7 +20,8 @@
             <p class="title" group-hover-themeColor>{{ item.name }}</p>
             <p text-13px text-gray-400>
               <span>by: </span>
-              <span @click.stop="$router.push(`/othersInfo/${item.userId}`)" hover-themeColor>{{ item.nickname }}</span>
+              <span @click.stop="$router.push(`/personalPage/${item.userId}`)" hover-themeColor>{{ item.nickname
+              }}</span>
             </p>
           </div>
         </li>

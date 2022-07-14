@@ -19,13 +19,13 @@
       <ul grid3Cols py-4>
         <li v-for="item in collectorList" :key="item.userId" flex overflow-hidden gap-10px>
           <!-- 头像 -->
-          <el-avatar @click="$router.push(`/othersInfo/${item.userId}`)" :src="item.avatarUrl" cursor="pointer"
+          <el-avatar @click="$router.push(`/personalPage/${item.userId}`)" :src="item.avatarUrl" cursor="pointer"
             :size="70" />
           <!-- 信息 -->
           <div class="group" flex overflow-hidden flex-1 flex-col flex-nowrap justify-center>
             <div flex items-center gap-5px>
               <!-- 名字 -->
-              <p @click="$router.push(`/othersInfo/${item.userId}`)" truncate text-15px cursor-pointer
+              <p @click="$router.push(`/personalPage/${item.userId}`)" truncate text-15px cursor-pointer
                 group-hover:themeColor>
                 {{ item.nickname }}
               </p>

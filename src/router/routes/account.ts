@@ -1,30 +1,17 @@
 import { RouteRecordRaw } from "vue-router";
 import { useMainStore } from "store";
 
-/*
- * Account: "账户",
- * Login: "登陆",
- * Register: "注册",
- * Following: "关注",
- * Notice: "通知",
- * MyHomePage: "我的主页",
- * OtherHomePage: "他人主页",
- * EditPersonalInfo: "编辑个人信息",
- * Dynamic: "个人动态",
- * Follows: "个人关注",
- * Followeds: "个人粉丝",
- */
 let Account = () => import("@/views/account/account.vue");
 let Login = () => import("@/pages/account/login/login.vue");
 let Register = () => import("@/pages/account/register/register.vue");
-let Following = () => import("@/pages/account/following/following.vue");
-let Notice = () => import("@/pages/account/notice/notice.vue");
-let PersonalInfo = () => import("@/pages/account/personalInfo/personalInfo.vue");
-let OthersInfo = () => import("@/pages/account/othersInfo/othersInfo.vue");
-let EditPersonalInfo = () => import("@/pages/account/editPersonalInfo/editPersonalInfo.vue");
 let Dynamic = () => import("@/pages/account/dynamic/dynamic.vue");
-let Follows = () => import("@/pages/account/follows/follows.vue");
-let Followeds = () => import("@/pages/account/followeds/followeds.vue");
+let Notice = () => import("@/pages/account/notice/notice.vue");
+let PersonalPage = () => import("@/pages/account/personalPage/personalPage.vue");
+let MyHonePage = () => import("@/pages/account/myHomePage/myHomePage.vue");
+let EditPersonalInfo = () => import("@/pages/account/editPersonalInfo/editPersonalInfo.vue");
+let UserDynamic = () => import("@/pages/account/userDynamic/userDynamic.vue");
+let UserFollows = () => import("@/pages/account/userFollows/userFollows.vue");
+let UserFolloweds = () => import("@/pages/account/userFolloweds/userFolloweds.vue");
 
 const routes: RouteRecordRaw[] = [
   {
@@ -34,7 +21,7 @@ const routes: RouteRecordRaw[] = [
     beforeEnter() {
       const store = useMainStore();
       if (store.auth) {
-        return "/personalInfo"
+        return "/myHonePage"
       } else {
         return true;
       }
@@ -57,8 +44,8 @@ const routes: RouteRecordRaw[] = [
   // 关注
   {
     path: "/following",
-    meta: { title: "关注", auth: true },
-    component: Following
+    meta: { title: "动态", auth: true },
+    component: Dynamic
   },
   // 消息
   {
@@ -68,14 +55,14 @@ const routes: RouteRecordRaw[] = [
   },
   // 我的主页
   {
-    path: "/personalInfo",
-    component: PersonalInfo,
+    path: "/myHonePage",
+    component: MyHonePage,
     meta: { title: "我的主页", auth: true },
   },
   // 个人主页
   {
-    path: "/othersInfo/:uid",
-    component: OthersInfo,
+    path: "/personalPage/:uid",
+    component: PersonalPage,
     meta: { title: "个人主页", auth: true },
   },
   // 编辑个人信息
@@ -84,22 +71,22 @@ const routes: RouteRecordRaw[] = [
     component: EditPersonalInfo,
     meta: { title: "编辑个人信息", auth: true },
   },
-  // 个人动态
+  // 用户动态
   {
-    path: "/dynamic/:uid",
-    component: Dynamic,
+    path: "/userDynamic/:uid",
+    component: UserDynamic,
     meta: { title: "个人动态", auth: true },
   },
-  // 个人关注
+  // 用户关注
   {
-    path: "/follows/:uid",
-    component: Follows,
+    path: "/userFollows/:uid",
+    component: UserFollows,
     meta: { title: "个人关注", auth: true },
   },
-  // 个人粉丝
+  // 用户粉丝
   {
-    path: "/followeds/:uid",
-    component: Followeds,
+    path: "/userFolloweds/:uid",
+    component: UserFolloweds,
     meta: { title: "个人粉丝", auth: true },
   },
 ];

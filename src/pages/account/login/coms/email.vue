@@ -77,7 +77,7 @@ let submit = () => {
           message: '登陆成功!',
           type: 'success',
         });
-        router.push("/personalInfo");
+        router.push("/myHonePage");
       } else {
         // 登陆失败
         ElNotification({

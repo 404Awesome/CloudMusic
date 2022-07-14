@@ -77,10 +77,12 @@ aside {
 
 // 播放图标
 .cover {
+  @apply relative overflow-hidden;
+
   .playIcon {
     transition: opacity 0.3s ease-in-out;
     transform: translate(-50%, -50%);
-    @apply absolute top-1/2 left-1/2 w-40px h-40px rounded-full color-#d33a31 text-30px;
+    @apply absolute top-1/2 left-1/2 w-40px h-40px rounded-full color-#d33a31 text-30px cursor-pointer;
     @apply flex items-center justify-center opacity-0 bg-white/50 dark-text-orange-400;
 
     &:hover {

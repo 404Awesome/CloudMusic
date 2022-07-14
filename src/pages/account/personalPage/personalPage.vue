@@ -1,4 +1,4 @@
-<!-- 他人的个人主页 -->
+<!-- 个人主页 -->
 <template>
   <div></div>
 </template>

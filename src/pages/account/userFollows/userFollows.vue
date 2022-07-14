@@ -17,10 +17,11 @@
       <ul v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled" v-show="followList.length" class="list">
         <li v-for="item in followList" :key="item.nickname">
           <!-- 头像 -->
-          <el-image @click="$router.push(`/othersInfo/${item.id}`)" :src="item.avatarUrl" fit="cover" class="avatar" />
+          <el-image @click="$router.push(`/personalPage/${item.id}`)" :src="item.avatarUrl" fit="cover"
+            class="avatar" />
           <div class="detail">
             <!-- 名称 -->
-            <p class="nickname" @click="$router.push(`/othersInfo/${item.id}`)">{{ item.nickname }}</p>
+            <p class="nickname" @click="$router.push(`/personalPage/${item.id}`)">{{ item.nickname }}</p>
             <!-- 签名 -->
             <p class="signature">{{ item.signature }}</p>
             <!-- 数量 -->

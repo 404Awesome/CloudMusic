@@ -24,7 +24,7 @@
       <!-- 创建人名称 -->
       <p class="creator">
         <span>by&nbsp;</span>
-        <span @click.stop="goOthersInfo" class="nickname">{{ nickname }}</span>
+        <span @click.stop="goPersonalPage" class="nickname">{{ nickname }}</span>
       </p>
     </div>
   </div>
@@ -69,8 +69,8 @@ let goVideoDetailPage = () => {
 }
 
 // 跳转创建人个人主页
-let goOthersInfo = () => {
-  router.push(`/othersInfo/${uid}`);
+let goPersonalPage = () => {
+  router.push(`/personalPage/${uid}`);
 }
 </script>
 

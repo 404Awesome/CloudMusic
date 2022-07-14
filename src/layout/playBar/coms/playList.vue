@@ -27,10 +27,12 @@
         <ul class="list">
           <li @dblclick="playSong(item)" :class="{ active: item.song.id == currentSong?.song.id }"
             v-for="item in store.playList" :key="item.song.id" class="group">
-            <!-- 播放图标 -->
-            <span class="playIcon" hidden text-18px i-eva:arrow-right-fill></span>
-            <!-- 歌名 -->
-            <p class="name" group-hover-themeColor group-hover-dark-text-orange-400>{{ item.song.name }}</p>
+            <p class="title" group-hover-themeColor group-hover-dark-text-orange-400>
+              <!-- 播放图标 -->
+              <span class="playIcon" i-eva:arrow-right-fill></span>
+              <!-- 歌名 -->
+              <span class="name">{{ item.song.name }}</span>
+            </p>
             <!-- 艺术家 -->
             <Artists flex-1 :artists="item.artists" />
           </li>
@@ -105,17 +107,24 @@ defineExpose({ toggle });
   @apply bg-white pb-5px dark-bg-gray-300;
 
   .list li {
-    @apply flex overflow-hidden py-7px px-15px important-fontColor whitespace-normal text-14px cursor-pointer select-none hover-bg-#f5f7fa hover-dark-bg-gray-200;
+    @apply flex gap-20px py-7px px-15px important-fontColor cursor-pointer select-none hover-bg-#f5f7fa hover-dark-bg-gray-200;
 
-    .name {
-      @apply flex-1 truncate mr-20px;
+    .title {
+      @apply flex-1 flex items-center overflow-hidden;
+
+      .playIcon {
+        @apply hidden text-18px flex-none;
+      }
+
+      .name {
+        @apply truncate text-14px;
+      }
     }
 
     &.active {
       @apply pl-10px bg-#f5f7fa dark-bg-gray-200;
 
-      .name,
-      .playIcon {
+      .title {
         @apply themeColor dark-text-orange-400;
       }
 

@@ -44,51 +44,51 @@ const routes: RouteRecordRaw[] = [
   // 关注
   {
     path: "/following",
-    meta: { title: "动态", auth: true },
-    component: Dynamic
+    component: Dynamic,
+    meta: { title: "动态", auth: true }
   },
   // 消息
   {
     path: "/notice",
     component: Notice,
-    meta: { title: "消息", auth: true },
+    meta: { title: "消息", auth: true }
   },
   // 我的主页
   {
     path: "/myHonePage",
     component: MyHonePage,
-    meta: { title: "我的主页", auth: true },
+    meta: { title: "我的主页", auth: true }
   },
   // 个人主页
   {
     path: "/personalPage/:uid",
     component: PersonalPage,
-    meta: { title: "个人主页", auth: true },
+    meta: { title: "个人主页" }
   },
   // 编辑个人信息
   {
     path: "/editPersonalInfo",
     component: EditPersonalInfo,
-    meta: { title: "编辑个人信息", auth: true },
+    meta: { title: "编辑个人信息", auth: true }
   },
   // 用户动态
   {
     path: "/userDynamic/:uid",
     component: UserDynamic,
-    meta: { title: "个人动态", auth: true },
+    meta: { title: "个人动态", auth: true }
   },
   // 用户关注
   {
     path: "/userFollows/:uid",
     component: UserFollows,
-    meta: { title: "个人关注", auth: true },
+    meta: { title: "个人关注", auth: true }
   },
   // 用户粉丝
   {
     path: "/userFolloweds/:uid",
     component: UserFolloweds,
-    meta: { title: "个人粉丝", auth: true },
-  },
+    meta: { title: "个人粉丝", auth: true }
+  }
 ];
 
 export default routes;

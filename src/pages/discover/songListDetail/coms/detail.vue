@@ -123,11 +123,7 @@ let showMore = ref<boolean>(false);
 
 // 跳转个人页面
 let goPersonalPage = () => {
-  if (store.auth) {
-    router.push(`/personalPage/${detail.userId}`);
-  } else {
-    ElMessage.warning("请登录后查看!");
-  }
+  router.push(`/personalPage/${detail.userId}`);
 }
 
 // 分享

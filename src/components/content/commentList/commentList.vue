@@ -137,11 +137,7 @@ let loadData = async (offset: number = 0) => {
 
 // 跳转个人页面
 let goPersonalPage = (id: number) => {
-  if (store.auth) {
-    router.push(`/personalPage/${id}`);
-  } else {
-    ElMessage.warning("请登录后查看!");
-  }
+  router.push(`/personalPage/${id}`);
 }
 
 // 分页改变时触发

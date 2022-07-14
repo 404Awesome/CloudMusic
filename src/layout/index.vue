@@ -35,7 +35,7 @@ const store = useMainStore();
 const route = useRoute();
 
 // keepAlive排除列表
-let excludeList = ['Login', 'Register', 'singerDetail', 'songListDetail', 'AllMV', 'MVDetail', 'VideoDetail', 'Search'];
+let excludeList = ['Login', 'Register', 'singerDetail', 'songListDetail', 'AllMV', 'MVDetail', 'VideoDetail', 'Search', 'personalPage'];
 
 // 滚动元素
 let scrollEl = ref<HTMLElement | null>(null);

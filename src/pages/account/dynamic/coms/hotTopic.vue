@@ -6,7 +6,7 @@
     <el-skeleton :loading="loading" animated>
       <template #template>
         <ul ref="skeletonEl" class="list">
-          <li v-for="item in 6" important-hover-bg-white>
+          <li v-for="item in 5" important-hover-bg-white>
             <el-skeleton-item variant="image" h-12 w-12 rounded-md />
             <div class="info">
               <el-skeleton-item variant="text" w="6/10" />
@@ -59,7 +59,7 @@ let goTopicPage = (id: number) => {
 let loadData = async () => {
   try {
     loading.value = true;
-    let { code, hot }: any = await OtherAPI.getHotTopic(0, 6);
+    let { code, hot }: any = await OtherAPI.getHotTopic(0, 5);
     if (code == 200) {
       // 处理热门列表
       let list: TopicInfo[] = hot.map((item: any): TopicInfo => {

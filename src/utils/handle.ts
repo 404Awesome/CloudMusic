@@ -1,6 +1,6 @@
-import { timestamp } from "@vueuse/core";
+import ProvinceCode from "@/assets/areaCode/province.json";
+import CityCode from "@/assets/areaCode/city.json";
 import { SongInfo } from "store";
-
 
 export interface Lyric {
   lyric: string,
@@ -73,5 +73,15 @@ export default {
       }
       return null;
     }).filter((item: any) => item);
+  },
+  // 处理城市
+  City(province: number, city: number): string {
+    try {
+      let provinceName = ProvinceCode.filter((item: any) => item.code == `${province}`.slice(0, 2))[0].name;
+      let cityName = CityCode.filter((item: any) => item.code == `${city}`.slice(0, 4))[0].name;
+      return `${provinceName} ${cityName}`;
+    } catch (err: any) {
+      return "";
+    }
   }
 }

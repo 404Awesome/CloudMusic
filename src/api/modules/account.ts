@@ -4,11 +4,11 @@ import md5 from "md5";
 export default {
   // 获取账户详情
   getUserAccount() {
-    return POST("/user/account");
+    return GET("/user/account");
   },
   // 获取用户详情
   getUserDetail(uid: number) {
-    return POST("/user/detail", { uid });
+    return GET("/user/detail", { uid });
   },
   // 发送验证码
   captchaSent(phone: number) {

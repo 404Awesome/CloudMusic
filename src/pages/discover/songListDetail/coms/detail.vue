@@ -29,77 +29,65 @@
 
         <!-- 详情 -->
         <div flex-1 overflow-hidden>
-          <section lg:h-50 flex overflow-hidden flex-1 flex-col flex-nowrap justify-between>
-            <!-- 标题 -->
-            <h1 text-19px truncate>{{ detail.name }}</h1>
+          <!-- 标题 -->
+          <h1 text-19px truncate>{{ detail.name }}</h1>
 
-            <!-- 创建者 -->
-            <div @click="goPersonalPage" my-3 lg:my-0 flex items-center gap-10px>
-              <!-- 头像 -->
-              <el-image :src="detail.avatarUrl" fit="cover" w-8 h-8 rounded-full />
-              <!-- 名字 -->
-              <p themeColor cursor-pointer truncate>{{ detail.nickname }}</p>
-              <!-- 创建时间 -->
-              <p truncate text="black/50">{{ detail.createTime }}</p>
-            </div>
+          <!-- 创建者 -->
+          <div my-3 flex items-center gap-10px>
+            <!-- 头像 -->
+            <el-image @click="goPersonalPage" :src="detail.avatarUrl" fit="cover" w-8 h-8 rounded-full cursor-pointer />
+            <!-- 名字 -->
+            <p @click="goPersonalPage" themeColor cursor-pointer truncate>{{ detail.nickname }}</p>
+            <!-- 创建时间 -->
+            <p truncate text="black/50">{{ detail.createTime }}</p>
+          </div>
 
-            <!-- 操作 -->
-            <ul class="operate">
-              <li @click="Operate.playSongList(id)">
-                <span class="icon" i-eva:play-circle-outline></span>
-                <span>播放全部</span>
-              </li>
-              <li @click="Operate.collectSongList(id)">
-                <span class="icon" i-carbon:folder-add></span>
-                <span v-once>收藏({{ Handle.Count(detail.subscribedCount) }})</span>
-              </li>
-              <li @click="share()">
-                <span class="icon i-carbon:link"></span>
-                <span v-once>分享({{ Handle.Count(detail.shareCount) }})</span>
-              </li>
-            </ul>
+          <!-- 操作 -->
+          <ul class="operate">
+            <li @click="Operate.playSongList(id)">
+              <span class="icon" i-eva:play-circle-outline></span>
+              <span>播放全部</span>
+            </li>
+            <li @click="Operate.collectSongList(id)">
+              <span class="icon" i-carbon:folder-add></span>
+              <span v-once>收藏({{ Handle.Count(detail.subscribedCount) }})</span>
+            </li>
+            <li @click="share()">
+              <span class="icon i-carbon:link"></span>
+              <span v-once>分享({{ Handle.Count(detail.shareCount) }})</span>
+            </li>
+          </ul>
 
-            <!-- 元信息 -->
-            <div text-14px>
-              <!-- 标签 -->
-              <p v-if="detail.tags.length" truncate>
-                <span>标&emsp;签:&nbsp;</span>
-                <span v-for="(item, index) in detail.tags" :key="item">
-                  <span themeColor cursor-pointer>{{ item }}</span>
-                  <span v-if="index < (detail.tags.length - 1)">&nbsp;/&nbsp;</span>
-                </span>
+          <!-- 元信息 -->
+          <div flex flex-col gap-5px text-14px>
+            <!-- 标签 -->
+            <p v-if="detail.tags.length" truncate>
+              <span>标&emsp;签:&nbsp;&nbsp;</span>
+              <span v-for="(item, index) in detail.tags" :key="item">
+                <span themeColor cursor-pointer>{{ item }}</span>
+                <span v-if="index < (detail.tags.length - 1)">&nbsp;/&nbsp;</span>
+              </span>
+            </p>
+
+            <!-- 次数 -->
+            <div flex gap-10px>
+              <p truncate>
+                <span>歌曲数:&nbsp;&nbsp;</span>
+                <span text="black/50">{{ detail.trackCount }}</span>
               </p>
-
-              <!-- 次数 -->
-              <div flex gap-10px>
-                <p truncate>
-                  <span>歌曲数:&nbsp;</span>
-                  <span text="black/50">{{ detail.trackCount }}</span>
-                </p>
-                <p truncate>
-                  <span>播放数:&nbsp;</span>
-                  <span v-once text="black/50">{{ Handle.Count(detail.playCount) }}</span>
-                </p>
-              </div>
-
-              <!-- 描述 -->
-              <div v-if="describe.content" flex items-center justify-between gap-15px>
-                <p>
-                  <span>简&emsp;介:&nbsp;</span>
-                  <span text="black/50">{{ describe.content || "" }}</span>
-                  <span v-if="describe.more">
-                    <span v-show="!showMore" text="black/50">...</span>
-                  </span>
-                </p>
-                <span v-if="describe.more" @click="showMore = !showMore" :class="{ active: showMore }"
-                  i-eva:arrow-up-fill hover:themeColor min-w-25px text-22px cursor-pointer transition-transform
-                  rotate-180></span>
-              </div>
+              <p truncate>
+                <span>播放数:&nbsp;&nbsp;</span>
+                <span v-once text="black/50">{{ Handle.Count(detail.playCount) }}</span>
+              </p>
             </div>
-          </section>
 
-          <!-- 更多描述 -->
-          <section v-show="showMore" whitespace-pre-wrap leading-6 text="black/50">{{ describe.more || "" }}</section>
+            <!-- 描述 -->
+            <div v-if="detail.description" :class="{ showMore: showMore }" class="description">
+              <span whitespace-nowrap>简&emsp;介:&nbsp;&nbsp;</span>
+              <span class="content">{{ detail.description }}</span>
+              <span @click.stop="showMore = !showMore" class="moreIcon" i-carbon:caret-down></span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -130,31 +118,13 @@ let loading = ref(true);
 let detailEl = ref<any>(null);
 // 详情
 let detail = reactive<any>({});
-// 描述
-let describe = reactive<{ [prop: string]: string | null }>({
-  content: null,
-  more: null
-});
 // 展示更多
 let showMore = ref<boolean>(false);
-
-// 处理描述
-let handleDescribe = (desc: string) => {
-  let splitArr = desc.split("\n");
-  if (splitArr.length > 1) {
-    // 有更多
-    describe.content = splitArr[0];
-    describe.more = splitArr.splice(1).join("\n");
-  } else {
-    // 没有更多
-    describe.content = desc;
-  }
-}
 
 // 跳转个人页面
 let goPersonalPage = () => {
   if (store.auth) {
-    router.push(`/personalPage/${detail.id}`);
+    router.push(`/personalPage/${detail.userId}`);
   } else {
     ElMessage.warning("请登录后查看!");
   }
@@ -174,13 +144,11 @@ let loadData = async () => {
     loading.value = true;
     let { code, playlist }: any = await SongListAPI.getDetail(id);
     if (code == 200) {
-      let { playCount, trackCount, shareCount, createTime, description, creator, name, coverImgUrl, subscribedCount, tags, id } = playlist;
-      // 处理描述
-      if (description) handleDescribe(description);
+      let { playCount, trackCount, shareCount, createTime, description, creator, name, coverImgUrl, subscribedCount, tags, userId } = playlist;
       // 合并对象
       Object.assign(detail, {
         // ID
-        id,
+        userId,
         // 封面
         coverImgUrl,
         // 创建者头像
@@ -201,6 +169,8 @@ let loadData = async () => {
         trackCount,
         // 播放次数
         playCount,
+        // 描述
+        description
       });
     }
   } catch (err: any) {
@@ -215,7 +185,7 @@ onMounted(() => loadData());
 
 <style lang="scss" scoped>
 .operate {
-  @apply mb-3 lg-my-0 flex content-center flex-row flex-wrap gap-y-7px gap-x-15px;
+  @apply mb-3 lg-my-5 flex content-center flex-row flex-wrap gap-y-7px gap-x-15px;
 
   li {
     @apply flexCenter select-none rounded-full w-115px text-center cursor-pointer border-1px border-#eee gap-5px whitespace-nowrap;
@@ -246,8 +216,27 @@ onMounted(() => loadData());
   }
 }
 
-// 更多激活时样式
-.active {
-  transform: rotate(0deg) !important;
+// 描述 
+.description {
+  @apply flex;
+
+  .content {
+    @apply truncate flex-1;
+  }
+
+  .moreIcon {
+    @apply ml-15px text-22px flex-none text-gray-500 cursor-pointer hover-themeColor;
+  }
+
+  // 显示更多
+  &.showMore {
+    .content {
+      @apply whitespace-pre-line;
+    }
+
+    .moreIcon {
+      @apply rotate-180;
+    }
+  }
 }
 </style>

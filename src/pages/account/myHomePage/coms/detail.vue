@@ -26,7 +26,7 @@
             :style="{ color: info.gender == 1 ? '#3b82f6' : '#e3357b' }"></span>
         </p>
         <p truncate py-5px>个人介绍: {{ info.signature }}</p>
-        <p truncate>所在地区: {{ info.city }}</p>
+        <p truncate>所在地区: {{ info.cityName }}</p>
       </div>
 
       <!-- 计数 -->
@@ -49,12 +49,11 @@
 </template>
 
 <script setup lang="ts">
-import ProvinceCode from "@/assets/areaCode/province.json";
-import CityCode from "@/assets/areaCode/city.json";
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { AccountAPI } from "api";
+import { Handle } from "utils";
 const router = useRouter();
 const emit = defineEmits(['getUid']);
 
@@ -117,8 +116,8 @@ onMounted(async () => {
       getCount(profile.userId);
       let { userId: uid, avatarUrl, backgroundUrl, city, nickname, signature, province, gender } = profile;
       // 处理城市
-      let provinceName = ProvinceCode.filter((item: any) => item.code == `${province}`.slice(0, 2))[0].name;
-      let cityName = CityCode.filter((item: any) => item.code == `${city}`.slice(0, 4))[0].name;
+      let cityName = Handle.City(province, city);
+
       Object.assign(info, {
         // 用户id
         uid,
@@ -135,7 +134,7 @@ onMounted(async () => {
         // 签名
         signature,
         // 城市
-        city: `${provinceName} ${cityName}`
+        cityName
       });
     }
   } catch (err: any) {

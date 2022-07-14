@@ -1,12 +1,13 @@
 <!-- 个人主页 -->
 <template>
-  <div></div>
+  <div wrapBox :key="`${$route.params.uid}`">
+    <Detail :key="($route.params.uid as string)" />
+  </div>
 </template>
 
-<script setup lang="ts">
-import { useRoute } from "vue-router";
-const route = useRoute();
+<script lang="ts">
+export default { name: "personalPage" }
 </script>
-
-<style lang="scss" scoped>
-</style>
+<script setup lang="ts">
+import Detail from "./coms/detail.vue";
+</script>

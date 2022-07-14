@@ -52,6 +52,7 @@
 import { reactive, watch } from "vue";
 import { useMainStore } from "store";
 import { AccountAPI } from "api";
+import { ElMessage } from "element-plus";
 const store = useMainStore();
 
 // 个人信息
@@ -98,13 +99,17 @@ watch(() => store.auth, async (newVal) => {
     // 已登陆
     navList.push(...noLogin, ...needLogin);
     // 请求个人信息
-    let { code, profile }: any = await AccountAPI.getUserAccount();
-    if (code == 200) {
-      Object.assign(profileInfo, {
-        nickname: profile.nickname,
-        signature: profile.signature,
-        avatarUrl: profile.avatarUrl,
-      });
+    try {
+      let { code, profile }: any = await AccountAPI.getUserAccount();
+      if (code == 200) {
+        Object.assign(profileInfo, {
+          nickname: profile.nickname,
+          signature: profile.signature,
+          avatarUrl: profile.avatarUrl,
+        });
+      }
+    } catch (err: any) {
+      ElMessage.error("加载个人信息失败!");
     }
   } else {
     // 未登陆

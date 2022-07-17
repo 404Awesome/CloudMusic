@@ -49,14 +49,16 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, watch } from "vue";
+import { reactive, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 import { useMainStore } from "store";
+import { Operate } from "@/utils";
 import { AccountAPI } from "api";
-import { ElMessage } from "element-plus";
 const store = useMainStore();
+const router = useRouter();
 
 // 个人信息
-let profileInfo = reactive<any>({});
+let profileInfo = ref<any>({});
 // 导航列表
 interface ListItem {
   icon: string,
@@ -93,28 +95,26 @@ let needLogin: ListItem[] = [
 ];
 
 // 监视store中的auth状态
-watch(() => store.auth, async (newVal) => {
-  navList.splice(0, navList.length);
-  if (newVal) {
-    // 已登陆
-    navList.push(...noLogin, ...needLogin);
-    // 请求个人信息
-    try {
-      let { code, profile }: any = await AccountAPI.getUserAccount();
-      if (code == 200) {
-        Object.assign(profileInfo, {
-          nickname: profile.nickname,
-          signature: profile.signature,
-          avatarUrl: profile.avatarUrl,
-        });
-      }
-    } catch (err: any) {
-      ElMessage.error("加载个人信息失败!");
+watch(() => store.auth, async (authStatus) => {
+  // 初始化导航列表
+  navList.splice(0, navList.length, ...noLogin);
+  // 判断当前登陆状态
+  if (!authStatus) return;
+  // 请求账号信息
+  try {
+    let { code, profile }: any = await AccountAPI.getUserAccount();
+    if (code !== 200) return;
+    if (profile) {
+      // 已登陆
+      navList.push(...needLogin);
+      profileInfo.value = profile;
+    } else {
+      // 未登陆
+      Operate.clearLoginStatus();
+      // 跳转登陆页
+      router.push("/account/login");
     }
-  } else {
-    // 未登陆
-    navList.push(...noLogin);
-  }
+  } catch (error) { }
 }, { immediate: true });
 </script>
 

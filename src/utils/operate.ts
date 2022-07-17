@@ -1,6 +1,6 @@
+import { ElMessage, ElNotification } from "element-plus";
 import { useDebounceFn } from "@vueuse/core";
 import { SongListAPI, SongAPI } from "api";
-import { ElMessage } from "element-plus";
 import { useMainStore } from "store";
 import { saveAs } from "file-saver";
 import { Handle } from "utils";
@@ -65,5 +65,17 @@ export default {
     console.log(href);
     console.log(type);
     console.log(cover);
+  },
+  // 未登陆,清除登陆状态
+  clearLoginStatus() {
+    const store = useMainStore();
+    // 清除登陆状态
+    store.auth = '';
+    // 提示用户重新登录
+    ElNotification({
+      title: '警告',
+      message: '登陆失效, 请重新登录!',
+      type: 'warning',
+    });
   }
 }

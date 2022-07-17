@@ -3,7 +3,7 @@
   <div v-if="props.uid">
     <h3 truncate>创建的歌单</h3>
 
-    <ul grid grid-cols-3 gap-10px mt-10px>
+    <ul class="list">
       <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" cursor-pointer>
         <!-- 封面 -->
         <div class="cover" relative>
@@ -71,6 +71,10 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
+.list {
+  @apply grid grid-cols-2 sm-grid-cols-3 gap-10px pt-10px;
+}
+
 .cover .playIcon {
   top: calc(100% - 50px);
   left: calc(100% - 50px);

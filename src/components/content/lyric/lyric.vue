@@ -86,7 +86,6 @@ let loadLyric = async () => {
 
 // 滚动歌词
 let stopWatcher = watch(progress, useThrottleFn(() => {
-  console.log(123);
   if (lyricList.length && scrollbarEl.value) {
     // scrollbarEl的高度
     let wrapHeight = scrollbarEl.value.$el.offsetHeight;

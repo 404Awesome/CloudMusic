@@ -151,7 +151,7 @@ let change = (current: any) => {
 // 监听容器元素是否显示在页面上
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {
-    if (isIntersecting) {
+    if (isIntersecting && id) {
       loadData();
       stop();
     }

@@ -57,11 +57,12 @@
 import PlayList from "./coms/playList.vue";
 import SongInfo from "./coms/songInfo.vue";
 import Plyr from "plyr";
-import { ref, watch, onMounted, computed } from "vue";
+import { ref, watch, onMounted, computed, nextTick } from "vue";
 import { useDebounceFn } from "@vueuse/shared";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElNotification } from "element-plus";
 import { useRoute } from "vue-router";
 import { useMainStore } from "store";
+// import { nextTick } from "process";
 const store = useMainStore();
 const route = useRoute();
 
@@ -200,21 +201,27 @@ let openPlayList = () => {
 
 
 // 监听当播放音乐改动
-watch(() => store.currentSong, (newSong) => {
+watch(() => store.currentSong, async (newSong) => {
   let id = newSong?.song.id;
-  if (id) {
-    // 清空歌曲时间
-    songDuration.value = 0;
-    songCurrentTime.value = 0;
-    // 赋予audio新的音源
-    audioPlyr.value!.source = {
-      type: 'audio',
-      sources: [{
-        src: `https://music.163.com/song/media/outer/url?id=${id}.mp3`,
-        type: 'audio/mp3',
-      }]
+  if (!id) return;
+  // 清空歌曲时间
+  songDuration.value = 0;
+  songCurrentTime.value = 0;
+  // 赋予audio新的音源
+  audioPlyr.value!.source = {
+    type: 'audio',
+    sources: [{
+      src: `https://music.163.com/song/media/outer/url?id=${id}.mp3`,
+      type: 'audio/mp3',
+    }]
+  }
+  try {
+    await audioPlyr.value?.play();
+  } catch (err: any) {
+    // 提示用户点击播放按钮
+    if (err.name == "NotAllowedError") {
+      ElMessage.success("加载完毕,请点击播放按钮!");
     }
-    audioPlyr.value?.play();
   }
 });
 // 播放图标

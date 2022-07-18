@@ -70,7 +70,7 @@
               </p>
               <p flex-1 flex items-center truncate overflow-hidden>
                 <span>歌手:&nbsp;</span>
-                <Artists fontSize="14px" :artists="personalFM.artists" />
+                <Artists fontSize="14px" :artists="personalFM?.artists" />
               </p>
             </div>
 
@@ -105,6 +105,8 @@ import { SongAPI } from "api";
 let loading = ref(true);
 // 私人FM列表
 let personalFM = reactive<any>({});
+// 错误请求次数限制
+let attemptCount = 0;
 
 // 获取评论事件
 let getComment = (id: number, content: string) => {
@@ -117,15 +119,17 @@ let loadData = async () => {
     loading.value = true;
     let { code, data }: any = await SongAPI.getPersonalFM();
     if (code == 200) {
-      Operate.playSong(data[0]);
       let { id, album, artists, name } = data[0];
       Object.assign(personalFM, { id, album, artists, name });
+      Operate.playSong(data[0]);
     }
   } catch (err: any) {
-    ElMessage.error("加载私人FM错误!");
-  } finally {
-    loading.value = false;
+    attemptCount++;
+    attemptCount >= 3 ? ElMessage.error("加载私人FM错误!") : loadData();
+    return;
   }
+  attemptCount = 0;
+  loading.value = false;
 }
 
 // 初始化私人FM

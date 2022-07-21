@@ -14,17 +14,11 @@
       <ul wrapBox grid6Cols py-20px>
         <li v-for="item in rankingList" :key="item.id" @click="goSongListDetail(item.id)" class="group cover"
           cursor-pointer>
+          <!-- 封面 -->
           <div relative>
-            <!-- 播放数 -->
-            <PlayCount :playCount="item.playCount" />
-
-            <!-- 封面 -->
             <el-image :src="item.coverImgUrl" fit="cover" rounded-md brightness-90 />
-
-            <!-- 播放按钮 -->
-            <div @click.stop="Operate.playSongList(item.id)" class="playIcon">
-              <span i-eva:arrow-right-fill></span>
-            </div>
+            <PlayCount :playCount="item.playCount" />
+            <PlayIcon @playClick="Operate.playSongList(item.id)" />
           </div>
 
           <!-- 标题 -->
@@ -40,6 +34,7 @@
 
 <script setup lang="ts">
 import PlayCount from "@/components/content/playCount/playCount.vue";
+import PlayIcon from "@/components/content/playIcon/playIcon.vue";
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { Handle, Operate } from "utils";

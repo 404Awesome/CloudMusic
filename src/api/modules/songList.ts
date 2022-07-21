@@ -37,4 +37,8 @@ export default {
   getTopDetail() {
     return GET("/toplist/detail");
   },
+  // 获取用户歌单
+  getUserPlaylist(uid: number, offset: number = 0, limit: number = 30) {
+    return GET("/user/playlist", { uid, offset, limit });
+  },
 }

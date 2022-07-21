@@ -22,12 +22,11 @@
           <!-- 专辑 / 单曲 -->
           <div v-if="item?.song || item?.album" class="song">
             <!-- 封面 -->
-            <div @click="playSong(item, false)" class="cover">
+            <div relative>
               <el-image :src="item?.song?.album.picUrl || item?.album.picUrl" fit="cover" class="img" />
-              <p class="playIcon">
-                <span i-eva:arrow-right-fill></span>
-              </p>
+              <PlayIcon @playClick="playSong(item, false)" :visible="true" size="30px" fontSize="25px" />
             </div>
+            <!-- 信息 -->
             <div class="info">
               <!-- 名称 -->
               <p @click="playSong(item, true)" class="name">
@@ -71,6 +70,7 @@
 </template>
 
 <script setup lang="ts">
+import PlayIcon from "@/components/content/playIcon/playIcon.vue";
 import Artists from "@/components/content/artists/artists.vue";
 import { onMounted, reactive, ref, toRaw } from "vue";
 import { AccountAPI, ArtistAPI } from "api";
@@ -233,10 +233,6 @@ onMounted(() => loadData());
 
   .img {
     @apply w-13 h-13 min-w-13 rounded-md cursor-pointer brightness-90;
-  }
-
-  .playIcon {
-    @apply h-30px w-30px opacity-100;
   }
 
   .info {

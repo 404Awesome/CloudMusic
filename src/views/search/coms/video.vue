@@ -22,17 +22,9 @@
           <!-- 封面 -->
           <div @click="goDetailPage(item.vid, item.type)" class="cover">
             <el-image :src="item.coverUrl" fit="cover" class="img" />
-
-            <!-- 播放次数 -->
             <PlayCount :playCount="item.playTime" />
-
-            <!-- 时长 -->
             <VideoDuration :durationms="item.durationms" />
-
-            <!-- hover:播放图标 -->
-            <p class="playIcon">
-              <span i-eva:arrow-right-fill></span>
-            </p>
+            <PlayIcon />
           </div>
 
           <!-- 详情 -->
@@ -70,6 +62,7 @@
 <script setup lang="ts">
 import VideoDuration from "@/components/content/videoDuration/videoDuration.vue";
 import PlayCount from "@/components/content/playCount/playCount.vue";
+import PlayIcon from "@/components/content/playIcon/playIcon.vue";
 import { useIntersectionObserver } from "@vueuse/core";
 import { useRoute, useRouter } from "vue-router";
 import { onMounted, reactive, ref } from "vue";

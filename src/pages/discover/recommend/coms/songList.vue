@@ -14,18 +14,12 @@
       <ul class="songList">
         <!-- 每日推荐 -->
         <li v-if="store.auth" @click="$router.push('/dailySongs')" cursor-pointer>
+          <!-- 封面 -->
           <div class="dailySongs cover">
             <el-image src="/img/dailySongs.png" fit="cover" :draggable="false" />
-
-            <!-- 提示文本 -->
             <p class="tipText">根据你的音乐口味生成每日更新</p>
-
-            <!-- 当天日期 -->
             <p class="date">{{ new Date().getDate() }}</p>
-
-            <p class="playIcon">
-              <span @click.stop="playDailySongs" i-eva:arrow-right-fill></span>
-            </p>
+            <PlayIcon @playClick="playDailySongs" position="bottom-right" />
           </div>
 
           <p class="name">每日歌曲推荐</p>
@@ -33,17 +27,11 @@
 
         <!-- 歌单列表 -->
         <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" cursor-pointer>
+          <!-- 封面 -->
           <div class="cover">
-            <!-- 封面 -->
             <el-image :src="item.picUrl" fit="cover" :draggable="false" brightness-85 />
-
-            <!-- 播放次数 -->
             <PlayCount :playCount="item.playCount" />
-
-            <!-- 播放图标 -->
-            <p class="playIcon">
-              <span @click.stop="Operate.playSongList(item.id)" i-eva:arrow-right-fill></span>
-            </p>
+            <PlayIcon @playClick="Operate.playSongList(item.id)" position="bottom-right" />
           </div>
 
           <!-- 名字 -->
@@ -56,6 +44,7 @@
 
 <script setup lang="ts">
 import PlayCount from "@/components/content/playCount/playCount.vue";
+import PlayIcon from "@/components/content/playIcon/playIcon.vue";
 import { reactive, ref, onActivated } from "vue";
 import { SongAPI, SongListAPI } from "api";
 import { ElMessage } from "element-plus";
@@ -144,13 +133,6 @@ onActivated(() => {
 
 .cover {
   @apply relative flex overflow-hidden rounded-md;
-
-  .playIcon {
-    top: calc(100% - 45px);
-    left: calc(100% - 45px);
-    transform: none !important;
-    @apply h-35px w-35px;
-  }
 }
 
 .name {

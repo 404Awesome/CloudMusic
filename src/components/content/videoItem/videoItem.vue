@@ -8,13 +8,11 @@
       <!-- 播放次数 -->
       <PlayCount :playCount="playTime!" />
 
+      <!-- 播放图标 -->
+      <PlayIcon />
+
       <!-- 时长 -->
       <VideoDuration :durationms="durationms!" />
-
-      <!-- hover:播放图标 -->
-      <p class="playIcon">
-        <span i-eva:arrow-right-fill></span>
-      </p>
     </div>
 
     <div class="info">
@@ -31,8 +29,9 @@
 </template>
 
 <script setup lang="ts">
-import VideoDuration from "@/components/content/videoDuration/videoDuration.vue"
+import VideoDuration from "@/components/content/videoDuration/videoDuration.vue";
 import PlayCount from "@/components/content/playCount/playCount.vue";
+import PlayIcon from "@/components/content/playIcon/playIcon.vue";
 import { PropType, toRaw, toRef } from 'vue';
 import { useRouter } from "vue-router";
 const router = useRouter();

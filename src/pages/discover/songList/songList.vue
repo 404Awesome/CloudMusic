@@ -8,7 +8,7 @@
     <el-skeleton :loading="loading" animated>
       <template #template>
         <ul grid6Cols py-20px>
-          <li v-for="item in 12">
+          <li v-for="item in 6">
             <el-skeleton-item variant="image" w-full h-33 rounded-md />
             <el-skeleton-item variant="text" mt-6px />
             <el-skeleton-item variant="text" w="5/10" />

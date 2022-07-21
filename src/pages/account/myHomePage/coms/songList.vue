@@ -8,14 +8,8 @@
         <!-- 封面 -->
         <div class="cover" relative>
           <el-image :src="item.coverImgUrl" fit="cover" :draggable="false" rounded-md group-hover:brightness-90 />
-
-          <!-- 播放数 -->
           <PlayCount :playCount="item.playCount" />
-
-          <!-- hover:播放图标 -->
-          <p @click.stop="Operate.playSongList(item.id)" class="playIcon">
-            <span i-eva:arrow-right-fill></span>
-          </p>
+          <PlayIcon @playClick="Operate.playSongList(item.id)" position="bottom-right" />
         </div>
 
         <!-- 名字 -->
@@ -30,9 +24,10 @@
 
 <script setup lang="ts">
 import PlayCount from "@/components/content/playCount/playCount.vue";
+import PlayIcon from "@/components/content/playIcon/playIcon.vue";
 import { onMounted, reactive } from "vue";
 import { ElMessage } from "element-plus";
-import { AccountAPI } from "api";
+import { SongListAPI } from "api";
 import { Operate } from "utils";
 const props = defineProps({
   uid: {
@@ -54,7 +49,7 @@ let songList = reactive<SongInfo[]>([]);
 // 加载用户歌单
 onMounted(async () => {
   try {
-    let { code, playlist }: any = await AccountAPI.getUserPlaylist(props.uid);
+    let { code, playlist }: any = await SongListAPI.getUserPlaylist(props.uid);
     if (code == 200) {
       let reg = /.*喜欢的音乐$/g;
       playlist = playlist.map((item: any) => {
@@ -73,11 +68,5 @@ onMounted(async () => {
 <style lang="scss" scoped>
 .list {
   @apply grid grid-cols-2 sm-grid-cols-3 gap-10px pt-10px;
-}
-
-.cover .playIcon {
-  top: calc(100% - 50px);
-  left: calc(100% - 50px);
-  transform: none !important;
 }
 </style>

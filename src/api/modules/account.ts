@@ -74,4 +74,9 @@ export default {
   getEvent(lasttime: number, pagesize: number = 20) {
     return GET("/event", { pagesize, lasttime });
   },
+  // 关注/取消关注用户
+  getFollow(id: number, t: number = 0 | 1) {
+    // [t] 1为关注 0为取消关注
+    return GET("/follow", { id, t });
+  },
 }

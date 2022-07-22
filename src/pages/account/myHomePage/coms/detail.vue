@@ -13,7 +13,7 @@
     </div>
 
     <!-- 头像 -->
-    <el-image :src="info.avatarUrl" :draggable="false" class="avatar" translate-y--35px translate-x-10px />
+    <el-image :src="info.avatarUrl" :draggable="false" class="avatar" />
 
     <!-- 简介 -->
     <div h-full translate-y--70px bg-gray-200 p-10px pt-40px>
@@ -145,6 +145,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .avatar {
+  transform: translate(10px, -35px);
   @apply w-70px h-70px rounded-full relative z-10 border-5px border-#fff;
 }
 

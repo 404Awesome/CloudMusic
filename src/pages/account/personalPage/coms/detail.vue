@@ -46,12 +46,12 @@
               <!-- 等级 -->
               <p class="level">Lv{{ detail.level }}</p>
             </section>
-            <section>
+            <section select-none>
               <p>
                 <span class="icon" i-carbon:email></span>
                 <span class="">发私信</span>
               </p>
-              <p>
+              <p @click.stop="followed">
                 <span class="icon" :class="detail.followed ? 'i-carbon:checkmark' : 'i-carbon:add'"></span>
                 <span>{{ detail.followed ? '已关注' : '关注' }}</span>
               </p>
@@ -94,6 +94,7 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref } from "vue";
+import { useDebounceFn } from "@vueuse/shared";
 import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
 import { AccountAPI } from "api";
@@ -106,6 +107,18 @@ let loading = ref(true);
 let showMore = ref(false);
 // 用户详情
 let detail = reactive<any>({});
+
+// 关注 / 取消关注
+let followed = useDebounceFn(async () => {
+  try {
+    let uid = parseInt(route.params.uid as string);
+    let t = detail.followed ? 0 : 1;
+    let { code, user = null }: any = await AccountAPI.getFollow(uid, t);
+    if (code == 200) detail.followed = !!user;
+  } catch (err: any) {
+    ElMessage.error("该账户已被风控!");
+  }
+}, 300);
 
 // 加载用户详情
 let loadData = async () => {

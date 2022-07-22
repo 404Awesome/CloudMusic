@@ -25,7 +25,7 @@
     </header>
 
     <!-- 导航列表 / 版权声明 -->
-    <div flex flex-col flex-1 justify-between>
+    <div flex flex-col gap-10px flex-1 justify-between>
       <!-- 列表 -->
       <ul class="navList">
         <li @click="$router.push(item.path)" :class="{ active: $route.matched[0]?.path == item.path }"
@@ -121,7 +121,7 @@ watch(() => store.auth, async (authStatus) => {
 <style lang="scss" scoped>
 // 侧边栏容器
 .sidebar {
-  @apply flex flex-col select-none p-10px h-full overflow-hidden bg-gray-300 dark-bg-gray-500;
+  @apply flex flex-col gap-10px select-none p-10px h-full overflow-hidden bg-gray-300 dark-bg-gray-500;
 }
 
 // 版权声明
@@ -159,7 +159,7 @@ watch(() => store.auth, async (authStatus) => {
 }
 
 .navList {
-  @apply overflow-hidden mt-10px rounded-md;
+  @apply overflow-hidden rounded-md;
 
   .active {
     @apply text-white themeBgColor dark-bg-gray-600 dark-text-gray-200;

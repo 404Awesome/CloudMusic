@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
-let Video = () => import("@/views/video/video.vue");
 
+let Video = () => import("@/pages/video/video.vue");
 let VideoList = () => import("@/pages/video/videoList/videoList.vue");
 let MVList = () => import("@/pages/video/mvList/mvList.vue");
 let MVDetail = () => import("@/pages/video/mvDetail/mvDetail.vue");

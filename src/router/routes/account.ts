@@ -1,7 +1,8 @@
 import { RouteRecordRaw } from "vue-router";
 import { useMainStore } from "store";
 
-let Account = () => import("@/views/account/account.vue");
+let Account = () => import("@/pages/account/account.vue");
+let Dynamic = () => import("@/pages/account/dynamic/dynamic.vue");
 let Login = () => import("@/pages/account/login/login.vue");
 let Register = () => import("@/pages/account/register/register.vue");
 let Notice = () => import("@/pages/account/notice/notice.vue");
@@ -57,6 +58,12 @@ const routes: RouteRecordRaw[] = [
     path: "/personalPage/:uid",
     component: PersonalPage,
     meta: { title: "个人主页" }
+  },
+  // 关注
+  {
+    path: "/following",
+    component: Dynamic,
+    meta: { title: "动态", auth: true }
   },
   // 编辑个人信息
   {

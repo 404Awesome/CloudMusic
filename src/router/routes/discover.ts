@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from "vue-router";
 import { useMainStore } from "store";
 
-let Discover = () => import("@/views/discover/discover.vue");
+let Discover = () => import("@/pages/discover/discover.vue");
 let Recommend = () => import("@/pages/discover/recommend/recommend.vue");
 let SongList = () => import("@/pages/discover/songList/songList.vue");
 let Ranking = () => import("@/pages/discover/ranking/ranking.vue");

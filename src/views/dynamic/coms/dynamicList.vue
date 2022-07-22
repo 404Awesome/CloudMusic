@@ -54,10 +54,13 @@
               <span>{{ item.shareCount }}</span>
             </li>
             <li>
-              <span class="icon" i-carbon:chat></span>
+              <span @click.stop="handleComment(item.id)" class="icon" i-carbon:chat></span>
               <span>{{ item.commentCount }}</span>
             </li>
           </ul>
+
+          <!-- 评论 -->
+          <Comment v-show="currentComment == item.id" :id="item.threadId" />
         </div>
       </li>
     </ul>
@@ -70,6 +73,7 @@
 </template>
 
 <script setup lang="ts">
+import Comment from "./comment.vue";
 import PlayIcon from "@/components/content/playIcon/playIcon.vue";
 import Artists from "@/components/content/artists/artists.vue";
 import { onMounted, reactive, ref, toRaw } from "vue";
@@ -104,9 +108,17 @@ interface DynamicInfo {
   shareCount: number,
   avatarUrl: string,
   nickname: string,
-  picsList: string[]
+  picsList: string[],
+  threadId: string
 }
 let dynamicList = reactive<DynamicInfo[]>([]);
+
+// 当前动态评论
+let currentComment = ref<number>(0);
+// 打开/关闭评论
+let handleComment = (id: number) => {
+  currentComment.value = currentComment.value == id ? 0 : id;
+}
 
 // 跳转个人主页
 let goPersonalPage = (id: number) => {
@@ -142,7 +154,7 @@ let loadData = async () => {
       lastTime.value = lasttime;
       // 处理动态
       let list = event.map((item: any) => {
-        let { id, eventTime, pics, json, info: { commentCount, likedCount, shareCount }, user: { avatarUrl, nickname, userId } } = item;
+        let { id, eventTime, pics, json, info: { commentCount, likedCount, shareCount, threadId }, user: { avatarUrl, nickname, userId } } = item;
         // 处理动态图片
         let picsList = pics.map((item: any) => item.originUrl);
         // 处理 json
@@ -171,6 +183,7 @@ let loadData = async () => {
         // 处理单曲
         return {
           id,
+          threadId,
           userId,
           picsList,
           eventTime,
@@ -181,7 +194,7 @@ let loadData = async () => {
           commentCount,
           likedCount, shareCount,
           avatarUrl,
-          nickname
+          nickname,
         }
       });
       dynamicList.push(...list);
@@ -255,7 +268,7 @@ onMounted(() => loadData());
 
 // 操作
 .operate {
-  @apply flex justify-end gap-10px overflow-hidden;
+  @apply flex justify-end gap-10px overflow-hidden select-none;
 
   li {
     @apply border-b-none border-r-1px border-gray-200;

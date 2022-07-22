@@ -93,9 +93,7 @@ import { useIntersectionObserver } from "@vueuse/core";
 import { toRaw, ref, reactive, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
-import { useMainStore } from "store";
 const router = useRouter();
-const store = useMainStore();
 const props = defineProps({
   id: {
     type: [Number, String],

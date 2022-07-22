@@ -4,7 +4,6 @@ import { useMainStore } from "store";
 let Account = () => import("@/views/account/account.vue");
 let Login = () => import("@/pages/account/login/login.vue");
 let Register = () => import("@/pages/account/register/register.vue");
-let Dynamic = () => import("@/pages/account/dynamic/dynamic.vue");
 let Notice = () => import("@/pages/account/notice/notice.vue");
 let PersonalPage = () => import("@/pages/account/personalPage/personalPage.vue");
 let MyHonePage = () => import("@/pages/account/myHomePage/myHomePage.vue");
@@ -40,12 +39,6 @@ const routes: RouteRecordRaw[] = [
       path: "register",
       component: Register,
     }]
-  },
-  // 关注
-  {
-    path: "/following",
-    component: Dynamic,
-    meta: { title: "动态", auth: true }
   },
   // 消息
   {

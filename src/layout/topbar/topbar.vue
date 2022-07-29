@@ -2,7 +2,7 @@
 <template>
   <div class="topbar">
     <!-- 标题 -->
-    <h1 @click="goRouter('/')" class="title">CloudMusic</h1>
+    <h1 @click="$router.push('/')" class="title">CloudMusic</h1>
 
     <!-- 导航栏 -->
     <nav flex overflow-hidden flex-1 justify-between p-x-15px gap-15px>
@@ -20,22 +20,22 @@
         <ThemeSelect />
 
         <!-- 通知 -->
-        <span @click="goRouter('/notice')" class="icon" i-carbon:notification></span>
+        <span v-if="store.auth" @click.stop="openNoticeDrawer" class="icon" i-carbon:notification></span>
 
         <!-- 暗夜模式 -->
-        <span @click="toggleDark()" class="icon" i-carbon:sun dark:i-carbon-moon></span>
+        <span @click.stop="toggleDark()" class="icon" i-carbon:sun dark:i-carbon-moon></span>
 
         <!-- 设置 -->
-        <span @click="goRouter('/setting')" class="icon" i-carbon:settings></span>
+        <span @click.stop="$router.push('/setting')" class="icon" i-carbon:settings></span>
       </section>
     </nav>
   </div>
 </template>
 
 <script lang="ts" setup>
+import ThemeSelect from "./coms/themeSelect.vue";
 import RouterNav from "./coms/routerNav.vue";
 import Search from "./coms/search.vue";
-import ThemeSelect from "./coms/themeSelect.vue";
 import { useDark, useToggle } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { useMainStore } from "store";
@@ -44,11 +44,11 @@ const router = useRouter();
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
-// 跳转路由
-let goRouter = (path: string) => {
-  if (store.isFolding) store.isFolding = false;
-  router.push(path);
-};
+// 打开通知
+let openNoticeDrawer = () => {
+  store.playListDrawer = false;
+  store.noticeDrawer = !store.noticeDrawer;
+}
 </script>
 
 <style lang="scss" scoped>

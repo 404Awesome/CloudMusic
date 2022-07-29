@@ -1,12 +1,22 @@
 <!-- CloudMusic -->
 <template>
+  <!-- 布局 -->
   <Layout />
+  <!-- 播放列表 -->
+  <PlayList />
+  <!-- 通知 -->
+  <Notice />
+  <!-- 歌曲详情 -->
+  <SongDetail />
 </template>
 
 <script setup lang="ts">
 import Layout from "@/layout/index.vue";
-import { onMounted } from "vue";
+import Notice from "@/pages/drawer/notice/notice.vue";
+import PlayList from "@/pages/drawer/playList/playList.vue";
+import SongDetail from "@/pages/drawer/songDetail/songDetail.vue";
 import { useMainStore } from "store";
+import { onMounted } from "vue";
 const store = useMainStore();
 
 onMounted(() => {
@@ -159,5 +169,27 @@ aside {
   .el-popper__arrow::before {
     @apply dark-bg-gray-300 dark-border-none;
   }
+}
+
+/* 修改elementui drawer */
+.el-drawer.rtl {
+  overflow: hidden;
+  box-sizing: border-box;
+  margin-top: var(--topNavBarHeight);
+  max-height: calc(101% - var(--topNavBarHeight) - var(--playBarHeight));
+  background-color: transparent;
+
+  .el-drawer__body {
+    overflow: hidden;
+    padding: 0px;
+
+    .el-scrollbar__view {
+      height: 100%;
+    }
+  }
+}
+
+.el-overlay {
+  background-color: transparent;
 }
 </style>

@@ -5,10 +5,11 @@
       <span class="icon" i-carbon:color-palette></span>
     </template>
     <template #default>
-      <ul @click="themeSelect" flex justify-around py-10px>
-        <li class="themeItem" bg="#d95047" bg-color="#d95047"></li>
-        <li class="themeItem" cursor-pointer bg="#575fcf" bg-color="#575fcf"></li>
-        <li class="themeItem" cursor-pointer bg="#fa8231" bg-color="#fa8231"></li>
+      <ul @click="themeSelect" class="themeList">
+        <li bg="#d95047"></li>
+        <li bg="#575fcf"></li>
+        <li bg="#fa8231"></li>
+        <li bg="#6ab04c"></li>
       </ul>
     </template>
   </el-popover>
@@ -20,7 +21,7 @@ const store = useMainStore();
 
 // 主题选择
 let themeSelect = (event: Event) => {
-  let color = (event.target as any).getAttribute("bg-color");
+  let color = (event.target as any).getAttribute("bg");
   if (!color || color == store.themeColor) return;
   store.themeColor = color;
   document.documentElement.style.setProperty("--theme-color", color);
@@ -28,7 +29,12 @@ let themeSelect = (event: Event) => {
 </script>
 
 <style lang="scss" scoped>
-.themeItem {
-  @apply w-20px h-20px rounded-full cursor-pointer;
+.themeList {
+  @apply flex justify-around py-10px;
+
+  li {
+    @apply w-20px h-20px rounded-full cursor-pointer;
+
+  }
 }
 </style>

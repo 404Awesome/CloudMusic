@@ -33,8 +33,6 @@ export const useMainStore = defineStore("main", {
       playStatus: useStorage<'audio' | 'video' | 'pause'>("playStatus", 'pause', sessionStorage),
       // 主题色
       themeColor: useStorage<string>('theme', '#d95047', localStorage),
-      // 是否折叠侧边栏
-      isFolding: useStorage<boolean>('isFolding', false, sessionStorage),
       // 音量大小
       volume: useStorage<number>('volume', 70, localStorage),
       // 播放列表
@@ -44,7 +42,13 @@ export const useMainStore = defineStore("main", {
       // 当前播放进度
       playProgress: useStorage<number>("playProgress", 0, sessionStorage),
       // 当前播放歌曲
-      currentSong: useStorage<SongInfo | null>('currentSong', null, sessionStorage, { serializer: StorageSerializers.object })
+      currentSong: useStorage<SongInfo | null>('currentSong', null, sessionStorage, { serializer: StorageSerializers.object }),
+      // 播放列表抽屉打开状态
+      playListDrawer: useStorage<boolean>("playListDrawer", false, sessionStorage),
+      // 通知抽屉打开状态
+      noticeDrawer: useStorage<boolean>("noticeDrawer", false, sessionStorage),
+      // 歌曲详情抽屉打开状态
+      songDetailDrawer: useStorage<boolean>('songDetailDrawer', false, sessionStorage)
     };
   },
   actions: {
@@ -82,6 +86,6 @@ export const useMainStore = defineStore("main", {
       this.emptyPlayList();
       this.playList.push(...songList);
       this.playSong(songList[0]);
-    }
+    },
   },
 });

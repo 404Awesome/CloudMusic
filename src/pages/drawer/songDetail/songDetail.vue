@@ -1,9 +1,9 @@
 <!-- 歌曲详情 -->
 <template>
-  <el-drawer direction="btt" custom-class="songDetailDrawer" modal-class="songDetailModal" :z-index="50"
-    :append-to-body="true" v-model="store.isFolding" :with-header="false">
+  <el-drawer direction="btt" custom-class="songDetailDrawer" modal-class="songDetailModal" :z-index="100"
+    :append-to-body="true" :with-header="false" @close="songDetailDrawer = false" v-model="songDetailDrawer">
     <el-scrollbar>
-      <div wrapBox>
+      <div v-if="currentSong" :key="currentSong.song.id" wrapBox relative>
         <!-- 信息 -->
         <section class="songInfo">
           <div flex-1 flex-col justify-center items-center gap-30px hidden sm:flex>
@@ -43,7 +43,7 @@
               </p>
               <p flex-1 flex items-center truncate overflow-hidden>
                 <span>歌手:&nbsp;</span>
-                <Artists @jump="() => store.isFolding = false" :artists="currentSong!.artists" fontSize="14px" />
+                <Artists @jump="() => songDetailDrawer = false" :artists="currentSong!.artists" fontSize="14px" />
               </p>
             </div>
 
@@ -82,32 +82,29 @@ import SendComment from "@/components/content/sendComment/sendComment.vue";
 import CommentList from "@/components/content/commentList/commentList.vue";
 import Artists from "@/components/content/artists/artists.vue";
 import Lyric from "@/components/content/lyric/lyric.vue";
-import SimiSongList from "./simiSongList.vue";
+import SimiSongList from "./coms/simiSongList.vue";
 import { useMainStore } from "store";
 import { Operate } from "utils";
 import { SongAPI } from "api";
 import { toRef } from "vue";
+import { toRefs } from "@vueuse/shared";
 const store = useMainStore();
-let currentSong = toRef(store, 'currentSong');
+let { currentSong, songDetailDrawer } = toRefs(store);
 
 // 获取评论
 let getComment = (id: number, content: string) => {
   console.log(id, content);
 }
-
-// 是否显示
-let toggle = () => store.isFolding = !store.isFolding;
-defineExpose({ toggle });
 </script>
-  
+
 <style lang="scss" scoped>
 // 歌曲信息容器高度
 .songInfo {
-  height: calc(100vh - var(--topNavBarHeight) - var(--playBarHeight) - 30px);
+  height: calc(100vh - var(--topNavBarHeight) - var(--topNavBarHeight) - 30px);
   @apply flex gap-40px py-15px;
 }
 
-/* 操作 */
+// 操作 
 .operate {
   @apply flex items-center justify-center gap-30px;
 
@@ -126,8 +123,7 @@ defineExpose({ toggle });
 </style>
 <style lang="scss">
 .songDetailDrawer {
-  margin-bottom: var(--playBarHeight);
-  height: calc(100vh - var(--playBarHeight) - var(--topNavBarHeight)) !important;
+  height: calc(100vh - var(--topNavBarHeight)) !important;
   @apply dark-bg-gray-300;
 
   .el-drawer__body {

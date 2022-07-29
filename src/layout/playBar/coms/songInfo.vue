@@ -18,21 +18,15 @@
         <span>{{ handleTime(props.duration) }}</span>
       </p>
     </div>
-
-    <!-- 歌曲详情 -->
-    <SongDetail v-if="currentSong" :key="currentSong.song.id" />
   </div>
 </template>
 
 <script setup lang="ts">
-import SongDetail from "./songDetail.vue";
 import { useRoute } from "vue-router";
 import { useMainStore } from "store";
-import { toRef } from "vue";
+import { toRefs } from "vue";
 const store = useMainStore();
 const route = useRoute();
-let currentSong = toRef(store, "currentSong");
-
 const props = defineProps({
   duration: {
     type: Number,
@@ -42,7 +36,8 @@ const props = defineProps({
     type: Number,
     required: true
   }
-})
+});
+let { songDetailDrawer, currentSong } = toRefs(store);
 
 // 处理歌曲时间
 let handleTime = (time: number) => {
@@ -54,7 +49,7 @@ let handleTime = (time: number) => {
 // 打开歌曲详情
 let openSongDetail = () => {
   if (route.path !== "/privateFM") {
-    store.isFolding = !store.isFolding;
+    songDetailDrawer.value = !songDetailDrawer.value;
   }
 };
 </script>

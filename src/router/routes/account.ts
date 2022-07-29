@@ -5,7 +5,6 @@ let Account = () => import("@/pages/account/account.vue");
 let Dynamic = () => import("@/pages/account/dynamic/dynamic.vue");
 let Login = () => import("@/pages/account/login/login.vue");
 let Register = () => import("@/pages/account/register/register.vue");
-let Notice = () => import("@/pages/account/notice/notice.vue");
 let PersonalPage = () => import("@/pages/account/personalPage/personalPage.vue");
 let MyHonePage = () => import("@/pages/account/myHomePage/myHomePage.vue");
 let EditPersonalInfo = () => import("@/pages/account/editPersonalInfo/editPersonalInfo.vue");
@@ -40,12 +39,6 @@ const routes: RouteRecordRaw[] = [
       path: "register",
       component: Register,
     }]
-  },
-  // 消息
-  {
-    path: "/notice",
-    component: Notice,
-    meta: { title: "消息", auth: true }
   },
   // 我的主页
   {

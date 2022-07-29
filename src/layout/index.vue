@@ -1,6 +1,6 @@
 <!-- 布局组件 -->
 <template>
-  <main id="layout" :class="{ folding: store.isFolding }">
+  <main id="layout" :class="{ folding: songDetailDrawer }">
     <section class="topbar">
       <Topbar />
     </section>
@@ -30,9 +30,10 @@ import PlayBar from "./playBar/playBar.vue";    // 播放栏
 import { useThrottleFn } from "@vueuse/core";
 import { useRoute } from "vue-router";
 import { useMainStore } from "store";
-import { ref, watch } from "vue";
+import { ref, toRefs, watch } from "vue";
 const store = useMainStore();
 const route = useRoute();
+let { scrollTop, songDetailDrawer } = toRefs(store);
 
 // keepAlive排除列表
 let excludeList = ['Login', 'Register', 'singerDetail', 'songListDetail', 'AllMV', 'MVDetail', 'VideoDetail', 'Search', 'personalPage'];
@@ -43,7 +44,7 @@ let scrollEl = ref<HTMLElement | null>(null);
 let scroll = useThrottleFn((event: UIEvent) => {
   if (route.meta.scroll) {
     let target = event.target as HTMLElement;
-    store.scrollTop = target.scrollTop;
+    scrollTop.value = target.scrollTop;
   }
 }, 200);
 // 监听路由,将页面滚动到顶部
@@ -103,16 +104,10 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 // 折叠侧边栏
 #layout.folding {
   .navbar {
-    display: none;
-  }
-
-  .view {
     grid-row: 2/3;
-    grid-column: 1/3;
   }
 
   .playbar {
-    grid-row: 3/4;
     grid-column: 1/3;
   }
 }

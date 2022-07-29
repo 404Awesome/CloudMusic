@@ -30,7 +30,7 @@
             <!-- 歌曲名称 -->
             <p @click="store.playSong(item)" class="title">{{ item.song.name }}</p>
             <!-- 艺术家 -->
-            <Artists @jump="() => store.isFolding = false" :artists="item.artists" />
+            <Artists @jump="() => store.songDetailDrawer = false" :artists="item.artists" />
           </div>
         </li>
       </ul>

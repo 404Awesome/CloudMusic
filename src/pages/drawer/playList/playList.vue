@@ -1,7 +1,7 @@
 <!-- 播放列表 -->
 <template>
-  <el-drawer direction="rtl" custom-class="playListDrawer" modal-class="playListModal" size="350px" :z-index="200"
-    :append-to-body="true" v-model="isShow" :with-header="false">
+  <el-drawer direction="rtl" size="350px" :z-index="200" :append-to-body="true" v-model="playListDrawer"
+    :with-header="false">
     <!-- 头部 -->
     <header class="header">
       <h1 text-xl>当前播放</h1>
@@ -55,13 +55,7 @@ import { useMainStore } from "store";
 import { toRefs, ref } from "vue";
 const store = useMainStore();
 const route = useRoute();
-let { playList, currentSong } = toRefs(store);
-
-// 是否显示
-let isShow = ref<boolean>(false);
-let toggle = () => {
-  isShow.value = !isShow.value;
-}
+let { playList, currentSong, playListDrawer } = toRefs(store);
 
 // 播放音乐
 let playSong = (song: any) => {
@@ -73,8 +67,6 @@ let playSong = (song: any) => {
     store.playSong(song);
   }
 }
-
-defineExpose({ toggle });
 </script>
 
 <style lang="scss" scoped>
@@ -133,27 +125,5 @@ defineExpose({ toggle });
       }
     }
   }
-}
-</style>
-<style lang="scss">
-.playListDrawer {
-  overflow: hidden;
-  box-sizing: border-box;
-  margin-top: var(--topNavBarHeight);
-  max-height: calc(101% - var(--topNavBarHeight) - var(--playBarHeight));
-  background-color: transparent;
-
-  .el-drawer__body {
-    overflow: hidden;
-    padding: 0px;
-
-    .el-scrollbar__view {
-      height: 100%;
-    }
-  }
-}
-
-.playListModal {
-  background-color: transparent;
 }
 </style>

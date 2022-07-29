@@ -32,7 +32,7 @@
       <!-- 操作 -->
       <section flex-1 class="operate">
         <!-- 打开播放列表 -->
-        <span @click="openPlayList" i-carbon:list-boxes></span>
+        <span @click="openPlayListDrawer" i-carbon:list-boxes></span>
         <!-- 音量 -->
         <el-popover :hide-after="0" placement="top" trigger="hover">
           <template #reference>
@@ -47,24 +47,20 @@
         </el-popover>
       </section>
     </div>
-
-    <!-- 播放列表 -->
-    <PlayList ref="playListEl" />
   </div>
 </template>
 
 <script setup lang="ts">
-import PlayList from "./coms/playList.vue";
 import SongInfo from "./coms/songInfo.vue";
-import Plyr from "plyr";
-import { ref, watch, onMounted, computed, nextTick } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 import { useDebounceFn } from "@vueuse/shared";
-import { ElMessage, ElNotification } from "element-plus";
+import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
 import { useMainStore } from "store";
-// import { nextTick } from "process";
+import Plyr from "plyr";
 const store = useMainStore();
 const route = useRoute();
+
 
 // audio元素
 let audioEl = ref<HTMLElement | null>(null);
@@ -194,9 +190,9 @@ let setMute = () => {
   }
 }
 // 打开播放列表
-let playListEl = ref<InstanceType<typeof PlayList>>();
-let openPlayList = () => {
-  playListEl.value!.toggle()
+let openPlayListDrawer = () => {
+  store.noticeDrawer = false;
+  store.playListDrawer = !store.playListDrawer;
 }
 
 

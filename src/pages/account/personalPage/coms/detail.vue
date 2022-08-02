@@ -47,7 +47,7 @@
               <p class="level">Lv{{ detail.level }}</p>
             </section>
             <section select-none>
-              <p>
+              <p @click.stop="sendMsg">
                 <span class="icon" i-carbon:email></span>
                 <span class="">发私信</span>
               </p>
@@ -97,9 +97,12 @@ import { onMounted, reactive, ref } from "vue";
 import { useDebounceFn } from "@vueuse/shared";
 import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
+import { useMainStore } from "store";
 import { AccountAPI } from "api";
 import { Handle } from "utils";
 const route = useRoute();
+const store = useMainStore();
+const uid = parseInt(route.params.uid as string);
 
 // 加载状态
 let loading = ref(true);
@@ -107,6 +110,12 @@ let loading = ref(true);
 let showMore = ref(false);
 // 用户详情
 let detail = reactive<any>({});
+
+// 发私信
+let sendMsg = () => {
+  store.privateMsgInfo = { id: uid, name: detail.nickname };
+  store.privateMsgDrawer = true;
+}
 
 // 关注 / 取消关注
 let followed = useDebounceFn(async () => {
@@ -124,7 +133,6 @@ let followed = useDebounceFn(async () => {
 let loadData = async () => {
   try {
     loading.value = true;
-    let uid = parseInt(route.params.uid as string);
     let { code, level, profile: { avatarUrl, followeds, followed, follows, gender, eventCount, nickname, signature, province, city } }: any = await AccountAPI.getUserDetail(uid);
     if (code == 200) {
       // 处理城市

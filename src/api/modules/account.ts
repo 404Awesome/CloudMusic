@@ -83,4 +83,16 @@ export default {
     // [t] 1为关注 0为取消关注
     return GET("/follow", { id, t });
   },
+  // 通知 - 私信
+  getMsgPrivate(offset: number = 0, limit: number = 15) {
+    return GET("/msg/private", { offset, limit });
+  },
+  // 私信内容
+  getMsgPrivateHistory(uid: number, before: number, limit: number = 15) {
+    return GET("/msg/private/history", { uid, before, limit });
+  },
+  // 发送私信
+  sendText(user_ids: number, msg: string) {
+    return GET("/send/text", { user_ids, msg });
+  },
 }

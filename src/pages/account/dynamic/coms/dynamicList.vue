@@ -20,22 +20,8 @@
           <p v-html="item.content" class="content"></p>
 
           <!-- 专辑 / 单曲 -->
-          <div v-if="item?.song || item?.album" class="song">
-            <!-- 封面 -->
-            <div relative>
-              <el-image :src="item?.song?.album.picUrl || item?.album.picUrl" fit="cover" class="img" />
-              <PlayIcon @playClick="playSong(item, false)" :visible="true" size="30px" fontSize="25px" />
-            </div>
-            <!-- 信息 -->
-            <div class="info">
-              <!-- 名称 -->
-              <p @click="playSong(item, true)" class="name">
-                {{ item?.song?.song.name || item?.album.name }}
-              </p>
-              <!-- 艺术家 -->
-              <Artists :artists="item?.song?.artists || item?.album?.artists" />
-            </div>
-          </div>
+          <AlbumItem v-if="item.album" v-bind="item.album" hover:bg-gray-200 />
+          <SongItem v-if="item.song" :songInfo="item.song" hover:bg-gray-200 />
 
           <!-- 配图 -->
           <div class="pictures">
@@ -74,16 +60,14 @@
 
 <script setup lang="ts">
 import Comment from "./comment.vue";
-import PlayIcon from "@/components/content/playIcon/playIcon.vue";
-import Artists from "@/components/content/artists/artists.vue";
-import { onMounted, reactive, ref, toRaw } from "vue";
-import { AccountAPI, ArtistAPI } from "api";
+import SongItem from "@/components/content/songItem/songItem.vue";
+import AlbumItem from "@/components/content/albumItem/albumItem.vue";
+import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
-import { useMainStore } from "store";
 import { SongInfo } from "store";
-import { Handle, Operate } from "utils";
-const store = useMainStore();
+import { AccountAPI } from "api";
+import { Handle } from "utils";
 const router = useRouter();
 
 // 限制请求数据个数
@@ -123,23 +107,6 @@ let handleComment = (id: number) => {
 // 跳转个人主页
 let goPersonalPage = (id: number) => {
   router.push(`/personalPage/${id}`);
-}
-
-// 播放音乐 / 播放专辑
-let playSong = async (content: DynamicInfo, detailPage: boolean) => {
-  let { song, album, type } = toRaw(content);
-  if (type == "单曲") {
-    return store.playSong(song);
-  }
-
-  if (type == "专辑" && detailPage) {
-    // 跳转专辑详情页面
-    router.push(`/albumDetail/${album.id}`);
-  } else {
-    // 播放专辑内容
-    let { code, songs }: any = await ArtistAPI.getAlbumInfo(album.id);
-    if (code == 200) Operate.addPlayList(songs, album.id);
-  }
 }
 
 // 加载动态
@@ -238,22 +205,6 @@ onMounted(() => loadData());
 
   :deep(a) {
     @apply pr-5px no-underline text-blue-500 cursor-pointer hover-text-blue-600 hover-underline;
-  }
-}
-
-.song {
-  @apply rounded-md flex gap-10px p-10px bg-gray-100 hover-bg-gray-200;
-
-  .img {
-    @apply w-13 h-13 min-w-13 rounded-md cursor-pointer brightness-90;
-  }
-
-  .info {
-    @apply flex-1 flex flex-col justify-around overflow-hidden;
-
-    .name {
-      @apply truncate text-15px cursor-pointer hover-themeColor;
-    }
   }
 }
 

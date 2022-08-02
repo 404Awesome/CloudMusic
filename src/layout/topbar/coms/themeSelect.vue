@@ -1,15 +1,23 @@
 <!-- 主题选择 -->
 <template>
-  <el-popover placement="bottom" trigger="click" :hide-after="0">
+  <el-popover placement="bottom" trigger="click" :hide-after="0" popper-class="themeSelect">
     <template #reference>
       <span class="icon" i-carbon:color-palette></span>
     </template>
     <template #default>
       <ul @click="themeSelect" class="themeList">
-        <li bg="#d95047"></li>
-        <li bg="#575fcf"></li>
-        <li bg="#fa8231"></li>
-        <li bg="#6ab04c"></li>
+        <li>
+          <span class="color" bg="#d95047"></span>
+          <span class="name">红色</span>
+        </li>
+        <li>
+          <span class="color" bg="#575fcf"></span>
+          <span class="name">蓝色</span>
+        </li>
+        <li>
+          <span class="color" bg="#6ab04c"></span>
+          <span class="name">绿色</span>
+        </li>
       </ul>
     </template>
   </el-popover>
@@ -30,11 +38,24 @@ let themeSelect = (event: Event) => {
 
 <style lang="scss" scoped>
 .themeList {
-  @apply flex justify-around py-10px;
+  @apply flex justify-around py-10px px-5px;
 
   li {
-    @apply w-20px h-20px rounded-full cursor-pointer;
+    @apply flex flex-col items-center;
 
+    .color {
+      @apply block w-20px h-20px rounded-full cursor-pointer;
+    }
+
+    .name {
+      @apply mt-3px text-13px text-gray-500 select-none;
+    }
   }
+}
+</style>
+<style lang="scss">
+.themeSelect {
+  width: 130px !important;
+  min-width: 130px !important;
 }
 </style>

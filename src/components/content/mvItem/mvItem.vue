@@ -1,4 +1,4 @@
-<!-- mv列表item -->
+<!-- MV Item -->
 <template>
   <div :class="{ flex: isFlex }" class="mvItem">
     <!-- 封面 -->

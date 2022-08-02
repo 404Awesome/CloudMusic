@@ -47,7 +47,7 @@ const toggleDark = useToggle(isDark);
 // 打开通知
 let openNoticeDrawer = () => {
   store.playListDrawer = false;
-  store.noticeDrawer = !store.noticeDrawer;
+  store.messageDrawer = !store.messageDrawer;
 }
 </script>
 

@@ -43,12 +43,16 @@ export const useMainStore = defineStore("main", {
       playProgress: useStorage<number>("playProgress", 0, sessionStorage),
       // 当前播放歌曲
       currentSong: useStorage<SongInfo | null>('currentSong', null, sessionStorage, { serializer: StorageSerializers.object }),
+      // 私信信息
+      privateMsgInfo: useStorage<{ name: string, id: number }>("privateMsgInfo", { name: "", id: 0 }, sessionStorage),
       // 播放列表抽屉打开状态
       playListDrawer: useStorage<boolean>("playListDrawer", false, sessionStorage),
-      // 通知抽屉打开状态
-      noticeDrawer: useStorage<boolean>("noticeDrawer", false, sessionStorage),
+      // 消息抽屉打开状态
+      messageDrawer: useStorage<boolean>("messageDrawer", false, sessionStorage),
       // 歌曲详情抽屉打开状态
-      songDetailDrawer: useStorage<boolean>('songDetailDrawer', false, sessionStorage)
+      songDetailDrawer: useStorage<boolean>('songDetailDrawer', false, sessionStorage),
+      // 私信内容抽屉打开状态
+      privateMsgDrawer: useStorage<boolean>('privateMsgDrawer', false, sessionStorage),
     };
   },
   actions: {

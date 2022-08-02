@@ -4,8 +4,8 @@
     <!-- 标题 -->
     <h4 class="title">听友评论</h4>
     <!-- 表单 -->
-    <el-input rows="3" :autosize="{ minRows: 3 }" v-model.lazy.trim="content" maxlength="140" placeholder="输入评论或@朋友"
-      show-word-limit type="textarea" />
+    <el-input @keydown.stop rows="3" v-model.lazy="content" maxlength="140" placeholder="输入评论或@朋友" show-word-limit
+      type="textarea" />
     <!-- 导航 -->
     <nav class="nav">
       <section></section>
@@ -30,8 +30,8 @@ const props = defineProps({
 let content = ref<string>("");
 // 发送评论
 let sendComment = useDebounceFn(() => {
-  if (!content.value.length) return ElMessage.warning('请输入评论内容!');
-  emit('getComment', props.id, content.value);
+  if (!content.value.trim()) return ElMessage.warning('请输入评论内容!');
+  emit('getComment', props.id, content.value.trim());
 }, 500);
 </script>
 
@@ -39,10 +39,6 @@ let sendComment = useDebounceFn(() => {
 .title {
   margin-bottom: 10px;
   font-size: 18px;
-}
-
-:deep(.el-textarea__inner):focus {
-  box-shadow: 0 0 0 1px var(--theme-color) inset;
 }
 
 nav.nav {

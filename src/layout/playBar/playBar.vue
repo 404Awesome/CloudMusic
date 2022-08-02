@@ -191,7 +191,8 @@ let setMute = () => {
 }
 // 打开播放列表
 let openPlayListDrawer = () => {
-  store.noticeDrawer = false;
+  store.messageDrawer = false;
+  store.privateMsgDrawer = false;
   store.playListDrawer = !store.playListDrawer;
 }
 

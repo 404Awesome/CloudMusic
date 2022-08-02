@@ -2,19 +2,22 @@
 <template>
   <!-- 布局 -->
   <Layout />
-  <!-- 播放列表 -->
-  <PlayList />
-  <!-- 通知 -->
-  <Notice />
+  <!-- 消息 -->
+  <Message />
+  <!-- 私信 -->
+  <PrivateMsg />
   <!-- 歌曲详情 -->
   <SongDetail />
+  <!-- 播放列表 -->
+  <PlayList />
 </template>
 
 <script setup lang="ts">
 import Layout from "@/layout/index.vue";
-import Notice from "@/pages/drawer/notice/notice.vue";
+import Message from "@/pages/drawer/message/message.vue";
 import PlayList from "@/pages/drawer/playList/playList.vue";
 import SongDetail from "@/pages/drawer/songDetail/songDetail.vue";
+import PrivateMsg from "@/pages/drawer/privateMsg/privateMsg.vue";
 import { useMainStore } from "store";
 import { onMounted } from "vue";
 const store = useMainStore();
@@ -191,5 +194,23 @@ aside {
 
 .el-overlay {
   background-color: transparent;
+}
+
+/* 修改elementui textarea */
+.el-textarea textarea {
+  resize: none;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* 滚动条滑块 */
+  &::-webkit-scrollbar-thumb {
+    @apply rounded themeBgColor;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 1px var(--theme-color) inset;
+  }
 }
 </style>

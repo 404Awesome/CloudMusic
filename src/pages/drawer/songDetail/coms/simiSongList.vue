@@ -3,9 +3,9 @@
   <el-skeleton :loading="loading" animated>
     <template #template>
       <ul ref="skeletonEl" flex flex-col gap-15px>
-        <li v-for="item in 5" flex gap-10px>
+        <li v-for="item in 3" flex gap-10px p-8px>
           <!-- 封面 -->
-          <el-skeleton-item variant="image" h-70px w-70px rounded-md />
+          <el-skeleton-item variant="image" w-12 h-12 rounded-md />
           <!-- 歌曲信息 -->
           <div flex-1 flex flex-col justify-around>
             <!-- 标题 -->
@@ -18,20 +18,8 @@
     </template>
     <template #default>
       <ul flex flex-col gap-15px>
-        <li v-for="item in simiList" :key="item.song.id" class="group" flex gap-10px>
-          <!-- 封面 -->
-          <div relative>
-            <el-image @click="store.playSong(item)" :src="item.album.picUrl" class="cover" />
-            <span class="coverIcon" i-eva:arrow-right-fill></span>
-          </div>
-
-          <!-- 歌曲信息 -->
-          <div class="songInfo">
-            <!-- 歌曲名称 -->
-            <p @click="store.playSong(item)" class="title">{{ item.song.name }}</p>
-            <!-- 艺术家 -->
-            <Artists @jump="() => store.songDetailDrawer = false" :artists="item.artists" />
-          </div>
+        <li v-for="item in simiList" :key="item.song.id">
+          <SongItem :songInfo="item" hover:bg-gray-200 />
         </li>
       </ul>
     </template>
@@ -39,14 +27,13 @@
 </template>
 
 <script setup lang="ts">
-import Artists from "@/components/content/artists/artists.vue";
+import SongItem from "@/components/content/songItem/songItem.vue";
 import { useIntersectionObserver } from "@vueuse/core";
 import { onMounted, reactive, ref } from "vue";
-import { useMainStore, SongInfo } from "store";
 import { ElMessage } from "element-plus";
+import { SongInfo } from "store";
 import { Handle } from "utils";
 import { SongAPI } from "api";
-const store = useMainStore();
 const props = defineProps({
   id: {
     type: Number,
@@ -87,25 +74,3 @@ onMounted(() => {
   })
 });
 </script>
-
-<style lang="scss" scoped>
-// 封面
-.cover {
-  @apply w-70px min-w-70px h-70px rounded-md cursor-pointer brightness-85;
-}
-
-// 封面播放图标
-.coverIcon {
-  @apply group-hover-opacity-100 cursor-pointer absolute bottom-3px right-0px text-white text-27px opacity-0;
-}
-
-// 歌曲信息
-.songInfo {
-  @apply flex flex-1 flex-col justify-around overflow-hidden;
-
-  // 歌曲名称
-  .title {
-    @apply text-15px truncate cursor-pointer hover-themeColor;
-  }
-}
-</style>

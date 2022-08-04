@@ -72,7 +72,7 @@ let recentSongList = reactive<RecentSong[]>([]);
 // 播放全部
 let playAll = () => {
   if (recentSongList.length) {
-    let list = toRaw(recentSongList).splice(0, 50).map((item: RecentSong) => item.song);
+    let list = JSON.parse(JSON.stringify(recentSongList)).splice(0, 50).map((item: RecentSong) => item.song);
     store.addPlayList(list);
   }
 }
@@ -84,7 +84,7 @@ let clearList = () => {
 
 // 播放歌曲
 let playSong = (item: RecentSong) => {
-  let { song } = toRaw(item)
+  let { song } = toRaw(item);
   store.playSong(song);
 }
 

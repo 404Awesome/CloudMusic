@@ -11,10 +11,10 @@
             <el-skeleton-item block variant="text" w-50px ml-5px />
             <el-skeleton-item block variant="text" w-100px ml-10px />
           </div>
-          <div flex flex-wrap my-20px gap-7px>
+          <div flex flex-wrap my-20px gap-y-7px gap-x-15px>
+            <el-skeleton-item block variant="text" w-95px h-29px rounded-full />
             <el-skeleton-item block variant="text" w-110px h-29px rounded-full />
-            <el-skeleton-item block variant="text" w-130px h-29px rounded-full />
-            <el-skeleton-item block variant="text" w-130px h-29px rounded-full />
+            <el-skeleton-item block variant="text" w-110px h-29px rounded-full />
           </div>
           <el-skeleton-item block variant="text" w="2/10" mt-10px />
           <el-skeleton-item block variant="text" w="3/10" mt-10px />
@@ -104,11 +104,9 @@ import { useRoute, useRouter } from "vue-router";
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { Handle, Operate } from "utils";
-import { useMainStore } from "store";
 import { SongListAPI } from "api";
 const route = useRoute();
 const router = useRouter();
-const store = useMainStore();
 const props = defineProps({ activeComs: String });
 let id = parseInt(route.params.id as string);
 
@@ -184,7 +182,7 @@ onMounted(() => loadData());
   @apply mb-3 lg-my-5 flex content-center flex-row flex-wrap gap-y-7px gap-x-15px;
 
   li {
-    @apply flexCenter select-none rounded-full w-115px text-center cursor-pointer border-1px border-#eee gap-5px whitespace-nowrap;
+    @apply flexCenter select-none rounded-full w-110px text-center cursor-pointer border-1px border-#eee gap-2px whitespace-nowrap;
 
     span {
       @apply py-5px text-13px;
@@ -200,10 +198,8 @@ onMounted(() => loadData());
     }
 
     &:first-child {
-      width: 95px;
-      border: none;
+      @apply w-95px border-none text-white/80;
       background: linear-gradient(to right, #fa5042, #d43b32);
-      color: rgba($color: #fff, $alpha: .8);
 
       &:hover {
         color: white;

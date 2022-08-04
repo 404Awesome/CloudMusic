@@ -1,21 +1,19 @@
 <!-- 歌单列表 -->
 <template>
-  <el-table @row-dblclick="playSong" :data="props.songList" stripe w-full h-full text-13px overflow-hidden>
+  <el-table @row-dblclick="playSong" :data="props.songList" stripe class="songList">
     <!-- 序号 -->
-    <el-table-column :width="50" type="index">
+    <el-table-column :width="40" type="index">
       <template v-slot="{ $index }">
-        <p truncate text-center text-gray-400>{{ $index + 1 }}</p>
+        <p class="index">{{ $index + 1 }}</p>
       </template>
     </el-table-column>
 
     <!-- 操作 -->
     <el-table-column :width="65">
       <template v-slot="{ row }">
-        <p flex justify-between text-17px>
-          <span @click.stop="Operate.likeSong(row.song.id)" i-carbon:favorite hover:i-carbon-favorite-filled
-            hover:text-red-500 cursor-pointer></span>
-          <span @click.stop="Operate.downloadSong(row.song.id, row.song.name)" i-carbon:cloud-download hover:themeColor
-            cursor-pointer></span>
+        <p class="operate">
+          <span @click.stop="Operate.likeSong(row.song.id)" class="like"></span>
+          <span @click.stop="Operate.downloadSong(row.song.id, row.song.name)" class="download"></span>
         </p>
       </template>
     </el-table-column>
@@ -23,7 +21,7 @@
     <!-- 标题 -->
     <el-table-column label="音乐标题">
       <template v-slot="{ row }">
-        <p :class="{ 'themeColor': store.currentSong?.song.id == row.song.id }" truncate cursor-default select-none>
+        <p :class="{ 'themeColor': store.currentSong?.song.id == row.song.id }" class="title">
           {{ row.song.name }}
         </p>
       </template>
@@ -74,3 +72,29 @@ let playSong = (song: SongInfo) => {
   store.playSong(song);
 }
 </script>
+
+<style scoped lang="scss">
+.songList {
+  @apply w-full h-full text-13px overflow-hidden;
+
+  .index {
+    @apply truncate text-center text-gray-400;
+  }
+
+  .title {
+    @apply truncate cursor-default select-none;
+  }
+
+  .operate {
+    @apply flex justify-between text-17px;
+
+    .like {
+      @apply i-carbon-favorite hover-i-carbon-favorite-filled hover-text-red-500 cursor-pointer;
+    }
+
+    .download {
+      @apply i-carbon-cloud-download hover-themeColor cursor-pointer;
+    }
+  }
+}
+</style>

@@ -95,4 +95,8 @@ export default {
   sendText(user_ids: number, msg: string) {
     return GET("/send/text", { user_ids, msg });
   },
+  // 最近播放-歌曲
+  getRecentSong(limit: number = 100) {
+    return GET("/record/recent/song", { limit });
+  },
 }

@@ -11,6 +11,7 @@ let EditPersonalInfo = () => import("@/pages/account/editPersonalInfo/editPerson
 let UserDynamic = () => import("@/pages/account/userDynamic/userDynamic.vue");
 let UserFollows = () => import("@/pages/account/userFollows/userFollows.vue");
 let UserFolloweds = () => import("@/pages/account/userFolloweds/userFolloweds.vue");
+let RecentPlay = () => import("@/pages/account/recentPlay/recentPlay.vue");
 
 const routes: RouteRecordRaw[] = [
   {
@@ -81,6 +82,12 @@ const routes: RouteRecordRaw[] = [
     path: "/userFolloweds/:uid",
     component: UserFolloweds,
     meta: { title: "个人粉丝", auth: true }
+  },
+  // 用户粉丝
+  {
+    path: "/recentPlay",
+    component: RecentPlay,
+    meta: { title: "最近播放", auth: true }
   }
 ];
 

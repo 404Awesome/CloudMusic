@@ -91,6 +91,11 @@ let needLogin: ListItem[] = [
     icon: "i-carbon:radar",
     title: "私人FM",
     path: "/privateFM",
+  },
+  {
+    icon: "i-carbon:recently-viewed",
+    title: "最近播放",
+    path: "/recentPlay",
   }
 ];
 

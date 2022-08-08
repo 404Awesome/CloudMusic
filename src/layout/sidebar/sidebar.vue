@@ -169,7 +169,7 @@ let folding = () => {
   }
 
   .avatar {
-    @apply flex-none w-45px rounded-full;
+    @apply flex-none w-45px h-45px rounded-full;
   }
 
   // 个人信息
@@ -226,7 +226,7 @@ let folding = () => {
     @apply p-5px rounded-full;
 
     .avatar {
-      @apply w-40px;
+      @apply w-40px h-40px;
     }
 
     .info {

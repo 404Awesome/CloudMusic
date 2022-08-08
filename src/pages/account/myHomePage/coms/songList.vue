@@ -4,19 +4,19 @@
     <h3 truncate>创建的歌单</h3>
 
     <ul class="list">
-      <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" cursor-pointer>
+      <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)">
         <!-- 封面 -->
-        <div class="cover" relative>
-          <el-image :src="item.coverImgUrl" fit="cover" :draggable="false" rounded-md group-hover:brightness-90 />
+        <div relative>
+          <el-image :src="item.coverImgUrl" fit="cover" :draggable="false" rounded-md brightness-90 />
           <PlayCount :playCount="item.playCount" />
           <PlayIcon @playClick="Operate.playSongList(item.id)" position="bottom-right" />
         </div>
 
         <!-- 名字 -->
-        <p truncate group-hover:themeColor text-15px pt-5px pb-2px>{{ item.name }}</p>
+        <p class="name">{{ item.name }}</p>
 
         <!-- 多少首歌曲 -->
-        <p truncate text-gray-400 text-13px>{{ item.trackCount }}首</p>
+        <p class="trackCount">{{ item.trackCount }}首</p>
       </li>
     </ul>
   </div>
@@ -67,6 +67,22 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .list {
-  @apply grid grid-cols-2 sm-grid-cols-3 gap-10px pt-10px;
+  @apply grid grid-cols-3 gap-10px pt-10px;
+
+  li {
+    @apply cursor-pointer;
+
+    &:hover .name {
+      @apply themeColor;
+    }
+
+    .name {
+      @apply truncate text-15px pt-5px pb-2px;
+    }
+
+    .trackCount {
+      @apply truncate text-gray-400 text-13px;
+    }
+  }
 }
 </style>

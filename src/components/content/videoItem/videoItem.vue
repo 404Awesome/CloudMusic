@@ -9,7 +9,7 @@
       <PlayCount :playCount="playTime!" />
 
       <!-- 播放图标 -->
-      <PlayIcon />
+      <PlayIcon @playClick="goVideoDetailPage" />
 
       <!-- 时长 -->
       <VideoDuration :durationms="durationms!" />

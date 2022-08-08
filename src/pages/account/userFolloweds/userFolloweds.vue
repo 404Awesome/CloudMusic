@@ -14,26 +14,10 @@
       </ul>
     </template>
     <template #default>
-      <ul v-show="followedList.length" class="list">
-        <li v-for="item in followedList" :key="item.id">
-          <!-- 头像 -->
-          <el-image @click="$router.push(`/personalPage/${item.id}`)" :src="item.avatarUrl" fit="cover"
-            class="avatar" />
-          <div class="detail">
-            <!-- 名称 -->
-            <p class="nickname" @click="$router.push(`/personalPage/${item.id}`)">{{ item.nickname }}</p>
-            <div>
-              <!-- 个性签名 -->
-              <p v-if="item.signature" class="signature">{{ item.signature }}</p>
-              <!-- 数量 -->
-              <p flex gap-10px>
-                <span truncate>歌单: {{ item.playlistCount }}</span>
-                <span truncate>粉丝: {{ item.followeds }}</span>
-              </p>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <!-- 粉丝列表 -->
+      <div v-show="followedList.length" v-for="item in followedList" :key="item.id" class="list">
+        <PersonalCard v-bind="item" />
+      </div>
 
       <!-- 空状态 -->
       <el-empty v-show="!followedList.length" description="暂无粉丝!" />
@@ -46,10 +30,14 @@
   </div>
 </template>
 
+<script lang="ts">
+export default { name: "UserFolloweds" }
+</script>
 <script setup lang="ts">
+import PersonalCard from "@/components/content/personalCard/personalCard.vue";
+import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
-import { onMounted, reactive, ref } from "vue";
 import { AccountAPI } from 'api';
 const route = useRoute();
 
@@ -91,6 +79,8 @@ let loadData = async (offset: number = 0) => {
       // 处理粉丝列表
       let list: FollowedInfo[] = followeds.map((item: any): FollowedInfo => {
         let { userId, avatarUrl, nickname, signature, playlistCount, followeds } = item;
+        // 处理签名值为null
+        if (!signature) signature = "";
         return { id: userId, avatarUrl, nickname, signature, playlistCount, followeds };
       });
       followedList.push(...list);
@@ -109,25 +99,5 @@ onMounted(() => loadData());
 <style lang="scss" scoped>
 .list {
   @apply wrapBox grid3Cols py-15px;
-
-  li {
-    @apply py-15px px-20px flex gap-10px items-center hover-bg-gray-100;
-  }
-}
-
-.avatar {
-  @apply w-17 min-w-17 rounded-full border-1px border-gray-200 cursor-pointer;
-}
-
-.detail {
-  @apply flex-1 flex flex-col h-full justify-around text-13px text-gray-500 overflow-hidden cursor-default;
-
-  .nickname {
-    @apply truncate text-16px fontColor cursor-pointer hover-themeColor;
-  }
-
-  .signature {
-    @apply truncate pb-3px;
-  }
 }
 </style>

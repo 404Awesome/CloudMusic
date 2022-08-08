@@ -56,7 +56,7 @@
 
         <!-- 评论 / 推荐 -->
         <section flex gap-40px pb-20px>
-          <div flex-1>
+          <div flex-1 pb-50px>
             <!-- 发表评论 -->
             <SendComment :id="currentSong!.song.id" @getComment="getComment" />
 
@@ -64,7 +64,7 @@
             <CommentList :id="currentSong!.song.id" :RequestData="SongAPI.getComment" />
           </div>
 
-          <div w-300px hidden sm:inline-block>
+          <div w-300px min-w-300px hidden sm:inline-block>
             <!-- 标题 -->
             <h2 text-18px mb-10px>相似歌曲</h2>
 

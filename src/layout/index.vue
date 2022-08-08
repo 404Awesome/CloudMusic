@@ -1,6 +1,6 @@
 <!-- 布局组件 -->
 <template>
-  <main id="layout" :class="{ folding: songDetailDrawer }">
+  <main id="layout" :class="{ hiddenSidebar: songDetailDrawer, sidebarFolding: sidebarFolding }">
     <section class="topbar">
       <Topbar />
     </section>
@@ -33,10 +33,10 @@ import { useMainStore } from "store";
 import { ref, toRefs, watch } from "vue";
 const store = useMainStore();
 const route = useRoute();
-let { scrollTop, songDetailDrawer } = toRefs(store);
+let { scrollTop, songDetailDrawer, sidebarFolding } = toRefs(store);
 
 // keepAlive排除列表
-let excludeList = ['Login', 'Register', 'singerDetail', 'songListDetail', 'AllMV', 'MVDetail', 'VideoDetail', 'Search', 'personalPage'];
+let excludeList = ['Login', 'Register', 'SingerDetail', 'SongListDetail', 'AllMV', 'MVDetail', 'VideoDetail', 'Search', 'PersonalPage', 'UserFollows', 'UserFolloweds', 'UserDynamic'];
 
 // 滚动元素
 let scrollEl = ref<HTMLElement | null>(null);
@@ -101,8 +101,8 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
   }
 }
 
-// 折叠侧边栏
-#layout.folding {
+// 隐藏侧边栏
+#layout.hiddenSidebar {
   .navbar {
     grid-row: 2/3;
   }
@@ -110,5 +110,10 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
   .playbar {
     grid-column: 1/3;
   }
+}
+
+// 缩小侧边栏
+#layout.sidebarFolding {
+  grid-template: var(--topNavBarHeight) auto var(--playBarHeight) / 70px auto;
 }
 </style>

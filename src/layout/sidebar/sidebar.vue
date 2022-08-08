@@ -1,19 +1,19 @@
 <!-- 侧边导航栏 -->
 <template>
-  <main class="sidebar">
+  <main class="sidebar" :class="{ folding: store.sidebarFolding }">
     <!-- 登陆 / 注册 / 账号信息 -->
-    <header>
+    <div>
       <!-- 已登陆 -->
       <section v-if="store.auth" @click="$router.push('/myHonePage')" class="profile">
         <!-- 头像 -->
-        <el-avatar :src="profileInfo.avatarUrl" :size="45" flex-none />
+        <el-image :src="profileInfo.avatarUrl" class="avatar" />
 
         <!-- 信息 -->
         <div class="info">
           <!-- 昵称 -->
-          <p truncate themeColor text-15px dark:text-orange-400>{{ profileInfo.nickname }}</p>
+          <p class="nickname">{{ profileInfo.nickname }}</p>
           <!-- 签名 -->
-          <p truncate dark:text-gray-200>{{ profileInfo.signature }}</p>
+          <p class="signature">{{ profileInfo.signature }}</p>
         </div>
       </section>
 
@@ -22,7 +22,7 @@
         <span i-carbon:login></span>
         <p>未登陆</p>
       </section>
-    </header>
+    </div>
 
     <!-- 导航列表 / 版权声明 -->
     <div flex flex-col gap-10px flex-1 justify-between>
@@ -37,13 +37,19 @@
 
       <!-- 版权声明 -->
       <div class="copyright">
-        <p class="title">
+        <a href="https://github.com/404Awesome/CloudMusic" target="_blank" class="link">
           <span class="icon" i-carbon:information-filled></span>
-          <a href="https://github.com/404Awesome/CloudMusic" target="_blank" class="content">本项目为开源项目!</a>
-        </p>
-        <p>本项目仅用于学习用途!</p>
+          <span class="content">本项目为开源项目!</span>
+        </a>
+        <p mt-5px>本项目仅用于学习用途!</p>
         <p>资源版权都属于网易云音乐!</p>
       </div>
+    </div>
+
+    <!-- 折叠 -->
+    <div @click="folding" class="foldingBtn">
+      <span class="icon" :class="store.sidebarFolding ? 'i-carbon:chevron-right' : 'i-carbon:chevron-left'"></span>
+      <span class="content">折叠导航栏</span>
     </div>
   </main>
 </template>
@@ -52,8 +58,8 @@
 import { reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useMainStore } from "store";
-import { Operate } from "@/utils";
 import { AccountAPI } from "api";
+import { Operate } from "utils";
 const store = useMainStore();
 const router = useRouter();
 
@@ -121,6 +127,11 @@ watch(() => store.auth, async (authStatus) => {
     }
   } catch (error) { }
 }, { immediate: true });
+
+// 折叠侧边栏
+let folding = () => {
+  store.sidebarFolding = !store.sidebarFolding;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -131,20 +142,20 @@ watch(() => store.auth, async (authStatus) => {
 
 // 版权声明
 .copyright {
-  @apply bg-white/80 p-10px rounded-md text-14px text-gray-500 dark-bg-gray-600 dark-text-gray-400;
+  @apply bg-white/80 p-10px rounded-md text-14px text-gray-500 dark-bg-gray-300 dark-text-gray-400;
 
   // 标题
-  .title {
-    @apply mb-5px flex items-center gap-3px;
+  .link {
+    @apply flex items-center gap-3px decoration-none;
 
     // 图标
     .icon {
-      @apply text-20px themeColor dark-text-orange-400;
+      @apply block text-20px themeColor dark-text-orange-400;
     }
 
     // 内容
     .content {
-      @apply text-16px themeColor decoration-none hover-decoration-underline dark-text-orange-400;
+      @apply text-16px themeColor hover-decoration-underline dark-text-orange-400;
     }
   }
 }
@@ -154,12 +165,24 @@ watch(() => store.auth, async (authStatus) => {
   @apply transition duration-200 ease-in-out flex gap-10px p-10px rounded-md bg-white/0 cursor-pointer;
 
   &:hover {
-    @apply bg-white dark-bg-gray-400;
+    @apply bg-white/80 dark-bg-gray-400;
+  }
+
+  .avatar {
+    @apply flex-none w-45px rounded-full;
   }
 
   // 个人信息
   .info {
     @apply flex flex-col flex-nowrap justify-around text-13px w-full overflow-hidden;
+
+    .nickname {
+      @apply truncate themeColor text-15px dark-text-orange-400;
+    }
+
+    .signature {
+      @apply truncate dark-text-gray-200;
+    }
   }
 }
 
@@ -181,6 +204,60 @@ watch(() => store.auth, async (authStatus) => {
 
   &:hover {
     @apply themeBgColor text-white dark-bg-gray-600 dark-text-gray-200;
+  }
+}
+
+.foldingBtn {
+  @apply flex justify-center items-center bg-white/80 rounded-md px-5px py-7px cursor-pointer hover-themeColor;
+
+  .icon {
+    @apply text-19px;
+  }
+
+  .content {
+    @apply text-14px;
+  }
+}
+
+// 侧边栏折叠状态
+.folding {
+
+  .profile {
+    @apply p-5px rounded-full;
+
+    .avatar {
+      @apply w-40px;
+    }
+
+    .info {
+      @apply display-none;
+    }
+  }
+
+  .navList li {
+    @apply justify-center;
+
+    p {
+      @apply display-none;
+    }
+  }
+
+  .copyright {
+    p {
+      @apply display-none;
+    }
+
+    .link {
+      @apply justify-center;
+
+      .content {
+        @apply display-none;
+      }
+    }
+  }
+
+  .foldingBtn .content {
+    @apply display-none;
   }
 }
 </style>

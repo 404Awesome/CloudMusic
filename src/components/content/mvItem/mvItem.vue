@@ -5,7 +5,7 @@
     <section @click="goMVDetailPage" class="cover">
       <el-image fit="cover" lazy :src="cover" class="img" />
       <PlayCount :playCount="playCount" />
-      <PlayIcon />
+      <PlayIcon @playClick="goMVDetailPage" />
     </section>
 
     <!-- 详情 -->

@@ -14,7 +14,7 @@
 </template>
   
 <script lang="ts">
-export default { name: "singerDetail" }
+export default { name: "SingerDetail" }
 </script>
 <script setup lang="ts">
 import Detail from "./coms/detail.vue";

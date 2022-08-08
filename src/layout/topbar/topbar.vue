@@ -2,7 +2,9 @@
 <template>
   <div class="topbar">
     <!-- 标题 -->
-    <h1 @click="$router.push('/')" class="title">CloudMusic</h1>
+    <h1 @click="$router.push('/')" class="title" :class="{ folding: store.sidebarFolding }">
+      {{ store.sidebarFolding ? 'Music' : 'CloudMusic' }}
+    </h1>
 
     <!-- 导航栏 -->
     <nav flex overflow-hidden flex-1 justify-between p-x-15px gap-15px>
@@ -24,23 +26,18 @@
 
         <!-- 暗夜模式 -->
         <span @click.stop="toggleDark()" class="icon" i-carbon:sun dark:i-carbon-moon></span>
-
-        <!-- 设置 -->
-        <span @click.stop="$router.push('/setting')" class="icon" i-carbon:settings></span>
       </section>
     </nav>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { useDark, useToggle } from "@vueuse/core";
 import ThemeSelect from "./coms/themeSelect.vue";
 import RouterNav from "./coms/routerNav.vue";
 import Search from "./coms/search.vue";
-import { useDark, useToggle } from "@vueuse/core";
-import { useRouter } from "vue-router";
 import { useMainStore } from "store";
 const store = useMainStore();
-const router = useRouter();
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 
@@ -61,6 +58,10 @@ let openNoticeDrawer = () => {
 .title {
   width: var(--sideNavBarWidth);
   @apply text-white text-20px text-center cursor-pointer select-none hidden md-block dark-text-gray-300;
+
+  &.folding {
+    @apply w-70px;
+  }
 }
 
 // 图标

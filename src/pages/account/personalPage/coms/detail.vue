@@ -60,15 +60,15 @@
 
           <!-- 计数 -->
           <ul class="count">
-            <li pr-25px>
+            <li @click.stop="$router.push(`/userDynamic/${uid}`)" pr-25px>
               <span>{{ detail.eventCount }}</span>
               <span>动态</span>
             </li>
-            <li px-25px>
+            <li @click.stop="$router.push(`/userFollows/${uid}`)" px-25px>
               <span>{{ detail.follows }}</span>
               <span>关注</span>
             </li>
-            <li pl-25px>
+            <li @click.stop="$router.push(`/userFolloweds/${uid}`)" pl-25px>
               <span>{{ detail.followeds }}</span>
               <span>粉丝</span>
             </li>
@@ -210,10 +210,14 @@ onMounted(() => loadData());
   @apply flex py-10px;
 
   li {
-    @apply border-r-1px border-r-#eee flex flex-col gap-3px overflow-hidden;
+    @apply border-r-1px border-r-#eee flex flex-col gap-3px overflow-hidden cursor-pointer;
 
     &:last-child {
       @apply border-r-none;
+    }
+
+    &:hover span:first-child {
+      @apply themeColor;
     }
 
     span {

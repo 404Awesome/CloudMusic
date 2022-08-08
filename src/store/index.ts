@@ -53,6 +53,8 @@ export const useMainStore = defineStore("main", {
       songDetailDrawer: useStorage<boolean>('songDetailDrawer', false, sessionStorage),
       // 私信内容抽屉打开状态
       privateMsgDrawer: useStorage<boolean>('privateMsgDrawer', false, sessionStorage),
+      // 侧边栏折叠
+      sidebarFolding: useStorage<boolean>('sidebarFolding', true, localStorage),
     };
   },
   actions: {

@@ -128,11 +128,11 @@ let loadData = async () => {
         let info = JSON.parse(json);
         if (info.msg) {
           // 标签
-          let tag = /#(\1.+?)#/g;
+          let tag = new RegExp("#(\\1.+?)#", "g");
           info.msg = info.msg.replace(tag, `<span class="tag">#$1#</span>`);
 
           // 链接
-          let href = /\n(\1[https | http].+?)\n/g;
+          let href = new RegExp("\n(\\1[https | http].+?)\n", "g");
           info.msg = info.msg.replace(href, `<a href="$1" target="_blank">网页链接</a>`)
         }
         // 判断动态类型

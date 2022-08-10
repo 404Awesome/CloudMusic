@@ -1,5 +1,5 @@
-import { Operate } from "@/utils";
 import axios, { AxiosRequestConfig } from "axios";
+import { Operate } from "utils";
 
 // 请求实例
 let Request = (config: AxiosRequestConfig) => {

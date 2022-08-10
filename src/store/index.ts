@@ -54,7 +54,7 @@ export const useMainStore = defineStore("main", {
       // 私信内容抽屉打开状态
       privateMsgDrawer: useStorage<boolean>('privateMsgDrawer', false, sessionStorage),
       // 侧边栏折叠
-      sidebarFolding: useStorage<boolean>('sidebarFolding', true, localStorage),
+      sidebarFolding: useStorage<boolean>('sidebarFolding', false, localStorage),
     };
   },
   actions: {

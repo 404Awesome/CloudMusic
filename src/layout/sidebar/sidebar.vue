@@ -18,7 +18,7 @@
       </section>
 
       <!-- 未登陆 -->
-      <section v-else @click="$router.push('/account/login')" class="listItem" py-15px rounded>
+      <section v-else @click="$router.push('/account/login')" class="listItem login" py-15px rounded>
         <span i-carbon:login></span>
         <p>未登陆</p>
       </section>
@@ -221,7 +221,6 @@ let folding = () => {
 
 // 侧边栏折叠状态
 .folding {
-
   .profile {
     @apply p-5px rounded-full;
 
@@ -258,6 +257,14 @@ let folding = () => {
 
   .foldingBtn .content {
     @apply display-none;
+  }
+
+  .login {
+    @apply p-10px justify-center;
+
+    p {
+      @apply display-none;
+    }
   }
 }
 </style>

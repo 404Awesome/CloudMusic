@@ -51,7 +51,7 @@ onMounted(async () => {
   try {
     let { code, playlist }: any = await SongListAPI.getUserPlaylist(props.uid);
     if (code == 200) {
-      let reg = /.*喜欢的音乐$/g;
+      let reg = new RegExp(".*喜欢的音乐$", 'g');
       playlist = playlist.map((item: any) => {
         let { coverImgUrl, id, name, playCount, trackCount } = item;
         if (reg.test(name)) name = "我喜欢的音乐";

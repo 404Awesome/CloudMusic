@@ -1,7 +1,7 @@
 <!-- 详情折叠 -->
 <template>
   <div :class="{ visible: store.scrollTop >= height, disabled: disabled }" class="detailFold">
-    <div class="content" w-full h-full py-10px px-10px lg:py-10px lg:w="8/10">
+    <div class="content">
       <!-- 标题 -->
       <h1 text-19px truncate>{{ name }}</h1>
       <!-- 操作 -->
@@ -21,9 +21,9 @@
 </template>
 
 <script setup lang="ts">
+import { toRefs, computed } from "vue";
 import { useMainStore } from "store";
 import { Operate } from "utils";
-import { toRefs } from "vue";
 const store = useMainStore();
 const props = defineProps({
   name: {
@@ -48,18 +48,23 @@ const props = defineProps({
   }
 });
 let { name, id, share, disabled } = toRefs(props);
+
+let left = computed(() => {
+  return store.sidebarFolding ? '70px' : '230px';
+})
 </script>
 
 <style lang="scss" scoped>
 .detailFold {
   top: var(--topNavBarHeight);
-  left: var(--sideNavBarWidth);
+  left: v-bind(left);
   @apply fixed right-0 z-10 h-80px opacity-0 translate-y--80px;
 
   .content {
     border-bottom: 3px solid var(--theme-color);
     border-radius: 0px 0px 3px 3px;
     @apply flex flex-col flex-nowrap justify-between mx-auto bg-white;
+    @apply w-full h-full py-10px px-10px lg-py-10px lg-w-8/10;
 
     li {
       @apply flex items-center justify-center w-23px h-23px cursor-pinter;

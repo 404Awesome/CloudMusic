@@ -24,7 +24,7 @@
     <!-- 分页 -->
     <div v-show="songList.length" flex justify-center>
       <el-pagination @current-change="(page: number) => loadData(page - 1)" background layout="prev, pager, next"
-        :page-size="limit" :total="total" />
+        :pager-count="5" :page-size="limit" :total="total" />
     </div>
   </div>
 </template>

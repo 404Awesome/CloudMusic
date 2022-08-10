@@ -18,6 +18,7 @@ import Message from "@/pages/drawer/message/message.vue";
 import PlayList from "@/pages/drawer/playList/playList.vue";
 import SongDetail from "@/pages/drawer/songDetail/songDetail.vue";
 import PrivateMsg from "@/pages/drawer/privateMsg/privateMsg.vue";
+import { useThrottleFn } from "@vueuse/shared";
 import { useMainStore } from "store";
 import { onMounted } from "vue";
 const store = useMainStore();
@@ -25,6 +26,11 @@ const store = useMainStore();
 onMounted(() => {
   // 初始化主题
   document.documentElement.style.setProperty("--theme-color", store.themeColor);
+  // 初始化vh
+  document.documentElement.style.setProperty("--100vh", `${window.innerHeight}px`);
+  window.addEventListener("resize", useThrottleFn(() => {
+    document.documentElement.style.setProperty("--100vh", `${window.innerHeight}px`);
+  }, 300));
 });
 </script>
 
@@ -43,6 +49,8 @@ onMounted(() => {
   --playBarHeight: 52px;
   /* 侧边导航栏宽度 */
   --sideNavBarWidth: 230px;
+  /* 100vh */
+  --100vh: 0px;
 }
 
 // 暗黑模式下的变量
@@ -51,6 +59,7 @@ onMounted(() => {
 }
 
 body {
+  overflow: hidden;
   color: var(--font-color);
   font-family: "Noto Sans SC", serif;
 }
@@ -75,6 +84,8 @@ h6 {
   font-weight: 400;
 }
 
+html,
+body,
 ul,
 li,
 div,

@@ -28,9 +28,9 @@ import Topbar from "./topbar/topbar.vue";       // 顶部导航栏
 import Sidebar from "./sidebar/sidebar.vue";    // 侧边导航栏
 import PlayBar from "./playBar/playBar.vue";    // 播放栏
 import { useThrottleFn } from "@vueuse/core";
+import { ref, toRefs, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useMainStore } from "store";
-import { ref, toRefs, watch } from "vue";
 const store = useMainStore();
 const route = useRoute();
 let { scrollTop, songDetailDrawer, sidebarFolding } = toRefs(store);
@@ -55,8 +55,8 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 #layout {
   display: grid;
   overflow: hidden;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: var(--100vh);
 
   grid-template: var(--topNavBarHeight) auto var(--playBarHeight) / var(--sideNavBarWidth) auto;
 
@@ -68,36 +68,42 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 
   // 侧边栏
   .sidebar {
-    grid-row: 2/4;
+    grid-row: 2/3;
     grid-column: 1/2;
+    @apply md-row-end-4;
   }
 
   // 播放栏
   .playbar {
     grid-row: 3/4;
-    grid-column: 2/3;
+    grid-column: 1/3;
+    @apply md-col-start-2 md-col-end-3;
   }
 
   // 路由视图
   .view {
-    overflow-y: overlay;
-
     grid-row: 2/3;
     grid-column: 2/3;
     @apply dark-bg-gray-400 overflow-x-hidden rows-2/3;
+  }
+}
 
-    &:hover::-webkit-scrollbar {
-      width: 5px;
-    }
+// 滚动条
+.sidebar,
+.view {
+  overflow-y: overlay;
 
-    &::-webkit-scrollbar {
-      width: 0px;
-    }
+  &:hover::-webkit-scrollbar {
+    width: 5px;
+  }
 
-    /* 滚动条滑块 */
-    &::-webkit-scrollbar-thumb {
-      @apply rounded bg-black/15 dark-bg-gray-200;
-    }
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  /* 滚动条滑块 */
+  &::-webkit-scrollbar-thumb {
+    @apply rounded bg-black/15 dark-bg-gray-200;
   }
 }
 

@@ -49,7 +49,8 @@
 
   <!-- 分页 -->
   <div v-show="collectorList.length" flex justify-center my-20px>
-    <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :total="total" />
+    <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :pager-count="5"
+      :total="total" />
   </div>
 </template>
 

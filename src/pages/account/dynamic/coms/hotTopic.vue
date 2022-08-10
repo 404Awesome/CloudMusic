@@ -88,7 +88,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .hotTopic {
-  @apply w-300px mt-20px overflow-hidden hidden lg-block;
+  @apply w-300px mt-20px overflow-hidden hidden md-block;
 
   .list {
     @apply pt-10px;

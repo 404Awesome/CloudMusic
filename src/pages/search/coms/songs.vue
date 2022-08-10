@@ -5,7 +5,8 @@
 
   <!-- 分页 -->
   <div v-show="!loading" flex justify-center my-15px>
-    <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :total="total" />
+    <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :pager-count="5"
+      :total="total" />
   </div>
 </template>
 

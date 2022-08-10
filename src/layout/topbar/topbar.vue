@@ -7,7 +7,7 @@
     </h1>
 
     <!-- 导航栏 -->
-    <nav flex overflow-hidden flex-1 justify-between p-x-15px gap-15px>
+    <nav class="nav">
       <!-- 路由 -->
       <section flex-1>
         <RouterNav />
@@ -67,5 +67,10 @@ let openNoticeDrawer = () => {
 // 图标
 :deep(.icon) {
   @apply flex-1 text-white/70 whitespace-nowrap text-19px cursor-pointer hover-text-white hover-dark-text-orange-400;
+}
+
+// 导航栏
+.nav {
+  @apply flex overflow-hidden flex-1 justify-between p-x-15px gap-15px;
 }
 </style>

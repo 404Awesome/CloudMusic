@@ -162,7 +162,7 @@ onMounted(() => loadData());
 
 <style lang="scss" scoped>
 .detail {
-  @apply flex gap-15px md-gap-30px pt-15px;
+  @apply flex flex-col sm-flex-row gap-15px md-gap-30px pt-15px;
 
   .avatar {
     @apply transition-all duration-200;

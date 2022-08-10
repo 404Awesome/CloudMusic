@@ -60,16 +60,16 @@ export default {
   // 处理歌词
   Lyric(lyricInfo: string): Lyric[] {
     // 分割成歌词列表
-    let lyricList = lyricInfo.split(/\n/g);
+    let lyricList = lyricInfo.split(new RegExp("\n", "g"));
     return <Lyric[]>lyricList.map((item: string) => {
       // 歌词
-      let lyric = item.match(/(?<=]).+$/g);
+      let [time, lyric] = item.split("]");
       if (lyric) {
-        // 取时间
-        let timeList = item.match(/(?<=\[)(.+)(?=\])/g)![0].split(":");
-        // 处理时间
-        let time = ((parseInt(timeList[0]) * 60) + parseFloat(timeList[1]));
-        return { lyric: lyric[0].trim(), time }
+        let timeList = time.slice(1).split(":");
+        return {
+          lyric: lyric.trim(),
+          time: ((parseInt(timeList[0]) * 60) + parseFloat(timeList[1]))
+        }
       }
       return null;
     }).filter((item: any) => item);

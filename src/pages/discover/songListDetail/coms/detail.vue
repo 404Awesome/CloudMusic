@@ -25,7 +25,8 @@
     <template #default>
       <div ref="detailEl" flex pt-15px pb-20px text-14px gap-20px>
         <!-- 封面 -->
-        <el-image :src="detail.coverImgUrl" fit="cover" transition-all flex-none h-35 w-35 lg:h-50 lg:w-50 rounded-md />
+        <el-image :src="detail.coverImgUrl" fit="cover" transition-all flex-none display-none sm:block h-35 w-35 lg:h-50
+          lg:w-50 rounded-md />
 
         <!-- 详情 -->
         <div flex-1 overflow-hidden>
@@ -35,7 +36,8 @@
           <!-- 创建者 -->
           <div my-3 flex items-center gap-10px>
             <!-- 头像 -->
-            <el-image @click="goPersonalPage" :src="detail.avatarUrl" fit="cover" w-8 h-8 rounded-full cursor-pointer />
+            <el-image @click="goPersonalPage" :src="detail.avatarUrl" fit="cover" w-8 h-8 min-w-8 rounded-full
+              cursor-pointer />
             <!-- 名字 -->
             <p @click="goPersonalPage" themeColor cursor-pointer truncate>{{ detail.nickname }}</p>
             <!-- 创建时间 -->

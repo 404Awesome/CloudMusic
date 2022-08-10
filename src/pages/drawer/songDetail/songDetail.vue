@@ -100,7 +100,7 @@ let getComment = (id: number, content: string) => {
 <style lang="scss" scoped>
 // 歌曲信息容器高度
 .songInfo {
-  height: calc(100vh - var(--topNavBarHeight) - var(--topNavBarHeight) - 30px);
+  height: calc(var(--100vh) - var(--topNavBarHeight) - var(--topNavBarHeight) - 30px);
   @apply flex gap-40px py-15px;
 }
 
@@ -123,7 +123,7 @@ let getComment = (id: number, content: string) => {
 </style>
 <style lang="scss">
 .songDetailDrawer {
-  height: calc(100vh - var(--topNavBarHeight)) !important;
+  height: calc(var(--100vh) - var(--topNavBarHeight)) !important;
   @apply dark-bg-gray-300;
 
   .el-drawer__body {

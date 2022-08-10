@@ -83,7 +83,8 @@
 
     <!-- 分页 -->
     <div v-show="commentList.length" flex justify-center mt-7>
-      <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :total="total" />
+      <el-pagination @current-change="change" background layout="prev, pager, next" :pager-count="5" :page-size="limit"
+        :total="total" />
     </div>
   </div>
 </template>

@@ -19,12 +19,12 @@
     <template #default>
       <el-scrollbar ref="scrollbarEl" wrap-class="lyricScroll">
         <!-- 歌词列表 -->
-        <div ref="lyricEl" class="lyricList">
-          <p v-for="({ time, lyric }, index) in lyricList" :key="time"
+        <ul @mouseenter="pause" @mouseleave="resume" ref="lyricEl" py-15px>
+          <li v-for="({ time, lyric }, index) in lyricList" :key="time" v-show="lyric" @click.stop="lyricClick(time)"
             :class="{ active: progress >= time && progress <= lyricList[index + 1]?.time }" class="lyric">
             {{ lyric }}
-          </p>
-        </div>
+          </li>
+        </ul>
 
         <!-- 提示 -->
         <el-empty v-show="!lyricList.length" description="暂无歌词!" />
@@ -34,8 +34,8 @@
 </template>
 
 <script setup lang="ts">
-import { useIntersectionObserver, useThrottleFn } from '@vueuse/core';
-import { onMounted, reactive, ref, toRef, watch } from 'vue';
+import { useIntersectionObserver, useThrottleFn, watchPausable } from '@vueuse/core';
+import { onMounted, reactive, ref, toRef } from 'vue';
 import { ElMessage } from 'element-plus';
 import { Lyric } from "@/utils/handle";
 import { useMainStore } from "store";
@@ -62,30 +62,8 @@ let skeletonEl = ref<HTMLElement | null>(null);
 // 歌词列表
 let lyricList = reactive<Lyric[]>([]);
 
-// 加载歌词
-let loadLyric = async () => {
-  try {
-    loading.value = true;
-    let { code, lrc: { lyric } }: any = await SongAPI.getLyric(props.id);
-    if (code == 200) {
-      // 处理歌词
-      let list = Handle.Lyric(lyric);
-      // 向歌词列表添加歌词
-      lyricList.push(...list);
-      // 判断歌词小于4句,停止监听进度
-      if (list.length <= 4) {
-        stopWatcher();
-      }
-    }
-  } catch (err: any) {
-    ElMessage.error("加载歌词失败!");
-  } finally {
-    loading.value = false;
-  }
-}
-
 // 滚动歌词
-let stopWatcher = watch(progress, useThrottleFn(() => {
+const { stop, pause, resume } = watchPausable(() => progress.value, useThrottleFn(() => {
   if (lyricList.length && scrollbarEl.value) {
     // scrollbarEl的高度
     let wrapHeight = scrollbarEl.value.$el.offsetHeight;
@@ -102,7 +80,36 @@ let stopWatcher = watch(progress, useThrottleFn(() => {
       scrollbarEl.value.setScrollTop(0);
     }
   }
-}, 500));
+}, 200))
+
+// 点击歌词
+let lyricClick = (time: number) => {
+  if (store.audioPlyr) {
+    store.audioPlyr.currentTime = time + 0.5;
+  }
+}
+
+// 加载歌词
+let loadLyric = async () => {
+  try {
+    loading.value = true;
+    let { code, lrc: { lyric } }: any = await SongAPI.getLyric(props.id);
+    if (code == 200) {
+      // 处理歌词
+      let list = Handle.Lyric(lyric);
+      // 向歌词列表添加歌词
+      lyricList.push(...list);
+      // 判断歌词小于4句,停止监听进度
+      if (list.length <= 4) {
+        stop();
+      }
+    }
+  } catch (err: any) {
+    ElMessage.error("加载歌词失败!");
+  } finally {
+    loading.value = false;
+  }
+}
 
 // 监听容器元素是否显示在页面上
 onMounted(() => {
@@ -116,14 +123,13 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-// 歌词列表
-.lyricList {
-  @apply py-15px flex flex-col gap-20px;
-}
-
 // 歌词
 .lyric {
-  @apply text-15px truncate transition-all duration-250 ease-linear select-none;
+  @apply py-10px text-15px truncate transition-all duration-250 ease-linear select-none cursor-pointer;
+
+  &:hover {
+    @apply bg-gray-100 px-10px rounded-md themeColor;
+  }
 
   &.active {
     @apply themeColor text-18px dark-text-orange-400;

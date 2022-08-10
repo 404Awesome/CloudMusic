@@ -92,6 +92,7 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 .sidebar,
 .view {
   overflow-y: overlay;
+  scroll-behavior: smooth;
 
   &:hover::-webkit-scrollbar {
     width: 5px;

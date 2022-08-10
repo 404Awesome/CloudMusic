@@ -6,7 +6,7 @@
         <li v-for="item in 6" flex items-center>
           <el-skeleton-item variant="image" h-20 w-20 rounded-md />
           <el-skeleton-item variant="text" h-20px w-20px mx-10px rounded-md />
-          <div h-full flex-1 flex flex-col justify-around>
+          <div h-20 w-20 flex-1 flex flex-col justify-around>
             <el-skeleton-item variant="text" w="7/10" />
             <el-skeleton-item variant="text" w="3/10" />
           </div>

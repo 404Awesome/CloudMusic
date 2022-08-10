@@ -1,5 +1,6 @@
 import { useStorage, StorageSerializers } from "@vueuse/core";
 import { defineStore } from "pinia";
+import Plyr from "plyr";
 
 // 歌曲信息
 export interface SongInfo {
@@ -55,6 +56,8 @@ export const useMainStore = defineStore("main", {
       privateMsgDrawer: useStorage<boolean>('privateMsgDrawer', false, sessionStorage),
       // 侧边栏折叠
       sidebarFolding: useStorage<boolean>('sidebarFolding', false, localStorage),
+      // audioPlyr实例
+      audioPlyr: useStorage<Plyr | null>('audioPlyr', null, sessionStorage),
     };
   },
   actions: {

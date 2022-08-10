@@ -59,7 +59,6 @@ onMounted(() => {
 }
 
 body {
-  overflow: hidden;
   color: var(--font-color);
   font-family: "Noto Sans SC", serif;
 }
@@ -97,6 +96,7 @@ main,
 footer,
 aside {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 </style>
 <!-- element-plus -->
@@ -144,6 +144,10 @@ aside {
   .is-active {
     background-color: var(--theme-color) !important;
     color: #fff !important;
+
+    &:focus {
+      outline: transparent;
+    }
   }
 
   &.is-background .el-pager li:not(.is-active):hover {

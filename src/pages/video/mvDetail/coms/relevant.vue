@@ -4,19 +4,17 @@
 
   <el-skeleton :loading="loading" animated>
     <template #template>
-      <ul>
-        <li v-for="item in 4" flex gap-10px mb-4>
-          <el-skeleton-item variant="image" flex-1 h-35 rounded-md />
-          <div flex-1 mt-5px>
-            <el-skeleton-item block variant="text" w-full />
-            <el-skeleton-item block variant="text" w="2/10" mt-7px />
-            <el-skeleton-item block variant="text" w="4/10" mt-10px />
-          </div>
-        </li>
-      </ul>
+      <div v-for="item in 4" flex gap-10px mb-4>
+        <el-skeleton-item variant="image" flex-1 h-35 rounded-md />
+        <div flex-1 mt-5px>
+          <el-skeleton-item block variant="text" w-full />
+          <el-skeleton-item block variant="text" w="2/10" mt-7px />
+          <el-skeleton-item block variant="text" w="4/10" mt-10px />
+        </div>
+      </div>
     </template>
     <template #default>
-      <div mb-4 v-for="item in relevantList" :key="item.id">
+      <div v-for="item in relevantList" :key="item.id" mb-4>
         <MVItem v-bind="item" :isFlex="true" mode="replace" />
       </div>
     </template>

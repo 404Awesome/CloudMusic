@@ -2,7 +2,7 @@
 <template>
   <div :key="($route.params.id as string)" class="mvDetails">
     <!-- MV信息 -->
-    <div overflow-hidden col-span-full lg:col-span-1>
+    <div class="info">
       <el-skeleton :loading="loading" animated>
         <template #template>
           <!-- 视频 -->
@@ -41,7 +41,7 @@
     </div>
 
     <!-- 相关推荐 -->
-    <div col-start-2 col-end-3 hidden lg:block overflow-hidden>
+    <div class="relevant">
       <Relevant />
     </div>
   </div>
@@ -102,10 +102,14 @@ watch(() => route.params.id, (newVal) => {
 
 <style lang="scss" scoped>
 .mvDetails {
-  display: grid;
-  padding: 15px 20px;
+  @apply flex gap-30px p-10px sm-py-15px sm-px-20px;
 
-  gap: 30px;
-  grid-template-columns: 2fr 1fr;
+  .info {
+    @apply overflow-hidden flex-1;
+  }
+
+  .relevant {
+    @apply w-350px hidden lg-block overflow-hidden;
+  }
 }
 </style>

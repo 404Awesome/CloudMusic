@@ -64,8 +64,6 @@ const route = useRoute();
 
 // audio元素
 let audioEl = ref<HTMLElement | null>(null);
-// audioPlyr实例
-let audioPlyr = ref<Plyr | null>(null);
 // 播放状态
 let playing = ref<boolean>(false);
 // 音量
@@ -76,14 +74,14 @@ let songDuration = ref<number>(0);
 let songCurrentTime = ref<number>(0);
 // 初始化plyr插件
 onMounted(() => {
-  audioPlyr.value = new Plyr(audioEl.value!, {
+  store.audioPlyr = new Plyr(audioEl.value!, {
     controls: ['progress'],
     volume: volume.value / 100,
   });
   // 为plyr添加音乐源
   let source = store.currentSong || store.playList[0];
   if (source) {
-    audioPlyr.value.source = {
+    store.audioPlyr.source = {
       type: 'audio',
       sources: [{
         src: `https://music.163.com/song/media/outer/url?id=${source.song.id}.mp3`,
@@ -92,43 +90,43 @@ onMounted(() => {
     }
   }
   // 播放时触发
-  audioPlyr.value.on("play", () => {
+  store.audioPlyr.on("play", () => {
     // 音频播放,暂停视频播放
     store.playStatus = "audio";
     // 延迟100毫秒获取结果
     let timer = setTimeout(() => {
       // 改变当前playing的状态
-      if (audioPlyr.value!.playing === true) playing.value = true;
+      if (store.audioPlyr!.playing === true) playing.value = true;
       // 获取歌曲时间
-      if (!songDuration.value) songDuration.value = audioPlyr.value!.duration;
-      songCurrentTime.value = audioPlyr.value!.currentTime;
+      if (!songDuration.value) songDuration.value = store.audioPlyr!.duration;
+      songCurrentTime.value = store.audioPlyr!.currentTime;
       clearTimeout(timer);
     }, 300);
   });
   // 暂停时触发
-  audioPlyr.value.on("pause", () => {
+  store.audioPlyr.on("pause", () => {
     // 延迟100毫秒获取结果
     let timer = setTimeout(() => {
       // 视频暂停,播放状态为pause
       if (store.playStatus !== "video") store.playStatus = "pause";
       // 改变当前playing的状态
-      if (audioPlyr.value!.playing === false) playing.value = false;
+      if (store.audioPlyr!.playing === false) playing.value = false;
       clearTimeout(timer);
     }, 100);
   });
   // 播放完毕时触发
-  audioPlyr.value.on("ended", () => {
+  store.audioPlyr.on("ended", () => {
     // 播放下一首
     changeSong(true);
   });
   // 当前歌曲播放进度
-  audioPlyr.value.on("timeupdate", () => {
-    store.playProgress = parseFloat((audioPlyr.value!.currentTime).toFixed(3));
+  store.audioPlyr.on("timeupdate", () => {
+    store.playProgress = parseFloat((store.audioPlyr!.currentTime).toFixed(3));
   });
   // 监听键盘按键事件
   document.body.addEventListener("keydown", (event: KeyboardEvent) => {
     // 空格按键 -> 播放或暂停歌曲
-    if (event.code === "Space" && audioPlyr.value!.source) {
+    if (event.code === "Space" && store.audioPlyr!.source) {
       // 阻止默认事件
       event.preventDefault();
       // 播放
@@ -138,8 +136,8 @@ onMounted(() => {
 });
 // 视频播放,暂停音频播放
 watch(() => store.playStatus, (status) => {
-  if (status == "video" && audioPlyr.value?.playing) {
-    audioPlyr.value.pause();
+  if (status == "video" && store.audioPlyr?.playing) {
+    store.audioPlyr.pause();
   }
 });
 
@@ -147,8 +145,8 @@ watch(() => store.playStatus, (status) => {
 // 控制播放
 let play = () => {
   // 判断当前播放器是存在播放源
-  if (audioPlyr.value!.source) {
-    audioPlyr.value?.togglePlay();
+  if (store.audioPlyr!.source) {
+    store.audioPlyr?.togglePlay();
   } else {
     ElMessage.warning('请添加音乐到播放列表!');
   }
@@ -174,7 +172,7 @@ let changeSong = useDebounceFn((control: boolean) => {
 }, 500);
 // 改变音量
 let volumeChange = (currentVolume: number) => {
-  audioPlyr.value!.volume = currentVolume / 100;
+  store.audioPlyr!.volume = currentVolume / 100;
   store.volume = currentVolume;
 }
 // 设置静音
@@ -182,11 +180,11 @@ let setMute = () => {
   if (volume.value == 0) {
     volume.value = 70;
     store.volume = 70;
-    audioPlyr.value!.volume = 0.7;
+    store.audioPlyr!.volume = 0.7;
   } else {
     volume.value = 0;
     store.volume = 0;
-    audioPlyr.value!.volume = 0;
+    store.audioPlyr!.volume = 0;
   }
 }
 // 打开播放列表
@@ -205,7 +203,7 @@ watch(() => store.currentSong, async (newSong) => {
   songDuration.value = 0;
   songCurrentTime.value = 0;
   // 赋予audio新的音源
-  audioPlyr.value!.source = {
+  store.audioPlyr!.source = {
     type: 'audio',
     sources: [{
       src: `https://music.163.com/song/media/outer/url?id=${id}.mp3`,
@@ -213,7 +211,7 @@ watch(() => store.currentSong, async (newSong) => {
     }]
   }
   try {
-    await audioPlyr.value?.play();
+    await store.audioPlyr?.play();
   } catch (err: any) {
     // 提示用户点击播放按钮
     if (err.name == "NotAllowedError") {

@@ -9,12 +9,12 @@
     <!-- 导航栏 -->
     <nav class="nav">
       <!-- 路由 -->
-      <section flex-1>
+      <section class="router">
         <RouterNav />
       </section>
 
       <!-- 功能 -->
-      <section flex items-center gap-10px>
+      <section class="function">
         <!-- 搜索 -->
         <Search />
 
@@ -51,13 +51,13 @@ let openNoticeDrawer = () => {
 <style lang="scss" scoped>
 // 顶部导航栏
 .topbar {
-  @apply relative z-100 flex items-center h-full shadow-md themeBgColor select-none dark-bg-gray-700;
+  @apply relative z-100 flex items-center h-full w-full shadow-md themeBgColor select-none dark-bg-gray-700;
 }
 
 // 标题
 .title {
   width: var(--sideNavBarWidth);
-  @apply text-white text-20px text-center cursor-pointer select-none hidden md-block dark-text-gray-300;
+  @apply text-white text-20px text-center cursor-pointer select-none hidden sm-block dark-text-gray-300;
 
   &.folding {
     @apply w-70px;
@@ -71,6 +71,20 @@ let openNoticeDrawer = () => {
 
 // 导航栏
 .nav {
-  @apply flex overflow-hidden flex-1 justify-between p-x-15px gap-15px;
+  @apply flex flex-1 h-full justify-between p-x-15px gap-15px;
+
+  .router {
+    @apply w-220px overflow-hidden;
+  }
+
+  .function {
+    @apply flex flex-none items-center gap-10px;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  .nav .router {
+    flex: 1;
+  }
 }
 </style>

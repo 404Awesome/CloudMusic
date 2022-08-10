@@ -92,14 +92,17 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 .sidebar,
 .view {
   overflow-y: overlay;
+
   scroll-behavior: smooth;
 
   &:hover::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
   }
 
   &::-webkit-scrollbar {
     width: 0px;
+    height: 0px;
   }
 
   /* 滚动条滑块 */

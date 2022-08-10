@@ -3,7 +3,7 @@
   <el-skeleton :loading="loading" animated>
     <template #template>
       <div flex pt-15px pb-20px text-14px gap-20px>
-        <el-skeleton-item variant="image" min-h-35 min-w-35 lg:h-50 lg:w-50 rounded-md />
+        <el-skeleton-item variant="image" display-none sm:block min-h-35 min-w-35 lg:h-50 lg:w-50 rounded-md />
         <div flex-1>
           <el-skeleton-item block variant="text" h-25px w="4/10" />
           <div w-full flex items-center mt-10px>
@@ -200,8 +200,8 @@ onMounted(() => loadData());
     }
 
     &:first-child {
-      @apply w-95px border-none text-white/80;
       background: linear-gradient(to right, #fa5042, #d43b32);
+      @apply w-95px border-none text-white/80;
 
       &:hover {
         color: white;

@@ -61,7 +61,7 @@ export default {
   Lyric(lyricInfo: string): Lyric[] {
     // 分割成歌词列表
     let lyricList = lyricInfo.split(new RegExp("\n", "g"));
-    return <Lyric[]>lyricList.map((item: string) => {
+    return lyricList.map((item: string) => {
       // 歌词
       let [time, lyric] = item.split("]");
       if (lyric) {
@@ -72,7 +72,7 @@ export default {
         }
       }
       return null;
-    }).filter((item: any) => item);
+    }).filter((item: any) => item) as Lyric[];
   },
   // 处理城市
   City(province: number, city: number): string {

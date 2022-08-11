@@ -82,7 +82,7 @@ let openNoticeDrawer = () => {
   }
 }
 
-@media screen and (min-width: 450px) {
+@media screen and (min-width: 430px) {
   .nav .router {
     flex: 1;
   }

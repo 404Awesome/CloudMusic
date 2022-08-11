@@ -48,7 +48,7 @@ let scroll = useThrottleFn((event: UIEvent) => {
   }
 }, 200);
 // 监听路由,将页面滚动到顶部
-watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
+watch(route, () => scrollEl.value?.scrollTo({ top: 0, behavior: "smooth" }));
 </script>
 
 <style lang="scss" scoped>

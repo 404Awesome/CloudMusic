@@ -17,26 +17,25 @@
       </div>
     </template>
     <template #default>
-      <el-scrollbar wrap-class="lyricScroll">
-        <!-- 歌词列表 -->
-        <ul @mouseenter="pause" @mouseleave="resume" @touchstart="pause" @touchend="touchLeave" ref="lyricEl" py-15px>
-          <li v-for="({ time, lyric }, index) in lyricList" :key="time" v-show="lyric"
-            @click.stop="lyricClick(time, $event)" class="lyric"
-            :class="{ active: progress >= time && progress < lyricList[index + 1]?.time }">
-            {{ lyric }}
-          </li>
-        </ul>
+      <!-- 歌词列表 -->
+      <ul @mouseenter="pause" @mouseleave="mouseLeave" @touchstart="pause" @touchend="touchLeave" ref="lyricEl"
+        class="lyric">
+        <li v-for="({ time, lyric }, index) in lyricList" :key="time" v-show="lyric" @click.stop="lyricClick(time)"
+          :class="{ active: progress >= time && progress <= lyricList[index + 1]?.time }">
+          {{ lyric }}
+        </li>
+      </ul>
 
-        <!-- 提示 -->
-        <el-empty v-show="!lyricList.length" description="暂无歌词!" />
-      </el-scrollbar>
+      <!-- 提示 -->
+      <el-empty v-show="!lyricList.length" description="暂无歌词!" />
     </template>
   </el-skeleton>
 </template>
 
 <script setup lang="ts">
-import { useIntersectionObserver, useThrottleFn, watchPausable } from '@vueuse/core';
-import { onMounted, reactive, ref, toRef, nextTick } from 'vue';
+import { promiseTimeout, useIntersectionObserver, useThrottleFn, watchPausable } from '@vueuse/core';
+import { onMounted, reactive, ref, toRef } from 'vue';
+import { scrollTo } from "seamless-scroll-polyfill";
 import { ElMessage } from 'element-plus';
 import { Lyric } from "@/utils/handle";
 import { useMainStore } from "store";
@@ -48,7 +47,7 @@ const props = defineProps({
     type: Number,
     required: true
   }
-})
+});
 
 // 加载状态
 let loading = ref(true);
@@ -60,31 +59,31 @@ let lyricEl = ref<HTMLElement | null>(null);
 let skeletonEl = ref<HTMLElement | null>(null);
 // 歌词列表
 let lyricList = reactive<Lyric[]>([]);
+// 当前播放的歌词
+let playLyric = ref<string | null>(null);
 
 // 滚动歌词
-let scrollLyrics = () => {
-  nextTick(() => {
-    // 当前播放的歌词元素
-    let currentLyric = lyricEl.value?.getElementsByClassName("active")[0];
-    if (lyricEl.value && lyricList.length && currentLyric) {
-      // 歌词总高度
-      let lyricHeight = lyricEl.value.offsetHeight;
-      // 歌词元素距离父元素顶部的距离
-      let lyricOffsetTop = (currentLyric as any).offsetTop;
-      // 容器高度
-      let wrapHeight = (lyricEl.value as any).offsetParent.offsetHeight;
-      // 解决scrollIntoView会导致整体页面会滚动问题
-      let block: ScrollLogicalPosition = lyricOffsetTop < lyricHeight - (wrapHeight / 2) ? "center" : "end";
-      currentLyric.scrollIntoView({
-        block,
-        behavior: "smooth"
-      });
-    }
-  });
+let scrollLyrics = (update: boolean = false) => {
+  let currentLyric = lyricEl.value?.querySelector(".active") as HTMLElement;
+  if (currentLyric && playLyric.value !== currentLyric.textContent || update) {
+    playLyric.value = currentLyric.textContent;
+    let wrapHeight = lyricEl.value!.offsetHeight;
+    let top = currentLyric.offsetTop - (wrapHeight / 2 + 40);
+    scrollTo(lyricEl.value!, {
+      top,
+      behavior: "smooth"
+    });
+  };
 };
 
 // 监听音乐进度并滚动歌词
-const { stop, pause, resume } = watchPausable(() => progress.value, useThrottleFn(scrollLyrics, 300));
+const { stop, pause, resume } = watchPausable(() => progress.value, useThrottleFn(() => scrollLyrics(), 300));
+
+// 鼠标离开
+let mouseLeave = () => {
+  resume();
+  scrollLyrics(true);
+}
 
 // touch离开歌词
 let touchLeave = (function () {
@@ -93,35 +92,23 @@ let touchLeave = (function () {
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
       resume();
-      scrollLyrics();
+      scrollLyrics(true);
       clearTimeout(timer);
     }, 2000);
   }
 }());
 
 // 点击歌词
-let lyricClick = (function () {
-  // 定时器
-  let timer: any = null;
-  return (time: number, event: Event) => {
-    // 如果定时器存在,就清除定时器
-    if (timer) clearTimeout(timer);
-    // 判断当前点击的歌词是否是正在播放的歌词
-    let currentLyric = lyricEl.value?.getElementsByClassName("active")[0];
-    let targetLyric = event.target;
-    if (store.audioPlyr && targetLyric !== currentLyric) {
-      // 改变音乐播放进度
-      store.audioPlyr.currentTime = time;
-      let timer = setTimeout(() => {
-        // 滚动歌词
-        scrollLyrics();
-        // 添加动画
-        // 清除定时器
-        clearTimeout(timer);
-      }, 100);
-    };
-  }
-}());
+let lyricClick = async (time: number) => {
+  if (store.audioPlyr) {
+    // 改变音乐播放进度
+    store.audioPlyr.currentTime = time + 0.3;
+    // 100毫秒后执行后续操作
+    await promiseTimeout(150);
+    // 滚动歌词
+    scrollLyrics(true);
+  };
+};
 
 // 加载歌词
 let loadLyric = async () => {
@@ -157,15 +144,27 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-// 歌词
 .lyric {
-  @apply p-10px text-15px truncate transition-all duration-250 ease-linear select-none cursor-pointer rounded-md;
+  height: 100%;
+  padding: 15px 0px;
+  overflow-y: overlay;
+  overflow-x: hidden;
 
-  &.active {
-    animation: lyric 1s ease-in-out;
-    @apply themeColor text-18px dark-text-orange-400;
+  &::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  li {
+    @apply p-10px leading-5 text-15px transition-all duration-250 ease-linear select-none cursor-pointer rounded-md;
+
+    &.active {
+      animation: lyric 1s ease-in-out;
+      @apply themeColor text-18px dark-text-orange-400;
+    }
   }
 }
+
 
 @keyframes lyric {
   0% {
@@ -178,7 +177,7 @@ onMounted(() => {
 }
 
 @media (any-hover: hover) {
-  .lyric:hover {
+  .lyric li:hover {
     @apply bg-gray-100 themeColor;
   }
 }

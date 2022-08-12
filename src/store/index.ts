@@ -37,7 +37,7 @@ export const useMainStore = defineStore("main", {
       // 音量大小
       volume: useStorage<number>('volume', 70, localStorage),
       // 播放列表
-      playList: useStorage<SongInfo[]>('playList', [], sessionStorage),
+      playList: useStorage<SongInfo[]>('playList', [], localStorage),
       // 当前歌单ID
       songListID: useStorage<number>('songListID', 0, sessionStorage),
       // 当前播放进度

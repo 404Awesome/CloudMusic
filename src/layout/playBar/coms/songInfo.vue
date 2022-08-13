@@ -13,7 +13,7 @@
       <p @click="openSongDetail" class="title">{{ currentSong?.song.name }}</p>
       <!-- 时间 -->
       <p class="time">
-        <span>{{ handleTime(store.playProgress) }}</span>
+        <span>{{ handleTime(store.progress) }}</span>
         <span>&nbsp;/&nbsp;</span>
         <span>{{ handleTime(props.duration) }}</span>
       </p>
@@ -29,10 +29,6 @@ const store = useMainStore();
 const route = useRoute();
 const props = defineProps({
   duration: {
-    type: Number,
-    required: true
-  },
-  currentTime: {
     type: Number,
     required: true
   }

@@ -21,7 +21,7 @@
                 <span i-carbon:folder-add></span>
               </li>
               <!-- 下载 -->
-              <li @click="Operate.downloadSong(currentSong!.song.id, currentSong!.song.name)">
+              <li @click="Operate.downloadSong(currentSong!.song.id)">
                 <span i-carbon:cloud-download></span>
               </li>
               <!-- 分享 -->

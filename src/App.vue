@@ -180,8 +180,8 @@ aside {
   }
 }
 
-/* 修改elementui popper */
-.el-popper {
+/* 修改elementui popover */
+.el-popover {
   @apply important-p-0 dark-bg-gray-300 dark-border-none;
 
   .el-popper__arrow::before {
@@ -209,6 +209,23 @@ aside {
 
 .el-overlay {
   background-color: transparent;
+}
+
+/* 修改elementui message-box overlay */
+.el-overlay-message-box {
+  background-color: rgba($color: #000000, $alpha: .35);
+}
+
+/* 修改elementui message-box 确认按钮 */
+.MessageBoxConfirmBtn,
+.MessageBoxConfirmBtn:hover,
+.MessageBoxConfirmBtn:focus {
+  border: none;
+  background-color: var(--theme-color);
+}
+
+.MessageBoxConfirmBtn:hover {
+  opacity: .8;
 }
 
 /* 修改elementui textarea */

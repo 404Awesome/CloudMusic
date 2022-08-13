@@ -13,7 +13,7 @@
       <template v-slot="{ row }">
         <p class="operate">
           <span @click.stop="Operate.likeSong(row.song.id)" class="like"></span>
-          <span @click.stop="Operate.downloadSong(row.song.id, row.song.name)" class="download"></span>
+          <span @click.stop="Operate.downloadSong(row.song.id)" class="download"></span>
         </p>
       </template>
     </el-table-column>

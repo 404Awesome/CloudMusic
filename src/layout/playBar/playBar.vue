@@ -10,50 +10,37 @@
     <div class="controlLine">
       <!-- 歌曲信息 -->
       <section flex-1>
-        <SongInfo :currentTime="songCurrentTime" :duration="songDuration" v-if="store.currentSong" />
+        <SongInfo :duration="duration" v-if="store.currentSong" />
       </section>
 
       <!-- 控制按钮 -->
       <section class="control">
         <!-- 喜欢 -->
-        <span i-carbon:favorite hover:i-carbon-favorite-filled hover-text-red-500 hover:dark-text-orange-400></span>
+        <span class="like"></span>
         <!-- 上一首 -->
         <span @click="changeSong(false)" class="change" i-eva:skip-back-fill></span>
         <!-- 播放 -->
-        <p @click="play" class="play">
+        <p @click="togglePlay" class="play">
           <span :class="playIcon" class="change"></span>
         </p>
         <!-- 下一首 -->
         <span @click="changeSong(true)" class="change" i-eva:skip-forward-fill></span>
         <!-- 分享 -->
-        <span i-carbon:link hover-text-blue-500></span>
+        <span class="share"></span>
       </section>
 
       <!-- 操作 -->
-      <section flex-1 class="operate">
-        <!-- 打开播放列表 -->
-        <span @click="openPlayListDrawer" i-carbon:list-boxes></span>
-        <!-- 音量 -->
-        <el-popover :hide-after="0" placement="top" trigger="hover">
-          <template #reference>
-            <span @click="setMute" :class="volumeIcon"></span>
-          </template>
-          <template #default>
-            <div class="volumeSlider">
-              <span>音量: {{ volume }}</span>
-              <el-slider @change="volumeChange" :show-tooltip="false" :min="0" :max="100" v-model="volume" />
-            </div>
-          </template>
-        </el-popover>
-      </section>
+      <Operate />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import Operate from "./coms/operate.vue";
 import SongInfo from "./coms/songInfo.vue";
+import { promiseTimeout, useDebounceFn, useThrottleFn } from "@vueuse/shared";
 import { ref, watch, onMounted, computed } from "vue";
-import { useDebounceFn } from "@vueuse/shared";
+import { useMitt, Validation } from "utils";
 import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
 import { useMainStore } from "store";
@@ -61,157 +48,39 @@ import Plyr from "plyr";
 const store = useMainStore();
 const route = useRoute();
 
-
 // audio元素
 let audioEl = ref<HTMLElement | null>(null);
 // 播放状态
-let playing = ref<boolean>(false);
-// 音量
-let volume = ref<number>(store.volume);
-// 歌曲持续时间
-let songDuration = ref<number>(0);
-// 歌曲当前播放时间
-let songCurrentTime = ref<number>(0);
-// 初始化plyr插件
-onMounted(() => {
-  store.audioPlyr = new Plyr(audioEl.value!, {
-    controls: ['progress'],
-    volume: volume.value / 100,
-  });
-  // 为plyr添加音乐源
-  let source = store.currentSong || store.playList[0];
-  if (source) {
-    store.audioPlyr.source = {
-      type: 'audio',
-      sources: [{
-        src: `https://music.163.com/song/media/outer/url?id=${source.song.id}.mp3`,
-        type: 'audio/mp3',
-      }]
-    }
-  }
-  // 播放时触发
-  store.audioPlyr.on("play", () => {
-    // 音频播放,暂停视频播放
-    store.playStatus = "audio";
-    // 延迟100毫秒获取结果
-    let timer = setTimeout(() => {
-      // 改变当前playing的状态
-      if (store.audioPlyr!.playing === true) playing.value = true;
-      // 获取歌曲时间
-      if (!songDuration.value) songDuration.value = store.audioPlyr!.duration;
-      songCurrentTime.value = store.audioPlyr!.currentTime;
-      clearTimeout(timer);
-    }, 300);
-  });
-  // 暂停时触发
-  store.audioPlyr.on("pause", () => {
-    // 延迟100毫秒获取结果
-    let timer = setTimeout(() => {
-      // 视频暂停,播放状态为pause
-      if (store.playStatus !== "video") store.playStatus = "pause";
-      // 改变当前playing的状态
-      if (store.audioPlyr!.playing === false) playing.value = false;
-      clearTimeout(timer);
-    }, 100);
-  });
-  // 播放完毕时触发
-  store.audioPlyr.on("ended", () => {
-    // 播放下一首
-    changeSong(true);
-  });
-  // 当前歌曲播放进度
-  store.audioPlyr.on("timeupdate", () => {
-    store.playProgress = parseFloat((store.audioPlyr!.currentTime).toFixed(3));
-  });
-  // 监听键盘按键事件
-  document.body.addEventListener("keydown", (event: KeyboardEvent) => {
-    // 空格按键 -> 播放或暂停歌曲
-    if (event.code === "Space" && store.audioPlyr!.source) {
-      // 阻止默认事件
-      event.preventDefault();
-      // 播放
-      play()
-    };
-  });
-});
+let playStatus = ref<boolean>(false);
+// 歌曲总时长
+let duration = ref<number>(0);
+// audioPlyr实例
+let audioPlyr: Plyr | null = null;
+
 // 视频播放,暂停音频播放
-watch(() => store.playStatus, (status) => {
-  if (status == "video" && store.audioPlyr?.playing) {
-    store.audioPlyr.pause();
+useMitt.on("stopAudio", () => {
+  if (audioPlyr?.playing) audioPlyr.pause();
+});
+// 改变音乐进度
+useMitt.on("changeProgress", (time) => {
+  if (audioPlyr) {
+    audioPlyr.currentTime = time as number;
   }
 });
 
-
-// 控制播放
-let play = () => {
-  // 判断当前播放器是存在播放源
-  if (store.audioPlyr!.source) {
-    store.audioPlyr?.togglePlay();
-  } else {
-    ElMessage.warning('请添加音乐到播放列表!');
+// 监听音量变化
+watch(() => store.volume, useThrottleFn((volume: number) => {
+  if (audioPlyr) {
+    audioPlyr.volume = volume / 100;
   }
-}
-// 切换歌曲
-let changeSong = useDebounceFn((control: boolean) => {
-  if (route.path == "/privateFM") {
-    ElMessage.warning("当前为私人FM!");
-  } else {
-    // control为true是下一首, 反之是上一首
-    let currentIndex = store.getCurrentSongIndex();
-    if (currentIndex !== -1) {
-      // 找到当前索引位置
-      let target = control ? currentIndex + 1 : currentIndex - 1;
-      let origin = control ? 0 : store.playList.length - 1;
-      let result = store.playList[target] || store.playList[origin];
-      if (result) store.currentSong = result;
-    } else {
-      // 未找到当前索引位置
-      ElMessage.warning('暂无歌曲!');
-    }
-  }
-}, 500);
-// 改变音量
-let volumeChange = (currentVolume: number) => {
-  store.audioPlyr!.volume = currentVolume / 100;
-  store.volume = currentVolume;
-}
-// 设置静音
-let setMute = () => {
-  if (volume.value == 0) {
-    volume.value = 70;
-    store.volume = 70;
-    store.audioPlyr!.volume = 0.7;
-  } else {
-    volume.value = 0;
-    store.volume = 0;
-    store.audioPlyr!.volume = 0;
-  }
-}
-// 打开播放列表
-let openPlayListDrawer = () => {
-  store.messageDrawer = false;
-  store.privateMsgDrawer = false;
-  store.playListDrawer = !store.playListDrawer;
-}
-
-
-// 监听当播放音乐改动
-watch(() => store.currentSong, async (newSong) => {
-  let id = newSong?.song.id;
-  if (!id) return;
-  // 清空歌曲时间
-  songDuration.value = 0;
-  songCurrentTime.value = 0;
-  // 赋予audio新的音源
-  store.audioPlyr!.source = {
-    type: 'audio',
-    sources: [{
-      src: `https://music.163.com/song/media/outer/url?id=${id}.mp3`,
-      type: 'audio/mp3',
-    }]
-  }
+}, 1000));
+// 监听音乐ID变化
+watch(() => store.currentSong?.song.id, async (id) => {
   try {
-    await store.audioPlyr?.play();
+    if (audioPlyr && id) {
+      addSource(id);
+      await audioPlyr.play();
+    }
   } catch (err: any) {
     // 提示用户点击播放按钮
     if (err.name == "NotAllowedError") {
@@ -219,29 +88,92 @@ watch(() => store.currentSong, async (newSong) => {
     }
   }
 });
-// 播放图标
-let playIcon = computed(() => playing.value ? "i-carbon:pause-filled" : "i-eva:arrow-right-fill");
-// 声音图标
-let volumeIcon = computed(() => {
-  if (volume.value == 0) {
-    return "i-carbon:volume-mute";
-  } else if (volume.value < 50) {
-    return "i-carbon:volume-down";
-  } else {
-    return "i-carbon:volume-up";
+
+// 添加音乐源
+let addSource = async (id: number) => {
+  if (audioPlyr && id) {
+    audioPlyr.source = {
+      type: 'audio',
+      sources: [{
+        src: `https://music.163.com/song/media/outer/url?id=${id}.mp3`,
+        type: 'audio/mp3'
+      }]
+    }
+    await promiseTimeout(300);
+    duration.value = audioPlyr.duration;
   }
-})
+}
+
+// 播放图标
+let playIcon = computed(() => playStatus.value ? "i-carbon:pause-filled" : "i-eva:arrow-right-fill");
+// 控制播放
+let togglePlay = () => {
+  // 判断当前播放器是存在播放源
+  if (audioPlyr?.source) {
+    audioPlyr.togglePlay();
+  }
+}
+// 切换歌曲
+let changeSong = useDebounceFn((control: boolean) => {
+  // 判断当前是否为私人FM 
+  if (route.path == "/privateFM") {
+    return ElMessage.warning("当前为私人FM!");
+  }
+  // control为true是下一首, 反之是上一首
+  let currentIndex = store.getCurrentSongIndex();
+  if (currentIndex !== -1) {
+    // 找到当前索引位置
+    let target = control ? currentIndex + 1 : currentIndex - 1;
+    let origin = control ? 0 : store.playList.length - 1;
+    let result = store.playList[target] || store.playList[origin];
+    if (result) store.currentSong = result;
+  } else {
+    // 未找到当前索引位置
+    ElMessage.warning('暂无歌曲!');
+  }
+}, 200);
+
+// 初始化plyr插件
+onMounted(() => {
+  let volume = Validation.mobileDevice() ? 1 : store.volume / 100;
+  audioPlyr = new Plyr(audioEl.value!, {
+    controls: ['progress'],
+    volume
+  });
+  // 添加音乐源
+  let source = store.currentSong?.song.id;
+  if (source) addSource(source);
+  // 播放时触发
+  audioPlyr.on("play", () => {
+    // 音频播放,暂停视频播放
+    useMitt.emit("stopVideo");
+    // 改变播放状态
+    playStatus.value = true;
+  });
+  // 暂停时触发 -> 改变播放状态
+  audioPlyr.on("pause", () => playStatus.value = false);
+  // 播放完毕时触发 -> 播放下一首
+  audioPlyr.on("ended", () => changeSong(true));
+  // 当前歌曲播放进度
+  audioPlyr.on("timeupdate", () => {
+    store.progress = parseFloat((audioPlyr!.currentTime).toFixed(3));
+  });
+  // 监听键盘按键事件
+  document.body.addEventListener("keydown", (event: KeyboardEvent) => {
+    // 空格按键 -> 播放或暂停歌曲
+    if (event.code === "Space" && audioPlyr!.source) {
+      // 阻止默认事件
+      event.preventDefault();
+      // 播放
+      togglePlay();
+    };
+  });
+});
 </script>
 
 <style scoped lang="scss">
-.dark {
-  .playbar .audio :deep(.plyr--audio):hover {
-    --plyr-range-thumb-background: #fb923c !important;
-  }
-
-  .volumeSlider :deep(.el-slider) {
-    --el-slider-main-bg-color: #fb923c !important;
-  }
+.dark .playbar .audio :deep(.plyr--audio):hover {
+  --plyr-range-thumb-background: #fb923c !important;
 }
 
 .playbar {
@@ -273,6 +205,10 @@ let volumeIcon = computed(() => {
 .control {
   @apply flex items-center justify-center gap-15px;
 
+  .like {
+    @apply i-carbon-favorite hover-i-carbon-favorite-filled hover-text-red-500 hover-dark-text-orange-400;
+  }
+
   .play {
     @apply themeBgColor p-3px rounded-full dark-bg-gray-500;
 
@@ -281,41 +217,15 @@ let volumeIcon = computed(() => {
     }
   }
 
+  .share {
+    @apply i-carbon-link hover-text-blue-500;
+  }
+
   span {
     @apply shrink-0 text-20px cursor-pointer dark-text-gray-300 hover-dark-text-orange-400;
 
     &.change {
       @apply text-30px themeColor dark-text-gray-300 hover-dark-text-orange-400;
-    }
-  }
-}
-
-// 操作
-.operate {
-  @apply flex items-center justify-end pr-15px gap-15px;
-
-  span {
-    @apply shrink-0 text-20px cursor-pointer hover-themeColor dark-text-gray-300 hover-dark-text-orange-400;
-  }
-}
-
-// 音量滑块
-.volumeSlider {
-  padding: 7px 15px;
-
-  :deep(.el-slider) {
-    height: 20px;
-
-    --el-slider-main-bg-color: var(--theme-color);
-
-    .el-slider__button {
-      width: 15px;
-      height: 15px;
-    }
-
-    .el-slider__runway,
-    .el-slider__bar {
-      height: 4px;
     }
   }
 }

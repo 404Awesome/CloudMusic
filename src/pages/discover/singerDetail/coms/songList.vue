@@ -22,7 +22,7 @@
           <p flex justify-between>
             <span @click.stop="Operate.likeSong(row.id)" class="icon" i-carbon:favorite hover-i-carbon:favorite-filled
               hover-text-red-500></span>
-            <span @click.stop="Operate.downloadSong(row.id, row.name)" class="icon" i-carbon:cloud-download
+            <span @click.stop="Operate.downloadSong(row.id)" class="icon" i-carbon:cloud-download
               hover:themeColor></span>
           </p>
         </template>

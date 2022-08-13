@@ -4,7 +4,7 @@
     <ul v-infinite-scroll="loadAlbumData" :infinite-scroll-disabled="disabled" flex flex-col flex-nowrap gap-40px pb-4
       overflow-hidden>
       <!-- top50 -->
-      <li mt-4 flex gap-25px>
+      <li flex flex-col sm:flex-row gap-25px mt-4>
         <!-- 封面 -->
         <el-image src="/img/top50.png" transition-all w-35 h-35 lg:w-40 lg:h-40 rounded-md shadow-lg />
         <!-- 歌单列表 -->
@@ -21,7 +21,7 @@
       </li>
 
       <!-- 专辑列表 -->
-      <li v-for="album in albumList" :key="album.id" flex gap-25px>
+      <li v-for="album in albumList" :key="album.id" flex flex-col sm:flex-row gap-25px>
         <!-- 专辑封面  -->
         <section overflow-hidden>
           <el-image transition-all w-35 h-35 lg:w-40 lg:h-40 rounded-md shadow-lg fit="cover" lazy

@@ -34,12 +34,12 @@
 
 <script setup lang="ts">
 import { promiseTimeout, useIntersectionObserver, useThrottleFn, watchPausable } from '@vueuse/core';
-import { onMounted, reactive, ref, toRef } from 'vue';
+import { onMounted, reactive, ref, toRefs } from 'vue';
 import { scrollTo } from "seamless-scroll-polyfill";
 import { ElMessage } from 'element-plus';
+import { Handle, useMitt } from 'utils';
 import { Lyric } from "@/utils/handle";
 import { useMainStore } from "store";
-import { Handle } from 'utils';
 import { SongAPI } from 'api';
 const store = useMainStore();
 const props = defineProps({
@@ -52,7 +52,7 @@ const props = defineProps({
 // 加载状态
 let loading = ref(true);
 // 歌曲进度
-let progress = toRef(store, "playProgress");
+let { progress } = toRefs(store);
 // 歌词列表元素
 let lyricEl = ref<HTMLElement | null>(null);
 // 骨架屏容器元素
@@ -60,20 +60,22 @@ let skeletonEl = ref<HTMLElement | null>(null);
 // 歌词列表
 let lyricList = reactive<Lyric[]>([]);
 // 当前播放的歌词
-let playLyric = ref<string | null>(null);
+let playLyric = ref<string>("");
 
 // 滚动歌词
 let scrollLyrics = (update: boolean = false) => {
-  let currentLyric = lyricEl.value?.querySelector(".active") as HTMLElement;
-  if (currentLyric && playLyric.value !== currentLyric.textContent || update) {
-    playLyric.value = currentLyric.textContent;
-    let wrapHeight = lyricEl.value!.offsetHeight;
-    let top = currentLyric.offsetTop - (wrapHeight / 2 + 40);
-    scrollTo(lyricEl.value!, {
-      top,
-      behavior: "smooth"
-    });
-  };
+  try {
+    let currentLyric = lyricEl.value?.querySelector(".active") as HTMLElement;
+    if (currentLyric && playLyric.value !== currentLyric?.textContent || update) {
+      playLyric.value = currentLyric.textContent!;
+      let wrapHeight = lyricEl.value!.offsetHeight;
+      let top = currentLyric.offsetTop - (wrapHeight / 2 + 40);
+      scrollTo(lyricEl.value!, {
+        top,
+        behavior: "smooth"
+      });
+    };
+  } catch (err: any) { }
 };
 
 // 监听音乐进度并滚动歌词
@@ -100,14 +102,12 @@ let touchLeave = (function () {
 
 // 点击歌词
 let lyricClick = async (time: number) => {
-  if (store.audioPlyr) {
-    // 改变音乐播放进度
-    store.audioPlyr.currentTime = time + 0.3;
-    // 100毫秒后执行后续操作
-    await promiseTimeout(150);
-    // 滚动歌词
-    scrollLyrics(true);
-  };
+  // 改变音乐播放进度
+  useMitt.emit("changeProgress", time + 0.3);
+  // 100毫秒后执行后续操作
+  await promiseTimeout(150);
+  // 滚动歌词
+  scrollLyrics(true);
 };
 
 // 加载歌词
@@ -116,12 +116,13 @@ let loadLyric = async () => {
     loading.value = true;
     let { code, lrc: { lyric } }: any = await SongAPI.getLyric(props.id);
     if (code == 200) {
-      // 歌曲时长
-      let duration = store.audioPlyr?.duration;
       // 处理歌词
       let list = Handle.Lyric(lyric);
-      // 向歌词列表添加歌词
-      lyricList.push(...list, { lyric: "", time: duration! });
+      // 默认激活第一句歌词
+      playLyric.value = list[list.length - 1].lyric;
+      // 向歌词列表最后添加歌词
+      let time = list[list.length - 1].time + 30;
+      lyricList.push(...list, { lyric: "", time });
       // 判断歌词小于4句,停止监听进度
       if (list.length <= 4) stop();
     }
@@ -149,6 +150,7 @@ onMounted(() => {
   padding: 15px 0px;
   overflow-y: overlay;
   overflow-x: hidden;
+  overscroll-behavior: contain;
 
   &::-webkit-scrollbar {
     width: 0px;

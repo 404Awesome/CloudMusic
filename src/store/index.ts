@@ -1,6 +1,5 @@
 import { useStorage, StorageSerializers } from "@vueuse/core";
 import { defineStore } from "pinia";
-import Plyr from "plyr";
 
 // 歌曲信息
 export interface SongInfo {
@@ -30,8 +29,6 @@ export const useMainStore = defineStore("main", {
       auth: useStorage<string>('auth', '', localStorage),
       // 页面滚动距离
       scrollTop: useStorage<number>('scrollTop', 0),
-      // 播放状态 
-      playStatus: useStorage<'audio' | 'video' | 'pause'>("playStatus", 'pause', sessionStorage),
       // 主题色
       themeColor: useStorage<string>('theme', '#d95047', localStorage),
       // 音量大小
@@ -40,10 +37,10 @@ export const useMainStore = defineStore("main", {
       playList: useStorage<SongInfo[]>('playList', [], localStorage),
       // 当前歌单ID
       songListID: useStorage<number>('songListID', 0, sessionStorage),
-      // 当前播放进度
-      playProgress: useStorage<number>("playProgress", 0, sessionStorage),
+      // 当前音乐播放进度
+      progress: useStorage<number>("progress", 0, sessionStorage),
       // 当前播放歌曲
-      currentSong: useStorage<SongInfo | null>('currentSong', null, sessionStorage, { serializer: StorageSerializers.object }),
+      currentSong: useStorage<SongInfo | null>('currentSong', null, localStorage, { serializer: StorageSerializers.object }),
       // 私信信息
       privateMsgInfo: useStorage<{ name: string, id: number }>("privateMsgInfo", { name: "", id: 0 }, sessionStorage),
       // 播放列表抽屉打开状态
@@ -56,8 +53,6 @@ export const useMainStore = defineStore("main", {
       privateMsgDrawer: useStorage<boolean>('privateMsgDrawer', false, sessionStorage),
       // 侧边栏折叠
       sidebarFolding: useStorage<boolean>('sidebarFolding', false, localStorage),
-      // audioPlyr实例
-      audioPlyr: useStorage<Plyr | null>('audioPlyr', null, sessionStorage),
     };
   },
   actions: {

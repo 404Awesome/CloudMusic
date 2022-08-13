@@ -13,7 +13,7 @@
 
     <template #default>
       <!-- 标题 -->
-      <header flex py-10px px-5px>
+      <header flex p10px>
         <h1 @click="typeSelect(defaultType)" :class="{ active: defaultType == currentType }" class="item">
           {{ defaultType }}
         </h1>
@@ -24,7 +24,7 @@
 
       <!-- 列表 -->
       <el-scrollbar :always="true" :height="350">
-        <main v-for="{ name, list } in typeList" :key="name" flex mb-20px p-10px select-none last:mb-0px>
+        <main v-for="{ name, list } in typeList" :key="name" flex px-15px mt-10px mb-20px select-none>
           <!-- 类型名称 -->
           <p v-if="name" themeColor text-15px>{{ name }}</p>
 

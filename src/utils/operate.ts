@@ -1,8 +1,7 @@
-import { ElMessage, ElNotification } from "element-plus";
+import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
 import { useDebounceFn } from "@vueuse/core";
-import { SongListAPI, SongAPI } from "api";
+import { SongListAPI } from "api";
 import { useMainStore } from "store";
-import { saveAs } from "file-saver";
 import { Handle } from "utils";
 
 // 防抖函数延迟时间
@@ -34,18 +33,26 @@ export default {
     store.playSong(songInfo);
   },
   // 下载歌曲
-  downloadSong: useDebounceFn(async (id: number, name: string) => {
+  downloadSong: useDebounceFn(async (id: number) => {
     try {
-      let { code, data: { url, type } }: any = await SongAPI.getDownloadUrl(id);
-      if (code == 200 && url) {
-        // 下载歌曲
-        saveAs(url, `${name}.${type}`);
-      } else {
-        ElMessage.warning("该歌曲暂时无法下载!");
+      await ElMessageBox.confirm(
+        '跳转新的页面进行下载!',
+        '提示',
+        {
+          center: true,
+          showCancelButton: false,
+          confirmButtonText: '跳转',
+          confirmButtonClass: 'MessageBoxConfirmBtn',
+          customStyle: {
+            width: '280px'
+          }
+        }
+      )
+      if (id) {
+        let url = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+        window.open(url);
       }
-    } catch (err: any) {
-      ElMessage.error("下载歌曲失败!");
-    }
+    } catch (err: any) { }
   }, delay),
   // 喜欢歌曲 / 取消 
   likeSong: useDebounceFn((id: number) => {

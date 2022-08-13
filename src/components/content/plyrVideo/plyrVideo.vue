@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import { PropType, ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { useMainStore } from "store";
+import { useMitt } from "utils";
 import Plyr from "plyr";
 const store = useMainStore();
 const props = defineProps({
@@ -19,13 +20,13 @@ const props = defineProps({
 });
 
 // plyr实例
-let videoPlyr = ref<Plyr>();
+let videoPlyr: Plyr | null = null;
 // video元素
 let playerEl = ref<HTMLElement | null>(null);
 onMounted(() => {
   // 音质数组
   let qualityArr = props.source.map(item => item.r);
-  videoPlyr.value = new Plyr(playerEl.value!, {
+  videoPlyr = new Plyr(playerEl.value!, {
     settings: ["speed", "quality"],
     quality: {
       default: Math.max(...qualityArr),
@@ -54,28 +55,20 @@ onMounted(() => {
 
   // 设置海报
   if (props.poster) {
-    videoPlyr.value.poster = props.poster;
+    videoPlyr.poster = props.poster;
   }
 
   // 视频播放,暂停音频播放
-  videoPlyr.value.on("play", () => store.playStatus = "video");
-  // 视频暂停,播放状态为pause
-  videoPlyr.value.on("pause", () => {
-    let timer = setTimeout(() => {
-      if (store.playStatus !== "audio") store.playStatus = "pause";
-      clearTimeout(timer);
-    }, 100);
-  });
+  videoPlyr.on("play", () => useMitt.emit("stopAudio"));
 });
+
 // 音频播放,暂停视频播放
-watch(() => store.playStatus, (status) => {
-  if (status == "audio" && videoPlyr.value?.playing) {
-    videoPlyr.value.pause();
-  }
-})
+useMitt.on("stopVideo", () => {
+  if (videoPlyr?.playing) videoPlyr.pause();
+});
 
 // 销毁视频组件
-onBeforeUnmount(() => videoPlyr.value?.destroy());
+onBeforeUnmount(() => videoPlyr?.destroy());
 </script>
 
 <style>

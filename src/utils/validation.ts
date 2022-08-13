@@ -13,5 +13,9 @@ export default {
   email163(email: string) {
     let reg = new RegExp("^[A-Za-z]\\w{5,17}@(vip\\.(126|163|188)\\.com|163\\.com|126\\.com|yeach\\.net)");
     return reg.test(email);
+  },
+  // 判断设备
+  mobileDevice() {
+    return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
   }
 }

@@ -24,6 +24,13 @@ import { onMounted } from "vue";
 const store = useMainStore();
 
 onMounted(() => {
+  // 生产模式下强制升级http请求为https
+  if (import.meta.env.MODE == "production") {
+    let Meta = document.createElement("meta");
+    Meta.httpEquiv = "Content-Security-Policy";
+    Meta.content = "upgrade-insecure-requests";
+    document.getElementsByTagName("head")[0].appendChild(Meta);
+  }
   // 初始化主题
   document.documentElement.style.setProperty("--theme-color", store.themeColor);
   // 初始化vh

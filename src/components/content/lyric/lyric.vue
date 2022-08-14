@@ -69,7 +69,7 @@ let scrollLyrics = (update: boolean = false) => {
     if (currentLyric && playLyric.value !== currentLyric?.textContent || update) {
       playLyric.value = currentLyric.textContent!;
       let wrapHeight = lyricEl.value!.offsetHeight;
-      let top = currentLyric.offsetTop - (wrapHeight / 2 + 40);
+      let top = currentLyric.offsetTop - (wrapHeight / 2 - 20);
       scrollTo(lyricEl.value!, {
         top,
         behavior: "smooth"
@@ -151,6 +151,7 @@ onMounted(() => {
   overflow-y: overlay;
   overflow-x: hidden;
   overscroll-behavior: contain;
+  position: relative;
 
   &::-webkit-scrollbar {
     width: 0px;

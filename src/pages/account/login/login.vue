@@ -1,15 +1,15 @@
 <!-- 登陆 -->
 <template>
   <div flex h-full overflow-hidden>
-    <el-scrollbar flex-1 min-w-400px>
-      <el-tabs tab-position="left" pt-25px md:pt-150px pb-25px>
+    <el-scrollbar flex-1 px-15px sm:p-0px>
+      <el-tabs :tab-position="tabPosition" pt-25px md:pt-150px pb-25px>
         <el-tab-pane v-for="{ label, component } in components" :key="label" :label="label">
           <component :is="component"></component>
         </el-tab-pane>
       </el-tabs>
 
       <!-- 提示 -->
-      <div pl-90px pb-25px>
+      <div sm:pl-90px sm:pb-25px>
         <el-alert title="密码登录暂时不要使用,尽量使用短信验证码登录和二维码登录" type="info" :closable="false" w-270px mx-auto />
       </div>
     </el-scrollbar>
@@ -28,7 +28,9 @@ import Password from "./coms/password.vue";
 import Captcha from "./coms/captcha.vue";
 import QrCode from "./coms/qrCode.vue";
 import Email from "./coms/email.vue";
-import { markRaw } from "vue";
+import { markRaw, computed, onMounted, ref } from "vue";
+import { useMainStore } from "store";
+const store = useMainStore();
 
 // 子组件列表
 let components = [
@@ -49,4 +51,9 @@ let components = [
     component: markRaw(QrCode)
   },
 ]
+
+// tab定位
+let tabPosition = computed(() => {
+  return store.is640px ? 'top' : 'left';
+});
 </script>

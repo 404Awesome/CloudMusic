@@ -1,5 +1,7 @@
-import { useStorage, StorageSerializers } from "@vueuse/core";
+import { AccountAPI } from "api";
 import { defineStore } from "pinia";
+import { ElMessageBox, ElMessage } from "element-plus";
+import { useStorage, StorageSerializers } from "@vueuse/core";
 
 // 歌曲信息
 export interface SongInfo {
@@ -39,6 +41,8 @@ export const useMainStore = defineStore("main", {
       songListID: useStorage<number>('songListID', 0, sessionStorage),
       // 当前音乐播放进度
       progress: useStorage<number>("progress", 0, sessionStorage),
+      // 当前窗体大小是否小于430px
+      is640px: useStorage<boolean>("is640px", false, localStorage),
       // 当前播放歌曲
       currentSong: useStorage<SongInfo | null>('currentSong', null, localStorage, { serializer: StorageSerializers.object }),
       // 私信信息
@@ -52,7 +56,7 @@ export const useMainStore = defineStore("main", {
       // 私信内容抽屉打开状态
       privateMsgDrawer: useStorage<boolean>('privateMsgDrawer', false, sessionStorage),
       // 侧边栏折叠
-      sidebarFolding: useStorage<boolean>('sidebarFolding', false, localStorage),
+      sidebarFolding: useStorage<boolean>('sidebarFolding', false, localStorage)
     };
   },
   actions: {
@@ -91,5 +95,5 @@ export const useMainStore = defineStore("main", {
       this.playList.push(...songList);
       this.playSong(songList[0]);
     },
-  },
+  }
 });

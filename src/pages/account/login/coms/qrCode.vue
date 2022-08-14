@@ -1,6 +1,6 @@
 <!-- 二维码登陆 -->
 <template>
-  <div ref="qrCodeEl" flex flex-col items-center justify-center>
+  <div ref="qrCodeEl" flex flex-col items-center justify-center pt-15px sm:pt-0px>
     <!-- 二维码图片 -->
     <div v-loading="loading" w-37 h-37 border-7px themeBorder rounded-md shadow-md>
       <el-image :class="{ overdue: qrCode.overdue }" :src="qrCode.img" :draggable="false" />

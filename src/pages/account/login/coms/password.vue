@@ -1,6 +1,6 @@
 <!-- 密码登陆 -->
 <template>
-  <div ref="passwordEl" w-270px mx-auto>
+  <div ref="passwordEl" w-270px pt-15px sm:pt-0px mx-auto>
     <el-form ref="formEl" :model="formData" :disabled="disabledForm" label-width="65px" :rules="rules">
       <el-form-item label="手机号" prop="phone">
         <el-input v-model.trim="formData.phone" :clearable="true" />
@@ -19,16 +19,11 @@
 </template>
 
 <script setup lang="ts">
-import { ElMessage, FormRules, ElNotification } from 'element-plus';
-import { useRouter } from "vue-router";
-import { useMainStore } from "store";
-import { onMounted, reactive, ref } from 'vue';
-import { Validation } from "utils";
-import { AccountAPI } from "api";
-import md5 from "md5";
 import { useIntersectionObserver } from '@vueuse/core';
-const store = useMainStore();
-const router = useRouter();
+import { ElMessage, FormRules } from 'element-plus';
+import { onMounted, reactive, ref } from 'vue';
+import { Validation, Operate } from "utils";
+import { AccountAPI } from "api";
 
 // 容器元素
 let passwordEl = ref<any>(null);
@@ -69,24 +64,9 @@ let submit = () => {
       // 禁用表单
       disabledForm.value = true;
       // 发起登陆请求
-      let { code, cookie }: any = await AccountAPI.loginPassword(parseInt(formData.phone), formData.password);
-      if (code == 200) {
-        // 登陆成功
-        store.auth = md5(cookie);
-        ElNotification({
-          title: '成功',
-          message: '登陆成功!',
-          type: 'success',
-        });
-        router.push("/myHonePage");
-      } else {
-        // 登陆失败
-        ElNotification({
-          title: '错误',
-          message: '登陆失败! 请检查账号密码!',
-          type: 'error',
-        });
-      }
+      let { code, message = "登陆失败!", cookie }: any = await AccountAPI.loginPassword(parseInt(formData.phone), formData.password);
+      // 登陆结果
+      Operate.loginResult(code, message, cookie);
       // 解除禁用表单
       disabledForm.value = false;
     }

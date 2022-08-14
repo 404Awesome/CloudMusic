@@ -9,8 +9,9 @@
     <template #default>
       <div fontColor p-10px>
         <!-- 表单 -->
-        <div flex gap-5px>
-          <input v-model.trim.lazy="searchText" @keyup.enter="search" type="text" placeholder="搜索" class="input" />
+        <div flex gap-5px overflow-hidden>
+          <input v-model.trim.lazy="searchText" @keyup.enter="search" type="text"
+            :placeholder="searchHotList[0]?.searchWord || '搜索'" class="input" />
           <button @click="search" class="searchBtn">搜索</button>
         </div>
 
@@ -75,6 +76,8 @@ let search = () => {
   if (searchText.value.length) {
     router.push(`/search/${searchText.value}`);
     popoverEl.value?.hide();
+  } else {
+    searchHot(searchHotList[0].searchWord);
   }
 }
 
@@ -88,7 +91,7 @@ let searchHot = (searchWord: string) => {
 <style lang="scss" scoped>
 // 输入框
 .input {
-  @apply px-10px py-5px w-130px outline-none border-none rounded-md bg-#eee text-14px box-border;
+  @apply px-10px py-5px max-w-115px sm-max-w-125px outline-none border-none rounded-md bg-#eee text-14px box-border;
 }
 
 // 搜索按钮

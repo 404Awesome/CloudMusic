@@ -29,28 +29,34 @@
         <p truncate>所在地区: {{ info.cityName }}</p>
       </div>
 
-      <!-- 计数 -->
-      <ul class="count">
-        <li @click="goCountPage('/userDynamic')">
-          <span text-blue-500>{{ count.dynamic }}</span>
-          <span>动态</span>
-        </li>
-        <li @click="goCountPage('/userFollows')">
-          <span text-teal-500>{{ count.follows }}</span>
-          <span>关注</span>
-        </li>
-        <li @click="goCountPage('/userFolloweds')">
-          <span text-violet-500>{{ count.followeds }}</span>
-          <span>粉丝</span>
-        </li>
-      </ul>
+      <div flex justify-between gap-10px mt-10px h-12>
+        <!-- 计数 -->
+        <ul class="count">
+          <li @click="goCountPage('/userDynamic')">
+            <span text-blue-500>{{ count.dynamic }}</span>
+            <span>动态</span>
+          </li>
+          <li @click="goCountPage('/userFollows')">
+            <span text-teal-500>{{ count.follows }}</span>
+            <span>关注</span>
+          </li>
+          <li @click="goCountPage('/userFolloweds')">
+            <span text-violet-500>{{ count.followeds }}</span>
+            <span>粉丝</span>
+          </li>
+        </ul>
+        <!-- 退出登陆 -->
+        <div @click.stop="exitLogin" class="exit">
+          <span i-carbon:login></span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ElMessage, ElMessageBox } from "element-plus";
 import { onMounted, reactive, ref } from "vue";
-import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 import { AccountAPI } from "api";
 import { Handle } from "utils";
@@ -99,6 +105,31 @@ let goCountPage = (path: string) => {
   if (info.uid) {
     router.push(`${path}/${info.uid}`);
   }
+}
+
+// 退出登陆
+let exitLogin = async () => {
+  try {
+    await ElMessageBox.confirm(
+      '是否退出登陆!',
+      '提示',
+      {
+        center: true,
+        showCancelButton: false,
+        confirmButtonText: '退出',
+        confirmButtonClass: 'MessageBoxConfirmBtn',
+        customStyle: {
+          width: '280px'
+        }
+      }
+    )
+    // 确认退出
+    let { code }: any = await AccountAPI.loginLogout();
+    if (code == 200) {
+      ElMessage.success("退出成功!");
+      router.push("/");
+    }
+  } catch (err: any) { }
 }
 
 // 加载个人信息
@@ -150,7 +181,7 @@ onMounted(async () => {
 }
 
 .count {
-  @apply flex gap-10px mt-10px h-12;
+  @apply flex gap-10px;
 
   li {
     @apply bg-white rounded h-full py-5px px-10px flex flex-col justify-between items-center cursor-pointer;
@@ -165,6 +196,14 @@ onMounted(async () => {
         @apply text-14px text-gray-500 truncate;
       }
     }
+  }
+}
+
+.exit {
+  @apply bg-white rounded h-full px-10px cursor-pointer flex items-center hover-themeColor;
+
+  span {
+    @apply text-20px;
   }
 }
 </style>

@@ -1,8 +1,9 @@
 import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
 import { useDebounceFn } from "@vueuse/core";
-import { SongListAPI } from "api";
+import { useRouter } from "vue-router";
+import { Handle, useMD5 } from "utils";
 import { useMainStore } from "store";
-import { Handle } from "utils";
+import { SongListAPI } from "api";
 
 // 防抖函数延迟时间
 const delay = 300;
@@ -84,5 +85,27 @@ export default {
       message: '登陆失效, 请重新登录!',
       type: 'warning',
     });
+  },
+  // 登陆
+  loginResult(code: number, message: string, cookie: string) {
+    let store = useMainStore();
+    let router = useRouter();
+    if (code == 200) {
+      // 登陆成功
+      store.auth = useMD5(cookie);
+      ElNotification({
+        title: '成功',
+        message: '登陆成功!',
+        type: 'success',
+      });
+      router.push("/myHonePage");
+    } else {
+      // 登陆失败
+      ElNotification({
+        title: '错误',
+        message,
+        type: 'error',
+      });
+    }
   }
 }

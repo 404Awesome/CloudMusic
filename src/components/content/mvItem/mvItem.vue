@@ -23,7 +23,7 @@
 import PlayCount from "@/components/content/playCount/playCount.vue";
 import PlayIcon from "@/components/content/playIcon/playIcon.vue";
 import Artists from "@/components/content/artists/artists.vue";
-import { PropType, toRaw } from "vue";
+import { PropType, toRaw, toRef } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 const props = defineProps({
@@ -56,7 +56,8 @@ const props = defineProps({
     default: "push"
   }
 });
-let { id, cover, artists, name, playCount, isFlex, mode } = toRaw(props);
+let isFlex = toRef(props, "isFlex");
+let { id, cover, artists, name, playCount, mode } = toRaw(props);
 
 // 跳转MV详情页面
 let goMVDetailPage = () => {
@@ -72,7 +73,7 @@ let goMVDetailPage = () => {
 
 <style lang="scss" scoped>
 .mvItem {
-  @apply w-full text-15px cursor-pointer;
+  @apply w-full text-15px cursor-pointer overflow-hidden;
 
   .cover {
     @apply relative flex overflow-hidden;
@@ -92,7 +93,7 @@ let goMVDetailPage = () => {
 }
 
 // 横向布局
-.flex {
+.mvItem.flex {
   gap: 10px;
 
   .cover,

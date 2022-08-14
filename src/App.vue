@@ -33,10 +33,15 @@ onMounted(() => {
   }
   // 初始化主题
   document.documentElement.style.setProperty("--theme-color", store.themeColor);
-  // 初始化vh
+  // 初始化 --100vh 高度
   document.documentElement.style.setProperty("--100vh", `${window.innerHeight}px`);
+  // 初始化 is640px 值
+  store.is640px = window.innerWidth < 640 ? true : false;
+  // 监听窗口变化
   window.addEventListener("resize", useThrottleFn(() => {
-    document.documentElement.style.setProperty("--100vh", `${window.innerHeight}px`);
+    let { innerHeight: height, innerWidth: width } = window;
+    document.documentElement.style.setProperty("--100vh", `${height}px`);
+    store.is640px = width < 640 ? true : false;
   }, 300));
 });
 </script>

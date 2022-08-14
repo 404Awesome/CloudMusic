@@ -32,7 +32,7 @@
 
           <!-- MVItem -->
           <MVItem :id="mv.id" :cover="mv.cover" :name="mv.name" :artists="mv.artists" :playCount="mv.playCount"
-            :isFlex="true" />
+            :isFlex="!store.is640px" />
         </li>
       </ul>
     </template>
@@ -45,7 +45,9 @@ import MVItem from "@/components/content/mvItem/mvItem.vue";
 import { useIntersectionObserver } from "@vueuse/core";
 import { ref, reactive, onMounted } from "vue";
 import { ElMessage } from "element-plus";
+import { useMainStore } from "store";
 import { MVAPI } from "api";
+const store = useMainStore();
 const props = defineProps({
   limit: {
     type: Number,

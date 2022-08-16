@@ -5,11 +5,10 @@
     <categoryList @selected="cateSelected" :loading="loading" />
 
     <!-- 歌手列表 -->
-    <ul v-if="artistsList.length" v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled" grid6Cols mt-15px
-      overflow-hidden>
+    <ul v-if="artistsList.length" v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled" class="singerList">
       <li v-for="item in artistsList" :key="item.id" @click="goSingerDetail(item)" class="group" cursor-pointer>
         <!-- 头像 -->
-        <el-image :src="item.picUrl" lazy fit="cover" h-140px rounded-md />
+        <el-image :src="item.picUrl" lazy fit="cover" h-130px w-130px rounded-md border-1px border-gray-200 />
         <!-- 名称 -->
         <p mt-5px group-hover:themeColor text-15px>{{ item.name }}</p>
       </li>
@@ -77,3 +76,9 @@ let goSingerDetail = (singer: any) => {
   });
 }
 </script>
+
+<style lang="scss" scoped>
+.singerList {
+  @apply flex flex-wrap justify-between gap-20px mt-15px overflow-hidden;
+}
+</style>

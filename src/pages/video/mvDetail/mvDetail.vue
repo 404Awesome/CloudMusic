@@ -6,7 +6,7 @@
       <el-skeleton :loading="loading" animated>
         <template #template>
           <!-- 视频 -->
-          <el-skeleton-item w-full h-200px lg:h-300px xl:h-428px rounded-md pt-4 />
+          <el-skeleton-item w-full h-200px lg:h-351px rounded-md pt-4 />
           <!-- 艺术家 -->
           <el-skeleton-item block variant="text" w-60px mt-4 mb-10px />
           <!-- 标题 -->
@@ -102,7 +102,7 @@ watch(() => route.params.id, (newVal) => {
 
 <style lang="scss" scoped>
 .mvDetails {
-  @apply flex gap-30px p-10px sm-py-15px sm-px-20px;
+  @apply wrapBox flex gap-30px py-15px;
 
   .info {
     @apply overflow-hidden flex-1;

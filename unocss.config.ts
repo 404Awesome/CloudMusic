@@ -19,11 +19,11 @@ export default defineConfig({
     ["twoLineOmit", { "display": "-webkit-box", "overflow": "hidden", "-webkit-box-orient": "vertical", "text-overflow": "ellipsis", "-webkit-line-clamp": "2" }]
   ],
   shortcuts: {
-    "wrapBox": "overflow-hidden m-y-0 m-x-auto w-9.5/10 lg:w-8/10",
-    "grid2Cols": "grid gap-5 lg:gap-7 grid-cols-1 md:grid-cols-2",
-    "grid3Cols": "grid gap-5 lg:gap-7 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
-    "grid4Cols": "grid gap-5 lg:gap-7 grid-cols-2 md:grid-cols-3 lg-grid-cols-4",
-    "grid6Cols": "grid gap-5 lg:gap-7 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6",
+    "wrapBox": "overflow-hidden max-w-1024px px-10px mx-auto",
+    "grid2Cols": "grid gap-5 lg:gap-x-7 lg:gap-y-5 grid-cols-1 md:grid-cols-2",
+    "grid3Cols": "grid gap-5 lg:gap-x-7 lg:gap-y-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+    "grid4Cols": "grid gap-5 lg:gap-x-7 lg:gap-y-5 grid-cols-2 md:grid-cols-3 lg-grid-cols-4",
+    "grid6Cols": "grid gap-5 lg:gap-x-7 lg:gap-y-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6",
     "tip": "themeColor text-17px pb-15px",
     "flexCenter": "flex items-center justify-center"
   },

@@ -41,7 +41,7 @@ export const useMainStore = defineStore("main", {
       songListID: useStorage<number>('songListID', 0, sessionStorage),
       // 当前音乐播放进度
       progress: useStorage<number>("progress", 0, sessionStorage),
-      // 当前窗体大小是否小于430px
+      // 当前窗体大小是否小于640px
       is640px: useStorage<boolean>("is640px", false, localStorage),
       // 当前播放歌曲
       currentSong: useStorage<SongInfo | null>('currentSong', null, localStorage, { serializer: StorageSerializers.object }),

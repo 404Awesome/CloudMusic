@@ -1,24 +1,18 @@
 <!-- 轮播图 -->
 <template>
-  <!-- pc下展示轮播图 -->
-  <div class="carouselCard">
-    <el-carousel :interval="3000" type="card" height="200px" wrapBox>
-      <el-carousel-item v-for="item in props.bannerList" :key="item.targetId">
-        <el-image rounded-md h-full :src="item.imageUrl || item.pic" fit="cover" />
-      </el-carousel-item>
-    </el-carousel>
-  </div>
-  <!-- ipad下展示轮播图 -->
   <div class="carousel">
-    <el-carousel :interval="3000" indicator-position="none" height="200px" wrapBox>
-      <el-carousel-item v-for="item in props.bannerList" :key="item.targetId" flex justify-center>
-        <el-image rounded-md h-full :src="item.imageUrl || item.pic" fit="cover" />
-      </el-carousel-item>
-    </el-carousel>
+    <div wrapBox>
+      <el-carousel :interval="3000" indicator-position="none" :type="store.is640px ? '' : 'card'" height="200px">
+        <el-carousel-item v-for="item in props.bannerList" :key="item.targetId">
+          <el-image rounded-md h-full :src="item.imageUrl || item.pic" fit="cover" />
+        </el-carousel-item>
+      </el-carousel>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { useMainStore } from 'store';
 import { PropType } from 'vue';
 export interface BannerItem {
   imageUrl: string,
@@ -26,6 +20,7 @@ export interface BannerItem {
   targetId: number,
   [propName: string]: any
 }
+const store = useMainStore();
 const props = defineProps({
   bannerList: {
     type: Array as PropType<BannerItem[]>,
@@ -35,11 +30,7 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.carouselCard {
-  @apply bg-gray-100 pt-7 h-260px dark-bg-gray-300 display-none md-block;
-}
-
 .carousel {
-  @apply bg-gray-100 py-15px block md-display-none;
+  @apply bg-gray-100 pt-7 h-260px dark-bg-gray-300;
 }
 </style>

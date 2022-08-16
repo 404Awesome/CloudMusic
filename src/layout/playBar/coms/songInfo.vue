@@ -76,7 +76,7 @@ let openSongDetail = () => {
   }
 
   .detail {
-    @apply hidden md-flex flex-1 h-40px flex-col justify-around;
+    @apply hidden sm-flex flex-1 h-40px flex-col justify-around;
 
     .title {
       @apply sm-max-w-32 xl-max-w-62 truncate select-none text-14px cursor-pointer hover-themeColor dark-text-gray-300 hover-dark-text-orange-400;

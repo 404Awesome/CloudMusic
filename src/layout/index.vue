@@ -84,7 +84,7 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
   .view {
     grid-row: 2/3;
     grid-column: 2/3;
-    @apply dark-bg-gray-400 overflow-x-hidden rows-2/3;
+    @apply dark-bg-gray-400 overflow-x-hidden;
   }
 }
 
@@ -92,8 +92,6 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 .sidebar,
 .view {
   overflow-y: overlay;
-
-  scroll-behavior: smooth;
 
   &:hover::-webkit-scrollbar {
     width: 5px;

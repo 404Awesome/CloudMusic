@@ -210,7 +210,7 @@ onMounted(() => loadData());
 
 // 配图
 .pictures {
-  @apply grid2Cols my-10px;
+  @apply grid gap-5 lg-gap-7 grid-cols-1 sm-grid-cols-2 my-10px;
 
   .image {
     @apply rounded-md border-1px border-#eee;

@@ -257,4 +257,9 @@ aside {
     box-shadow: 0 0 0 1px var(--theme-color) inset;
   }
 }
+
+/* 修改elementui message */
+.likeSongTip {
+  min-width: 180px;
+}
 </style>

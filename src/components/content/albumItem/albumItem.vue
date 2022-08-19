@@ -19,10 +19,10 @@
 <script setup lang="ts">
 import PlayIcon from "@/components/content/playIcon/playIcon.vue";
 import Artists from "@/components/content/artists/artists.vue";
+import { PropType, toRaw, toRef } from 'vue';
 import { ElMessage } from "element-plus";
-import { PropType, toRefs } from 'vue';
+import { Handle, Operate } from "utils";
 import { ArtistAPI } from "api";
-import { Operate } from "utils";
 const props = defineProps({
   id: {
     type: Number,
@@ -45,13 +45,17 @@ const props = defineProps({
     default: "#f3f4f6"
   },
 })
-let { id, picUrl, artists, name, bgColor } = toRefs(props);
+let bgColor = toRef(props, "bgColor")
+let { id, picUrl, artists, name } = toRaw(props);
 
 // 播放歌曲
 let playAlbum = async () => {
   try {
-    let { code, songs }: any = await ArtistAPI.getAlbumInfo(id.value);
-    if (code == 200) Operate.addPlayList(songs, id.value);
+    let { code, songs }: any = await ArtistAPI.getAlbumInfo(id);
+    if (code == 200) {
+      let songList = Handle.SongList(songs);
+      Operate.addPlayList(songList, id);
+    };
   } catch (err: any) {
     ElMessage.error("加载专辑歌曲失败!");
   }

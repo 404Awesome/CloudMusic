@@ -58,13 +58,13 @@ let left = computed(() => {
 .detailFold {
   top: var(--topNavBarHeight);
   left: v-bind(left);
-  @apply fixed right-0 z-10 h-80px opacity-0 translate-y--80px;
+  @apply fixed right-0 z-10 opacity-0 translate-y--80px;
 
   .content {
     border-bottom: 3px solid var(--theme-color);
     border-radius: 0px 0px 3px 3px;
-    @apply flex flex-col flex-nowrap justify-between mx-auto bg-white;
-    @apply w-full h-full py-10px px-10px lg-py-10px lg-w-8/10;
+
+    @apply wrapBox flex flex-col flex-nowrap justify-around bg-white h-80px;
 
     li {
       @apply flex items-center justify-center w-23px h-23px cursor-pinter;
@@ -86,7 +86,7 @@ let left = computed(() => {
 
   &.visible {
     opacity: 1;
-    transition: all .3s ease-in-out;
+    transition: transform .3s ease-in-out;
     transform: translateY(0px);
   }
 

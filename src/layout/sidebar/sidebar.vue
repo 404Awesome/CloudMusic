@@ -6,7 +6,7 @@
       <!-- 已登陆 -->
       <section v-if="store.auth" @click="$router.push('/myHonePage')" class="profile">
         <!-- 头像 -->
-        <el-image :src="profileInfo.avatarUrl" class="avatar" />
+        <el-image :src="profileInfo.avatarUrl" class="avatar" :draggable="false" />
 
         <!-- 信息 -->
         <div class="info">
@@ -56,9 +56,9 @@
 
 <script setup lang="ts">
 import { reactive, ref, watch } from "vue";
+import { AccountAPI, SongAPI } from "api";
 import { useRouter } from "vue-router";
 import { useMainStore } from "store";
-import { AccountAPI } from "api";
 import { Operate } from "utils";
 const store = useMainStore();
 const router = useRouter();
@@ -105,6 +105,23 @@ let needLogin: ListItem[] = [
   }
 ];
 
+// 请求喜欢音乐列表状态
+let loadingStatus = ref<boolean>(false);
+// 请求喜欢音乐列表
+let getLikeSongList = async (uid: number) => {
+  if (loadingStatus.value) return;
+  loadingStatus.value = true;
+  try {
+    let { code, ids }: any = await SongAPI.getLikeList(uid);
+    if (code == 200) {
+      // 清空喜欢音乐列表, 并添加数据
+      store.likeList.splice(0, store.likeList.length, ...ids);
+    }
+  } catch (err: any) { } finally {
+    loadingStatus.value = false;
+  }
+}
+
 // 监视store中的auth状态
 watch(() => store.auth, async (authStatus) => {
   // 初始化导航列表
@@ -119,6 +136,8 @@ watch(() => store.auth, async (authStatus) => {
       // 已登陆
       navList.push(...needLogin);
       profileInfo.value = profile;
+      // 请求喜欢音乐列表
+      getLikeSongList(profile.userId);
     } else {
       // 未登陆
       Operate.clearLoginStatus();

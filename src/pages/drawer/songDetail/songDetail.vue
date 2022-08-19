@@ -13,8 +13,8 @@
             <!-- 操作 -->
             <ul class="operate">
               <!-- 喜欢 -->
-              <li class="group">
-                <span i-carbon:favorite group-hover-i-carbon:favorite-filled group-hover-text-red-500></span>
+              <li>
+                <LikeIcon :id="currentSong.song.id" />
               </li>
               <!-- 收藏 -->
               <li>
@@ -78,16 +78,16 @@
 </template>
 
 <script setup lang="ts">
+import LikeIcon from "@/components/content/likeIcon/likeIcon.vue";
 import SendComment from "@/components/content/sendComment/sendComment.vue";
 import CommentList from "@/components/content/commentList/commentList.vue";
 import Artists from "@/components/content/artists/artists.vue";
 import Lyric from "@/components/content/lyric/lyric.vue";
 import SimiSongList from "./coms/simiSongList.vue";
+import { toRefs } from "@vueuse/shared";
 import { useMainStore } from "store";
 import { Operate } from "utils";
 import { SongAPI } from "api";
-import { toRef } from "vue";
-import { toRefs } from "@vueuse/shared";
 const store = useMainStore();
 let { currentSong, songDetailDrawer } = toRefs(store);
 

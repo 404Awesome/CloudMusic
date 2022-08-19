@@ -47,7 +47,7 @@ import Artists from "@/components/content/artists/artists.vue";
 import { useIntersectionObserver } from "@vueuse/core";
 import { reactive, onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { Operate } from "utils";
+import { Handle, Operate } from "utils";
 import { SongAPI } from "api";
 
 // 骨架屏容器元素

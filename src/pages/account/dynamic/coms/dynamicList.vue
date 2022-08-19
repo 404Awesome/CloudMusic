@@ -1,6 +1,6 @@
 <!-- 动态列表 -->
 <template>
-  <div flex-1 flex flex-col>
+  <div flex-1 flex flex-col overflow-hidden>
     <ul class="dynamicList" v-infinite-scroll="loadData" :infinite-scroll-disabled="disabled">
       <li v-for="item in dynamicList" :key="item.id">
         <!-- 头像 -->

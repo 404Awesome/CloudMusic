@@ -29,4 +29,13 @@ export default {
   getRecommend() {
     return GET("/recommend/songs");
   },
+  // 喜欢音乐列表
+  getLikeList(uid: number) {
+    return GET("/likelist", { uid });
+  },
+  // 喜欢音乐列表
+  likeSong(id: number, like: boolean) {
+    // 默认为 true 即喜欢 , 若传 false, 则取消喜欢
+    return GET("/like", { id, like });
+  }
 }

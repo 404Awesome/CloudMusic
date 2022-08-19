@@ -16,7 +16,7 @@
 
     <!-- 操作 -->
     <ul class="operate">
-      <li @click="playAllSongs">
+      <li @click="Operate.addPlayList(songList, 50)">
         <span class="icon" i-eva:play-circle-outline></span>
         <span>播放全部</span>
       </li>
@@ -38,9 +38,9 @@
 import SongList from "@/components/content/songList/songList.vue";
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
+import { Handle, Operate } from "utils";
 import { useMainStore } from "store";
 import { SongInfo } from "store";
-import { Handle } from "utils";
 import { SongAPI } from "api";
 const store = useMainStore();
 
@@ -48,15 +48,6 @@ const store = useMainStore();
 let loading = ref<boolean>(false);
 // 歌曲列表
 let songList = reactive<SongInfo[]>([]);
-
-// 播放全部歌曲
-let playAllSongs = () => {
-  if (songList.length) {
-    if (store.songListID == 50) return ElMessage.warning('请不要重复播放相同歌单!');
-    store.addPlayList(songList);
-    store.songListID = 50;
-  }
-}
 
 // 收藏全部
 let collectAllSongs = () => {

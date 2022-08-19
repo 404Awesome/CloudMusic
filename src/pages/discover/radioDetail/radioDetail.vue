@@ -1,7 +1,7 @@
 <!-- 电台详情页面 -->
 <template>
   <div>
-    <p>{{ route.params.id }}</p>
+    <p text-red-500 text-center text-lg>暂未开发</p>
   </div>
 </template>
 

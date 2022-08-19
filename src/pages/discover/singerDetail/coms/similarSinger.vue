@@ -6,20 +6,20 @@
   <!-- 相似歌手列表 -->
   <el-skeleton :loading="loading" animated>
     <template #template>
-      <ul ref="skeletonEl" grid6Cols mt-15px>
+      <ul ref="skeletonEl" class="singerList">
         <li v-for="item in 6">
-          <el-skeleton-item variant="image" rounded-md h-35 />
+          <el-skeleton-item variant="image" class="cover" />
           <el-skeleton-item block variant="text" w="4/10" mt-7px />
         </li>
       </ul>
     </template>
     <template #default>
-      <ul grid6Cols mt-15px>
-        <li v-for="item in similarSinger" :key="item.id" @click="goSingerDetail(item)" class="group" cursor-pointer>
+      <ul class="singerList">
+        <li v-for="item in similarSinger" :key="item.id" @click="goSingerDetail(item)" class="group">
           <!-- 封面 -->
-          <el-image :src="item.picUrl" fit="cover" lazy rounded-md h-35 />
+          <el-image :src="item.picUrl" fit="cover" class="cover" />
           <!-- 名字 -->
-          <p group-hover:themeColor truncate text-15px>{{ item.name }}</p>
+          <p class="name">{{ item.name }}</p>
         </li>
       </ul>
 
@@ -86,3 +86,21 @@ onMounted(() => {
   })
 });
 </script>
+
+<style lang="scss" scoped>
+.singerList {
+  @apply grid6Cols justify-items-center mt-15px overflow-hidden;
+
+  li {
+    @apply cursor-pointer;
+
+    .cover {
+      @apply h-130px w-130px rounded-md border-1px border-gray-200;
+    }
+
+    .name {
+      @apply mt-5px text-15px;
+    }
+  }
+}
+</style>

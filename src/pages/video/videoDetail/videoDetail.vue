@@ -2,11 +2,11 @@
 <template>
   <div :key="($route.params.vid as string)" class="videoDetails">
     <!-- 视频信息 -->
-    <div overflow-hidden col-span-full lg:col-span-1>
+    <div class="info">
       <el-skeleton :loading="loading" animated>
         <template #template>
           <!-- 视频 -->
-          <el-skeleton-item w-full h-200px lg:h-300px xl:h-428px rounded-md pt-4 />
+          <el-skeleton-item w-full h-250px sm:h-310px md:h-432px lg:h-354px rounded-md pt-4 />
           <div flex justify-between items-center>
             <!-- 创建人信息 -->
             <div mt-4 mb-10px flex gap-10px items-center>
@@ -48,7 +48,7 @@
     </div>
 
     <!-- 相关推荐 -->
-    <div col-start-2 col-end-3 hidden lg:block overflow-hidden>
+    <div class="relevant">
       <Relevant />
     </div>
   </div>
@@ -132,10 +132,14 @@ watch(() => route.params.vid, (newVal) => {
 
 <style lang="scss" scoped>
 .videoDetails {
-  display: grid;
-  padding: 15px 20px;
+  @apply wrapBox flex gap-25px py-15px;
 
-  gap: 30px;
-  grid-template-columns: 2fr 1fr;
+  .info {
+    @apply overflow-hidden flex-1;
+  }
+
+  .relevant {
+    @apply w-350px hidden lg-block overflow-hidden;
+  }
 }
 </style>

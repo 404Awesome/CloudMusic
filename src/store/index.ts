@@ -1,7 +1,5 @@
-import { AccountAPI } from "api";
-import { defineStore } from "pinia";
-import { ElMessageBox, ElMessage } from "element-plus";
 import { useStorage, StorageSerializers } from "@vueuse/core";
+import { defineStore } from "pinia";
 
 // 歌曲信息
 export interface SongInfo {
@@ -43,6 +41,8 @@ export const useMainStore = defineStore("main", {
       progress: useStorage<number>("progress", 0, sessionStorage),
       // 当前窗体大小是否小于640px
       is640px: useStorage<boolean>("is640px", false, localStorage),
+      // 喜欢的音乐列表
+      likeList: useStorage<number[]>("likeList", [], sessionStorage),
       // 当前播放歌曲
       currentSong: useStorage<SongInfo | null>('currentSong', null, localStorage, { serializer: StorageSerializers.object }),
       // 私信信息

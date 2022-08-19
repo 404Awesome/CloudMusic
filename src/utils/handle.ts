@@ -45,12 +45,11 @@ export default {
   },
   // 处理歌曲信息
   SongInfo(songInfo: any): SongInfo {
-    if (songInfo?.ar?.length) {
-      let { ar, al, id, name, tns = [] } = songInfo;
-      return { artists: ar, album: al, song: { id, name, tns } };
-    } else {
-      let { artists, album, id, name, tns = [] } = songInfo;
-      return { artists, album, song: { id, name, tns } };
+    let { artists, album, ar, al, id, name, tns = [] } = songInfo;
+    return {
+      artists: artists || ar,
+      album: album || al,
+      song: { id, name, tns }
     }
   },
   // 处理歌单列表中歌曲信息

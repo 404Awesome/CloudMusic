@@ -16,7 +16,7 @@
       <!-- 控制按钮 -->
       <section class="control">
         <!-- 喜欢 -->
-        <span class="like"></span>
+        <LikeIcon v-if="store.currentSong" :id="store.currentSong?.song.id" />
         <!-- 上一首 -->
         <span @click="changeSong(false)" class="change" i-eva:skip-back-fill></span>
         <!-- 播放 -->
@@ -38,6 +38,7 @@
 <script setup lang="ts">
 import Operate from "./coms/operate.vue";
 import SongInfo from "./coms/songInfo.vue";
+import LikeIcon from "@/components/content/likeIcon/likeIcon.vue"
 import { promiseTimeout, useDebounceFn, useThrottleFn } from "@vueuse/shared";
 import { ref, watch, onMounted, computed } from "vue";
 import { useMitt, Validation } from "utils";
@@ -204,10 +205,6 @@ onMounted(() => {
 // 控制
 .control {
   @apply flex items-center justify-center gap-15px;
-
-  .like {
-    @apply i-carbon-favorite hover-i-carbon-favorite-filled hover-text-red-500 hover-dark-text-orange-400;
-  }
 
   .play {
     @apply themeBgColor p-3px rounded-full dark-bg-gray-500;

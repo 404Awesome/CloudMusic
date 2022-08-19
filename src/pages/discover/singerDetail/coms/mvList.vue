@@ -3,7 +3,7 @@
   <el-skeleton :loading="loading" animated>
     <template #template>
       <ul ref="skeletonEl" grid4Cols mt-15px>
-        <li v-for="item in 8">
+        <li v-for="item in 4">
           <el-skeleton-item variant="image" w-full h-35 rounded-md />
           <el-skeleton-item block variant="text" w="6/10" mt-7px />
         </li>

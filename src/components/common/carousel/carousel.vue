@@ -31,6 +31,6 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .carousel {
-  @apply bg-gray-100 pt-7 h-260px dark-bg-gray-300;
+  @apply pt-2 sm-py-7 sm-bg-gray-100 dark-sm-bg-gray-300;
 }
 </style>

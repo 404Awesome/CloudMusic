@@ -1,7 +1,7 @@
 <!-- 电台分类详情 -->
 <template>
   <div>
-    <p>{{ route.query }}</p>
+    <p text-red-500 text-center text-lg>暂未开发</p>
   </div>
 </template>
 

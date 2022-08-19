@@ -1,9 +1,10 @@
 import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
+import { SongInfo, useMainStore } from "store";
 import { useDebounceFn } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { Handle, useMD5 } from "utils";
-import { useMainStore } from "store";
 import { SongListAPI } from "api";
+import { toRaw } from "vue";
 
 // 防抖函数延迟时间
 const delay = 300;
@@ -20,10 +21,10 @@ export default {
     }
   }, delay),
   // 将歌曲列表添加到播放列表
-  addPlayList: useDebounceFn((songs: any, id: number) => {
+  addPlayList: useDebounceFn((songList: SongInfo[], id: number) => {
     const store = useMainStore();
-    if (store.songListID == id) return ElMessage.warning('请不要重复播放相同歌单!');
-    let songList = Handle.SongList(songs);
+    songList = toRaw(songList);
+    if (store.songListID == id && id) return ElMessage.warning('请不要重复播放相同歌单!');
     store.addPlayList(songList);
     store.songListID = id;
   }, delay),
@@ -54,10 +55,6 @@ export default {
         window.open(url);
       }
     } catch (err: any) { }
-  }, delay),
-  // 喜欢歌曲 / 取消 
-  likeSong: useDebounceFn((id: number) => {
-    console.log(id);
   }, delay),
   // 收藏专辑
   collectAlbum: useDebounceFn((id: number) => {

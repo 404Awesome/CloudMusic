@@ -5,7 +5,7 @@
       <!-- 头像 -->
       <div py-10px>
         <el-image :src="item.avatarUrl" fit="cover" @click.stop="$router.push(`/personalPage/${item.userId}`)"
-          :draggable="false" class="avatar" />
+          class="avatar" />
       </div>
       <!-- 信息 -->
       <div @click.stop="goMsgContent(item)" class="info">

@@ -41,9 +41,5 @@ export default {
   // 获取相关mv
   getRelevant(mvid: number) {
     return GET("/simi/mv", { mvid });
-  },
-  // 获取mv评论
-  getComment(id: number, offset: number = 0, limit: number = 20) {
-    return GET("/comment/mv", { id, offset, limit });
-  },
+  }
 };

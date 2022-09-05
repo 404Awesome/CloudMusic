@@ -1,7 +1,7 @@
 <!-- 登陆 -->
 <template>
-  <div flex h-full overflow-hidden>
-    <el-scrollbar flex-1 px-15px sm:p-0px>
+  <div class="login">
+    <el-scrollbar class="form">
       <el-tabs :tab-position="tabPosition" pt-25px md:pt-150px pb-25px>
         <el-tab-pane v-for="{ label, component } in components" :key="label" :label="label">
           <component :is="component"></component>
@@ -14,7 +14,7 @@
       </div>
     </el-scrollbar>
 
-    <Lottie :animationData="lottieAnima!" flex-1 hidden md:block />
+    <Lottie :animationData="lottieAnima!" class="lottie" />
   </div>
 </template>
 
@@ -28,7 +28,7 @@ import Password from "./coms/password.vue";
 import Captcha from "./coms/captcha.vue";
 import QrCode from "./coms/qrCode.vue";
 import Email from "./coms/email.vue";
-import { markRaw, computed, onMounted, ref } from "vue";
+import { markRaw, computed } from "vue";
 import { useMainStore } from "store";
 const store = useMainStore();
 
@@ -57,3 +57,17 @@ let tabPosition = computed(() => {
   return store.is640px ? 'top' : 'left';
 });
 </script>
+
+<style lang="scss" scoped>
+.login {
+  @apply flex h-full overflow-hidden;
+
+  .form {
+    @apply grow shrink-0 px-15px sm-p-0px;
+  }
+
+  .lottie {
+    @apply w-50% hidden md-block;
+  }
+}
+</style>

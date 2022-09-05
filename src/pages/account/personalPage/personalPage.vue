@@ -2,7 +2,7 @@
 <template>
   <div wrapBox :key="`${$route.params.uid}`">
     <!-- 详情 -->
-    <Detail :key="($route.params.uid as string)" />
+    <Detail />
     <!-- 歌单 -->
     <SongList />
   </div>

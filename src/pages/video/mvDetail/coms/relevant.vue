@@ -4,7 +4,7 @@
 
   <el-skeleton :loading="loading" animated>
     <template #template>
-      <div v-for="item in 4" flex gap-10px mb-4>
+      <div v-for="item in 3" flex gap-10px mb-4>
         <el-skeleton-item variant="image" flex-1 h-35 rounded-md />
         <div flex-1 mt-5px>
           <el-skeleton-item block variant="text" w-full />

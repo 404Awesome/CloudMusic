@@ -22,7 +22,7 @@
         <ThemeSelect />
 
         <!-- 通知 -->
-        <span v-if="store.auth" @click.stop="openNoticeDrawer" class="icon" i-carbon:notification></span>
+        <span v-if="store.accountInfo.id" @click.stop="openNoticeDrawer" class="icon" i-carbon:notification></span>
 
         <!-- 暗夜模式 -->
         <span @click.stop="toggleDark()" class="icon" i-carbon:sun dark:i-carbon-moon></span>

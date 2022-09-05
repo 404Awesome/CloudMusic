@@ -4,7 +4,7 @@
     <p v-if="$route.meta.tablist">
       <span v-for="item in ($route.meta.tablist as any)" :class="{ active: $route.fullPath == item.path }"
         @click="$router.push(item.path)">
-        {{ item.auth && !store.auth ? "" : item.title }}
+        {{ item.auth && !store.accountInfo.id ? "" : item.title }}
       </span>
     </p>
     <p v-else>

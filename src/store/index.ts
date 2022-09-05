@@ -22,11 +22,17 @@ export interface SongInfo {
     tns: string[]
   }
 }
+export interface AccountInfo {
+  id: number,
+  avatarUrl: string,
+  nickname: string,
+  signature: string
+}
 export const useMainStore = defineStore("main", {
   state: () => {
     return {
-      // 登陆状态
-      auth: useStorage<string>('auth', '', localStorage),
+      // 账号信息
+      accountInfo: useStorage<AccountInfo>('accountInfo', { id: 0, avatarUrl: '', nickname: '', signature: '' }, localStorage),
       // 页面滚动距离
       scrollTop: useStorage<number>('scrollTop', 0),
       // 主题色
@@ -39,7 +45,7 @@ export const useMainStore = defineStore("main", {
       songListID: useStorage<number>('songListID', 0, sessionStorage),
       // 当前音乐播放进度
       progress: useStorage<number>("progress", 0, sessionStorage),
-      // 当前窗体大小是否小于640px
+      // 当前窗体宽度是否小于640px
       is640px: useStorage<boolean>("is640px", false, localStorage),
       // 喜欢的音乐列表
       likeList: useStorage<number[]>("likeList", [], sessionStorage),
@@ -94,6 +100,6 @@ export const useMainStore = defineStore("main", {
       this.emptyPlayList();
       this.playList.push(...songList);
       this.playSong(songList[0]);
-    },
+    }
   }
 });

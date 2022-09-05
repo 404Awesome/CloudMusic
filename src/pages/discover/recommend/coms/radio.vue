@@ -65,7 +65,7 @@ let loadData = async () => {
 
 // 跳转电台详情页面
 let goRadioDetail = (id: number) => {
-  if (store.auth) {
+  if (store.accountInfo.id) {
     router.push(`/radioDetail/${id}`);
   } else {
     ElMessage.warning("需要登陆后查看!");

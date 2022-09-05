@@ -74,12 +74,12 @@ let left = computed(() => {
         background: linear-gradient(to right, #fa5042, #d43b32);
 
         .icon {
-          color: #fff !important;
+          @apply important-text-white;
         }
       }
 
       .icon {
-        @apply text-#7f8c8d text-20px cursor-pinter hover-themeColor;
+        @apply text-#7f8c8d text-20px hover-themeColor cursor-pointer;
       }
     }
   }

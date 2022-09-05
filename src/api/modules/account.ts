@@ -74,10 +74,6 @@ export default {
   getEvent(lasttime: number, pagesize: number = 20) {
     return GET("/event", { pagesize, lasttime });
   },
-  // 获取动态评论
-  getCommentEvent(threadId: number, offset: number, limit: number) {
-    return GET("/comment/event", { threadId, offset, limit });
-  },
   // 关注/取消关注用户
   getFollow(id: number, t: number = 0 | 1) {
     // [t] 1为关注 0为取消关注
@@ -98,5 +94,5 @@ export default {
   // 最近播放-歌曲
   getRecentSong(limit: number = 100) {
     return GET("/record/recent/song", { limit });
-  },
+  }
 }

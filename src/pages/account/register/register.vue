@@ -156,11 +156,7 @@ let submit = () => {
       // 暂不支持注册
       let timer = setTimeout(() => {
         disabledForm.value = false;
-        ElNotification({
-          title: '提示',
-          message: '暂不支持注册!',
-          type: 'warning',
-        })
+        ElNotification.warning({ message: "暂不支持注册!", duration: 2000, showClose: false });
         clearTimeout(timer);
       }, 1000);
 

@@ -11,18 +11,17 @@
       </li>
     </ul>
 
-    <!-- 分割线 -->
-    <el-divider>
-      <span tip>{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
-    </el-divider>
+    <!-- 提示 -->
+    <Tip :disabled="disabled" />
   </div>
 </template>
 
 <script setup lang="ts">
+import Tip from "@/components/content/tip/tip.vue";
 import VideoItem from "@/components/content/videoItem/videoItem.vue";
+import { onMounted, reactive, ref } from "vue";
 import CateList from "./coms/cateList.vue";
 import { ElMessage } from "element-plus";
-import { onMounted, reactive, ref } from "vue";
 import { VideoAPI } from "api";
 
 // 是否正在加载

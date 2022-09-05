@@ -28,9 +28,5 @@ export default {
   // 获取视频播放地址
   getUrl(id: string) {
     return GET("/video/url", { id });
-  },
-  // 获取视频评论
-  getComment(id: string) {
-    return GET("/comment/video", { id });
-  },
+  }
 }

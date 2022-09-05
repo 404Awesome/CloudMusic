@@ -13,10 +13,10 @@
     <template #default>
       <ul class="songList">
         <!-- 每日推荐 -->
-        <li v-if="store.auth" @click="$router.push('/dailySongs')" cursor-pointer>
+        <li v-if="store.accountInfo.id" @click="$router.push('/dailySongs')" cursor-pointer>
           <!-- 封面 -->
           <div class="dailySongs cover">
-            <el-image src="/img/dailySongs.png" fit="cover" :draggable="false" />
+            <el-image src="/img/dailySongs.png" fit="cover" />
             <p class="tipText">根据你的音乐口味生成每日更新</p>
             <p class="date">{{ new Date().getDate() }}</p>
             <PlayIcon @playClick="playDailySongs" position="bottom-right" />
@@ -26,10 +26,10 @@
         </li>
 
         <!-- 歌单列表 -->
-        <li v-for="item in songList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" cursor-pointer>
+        <li v-for="item in SongList" :key="item.id" @click="$router.push(`/songListDetail/${item.id}`)" cursor-pointer>
           <!-- 封面 -->
           <div class="cover">
-            <el-image :src="item.picUrl" fit="cover" :draggable="false" brightness-85 />
+            <el-image :src="item.picUrl" fit="cover" brightness-85 />
             <PlayCount :playCount="item.playCount" />
             <PlayIcon @playClick="Operate.playSongList(item.id)" position="bottom-right" />
           </div>
@@ -45,15 +45,13 @@
 <script setup lang="ts">
 import PlayCount from "@/components/content/playCount/playCount.vue";
 import PlayIcon from "@/components/content/playIcon/playIcon.vue";
-import { reactive, ref, onActivated } from "vue";
+import { reactive, ref, onActivated, computed } from "vue";
 import { SongAPI, SongListAPI } from "api";
 import { ElMessage } from "element-plus";
 import { Handle, Operate } from "utils";
 import { useMainStore } from "store";
 const store = useMainStore();
 
-// 限制获取数量
-let limit = 12;
 // 加载状态
 let loading = ref<boolean>(false);
 // 推荐歌单列表
@@ -64,6 +62,10 @@ interface SongInfo {
   playCount: number
 }
 let songList = reactive<SongInfo[]>([]);
+// 歌单
+let SongList = computed((): SongInfo[] => {
+  return store.accountInfo.id ? songList.slice(0, 11) : songList;
+});
 
 // 播放每日推荐音乐
 let playDailySongs = async () => {
@@ -86,8 +88,7 @@ let playDailySongs = async () => {
 let loadData = async () => {
   try {
     loading.value = true;
-    if (store.auth) limit = 11;
-    let { code, result }: any = await SongListAPI.getPersonalized(limit);
+    let { code, result }: any = await SongListAPI.getPersonalized(12);
     if (code == 200) {
       // 处理歌单
       let list = result.map((item: any) => {

@@ -1,9 +1,9 @@
 <!-- 二维码登陆 -->
 <template>
-  <div ref="qrCodeEl" flex flex-col items-center justify-center pt-15px sm:pt-0px>
+  <div ref="qrCodeEl" class="qrcodeWrap">
     <!-- 二维码图片 -->
-    <div v-loading="loading" w-37 h-37 border-7px themeBorder rounded-md shadow-md>
-      <el-image :class="{ overdue: qrCode.overdue }" :src="qrCode.img" :draggable="false" />
+    <div v-loading="loading" class="qrcode">
+      <el-image :class="{ overdue: qrCode.overdue }" :src="qrCode.img" />
     </div>
 
     <!-- 二维码状态 -->
@@ -16,14 +16,12 @@
 
 <script setup lang="ts">
 import { useQRCode } from '@vueuse/integrations/useQRCode'
-import { ElMessage, ElNotification } from "element-plus";
 import { useIntersectionObserver } from "@vueuse/core";
 import { onMounted, reactive, ref } from "vue";
+import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
-import { useMainStore } from "store";
 import { AccountAPI } from "api";
-import md5 from "md5";
-const store = useMainStore();
+import { Operate } from 'utils';
 const router = useRouter();
 
 // 二维码加载状态
@@ -73,7 +71,7 @@ let pollingQrCode = async () => {
   if (qrCode.timer) clearInterval(qrCode.timer);
   qrCode.timer = setInterval(async () => {
     // 二维码状态 800为二维码过期, 801为等待扫码, 802为待确认, 803为授权登录成功
-    let { code, message, cookie }: any = await AccountAPI.loginQrCheck(qrCode.key);
+    let { code, message }: any = await AccountAPI.loginQrCheck(qrCode.key);
     if (qrCode.status !== message) qrCode.status = message;
     // 二维码过期
     if (code === 800) {
@@ -84,13 +82,8 @@ let pollingQrCode = async () => {
     // 登录成功
     if (code === 803) {
       clearInterval(qrCode.timer);
-      store.auth = md5(cookie);
-      router.push("/myHonePage");
-      return ElNotification({
-        title: '成功',
-        message: '登录成功!',
-        type: 'success',
-      });
+      // 登陆成功
+      Operate.loginResult(200, () => router.replace("/"));
     }
   }, 1500);
 }
@@ -116,6 +109,15 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+// 二维码容器
+.qrcodeWrap {
+  @apply flex flex-col items-center justify-center pt-15px sm-pt-0px;
+
+  .qrcode {
+    @apply w-37 h-37 border-7px themeBorder rounded-md shadow-md;
+  }
+}
+
 // 状态
 .status {
   @apply truncate mt-5px text-17px;

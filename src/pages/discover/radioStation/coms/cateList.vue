@@ -4,7 +4,7 @@
     <el-skeleton :loading="loading" animated>
       <template #template>
         <div w-full flex justify-center>
-          <el-skeleton-item wrapBox h-80px rounded-md />
+          <el-skeleton-item w="8/10" h-80px rounded-md />
         </div>
       </template>
       <template #default>
@@ -70,7 +70,7 @@ onMounted(async () => {
 
 // 跳转电台分类页面
 let goRadioPage = (id: number, name: string) => {
-  if (store.auth) {
+  if (store.accountInfo.id) {
     router.push({
       path: "/radioCateDetail",
       query: { id, name }

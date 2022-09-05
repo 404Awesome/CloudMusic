@@ -19,9 +19,22 @@ import PlayList from "@/pages/drawer/playList/playList.vue";
 import SongDetail from "@/pages/drawer/songDetail/songDetail.vue";
 import PrivateMsg from "@/pages/drawer/privateMsg/privateMsg.vue";
 import { useThrottleFn } from "@vueuse/shared";
+import { ElMessage } from "element-plus";
 import { useMainStore } from "store";
 import { onMounted } from "vue";
+import { SongAPI } from "api";
 const store = useMainStore();
+
+let getLikeSongList = async () => {
+  try {
+    if (!store.likeList.length) {
+      let { code, ids }: any = await SongAPI.getLikeList(store.accountInfo.id);
+      if (code == 200) store.likeList.push(...ids);
+    }
+  } catch (err: any) {
+    ElMessage.error("加载喜欢音乐列表失败!");
+  }
+}
 
 onMounted(() => {
   // 生产模式下强制升级http请求为https
@@ -43,6 +56,8 @@ onMounted(() => {
     document.documentElement.style.setProperty("--100vh", `${height}px`);
     store.is640px = width < 640 ? true : false;
   }, 300));
+  // 如果已登陆,请求喜欢音乐列表
+  if (store.accountInfo.id) getLikeSongList();
 });
 </script>
 
@@ -63,6 +78,8 @@ onMounted(() => {
   --sideNavBarWidth: 230px;
   /* 100vh */
   --100vh: 0px;
+  /* element ui primary color */
+  --el-color-primary: var(--theme-color);
 }
 
 // 暗黑模式下的变量
@@ -100,6 +117,7 @@ body,
 ul,
 li,
 div,
+button,
 article,
 header,
 section,
@@ -108,7 +126,12 @@ main,
 footer,
 aside {
   box-sizing: border-box;
+  color: var(--font-color);
   -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  -webkit-user-drag: none;
 }
 </style>
 <!-- element-plus -->
@@ -153,21 +176,12 @@ aside {
 
 /* 修改elementui el-pagination */
 .el-pagination {
-  .is-active {
-    background-color: var(--theme-color) !important;
-    color: #fff !important;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 
-    &:focus {
-      outline: transparent;
-    }
-  }
-
-  &.is-background .el-pager li:not(.is-active):hover {
-    color: var(--theme-color) !important;
-  }
-
-  &.is-background .btn-next:hover:not([disabled]) {
-    color: var(--theme-color);
+  .is-active:focus {
+    outline: transparent;
   }
 }
 
@@ -250,11 +264,15 @@ aside {
 
   /* 滚动条滑块 */
   &::-webkit-scrollbar-thumb {
-    @apply rounded themeBgColor;
+    @apply rounded bg-black/25 border-r-1px border-r-transparent;
   }
 
   &:focus {
     box-shadow: 0 0 0 1px var(--theme-color) inset;
+
+    &::-webkit-scrollbar-thumb {
+      border-right-color: var(--theme-color);
+    }
   }
 }
 

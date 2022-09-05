@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
+import { useMainStore } from "store";
 
 let Video = () => import("@/pages/video/video.vue");
 let VideoList = () => import("@/pages/video/videoList/videoList.vue");
@@ -24,8 +25,8 @@ const routes: RouteRecordRaw[] = [
       path: "videoList",
       component: VideoList,
       beforeEnter() {
-        let auth = localStorage.getItem("auth");
-        return auth ? true : "/account/login";
+        const store = useMainStore();
+        return store.accountInfo.id ? true : "/account/login";
       },
     }, {
       path: "mvList",

@@ -11,7 +11,7 @@
       <el-form-item>
         <div w-full flex justify-center gap-10px>
           <button @click.prevent="submit" :disabled="disabledForm" class="btn" bg-blue-500>登陆</button>
-          <button @click.prevent="formEl.resetFields()" :disabled="disabledForm" class="btn" bg-amber-500>重置</button>
+          <button @click.prevent="formEl?.resetFields()" :disabled="disabledForm" class="btn" bg-amber-500>重置</button>
         </div>
       </el-form-item>
     </el-form>
@@ -19,16 +19,20 @@
 </template>
 
 <script setup lang="ts">
+import { ElForm, ElMessage, FormRules, ElNotification } from 'element-plus';
 import { useIntersectionObserver } from '@vueuse/core';
-import { ElMessage, FormRules } from 'element-plus';
 import { onMounted, reactive, ref } from 'vue';
-import { Validation, Operate } from "utils";
+import { useRouter } from "vue-router";
+import { useMainStore } from "store";
+import { Operate, Validation } from "utils";
 import { AccountAPI } from "api";
+const store = useMainStore();
+const router = useRouter();
 
 // 容器元素
-let passwordEl = ref<any>(null);
+let passwordEl = ref<HTMLElement | null>(null);
 // 表单元素
-let formEl = ref<any>(null);
+let formEl = ref<InstanceType<typeof ElForm>>();
 // 禁用表单
 let disabledForm = ref(false);
 // 表单数据
@@ -51,7 +55,7 @@ const rules = reactive<FormRules>({
 
 // 提交登陆
 let submit = () => {
-  formEl.value.validate(async (isValid: boolean) => {
+  formEl.value?.validate(async (isValid: boolean) => {
     if (isValid) {
       // 验证手机号
       if (!Validation.phone(formData.phone)) {
@@ -64,9 +68,9 @@ let submit = () => {
       // 禁用表单
       disabledForm.value = true;
       // 发起登陆请求
-      let { code, message = "登陆失败!", cookie }: any = await AccountAPI.loginPassword(parseInt(formData.phone), formData.password);
+      let { code }: any = await AccountAPI.loginPassword(parseInt(formData.phone), formData.password);
       // 登陆结果
-      Operate.loginResult(code, message, cookie);
+      Operate.loginResult(code, () => router.replace("/"));
       // 解除禁用表单
       disabledForm.value = false;
     }
@@ -77,7 +81,7 @@ let submit = () => {
 onMounted(() => {
   useIntersectionObserver(passwordEl.value, ([{ isIntersecting }]) => {
     if (!isIntersecting) {
-      formEl.value.resetFields();
+      formEl.value?.resetFields();
     }
   })
 });

@@ -2,69 +2,134 @@
 <template>
   <div pt-4 pb-8>
     <!-- 艺术家 -->
-    <Artists fontSize="15px" :artists="artists!" />
+    <div flex gap-10px items-center>
+      <el-avatar :src="artists[0].img1v1Url" :size="45" />
+      <Artists fontSize="15px" :artists="artists!" />
+    </div>
 
     <!-- mv信息 -->
     <div pt-10px>
       <!-- 标题 -->
-      <h4 text-20px flex items-center gap-5px>
-        <span max-w="7/10" truncate>{{ name }}</span>
-        <span v-if="desc" @click="showDesc = !showDesc" class="descIcon" :class="{ active: showDesc }"
-          i-eva:arrow-up-fill></span>
+      <h4 class="title">
+        <span class="content">{{ name }}</span>
+        <span v-if="desc" @click="showDesc = !showDesc" :class="{ active: showDesc }" class="descIcon"></span>
       </h4>
 
       <!-- 元信息 -->
-      <p flex py-10px text="black/50 14px" gap-15px>
+      <p class="metaInfo">
         <span>发布: {{ publishTime }}</span>
-        <span>播放: {{ Handle.Count(playCount!) }}</span>
+        <span>播放: {{ playCount }}</span>
       </p>
 
       <!-- 简介 -->
-      <p v-show="showDesc" p-10px mb-10px rounded-md bg="#f4f4f5" text-14px>{{ desc }}</p>
+      <p v-show="showDesc" class="description">{{ desc }}</p>
 
-      <!-- 操作 -->
-      <Operate mode="mv" :id="id!" :subCount="subCount!" :likedCount="likedCount!" :shareCount="shareCount!" />
+      <!-- 赞 / 收藏 / 分享 -->
+      <div class="operate">
+        <ul class="list">
+          <li v-for="item in control" :key="item.title" @click.stop="item.method">
+            <span :class="item.icon" mr-5px text-17px></span>
+            <span truncate>{{ item.title }}</span>
+          </li>
+        </ul>
+
+        <!-- 举报 -->
+        <p @click="report" class="report">举报</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import Operate from "@/components/content/operate/operate.vue";
 import Artists from "@/components/content/artists/artists.vue";
-import { toRaw, ref } from "vue";
-import { Handle } from "utils";
+import { MVDetail } from "../mvDetail.vue";
+import { toRaw, ref, PropType } from "vue";
+import { Operate } from "utils";
 const props = defineProps({
-  id: Number,
-  desc: String,
-  name: String,
-  artists: Array,
-  subCount: Number,
-  playCount: Number,
-  likedCount: Number,
-  shareCount: Number,
-  publishTime: String
+  info: {
+    type: Object as PropType<MVDetail>,
+    required: true
+  }
 });
-let { id, artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount } = toRaw(props);
+let { id, artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount } = toRaw(props.info);
 
 // 是否显示简介
-let showDesc = ref(false);
+let showDesc = ref<boolean>(false);
+
+// 赞 / 收藏 / 分享
+let control = ([{
+  title: `赞 (${likedCount})`,
+  icon: "i-carbon:thumbs-up group-hover:i-carbon-thumbs-up-filled",
+  method() {
+    console.log(id);
+  }
+}, {
+  title: `收藏 (${subCount})`,
+  icon: "i-carbon:folder-add",
+  method() {
+    console.log(id);
+  }
+}, {
+  title: `分享 (${shareCount})`,
+  icon: "i-carbon:link",
+  method() {
+    if (name) {
+      Operate.shareInfo(name, location.href);
+    }
+  }
+}]);
+
+// 举报
+let report = () => {
+  console.log(id);
+}
 </script>
 
 <style lang="scss" scoped>
-// 描述图标
-.descIcon {
-  min-width: 25px;
-  font-size: 25px;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out;
-  transform: rotate(180deg);
+// 标题
+.title {
+  @apply text-20px flex items-center gap-5px truncate;
 
-  &.active {
-    transform: rotate(0deg);
+  .content {
+    @apply max-w-7/10 truncate;
   }
 
-  &:hover {
-    color: var(--theme-color);
+  .descIcon {
+    transition: transform 0.3s ease-in-out;
+    transform: rotate(180deg);
+
+    @apply min-w-25px text-25px cursor-pointer hover-themeColor i-eva-arrow-up-fill;
+
+    &.active {
+      transform: rotate(0deg);
+    }
+  }
+}
+
+// 描述
+.description {
+  @apply p-10px mb-10px rounded-md bg-#f4f4f5 text-14px;
+}
+
+// 元信息
+.metaInfo {
+  @apply flex py-10px text-black/50 text-14px gap-15px;
+}
+
+// 操作
+.operate {
+  @apply flex items-center justify-between text-14px gap-10px select-none;
+
+  .list {
+    @apply flex flex-wrap overflow-hidden flex-1 gap-10px;
+
+    li {
+      @apply flex items-center py-6px px-13px rounded-full cursor-pointer hover-text-white hover-themeBgColor border-1px border-#eee;
+    }
+  }
+
+  .report {
+    @apply truncate cursor-pointer hover-themeColor;
   }
 }
 </style>

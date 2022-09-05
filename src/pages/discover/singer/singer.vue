@@ -15,13 +15,12 @@
     </ul>
 
     <!-- 提示 -->
-    <el-divider>
-      <span tip>{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
-    </el-divider>
+    <Tip :disabled="disabled" />
   </div>
 </template>
 
 <script setup lang="ts">
+import Tip from "@/components/content/tip/tip.vue";
 import categoryList from "./coms/categoryList.vue";
 import { ref, reactive, toRaw } from "vue";
 import { ElMessage } from "element-plus";

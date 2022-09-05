@@ -25,11 +25,15 @@
 </template>
 
 <script setup lang="ts">
+import { ElMessage, FormRules, ElNotification } from 'element-plus';
 import { useIntersectionObserver } from '@vueuse/core';
-import { ElMessage, FormRules } from 'element-plus';
 import { onMounted, reactive, ref } from 'vue';
-import { Validation, Operate } from "utils";
+import { useRouter } from "vue-router";
+import { useMainStore } from "store";
+import { Operate, Validation } from "utils";
 import { AccountAPI } from "api";
+const store = useMainStore();
+const router = useRouter();
 
 // 容器元素
 let captchaEl = ref<any>(null);
@@ -99,9 +103,9 @@ let submit = () => {
       // 禁用表单
       disabledForm.value = true;
       // 发起登陆请求
-      let { code, message = "登陆失败!", cookie }: any = await AccountAPI.loginCaptcha(parseInt(formData.phone), parseInt(formData.captcha));
+      let { code }: any = await AccountAPI.loginCaptcha(parseInt(formData.phone), parseInt(formData.captcha));
       // 登陆结果
-      Operate.loginResult(code, message, cookie);
+      Operate.loginResult(code, () => router.replace("/"));
       // 解除禁用表单
       disabledForm.value = false;
     }

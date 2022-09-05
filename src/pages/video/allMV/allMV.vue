@@ -25,7 +25,7 @@
     </el-skeleton>
 
     <!-- 分页 -->
-    <div v-show="mvList.length" flex justify-center mt-4>
+    <div v-show="mvList.length">
       <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :pager-count="5"
         :total="total" />
     </div>

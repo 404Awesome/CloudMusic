@@ -11,10 +11,8 @@
     <!-- 空状态 -->
     <el-empty v-show="disabled && !followList.length" description="未关注任何人!" />
 
-    <!-- 加载状态 -->
-    <el-divider>
-      <span tip>{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
-    </el-divider>
+    <!-- 提示 -->
+    <Tip :disabled="disabled" />
   </div>
 </template>
 
@@ -22,6 +20,7 @@
 export default { name: "UserFollows" }
 </script>
 <script setup lang="ts">
+import Tip from "@/components/content/tip/tip.vue";
 import PersonalCard from "@/components/content/personalCard/personalCard.vue";
 import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";

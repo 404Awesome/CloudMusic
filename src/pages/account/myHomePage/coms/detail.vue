@@ -1,9 +1,9 @@
 <!-- 账户详情 -->
 <template>
-  <div rounded overflow-hidden h-80>
-    <!-- 背景图片 -->
+  <div rounded overflow-hidden h-85>
     <div relative>
-      <el-image :src="info.backgroundUrl" fit="cover" :draggable="false" h-35 w-full brightness-95 />
+      <!-- 背景图片 -->
+      <el-image :src="info.backgroundUrl" fit="cover" h-40 w-full brightness-95 />
       <!-- 编辑个人信息 -->
       <div absolute right-0px bottom-5px @click="goEditInfo">
         <el-tooltip ref="tooltipEl" content="编辑个人信息" placement="top" effect="light" :hide-after="0">
@@ -13,7 +13,7 @@
     </div>
 
     <!-- 头像 -->
-    <el-image :src="info.avatarUrl" :draggable="false" class="avatar" />
+    <el-image :src="info.avatarUrl" class="avatar" />
 
     <!-- 简介 -->
     <div h-full translate-y--70px bg-gray-200 p-10px pt-40px>
@@ -33,15 +33,15 @@
         <!-- 计数 -->
         <ul class="count">
           <li @click="goCountPage('/userDynamic')">
-            <span text-blue-500>{{ count.dynamic }}</span>
+            <span text-blue-500>{{ info.dynamic || 0 }}</span>
             <span>动态</span>
           </li>
           <li @click="goCountPage('/userFollows')">
-            <span text-teal-500>{{ count.follows }}</span>
+            <span text-teal-500>{{ info.follows || 0 }}</span>
             <span>关注</span>
           </li>
           <li @click="goCountPage('/userFolloweds')">
-            <span text-violet-500>{{ count.followeds }}</span>
+            <span text-violet-500>{{ info.followeds || 0 }}</span>
             <span>粉丝</span>
           </li>
         </ul>
@@ -55,55 +55,45 @@
 </template>
 
 <script setup lang="ts">
-import { ElMessage, ElMessageBox } from "element-plus";
-import { onMounted, reactive, ref } from "vue";
+import { ElMessage, ElMessageBox, ElTooltip } from "element-plus";
+import { onMounted, ref, reactive } from "vue";
 import { useRouter } from "vue-router";
+import { useMainStore } from "store";
 import { AccountAPI } from "api";
 import { Handle } from "utils";
+const store = useMainStore();
 const router = useRouter();
-const emit = defineEmits(['getUid']);
 
-// tooltip元素
-let tooltipEl = ref<any>(null);
 // 个人信息
-let info = reactive<any>({});
-// 计数
-let count = reactive({
-  // 动态
-  dynamic: 0,
-  // 关注
-  follows: 0,
-  // 粉丝
-  followeds: 0
-});
+interface ProfileInfo {
+  id: number,            // 用户id
+  level: number,          // 等级
+  avatarUrl: string,      // 头像
+  backgroundUrl: string,  // 背景图片
+  gender: 0 | 1 | 2,      // 性别
+  nickname: string,       // 昵称
+  signature: string,      // 签名
+  cityName: string,       // 城市
+  dynamic: number,        // 动态数量
+  follows: number,        // 关注数量
+  followeds: number       // 粉丝数量
+}
+let info = reactive<ProfileInfo>({} as ProfileInfo);
+// tooltip元素
+let tooltipEl = ref<InstanceType<typeof ElTooltip>>();
 
 // 跳转编辑个人信息页面
 let goEditInfo = () => {
-  tooltipEl.value.hide();
-  router.push("/editPersonalInfo");
-}
-
-// 获取 动态/关注/粉丝 数量
-let getCount = async (uid: number) => {
-  try {
-    // 获取动态
-    let dynamic: any = await AccountAPI.getUserEvent(uid);
-    if (dynamic.code == 200) count.dynamic = dynamic.size;
-    // 获取关注
-    let follows: any = await AccountAPI.getUserFollows(uid);
-    if (follows.code == 200) count.follows = follows.follow.length;
-    // 获取粉丝
-    let followeds: any = await AccountAPI.getUserFolloweds(uid);
-    if (followeds.code == 200) count.followeds = followeds.size;
-  } catch (err: any) {
-    ElMessage.error("加载动态/关注/粉丝数失败!");
+  if (tooltipEl.value) {
+    tooltipEl.value.hide();
+    router.push("/editPersonalInfo");
   }
 }
 
 // 跳转 动态/关注/粉丝 页面
 let goCountPage = (path: string) => {
-  if (info.uid) {
-    router.push(`${path}/${info.uid}`);
+  if (info?.id) {
+    router.push(`${path}/${info.id}`);
   }
 }
 
@@ -127,9 +117,26 @@ let exitLogin = async () => {
     let { code }: any = await AccountAPI.loginLogout();
     if (code == 200) {
       ElMessage.success("退出成功!");
-      router.push("/");
+      // 清除账号信息
+      store.accountInfo = { id: 0, avatarUrl: '', nickname: '', signature: '' };
+      // 跳转到首页
+      router.replace("/");
     }
   } catch (err: any) { }
+}
+
+// 获取 动态/关注/粉丝 数量
+let getCount = async (id: number) => {
+  try {
+    let [Event, Follows, Followeds]: any = await Promise.all([AccountAPI.getUserEvent(id), AccountAPI.getUserFollows(id), AccountAPI.getUserFolloweds(id)])
+    Object.assign(info, {
+      dynamic: Event?.size || 0,             // 动态
+      followeds: Followeds?.size || 0,       // 粉丝
+      follows: Follows?.follow.length || 0   // 关注
+    });
+  } catch (err: any) {
+    ElMessage.error("加载动态/关注/粉丝数失败!");
+  }
 }
 
 // 加载个人信息
@@ -137,36 +144,16 @@ onMounted(async () => {
   try {
     // 获取个人信息
     let { code, profile }: any = await AccountAPI.getUserAccount();
-
     // 获取个人等级
     let { data: { level } } = await AccountAPI.getUserLevel();
     if (code == 200) {
-      // 发送uid
-      emit("getUid", profile.userId)
-      // 获取数量
-      getCount(profile.userId);
-      let { userId: uid, avatarUrl, backgroundUrl, city, nickname, signature, province, gender } = profile;
+      let { userId: id, avatarUrl, backgroundUrl, city, nickname, signature, province, gender } = profile;
       // 处理城市
       let cityName = Handle.City(province, city);
-
-      Object.assign(info, {
-        // 用户id
-        uid,
-        // 等级
-        level,
-        // 头像
-        avatarUrl,
-        // 背景图片
-        backgroundUrl,
-        // 性别
-        gender,
-        // 昵称
-        nickname,
-        // 签名
-        signature,
-        // 城市
-        cityName
-      });
+      store.accountInfo = { nickname, avatarUrl, id, signature };
+      Object.assign(info, { id, level, avatarUrl, backgroundUrl, gender, nickname, signature, cityName });
+      // 获取数量
+      getCount(id);
     }
   } catch (err: any) {
     ElMessage.error("加载账号信息失败!");

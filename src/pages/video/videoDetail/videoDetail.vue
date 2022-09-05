@@ -36,15 +36,15 @@
         </template>
         <template #default>
           <!-- Video视频 -->
-          <PlyrVideo :source="videoSource" :poster="videoDetail.coverUrl" />
+          <PlyrVideo :source="videoSource" :poster="videoDetail!.coverUrl" />
 
           <!-- 详情 -->
-          <Detail v-bind="videoDetail" />
+          <Detail :info="videoDetail!" />
         </template>
       </el-skeleton>
 
       <!-- 评论 -->
-      <Comment :id="(route.params.vid as string)" />
+      <Comment :id="(route.params.vid as string)" :type="5" />
     </div>
 
     <!-- 相关推荐 -->
@@ -55,25 +55,62 @@
 </template>
 
 <script lang="ts">
+
 export default { name: "VideoDetail" }
 </script>
 <script setup lang="ts">
-import PlyrVideo from "@/components/content/plyrVideo/plyrVideo.vue";
-import Relevant from "./coms/relevant.vue";
-import Comment from "./coms/comment.vue";
 import Detail from "./coms/detail.vue";
+import Relevant from "./coms/relevant.vue";
+import Comment from "@/components/content/comment/comment.vue";
+import PlyrVideo from "@/components/content/plyrVideo/plyrVideo.vue";
 import { reactive, ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
 import { VideoAPI } from "api";
+import { Handle } from "utils";
+export interface VideoDetail {
+  // 视频标题
+  title: string,
+  // 视频id
+  vid: string,
+  // 播放次数
+  playCount: string,
+  // 发布时间
+  publishTime: string,
+  // 视频收藏数量
+  subCount: number,
+  // 视频分享数量
+  shareCount: number,
+  // 视频点赞数量
+  likedCount: number,
+  // 视频描述
+  description: string,
+  // 视频封面
+  coverUrl: string,
+  // 创建人
+  creator: {
+    // 头像
+    avatarUrl: string,
+    // 名称
+    nickname: string,
+    // 是否关注
+    followed: boolean,
+    // 创建人ID
+    userId: number
+  }
+}
+export interface VideoSource {
+  r: number,
+  url: string
+}
 const route = useRoute();
 
 // 加载状态
-let loading = ref(true);
+let loading = ref<boolean>(true);
 // 视频详情
-let videoDetail = reactive<any>({});
+let videoDetail = ref<VideoDetail | null>(null);
 // 视频url
-let videoSource = reactive<{ r: number, url: string }[]>([]);
+let videoSource = reactive<VideoSource[]>([]);
 
 // 加载视频详情
 let loadVideoDetail = async (vid: string) => {
@@ -82,31 +119,30 @@ let loadVideoDetail = async (vid: string) => {
     let [Detail, Url]: any = await Promise.all([VideoAPI.getDetail(vid), VideoAPI.getUrl(vid)]);
     // 处理视频详情
     if (Detail.code == 200) {
-      let { title, vid, subscribeCount, publishTime, playTime, shareCount, praisedCount, description, creator, coverUrl } = Detail.data;
-      Object.assign(videoDetail, {
-        // 视频标题
+      let { title, vid, subscribeCount: subCount, publishTime, playTime: playCount, shareCount, praisedCount: likedCount, description, creator, coverUrl } = Detail.data;
+      let { avatarUrl, nickname, followed, userId } = creator;
+      // 处理播放时间
+      publishTime = Handle.TimeStamp(publishTime);
+      // 处理播放次数
+      playCount = Handle.Count(playCount);
+      videoDetail.value = {
         title,
-        // 视频id
         vid,
-        // 播放次数
-        playTime,
-        // 发布时间
+        playCount,
         publishTime,
-        // 视频收藏数量
-        subCount: subscribeCount,
-        // 视频分享数量
+        subCount,
         shareCount,
-        // 视频点赞数量
-        likedCount: praisedCount,
-        // 视频描述
+        likedCount,
         description,
-        // 视频创建人
-        creator,
-        // 视频封面
-        coverUrl
-      });
+        coverUrl,
+        creator: {
+          avatarUrl,
+          nickname,
+          followed,
+          userId
+        },
+      }
     }
-
     // 处理视频地址
     if (Url.code == 200) {
       let { url, r } = Url.urls[0];

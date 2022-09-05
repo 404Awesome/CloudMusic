@@ -30,7 +30,7 @@
     <!-- 歌手 -->
     <el-table-column label="歌手" v-if="!albumMode">
       <template v-slot="{ row }">
-        <Artists :artists="row.artists" fontSize="14px" />
+        <Artists :artists="row.artists" />
       </template>
     </el-table-column>
 

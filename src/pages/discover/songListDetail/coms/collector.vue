@@ -1,7 +1,7 @@
 <!-- 歌单收藏者 -->
 <template>
   <!-- 提示 -->
-  <el-alert v-if="!store.auth" mt-2 title="登陆后查看全部" type="warning" :closable="false" />
+  <el-alert v-if="!store.accountInfo.id" mt-2 title="登陆后查看全部" type="warning" :closable="false" />
 
   <el-skeleton :loading="loading" animated>
     <template #template>
@@ -48,7 +48,7 @@
   </el-skeleton>
 
   <!-- 分页 -->
-  <div v-show="collectorList.length" flex justify-center my-20px>
+  <div v-show="collectorList.length" mb-20px>
     <el-pagination @current-change="change" background layout="prev, pager, next" :page-size="limit" :pager-count="5"
       :total="total" />
   </div>

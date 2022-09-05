@@ -1,9 +1,9 @@
 import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
 import { SongInfo, useMainStore } from "store";
+import { AccountAPI, SongListAPI } from "api";
 import { useDebounceFn } from "@vueuse/core";
 import { useRouter } from "vue-router";
-import { Handle, useMD5 } from "utils";
-import { SongListAPI } from "api";
+import { Handle } from "utils";
 import { toRaw } from "vue";
 
 // 防抖函数延迟时间
@@ -65,44 +65,36 @@ export default {
     console.log(id);
   }, delay),
   // 分享信息
-  shareInfo: (title: string, href: string, type: string, cover: string) => {
+  shareInfo: (title: string, href: string) => {
     console.log(title);
     console.log(href);
-    console.log(type);
-    console.log(cover);
   },
   // 未登陆,清除登陆状态
   clearLoginStatus() {
+    const router = useRouter();
     const store = useMainStore();
-    // 清除登陆状态
-    store.auth = '';
+    // 清除账号信息
+    store.accountInfo = { id: 0, avatarUrl: '', nickname: '', signature: '' };
     // 提示用户重新登录
-    ElNotification({
-      title: '警告',
-      message: '登陆失效, 请重新登录!',
-      type: 'warning',
-    });
+    ElNotification.warning({ message: "登陆失效, 请重新登录!", duration: 2000, showClose: false });
+    // 跳转到登陆页
+    router.push("/account/login");
   },
-  // 登陆
-  loginResult(code: number, message: string, cookie: string) {
-    let store = useMainStore();
-    let router = useRouter();
+  // 登陆结果
+  async loginResult(code: number, goHome: () => any) {
     if (code == 200) {
+      const store = useMainStore();
       // 登陆成功
-      store.auth = useMD5(cookie);
-      ElNotification({
-        title: '成功',
-        message: '登陆成功!',
-        type: 'success',
-      });
-      router.push("/myHonePage");
+      let { profile: { userId: id, avatarUrl, nickname, signature } }: any = await AccountAPI.getUserAccount();
+      // 保存账号信息
+      store.accountInfo = { id, avatarUrl, nickname, signature };
+      // 提示用户登陆成功!
+      ElNotification.success({ message: "登陆成功", duration: 2000, showClose: false });
+      // 跳转首页
+      goHome();
     } else {
-      // 登陆失败
-      ElNotification({
-        title: '错误',
-        message,
-        type: 'error',
-      });
+      // 提示用户登陆失败!
+      ElNotification.error({ message: "登陆失败!", duration: 2000, showClose: false });
     }
   }
 }

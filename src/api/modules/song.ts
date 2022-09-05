@@ -13,10 +13,6 @@ export default {
   getPersonalFM() {
     return GET("/personal_fm");
   },
-  // 获取歌曲评论
-  getComment(id: number, offset: number = 0, limit: number = 20) {
-    return GET("/comment/music", { id, offset, limit });
-  },
   // 获取相似音乐
   getSimi(id: number) {
     return GET("/simi/song", { id });

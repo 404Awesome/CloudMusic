@@ -1,32 +1,27 @@
 <!-- 布局组件 -->
 <template>
-  <main id="layout" :class="{ hiddenSidebar: songDetailDrawer, sidebarFolding: sidebarFolding }">
-    <section class="topbar">
-      <Topbar />
-    </section>
-
-    <section class="sidebar">
-      <Sidebar />
-    </section>
-
-    <section class="playbar">
-      <PlayBar />
-    </section>
-
-    <section class="view" ref="scrollEl" @scroll="scroll">
+  <main id="layout" :class="{ hiddenSidebar: songDetailDrawer, folding: sidebarFolding }">
+    <!-- 顶部导航栏 -->
+    <Topbar class="topbar" />
+    <!-- 侧边导航栏 -->
+    <Sidebar class="sidebar" />
+    <!-- 播放栏 -->
+    <PlayBar class="playbar" />
+    <!-- 视图 -->
+    <div class="view" ref="scrollEl" @scroll="scroll">
       <router-view v-slot="{ Component }">
         <keep-alive :exclude="excludeList">
           <component :is="Component" />
         </keep-alive>
       </router-view>
-    </section>
+    </div>
   </main>
 </template>
 
 <script setup lang="ts">
-import Topbar from "./topbar/topbar.vue";       // 顶部导航栏
-import Sidebar from "./sidebar/sidebar.vue";    // 侧边导航栏
-import PlayBar from "./playBar/playBar.vue";    // 播放栏
+import Topbar from "./topbar/topbar.vue";
+import Sidebar from "./sidebar/sidebar.vue";
+import PlayBar from "./playBar/playBar.vue";
 import { useThrottleFn } from "@vueuse/core";
 import { ref, toRefs, watch } from "vue";
 import { useRoute } from "vue-router";
@@ -46,7 +41,7 @@ let scroll = useThrottleFn((event: UIEvent) => {
     let target = event.target as HTMLElement;
     scrollTop.value = target.scrollTop;
   }
-}, 200);
+}, 100);
 // 监听路由,将页面滚动到顶部
 watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 </script>
@@ -121,7 +116,7 @@ watch(route, () => scrollEl.value?.scrollTo({ top: 0 }));
 }
 
 // 缩小侧边栏
-#layout.sidebarFolding {
+#layout.folding {
   grid-template: var(--topNavBarHeight) auto var(--playBarHeight) / 70px auto;
 }
 </style>

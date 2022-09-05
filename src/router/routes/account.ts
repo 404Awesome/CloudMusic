@@ -20,7 +20,7 @@ const routes: RouteRecordRaw[] = [
     redirect: "/account/login",
     beforeEnter() {
       const store = useMainStore();
-      if (store.auth) {
+      if (store.accountInfo.id) {
         return "/myHonePage"
       } else {
         return true;

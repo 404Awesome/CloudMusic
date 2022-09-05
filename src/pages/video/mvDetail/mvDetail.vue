@@ -8,7 +8,11 @@
           <!-- 视频 -->
           <el-skeleton-item w-full h-250px sm:h-310px md:h-432px lg:h-354px rounded-md pt-4 />
           <!-- 艺术家 -->
-          <el-skeleton-item block variant="text" w-60px mt-4 mb-10px />
+          <div flex gap-10px items-center mt-4 mb-10px>
+            <el-skeleton-item block w-45px h-45px rounded-full />
+            <el-skeleton-item block variant="text" w-60px />
+          </div>
+
           <!-- 标题 -->
           <el-skeleton-item block variant="text" h-20px w-230px />
           <!-- 元信息 -->
@@ -29,15 +33,15 @@
         </template>
         <template #default>
           <!-- MV视频 -->
-          <PlyrVideo :source="mvSource" :poster="mvDetail.cover" />
+          <PlyrVideo :source="mvSource" :poster="mvDetail!.cover" />
 
           <!-- 详情 -->
-          <Detail v-bind="mvDetail" />
+          <Detail :info="mvDetail!" />
         </template>
       </el-skeleton>
 
       <!-- 评论 -->
-      <Comment :id="(route.params.id as string)" />
+      <Comment :id="(route.params.id as string)" :type="1" />
     </div>
 
     <!-- 相关推荐 -->
@@ -51,37 +55,57 @@
 export default { name: "MVDetail" }
 </script>
 <script setup lang="ts">
-import PlyrVideo from "@/components/content/plyrVideo/plyrVideo.vue";
-import Relevant from "./coms/relevant.vue";
+import Comment from "@/components/content/comment/comment.vue";
 import Detail from "./coms/detail.vue";
-import Comment from "./coms/comment.vue";
+import Relevant from "./coms/relevant.vue";
+import PlyrVideo from "@/components/content/plyrVideo/plyrVideo.vue";
 import { reactive, watch, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { useRoute } from "vue-router";
+import { Handle } from "utils";
 import { MVAPI } from "api";
+export interface MVDetail {
+  id: number,
+  artists: any,
+  publishTime: string,
+  playCount: string,
+  desc: string,
+  name: string,
+  subCount: number,
+  likedCount: number,
+  shareCount: number,
+  cover: string
+}
+export interface MVSource {
+  r: number,
+  url: string
+}
 const route = useRoute();
 
 // 加载状态
-let loading = ref(true);
+let loading = ref<boolean>(true);
+// mv详情
+let mvDetail = ref<MVDetail | null>(null);
 // 请求到MV资源
-let mvSource = reactive<any>([]);
+let mvSource = reactive<MVSource[]>([]);
+
 // 获取mv所有分辨率的视频地址
 let getResolution = async (qualityArr: object[], id: number) => {
-  let request = qualityArr.map((quality: any) => MVAPI.getAddress(id, quality.br));
-  let result = await Promise.all(request);
-  mvSource.push(...result.map(({ code, data }: any) => {
+  let result = await Promise.all(qualityArr.map((quality: any) => MVAPI.getAddress(id, quality.br)));
+  let list = result.map(({ code, data }: any) => {
     if (code == 200) return { r: data.r, url: data.url };
-  }));
+  }) as MVSource[];
+  mvSource.push(...list);
 };
-// mv详情
-let mvDetail = reactive<any>({});
+
 // 加载mv详情
 let loadMVDetail = async (id: number) => {
   try {
     loading.value = true;
     let [{ data: { brs, artists, publishTime, playCount, desc, name, subCount, cover } }, { likedCount, shareCount }]: any = await Promise.all([MVAPI.getDetail(id), MVAPI.getDetailInfo(id)]);
     await getResolution(brs, id);
-    Object.assign(mvDetail, { id, artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount, cover });
+    playCount = Handle.Count(playCount);
+    mvDetail.value = { id, artists, publishTime, playCount, desc, name, subCount, likedCount, shareCount, cover };
   } catch (err: any) {
     ElMessage.error("加载mv详情失败!");
   } finally {

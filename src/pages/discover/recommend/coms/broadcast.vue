@@ -9,16 +9,18 @@
       </ul>
     </template>
     <template #default>
-      <div pt-4 grid4Cols>
-        <BroadcastItem v-for="item in broadcastList" :key="item.id" :id="item.id" :picUrl="item.picUrl"
-          :copywriter="item.copywriter" />
-      </div>
+      <ul pt-4 grid4Cols>
+        <li v-for="item in broadcastList" :key="item.id">
+          <BroadcastItem v-bind="item" />
+        </li>
+      </ul>
     </template>
   </el-skeleton>
 </template>
 
 <script setup lang="ts">
 import BroadcastItem from "@/components/content/broadcastItem/broadcastItem.vue";
+import { BroadcastInfo } from "@/pages/discover/broadcast/broadcast.vue";
 import { useIntersectionObserver } from "@vueuse/core";
 import { reactive, onMounted, ref } from "vue";
 import { ElMessage } from "element-plus";
@@ -29,18 +31,26 @@ let skeletonEl = ref<HTMLElement | null>(null);
 // 加载状态
 let loading = ref<boolean>(true);
 // 独家放送列表
-let broadcastList = reactive<any>([]);
+let broadcastList = reactive<BroadcastInfo[]>([]);
 // 加载独家放送列表
 let loadData = async () => {
   try {
     let { code, result }: any = await MVAPI.getBroadcastList(0, 4);
-    if (code == 200) broadcastList.push(...result);
+    if (code == 200) {
+      // 处理独家放送列表
+      let list = result.map((item: any) => {
+        let { id, copywriter, picUrl } = item;
+        return { id, copywriter, picUrl };
+      });
+      broadcastList.push(...list);
+    };
   } catch (err: any) {
     ElMessage.error("加载独家放送列表失败!");
   } finally {
     loading.value = false;
   }
 }
+
 // 监听容器元素是否显示在页面上
 onMounted(() => {
   const { stop } = useIntersectionObserver(skeletonEl.value, ([{ isIntersecting }]) => {

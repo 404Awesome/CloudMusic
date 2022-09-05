@@ -46,20 +46,21 @@
           </ul>
 
           <!-- 评论 -->
-          <Comment v-show="currentComment == item.id" :id="item.threadId" />
+          <div v-show="currentComment == item.id">
+            <Comment :id="item.id" :type="6" :limit="5" />
+          </div>
         </div>
       </li>
     </ul>
 
     <!-- 提示 -->
-    <el-divider>
-      <span tip>{{ disabled ? '已加载到底!' : 'Loading...' }}</span>
-    </el-divider>
+    <Tip :disabled="disabled" />
   </div>
 </template>
 
 <script setup lang="ts">
-import Comment from "./comment.vue";
+import Tip from "@/components/content/tip/tip.vue";
+import Comment from "@/components/content/comment/comment.vue";
 import SongItem from "@/components/content/songItem/songItem.vue";
 import AlbumItem from "@/components/content/albumItem/albumItem.vue";
 import { onMounted, reactive, ref } from "vue";
@@ -93,7 +94,6 @@ interface DynamicInfo {
   avatarUrl: string,
   nickname: string,
   picsList: string[],
-  threadId: string
 }
 let dynamicList = reactive<DynamicInfo[]>([]);
 
@@ -121,7 +121,7 @@ let loadData = async () => {
       lastTime.value = lasttime;
       // 处理动态
       let list = event.map((item: any) => {
-        let { id, eventTime, pics, json, info: { commentCount, likedCount, shareCount, threadId }, user: { avatarUrl, nickname, userId } } = item;
+        let { id, eventTime, pics, json, info: { commentCount, likedCount, shareCount }, user: { avatarUrl, nickname, userId } } = item;
         // 处理动态图片
         let picsList = pics.map((item: any) => item.originUrl);
         // 处理 json
@@ -150,7 +150,6 @@ let loadData = async () => {
         // 处理单曲
         return {
           id,
-          threadId,
           userId,
           picsList,
           eventTime,

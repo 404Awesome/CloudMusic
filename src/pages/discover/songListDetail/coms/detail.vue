@@ -128,10 +128,9 @@ let goPersonalPage = () => {
 
 // 分享
 let share = () => {
-  let href = location.href;
-  let title = detail.name;
-  let cover = detail.coverImgUrl;
-  Operate.shareInfo(title, href, "歌单", cover);
+  if (detail.name) {
+    Operate.shareInfo(detail.name, location.href);
+  }
 }
 
 // 加载歌单详情

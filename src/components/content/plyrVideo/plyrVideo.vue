@@ -6,11 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref, onMounted, onBeforeUnmount, watch } from "vue";
-import { useMainStore } from "store";
+import { PropType, ref, onMounted, onBeforeUnmount } from "vue";
 import { useMitt } from "utils";
 import Plyr from "plyr";
-const store = useMainStore();
 const props = defineProps({
   source: {
     type: Array as PropType<{ r: number, url: string }[]>,

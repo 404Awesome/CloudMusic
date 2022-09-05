@@ -25,10 +25,6 @@ export default {
   getSubscribers(id: number, offset: number = 0, limit: number = 20) {
     return GET("/playlist/subscribers", { id, offset, limit });
   },
-  // 获取评论
-  getComment(id: number, offset: number = 0, limit: number = 20) {
-    return GET("/comment/playlist", { id, offset, limit });
-  },
   // 获取歌单所有歌曲
   getTrackAll(id: number, offset: number = 0, limit: number = 100) {
     return GET("/playlist/track/all", { id, limit, offset });

@@ -17,7 +17,7 @@
 
     <el-skeleton :loading="loading" animated>
       <template #template>
-        <ul grid6Cols mt-15px min-h-300px>
+        <ul grid6Cols mt-15px>
           <li v-for="item in 6">
             <el-skeleton-item variant="image" w-full h-33 rounded-md />
             <el-skeleton-item variant="text" mt-6px />
@@ -147,17 +147,17 @@ onMounted(() => loadData());
 }
 
 .songList {
-  @apply grid6Cols mt-15px;
+  @apply flex flex-wrap justify-around gap-10px mt-15px;
 
   li {
-    @apply cursor-pointer;
+    @apply cursor-pointer w-135px;
 
     &:hover .name {
       @apply themeColor;
     }
 
     .cover {
-      @apply rounded-md brightness-90;
+      @apply w-full h-135px rounded-md brightness-90 border-1px border-gray-200;
     }
 
     .name {

@@ -26,7 +26,7 @@
         <!-- 下一首 -->
         <span @click="changeSong(true)" class="change" i-eva:skip-forward-fill></span>
         <!-- 分享 -->
-        <span class="share"></span>
+        <span @click="share" class="share"></span>
       </section>
 
       <!-- 操作 -->
@@ -102,6 +102,14 @@ let addSource = async (id: number) => {
     }
     await promiseTimeout(300);
     duration.value = audioPlyr.duration;
+  }
+}
+
+// 分享
+let share = () => {
+  let title = store.currentSong?.song.name;
+  if (title) {
+    Operate.shareInfo(title, location.href);
   }
 }
 

@@ -1,29 +1,26 @@
 <!-- 歌手详情 详情 -->
 <template>
-  <div flex flex-col sm:flex-row gap-20px>
+  <div class="singerDetail">
     <!-- 歌手图片 -->
-    <el-image flex-none transition-all duration-300 ease-linear h-35 w-35 lg:h-50 lg:w-50 rounded-md
-      :src="singerDetail.cover" fit="cover" />
+    <el-image :src="singerDetail.cover" fit="cover" class="avatar" />
 
     <!-- 歌手信息 -->
-    <div flex overflow-hidden flex-1 flex-col flex-nowrap pt-2>
+    <div class="info">
       <!-- 姓名 -->
-      <h1 class="name" truncate>{{ name }}</h1>
+      <h1 truncate>{{ name }}</h1>
       <!-- 别名 -->
-      <p class="alias" text="14px black/50" truncate mt-1 v-if="alias">
+      <p v-if="alias" class="alias">
         {{ typeof alias == 'string' ? alias : alias.join("; ") }}
       </p>
 
       <!-- 收藏 -->
-      <div v-if="store.auth" @click="collection" :class="{ collected: followed }" mt-3 lg:mt-5 flexCenter w-80px
-        border="1px solid #eee" rounded-20px whitespace-nowrap cursor-pointer gap-3px select-none transition-all
-        hover="themeColor bg-#f5f7fa">
+      <div v-if="store.accountInfo.id" @click="collection" :class="{ collected: followed }" class="collection">
         <span text-19px p-y-5px i-carbon:folder-add></span>
         <span p-y-5px>{{ followed ? '已收藏' : '收藏' }}</span>
       </div>
 
       <!-- 数量 -->
-      <ul flex text-15px gap-20px mt-3 lg:mt-5>
+      <ul class="count">
         <li truncate>单曲数: {{ singerDetail.musicSize }}</li>
         <li truncate>专辑数: {{ singerDetail.albumSize }}</li>
         <li truncate>MV数: {{ singerDetail.mvSize }}</li>
@@ -61,8 +58,36 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.collected {
-  width: 90px;
-  color: var(--theme-color);
+.singerDetail {
+  @apply flex flex-col gap-20px sm-flex-row;
+
+  .avatar {
+    @apply flex-none transition-all duration-300 ease-linear h-35 w-35 lg-h-50 lg-w-50 rounded-md;
+  }
+
+  .info {
+    @apply flex overflow-hidden flex-1 flex-col flex-nowrap pt-2;
+
+    .alias {
+      @apply text-14px text-black/50 truncate mt-1;
+    }
+
+    .count {
+      @apply flex text-15px gap-20px mt-3 lg-mt-5;
+    }
+  }
+}
+
+.collection {
+  @apply mt-3 lg-mt-5 flexCenter w-80px border-1px border-#eee rounded-20px whitespace-nowrap cursor-pointer gap-3px select-none transition-all;
+
+  &:hover {
+    @apply themeColor bg-#f5f7fa;
+  }
+
+  &.collected {
+    width: 90px;
+    color: var(--theme-color);
+  }
 }
 </style>

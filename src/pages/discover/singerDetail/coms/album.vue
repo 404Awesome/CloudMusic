@@ -34,12 +34,11 @@
   </ul>
 
   <!-- 提示 -->
-  <el-divider>
-    <span tip>{{ disabled ? '已全部加载完成!' : 'Loading...' }}</span>
-  </el-divider>
+  <Tip :disabled="disabled" />
 </template>
 
 <script setup lang="ts">
+import Tip from "@/components/content/tip/tip.vue";
 import SongList from "@/components/content/songList/songList.vue";
 import { onMounted, reactive, ref } from "vue";
 import { ElMessage } from "element-plus";

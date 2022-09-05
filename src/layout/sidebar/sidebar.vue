@@ -1,19 +1,19 @@
 <!-- 侧边导航栏 -->
 <template>
-  <main class="sidebar" :class="{ folding: store.sidebarFolding }">
+  <main class="sidebar" :class="{ folding: sidebarFolding }">
     <!-- 登陆 / 注册 / 账号信息 -->
     <div>
       <!-- 已登陆 -->
-      <section v-if="store.auth" @click="$router.push('/myHonePage')" class="profile">
+      <section v-if="store.accountInfo.id" @click="$router.push('/myHonePage')" class="profile">
         <!-- 头像 -->
-        <el-image :src="profileInfo.avatarUrl" class="avatar" :draggable="false" />
+        <el-image :src="accountInfo.avatarUrl" class="avatar" />
 
         <!-- 信息 -->
         <div class="info">
           <!-- 昵称 -->
-          <p class="nickname">{{ profileInfo.nickname }}</p>
+          <p class="nickname">{{ accountInfo.nickname }}</p>
           <!-- 签名 -->
-          <p class="signature">{{ profileInfo.signature }}</p>
+          <p class="signature">{{ accountInfo.signature }}</p>
         </div>
       </section>
 
@@ -25,7 +25,7 @@
     </div>
 
     <!-- 导航列表 / 版权声明 -->
-    <div flex flex-col gap-10px flex-1 justify-between>
+    <nav class="nav">
       <!-- 列表 -->
       <ul class="navList">
         <li @click="$router.push(item.path)" :class="{ active: $route.matched[0]?.path == item.path }"
@@ -44,7 +44,7 @@
         <p mt-5px>本项目仅用于学习用途!</p>
         <p>资源版权都属于网易云音乐!</p>
       </div>
-    </div>
+    </nav>
 
     <!-- 折叠 -->
     <div @click="folding" class="foldingBtn">
@@ -55,24 +55,17 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch } from "vue";
-import { AccountAPI, SongAPI } from "api";
-import { useRouter } from "vue-router";
+import { reactive, toRefs, watch } from "vue";
 import { useMainStore } from "store";
-import { Operate } from "utils";
 const store = useMainStore();
-const router = useRouter();
+let { sidebarFolding, accountInfo } = toRefs(store);
 
-// 个人信息
-let profileInfo = ref<any>({});
 // 导航列表
 interface ListItem {
   icon: string,
   title: string,
   path: string
 }
-// 导航列表
-let navList = reactive<ListItem[]>([]);
 // 无需登陆列表
 let noLogin: ListItem[] = [
   {
@@ -104,47 +97,13 @@ let needLogin: ListItem[] = [
     path: "/recentPlay",
   }
 ];
+// 导航列表
+let navList = reactive<ListItem[]>([]);
 
-// 请求喜欢音乐列表状态
-let loadingStatus = ref<boolean>(false);
-// 请求喜欢音乐列表
-let getLikeSongList = async (uid: number) => {
-  if (loadingStatus.value) return;
-  loadingStatus.value = true;
-  try {
-    let { code, ids }: any = await SongAPI.getLikeList(uid);
-    if (code == 200) {
-      // 清空喜欢音乐列表, 并添加数据
-      store.likeList.splice(0, store.likeList.length, ...ids);
-    }
-  } catch (err: any) { } finally {
-    loadingStatus.value = false;
-  }
-}
-
-// 监视store中的auth状态
-watch(() => store.auth, async (authStatus) => {
-  // 初始化导航列表
+// 监视store中的账号状态
+watch(() => store.accountInfo.id, (status) => {
   navList.splice(0, navList.length, ...noLogin);
-  // 判断当前登陆状态
-  if (!authStatus) return;
-  // 请求账号信息
-  try {
-    let { code, profile }: any = await AccountAPI.getUserAccount();
-    if (code !== 200) return;
-    if (profile) {
-      // 已登陆
-      navList.push(...needLogin);
-      profileInfo.value = profile;
-      // 请求喜欢音乐列表
-      getLikeSongList(profile.userId);
-    } else {
-      // 未登陆
-      Operate.clearLoginStatus();
-      // 跳转登陆页
-      router.push("/account/login");
-    }
-  } catch (error) { }
+  if (status) navList.push(...needLogin);
 }, { immediate: true });
 
 // 折叠侧边栏
@@ -157,6 +116,11 @@ let folding = () => {
 // 侧边栏容器
 .sidebar {
   @apply flex flex-col gap-10px select-none p-10px h-full overflow-hidden bg-gray-300 dark-bg-gray-500;
+}
+
+// 导航
+.nav {
+  @apply flex flex-col gap-10px flex-1 justify-between;
 }
 
 // 版权声明
